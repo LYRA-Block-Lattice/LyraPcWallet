@@ -1,0 +1,1 @@
+walletComboBoxArrow   =  Arrow Down Icon@2x
