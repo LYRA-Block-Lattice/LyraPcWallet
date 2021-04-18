@@ -1,5 +1,5 @@
 QT       += core gui network charts websockets
-TARGET = ../../LyraWallet-Win64/lyra-pc-wallet
+TARGET = ../../LyraWallet-Win32/lyra-pc-wallet
 
 
 #win32{

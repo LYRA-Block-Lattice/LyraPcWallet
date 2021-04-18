@@ -1,17 +1,20 @@
 QT       += core gui network charts websockets
-TARGET = lyra-pc-wallet
+TARGET = ../../LyraWallet/LyraWallet-MacOsX/lyra-pc-wallet
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
-CONFIG -= app_bundle
+CONFIG += app_bundle
 
-DEFINES += MY_LIB_PATH=/usr/mylib
+DEFINES += MY_LIB_PATH=/
 
-# QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
+#QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
 
-QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
+#QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+MACDEPLOY = `echo $$QMAKE_QMAKE | sed 's/qmake/macdeployqt/g'`
+QMAKE_POST_LINK = $$MACDEPLOY $$OUT_PWD/$$TARGET\.app -qmldir=$$PWD -verbose=3
+
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -111,4 +114,5 @@ RESOURCES += \
     lyra-gui-wallet.qrc
 
 RC_ICONS = resource/ico/256color.ico
+ICON = icon.icns
 

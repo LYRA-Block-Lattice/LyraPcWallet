@@ -13,7 +13,7 @@ settingsshowprivkey::~settingsshowprivkey() {
 
 }
 
-void settingsshowprivkey::init(QMdiArea *mdiArea, QString walletName, QString privKey) {
+void settingsshowprivkey::init(QMdiArea *mdiArea) {
     this->parent = mdiArea;
     this->setParent(mdiArea);
     thisMdiArea = new QMdiArea(mdiArea);
@@ -40,7 +40,6 @@ void settingsshowprivkey::init(QMdiArea *mdiArea, QString walletName, QString pr
     titleName->setStyleSheet("color: #333;");
     titleName->setAlignment(Qt::AlignCenter);
     titleName->setAttribute(Qt::WA_TranslucentBackground, true);
-    titleName->setText(walletName);
 
     privateKey->setAttribute(Qt::WA_TranslucentBackground, true);
     privateKey->setAlignment(Qt::AlignCenter);
@@ -52,7 +51,6 @@ void settingsshowprivkey::init(QMdiArea *mdiArea, QString walletName, QString pr
                                                     "border-radius: 3px;"
                                                     ";}");
     privateKey->setReadOnly(true);
-    privateKey->setText(privKey);
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
@@ -90,7 +88,9 @@ settingsshowprivkey::runMode_e settingsshowprivkey::getState() {
     return currentMode;
 }
 
-void settingsshowprivkey::setState(runMode_e state) {
+void settingsshowprivkey::setState(runMode_e state, QString walletName, QString privKey) {
+    titleName->setText(walletName);
+    privateKey->setText(privKey);
     currentMode = state;
 }
 
@@ -107,7 +107,6 @@ void settingsshowprivkey::run() {
             refreshLanguage();
         }
         if(currentMode == runMode_e::RUN) {
-
             thisMdiArea->setVisible(true);
             thisWindow->setVisible(true);
         } else if(currentMode == runMode_e::NONE) {

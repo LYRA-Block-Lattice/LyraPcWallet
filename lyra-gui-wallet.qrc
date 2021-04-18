@@ -91,7 +91,4 @@
         <file>resource/ico/light/mainDashBoard/settings/whiteBack.png</file>
         <file>resource/ico/light/mainDashBoard/transitions/red.png</file>
     </qresource>
-    <qresource prefix="/new/prefix1">
-        <file>qt.conf</file>
-    </qresource>
 </RCC>

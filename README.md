@@ -104,12 +104,28 @@ Here is a list of accounts in the current wallet where user can add/edit/delete 
 
 ### Windows:
 
-Decompress the archive and double click on "InstallShortcutOnDesktop.cmd" file to install a shortcut on "Desktop".
+Both versions of Windows are supported 32bit and 64bit.
+
+Decompress the archive and double click on the wallet executable.
+
+If someone still use Windows 7 x64 or is reported that MSVCR100.dll is missing, download and install Microsoft Visual C++ 2010 Redistributable from Microsoft site.
 
 ### Linux:
 
-Decompress the archive and  double click on "LyraWalletInstall.sh" file, or in Ubuntu case open a terminal and navigate to the wallet directory and type: ./LyraWalletInstall.sh, will install all dependencies, on Linux Mint all dependencies are satisfied out of the box by the OS, but on other platforms the "libxcb" libs are not present, so this file will install them.
+Ubuntu 16 and UP and derivates 64bit versions only.
+
+Decompress the archive and  double click on "LyraWalletInstall.sh" file, or in Ubuntu case open a terminal and navigate to the wallet directory and type: ./LyraWalletInstall.sh, will install all dependencies, on Linux Mint all dependencies are satisfied out of the box by the OS, but on other platforms the "libxcb" and "libxkb" libs are not present, so this file will install them.
 
 The same file will copy the wallet files in the ~/LiraWallet directory and install a shortcut on the desktop.
 
 On some OS'es when you first double click the launcher will popup a message "Untrusted application launcher", click to "Trust and Launch".
+
+### Mac OS X:
+
+Minimum supported version is 10.12.
+
+Decompress the archive and double click on the APP file.
+
+### On all platforms:
+
+The wallet will take some time to appear on the desktop ~5 seconds, this is due to components initializations.

@@ -16,7 +16,7 @@ settingsdeleteaccount::~settingsdeleteaccount() {
 
 }
 
-void settingsdeleteaccount::init(QMdiArea *mdiArea, QString walletName) {
+void settingsdeleteaccount::init(QMdiArea *mdiArea) {
     this->parent = mdiArea;
     this->setParent(mdiArea);
     thisMdiArea = new QMdiArea(mdiArea);
@@ -31,7 +31,6 @@ void settingsdeleteaccount::init(QMdiArea *mdiArea, QString walletName) {
     thisWindow->setGeometry(0, 0, thisMdiArea->width(), thisMdiArea->height());
     thisWindow->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/whiteBack.png)");
     thisWindow->setVisible(false);
-    this->walletName = walletName;
 
     titleName = new QLabel(thisMdiArea);
 
@@ -91,7 +90,8 @@ settingsdeleteaccount::runMode_e settingsdeleteaccount::getState() {
     return currentMode;
 }
 
-void settingsdeleteaccount::setState(runMode_e state) {
+void settingsdeleteaccount::setState(runMode_e state, QString walletName) {
+    this->walletName = walletName;
     currentMode = state;
 }
 

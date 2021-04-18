@@ -1,5 +1,5 @@
 QT       += core gui network charts websockets
-TARGET = lyra-pc-wallet
+TARGET = ../LyraWallet-Linux/Package/lyra-pc-wallet
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

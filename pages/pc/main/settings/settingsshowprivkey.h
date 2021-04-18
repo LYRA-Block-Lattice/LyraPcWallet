@@ -18,10 +18,10 @@ public:
     }runMode_e;
     settingsshowprivkey();
     ~settingsshowprivkey();
-    void init(QMdiArea *mdiArea = nullptr, QString walletName = "", QString privKey = "");
+    void init(QMdiArea *mdiArea = nullptr);
     void run();
     runMode_e getState();
-    void setState(runMode_e state);
+    void setState(runMode_e state, QString walletName = "", QString privKey = "");
 
 private:
     void refreshFonts();

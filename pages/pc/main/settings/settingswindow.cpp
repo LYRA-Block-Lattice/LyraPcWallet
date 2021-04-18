@@ -32,6 +32,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     mdiAreaSettings->setAttribute(Qt::WA_TranslucentBackground);
     mdiAreaSettings->setGeometry(s(LEFT_MENU_WIDTH), s(HEADER_HEIGHT), s(WINDOW_WIDTH) - s(LEFT_MENU_WIDTH), s(WINDOW_HEIGHT) - s(HEADER_HEIGHT));
     mdiAreaSettings->setVisible(true);
+    mdiAreaSettings->repaint();
     widgetSettings = new QWidget(mdiAreaSettings);
     widgetSettings->show();
     setParent(mdiAreaSettings);
@@ -700,20 +701,17 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                 }
                 QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
                 if (obj == editButton) {
-                    settingsEditAccount->init(mdiAreaSettings, events::getWalletNameKeyList().at(cnt).first);
-                    settingsEditAccount->setState(settingseditaccount::runMode_e::RUN);
+                    settingsEditAccount->setState(settingseditaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
                 QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
                 if (obj == deleteButton) {
-                    settingsDeleteAccount->init(mdiAreaSettings, events::getWalletNameKeyList().at(cnt).first);
-                    settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN);
+                    settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
                 QPushButton *showPrivateKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 6));
                 if (obj == showPrivateKeyButton) {
-                    settingsShowPrivKey->init(mdiAreaSettings, events::getWalletNameKeyList().at(cnt).first, events::getWalletNameKeyList().at(cnt).second);
-                    settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::RUN);
+                    settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first, events::getWalletNameKeyList().at(cnt).second);
                     return true;
                 }
             }

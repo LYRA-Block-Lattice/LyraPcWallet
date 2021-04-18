@@ -25,10 +25,10 @@ public:
     }return_e;
     settingseditaccount();
     ~settingseditaccount();
-    void init(QMdiArea *mdiArea = nullptr, QString walletName = "");
+    void init(QMdiArea *mdiArea = nullptr);
     return_e run();
     runMode_e getState();
-    void setState(runMode_e state);
+    void setState(runMode_e state, QString walletName = "");
 
 private:
     void refreshFonts();
