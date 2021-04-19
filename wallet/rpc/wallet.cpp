@@ -12,13 +12,13 @@ void wallet::sync() {
     int index = events::getSelectedNameKeyIndex();
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
     if(pair.count()) {
-        events::setUnreceivedBallance("Please wait");
+        events::setUnreceivedBallance(_tr("Please wait"));
         bool newTransaction = false;
         walletbalance::receive(pair[index].second, &newTransaction);
         bool unreceived = false;
         int height = 0;
         walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &unreceived);
-        events::setUnreceivedBallance(unreceived ? _tr("Yes") : _tr("No"));
+        events::setUnreceivedBallance(unreceived ? "Yes" : "No");
         if(newTransaction || height != wallethistory::getCount(pair[index].first)) {
             wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
             populate::refreshAll();

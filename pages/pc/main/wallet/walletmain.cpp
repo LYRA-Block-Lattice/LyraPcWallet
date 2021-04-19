@@ -426,6 +426,9 @@ void walletmain::refreshSize() {
 }
 
 void walletmain::refreshLanguage() {
+    walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
+    numberOfTransactionsCountWeekLabel->setText(QString::number(nrOfTransactionsLastWeek) + " " + _tr("in last week"));
+
     myWalletLabel->setText(_tr("My Wallet"));
 
     walletBalanceLabel->setText(_tr("ACCOUNT BALANCE"));
@@ -445,6 +448,9 @@ void walletmain::refreshLanguage() {
     walletBalanceChartLabel->setText(_tr("My Account Balance") + " - LYR");
     walletValueChartLabel->setText(_tr("My Account Value") + " - LYR");
 
+    unreceivedBalanceValueLabel->setText(_tr(events::getUnreceivedBallance()));
+
+
     refreshFonts();
 }
 
@@ -452,6 +458,16 @@ void walletmain::run() {
     if(pastScale != events::getScale()) {
         refreshSize();
         pastScale = events::getScale();
+    }
+    if(creationDateTime != events::getCreationDateTime() || pastLanguage.compare(translate::getCurrentLang())) {
+        creationDateTime = events::getCreationDateTime();
+        if(creationDateTime) {
+            creationDateDateLabel->setText(textformating::toDate(creationDateTime));
+            creationDateHourLabel->setText(textformating::toTime(creationDateTime));
+        } else {
+            creationDateDateLabel->setText("EMPTY");
+            creationDateHourLabel->setText("");
+        }
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         refreshLanguage();
@@ -463,26 +479,16 @@ void walletmain::run() {
     }
     if(percentageOfTotalSupply != events::getPercentageOfTotalSupply()) {
         percentageOfTotalSupply = events::getPercentageOfTotalSupply();
-        walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + _tr(" of Total Supply"));
+        walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
     }
     if(unreceivedBallance.compare(events::getUnreceivedBallance())) {
         unreceivedBallance = events::getUnreceivedBallance();
-        unreceivedBalanceValueLabel->setText(unreceivedBallance);
+        unreceivedBalanceValueLabel->setText(_tr(unreceivedBallance));
     }
     /*if(lastSyncDateTime != events::getLastSyncDateTime()) {
         lastSyncDateTime = events::getLastSyncDateTime();
         unreceivedBalanceValueTotalLabel.setText(_tr("Last sync") + " " + textformating::toDate(lastSyncDateTime));
     }*/
-    if(creationDateTime != events::getCreationDateTime()) {
-        creationDateTime = events::getCreationDateTime();
-        if(creationDateTime) {
-            creationDateDateLabel->setText(textformating::toDate(creationDateTime));
-            creationDateHourLabel->setText(textformating::toTime(creationDateTime));
-        } else {
-            creationDateDateLabel->setText("EMPTY");
-            creationDateHourLabel->setText("");
-        }
-    }
     if(nrOfTransactions != events::getNumberOfTransactions()) {
         nrOfTransactions = events::getNumberOfTransactions();
         numberOfTransactionsCountLabel->setText(QString::number(nrOfTransactions));

@@ -522,7 +522,7 @@ void dashmain::updateLastTransactionsTables() {
     recentTransactionsItemModel->setRowCount(4);
 
     refreshSize();
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("DATE TRANSITION"));
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("DATE TRANSACTION"));
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("TYPE"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
@@ -627,6 +627,8 @@ void dashmain::run() {
         pastLanguage = translate::getCurrentLang();
         updateAssetsTables();
         updateLastTransactionsTables();
+        teamLockedResetvedValueTotalLabel->setText(textformating::toPercentage(events::getTeamLockedPercentageOfTotalSupply()) + " " + _tr("of Total Supply"));
+        circulatingSupplyValueTotalLabel->setText(textformating::toPercentage(events::getCirculatingSupplyPercentage()) + " " + _tr("of Total Supply"));
     }
     if(totalSupply != events::getTotalSupply()) {
         totalSupply = events::getTotalSupply();

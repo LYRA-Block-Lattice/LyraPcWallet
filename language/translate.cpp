@@ -109,7 +109,7 @@ QString _tr(QString str) {
     if(languagemap.contains(str)) {
         return languagemap[str].toString();
     }
-    return "?" + str;
+    return /*"?" + */str;
 }
 
 int _scale(int value, double extra) {

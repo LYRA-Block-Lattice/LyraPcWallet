@@ -213,7 +213,7 @@ void transitionswindow::refreshTable() {
             tmp = transaction[0];
             QString height = tmp["Height"];
             tmp = transaction[2];
-            QString timeStamp = _tr(tmp["TimeStamp"]);
+            QString timeStamp = tmp["TimeStamp"];
             tmp = transaction[3];
             QString sendAcc = tmp["SendAccountId"];
             tmp = transaction[4];

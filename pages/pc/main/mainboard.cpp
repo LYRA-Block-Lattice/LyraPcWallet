@@ -537,7 +537,7 @@ void mainboard::updateMenuButtonsLanguage() {
     myWalletSendTextLabel->setText(_tr("Send"));
     lyraTokensTextLabel->setText(_tr("Lyra Tokens"));
     swapTextLabel->setText(_tr("Swap"));
-    transactionsTextLabel->setText(_tr("Transitions"));
+    transactionsTextLabel->setText(_tr("Transactions"));
     searchTextLabel->setText(_tr("Search"));
     settingsTextLabel->setText(_tr("Settings"));
 

@@ -306,7 +306,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transition"));
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
     recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
@@ -589,6 +589,9 @@ void walletsend::refreshLanguage() {
     lastSendDateLabel->setText("21 " + _tr("January") + " 2021");
     lastSendValueLabel->setText("151,000.00" " LYR");
 
+    walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
+    totalLyrSendedLastWeekLabel->setText( textformating::toPercentage(totalLyraPercentageSendedLastWeek) + " " + _tr("of Total Wallet"));
+
     walletAddressLabel->setText(_tr("Your wallet's address ID") + ":");
 
     btcUsdLabel->setText("BTC            USD");
@@ -609,11 +612,26 @@ void walletsend::refreshLanguage() {
         btcUsdTextLabel->setText("BTC");
 
 
-    lastSendedTransitionsLabel->setText(_tr("LAST SEND TRANSITIONS"));
+    lastSendedTransitionsLabel->setText(_tr("LAST SEND TRANSACTIONS"));
 
 
     passwordConfirmationLineEdit->setPlaceholderText(_tr("Password"));
     noteLineEdit->setPlaceholderText(_tr("Note"));
+
+    unreceivedBalanceValueLabel->setText(_tr(events::getUnreceivedBallance()));
+
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Date / Hours"));
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Destination"));
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, _tr("Note"));
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
 
     QPushButton *viewDetails;
     for(int cnt = 0;  cnt < 6; cnt++) {
@@ -640,11 +658,11 @@ void walletsend::run() {
     }
     if(percentageOfTotalSupply != events::getPercentageOfTotalSupply()) {
         percentageOfTotalSupply = events::getPercentageOfTotalSupply();
-        walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + _tr(" of Total Supply"));
+        walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
     }
     if(unreceivedBallance.compare(events::getUnreceivedBallance())) {
         unreceivedBallance = events::getUnreceivedBallance();
-        unreceivedBalanceValueLabel->setText(unreceivedBallance);
+        unreceivedBalanceValueLabel->setText(_tr(unreceivedBallance));
     }
     /*if(lastSyncDateTime != events::getLastSyncDateTime()) {
         lastSyncDateTime = events::getLastSyncDateTime();

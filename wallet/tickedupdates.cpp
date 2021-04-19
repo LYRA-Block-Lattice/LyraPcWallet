@@ -122,7 +122,7 @@ void tickedupdates::on_FetchNode() {
         bool unreceived = false;
         int height = 0;
         walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &unreceived);
-        events::setUnreceivedBallance(unreceived ? _tr("Yes") : _tr("No"));
+        events::setUnreceivedBallance(unreceived ? "Yes" : "No");
         if(height != wallethistory::getCount(pair[index].first)) {
             wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
             populate::refreshAll();
