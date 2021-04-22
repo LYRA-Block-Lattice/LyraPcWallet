@@ -35,52 +35,52 @@ private:
     void updateLastTransactionsTables();
     void updateAssetsTables();
 
-    QMdiSubWindow *parent;
+    QMdiSubWindow *parent = nullptr;
 
-    QLabel *titleLabel;
+    QLabel *titleLabel = nullptr;
 
-    QLabel *totalSupplyLabel;
-    QLabel *totalSupplyValueLabel;
+    QLabel *totalSupplyLabel = nullptr;
+    QLabel *totalSupplyValueLabel = nullptr;
 
-    QLabel *teamLockedResetvedLabel;
-    QLabel *teamLockedResetvedValueLabel;
-    QLabel *teamLockedResetvedValueTotalLabel;
+    QLabel *teamLockedResetvedLabel = nullptr;
+    QLabel *teamLockedResetvedValueLabel = nullptr;
+    QLabel *teamLockedResetvedValueTotalLabel = nullptr;
 
-    QLabel *circulatingSupplyLabel;
-    QLabel *circulatingSupplyValueLabel;
-    QLabel *circulatingSupplyValueTotalLabel;
+    QLabel *circulatingSupplyLabel = nullptr;
+    QLabel *circulatingSupplyValueLabel = nullptr;
+    QLabel *circulatingSupplyValueTotalLabel = nullptr;
 
-    QLabel *totalBlockLabel;
-    QLabel *totalBlockCountLabel;
-    //QLabel *totalBlockPercentageLabel;
+    QLabel *totalBlockLabel = nullptr;
+    QLabel *totalBlockCountLabel = nullptr;
+    //QLabel *totalBlockPercentageLabel = nullptr;
 
-    QLabel *myWalletValueLabel;
-    QLabel *btcUsdLabel;
-    QLabel *btcUsdSwitchLabel;
+    QLabel *myWalletValueLabel = nullptr;
+    QLabel *btcUsdLabel = nullptr;
+    QLabel *btcUsdSwitchLabel = nullptr;
     bool usdSelected = true;
-    QComboBox *chooseRangeComboBox;
-    QLabel *orLabel;
-    QLabel *startLabel;
-    QDateEdit *startDateEdit;
-    QLabel *endLabel;
-    QDateEdit *endDateEdit;
+    QComboBox *chooseRangeComboBox = nullptr;
+    QLabel *orLabel = nullptr;
+    QLabel *startLabel = nullptr;
+    QDateEdit *startDateEdit = nullptr;
+    QLabel *endLabel = nullptr;
+    QDateEdit *endDateEdit = nullptr;
 
-    /*QSplineSeries*/QLineSeries *myWalletValueSeries;
-    QChart *myWalletValueChart;
-    QChartView *myWalletValueChartView;
-    QDateTimeAxis *myWalletValueAxisX;
-    QValueAxis *myWalletValueAxisY;
+    /*QSplineSeries*/QLineSeries *myWalletValueSeries = nullptr;
+    QChart *myWalletValueChart = nullptr;
+    QChartView *myWalletValueChartView = nullptr;
+    QDateTimeAxis *myWalletValueAxisX = nullptr;
+    QValueAxis *myWalletValueAxisY = nullptr;
 
-    QLabel *recentTransactionLabel;
-    QPushButton *viewAllTransactionsButton;
+    QLabel *recentTransactionLabel = nullptr;
+    QPushButton *viewAllTransactionsButton = nullptr;
 
-    QLabel *assetsLabel;
-    QPushButton *viewAllAssetsButton;
+    QLabel *assetsLabel = nullptr;
+    QPushButton *viewAllAssetsButton = nullptr;
 
-    QTableView *recentTransactionsTableView;
-    QStandardItemModel *recentTransactionsItemModel;
-    QTableView *assetsTableView;
-    QStandardItemModel *assetsItemModel;
+    QTableView *recentTransactionsTableView = nullptr;
+    QStandardItemModel *recentTransactionsItemModel = nullptr;
+    QTableView *assetsTableView = nullptr;
+    QStandardItemModel *assetsItemModel = nullptr;
 
 
     double pastScale = 0.0;

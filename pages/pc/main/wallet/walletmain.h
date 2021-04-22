@@ -36,56 +36,57 @@ private:
     void refreshSize();
     void refreshLanguage();
 
-    QMdiSubWindow *parent;
+    QMdiSubWindow *parent = nullptr;
+    QMdiArea *mdiArea = nullptr;
 
-    QLabel *myWalletLabel;
+    QLabel *myWalletLabel = nullptr;
 
-    QLabel *walletBalanceLabel;
-    QLabel *walletBalanceValueLabel;
-    QLabel *walletBalanceValueTotalLabel;
+    QLabel *walletBalanceLabel = nullptr;
+    QLabel *walletBalanceValueLabel = nullptr;
+    QLabel *walletBalanceValueTotalLabel = nullptr;
 
-    QLabel *unreceivedBalanceLabel;
-    QLabel *unreceivedBalanceValueLabel;
-    QLabel *unreceivedBalanceValueTotalLabel;
+    QLabel *unreceivedBalanceLabel = nullptr;
+    QLabel *unreceivedBalanceValueLabel = nullptr;
+    QLabel *unreceivedBalanceValueTotalLabel = nullptr;
 
-    QPushButton *syncButton;
+    QPushButton *syncButton = nullptr;
 
-    QLabel *creationDateLabel;
-    QLabel *creationDateDateLabel;
-    QLabel *creationDateHourLabel;
+    QLabel *creationDateLabel = nullptr;
+    QLabel *creationDateDateLabel = nullptr;
+    QLabel *creationDateHourLabel = nullptr;
 
-    QLabel *numberOfTransactionsLabel;
-    QLabel *numberOfTransactionsCountLabel;
-    QLabel *numberOfTransactionsCountWeekLabel;
+    QLabel *numberOfTransactionsLabel = nullptr;
+    QLabel *numberOfTransactionsCountLabel = nullptr;
+    QLabel *numberOfTransactionsCountWeekLabel = nullptr;
 
-    QLabel *walletAddressLabel;
-    QLabel *walletAddressIdLabel;
+    QLabel *walletAddressLabel = nullptr;
+    QLabel *walletAddressIdLabel = nullptr;
 
-    QDateEdit *startBalanceDateEdit;
-    QDateEdit *endBalanceDateEdit;
+    QDateEdit *startBalanceDateEdit = nullptr;
+    QDateEdit *endBalanceDateEdit = nullptr;
 
-    QDateEdit *startValueDateEdit;
-    QDateEdit *endValueDateEdit;
+    QDateEdit *startValueDateEdit = nullptr;
+    QDateEdit *endValueDateEdit = nullptr;
 
 
-    QLabel *btcUsdLabel;
-    QLabel *btcUsdSwitchLabel;
+    QLabel *btcUsdLabel = nullptr;
+    QLabel *btcUsdSwitchLabel = nullptr;
     bool usdSelected = true;
 
-    QLabel *walletBalanceChartLabel;
-    QLabel *walletValueChartLabel;
+    QLabel *walletBalanceChartLabel = nullptr;
+    QLabel *walletValueChartLabel = nullptr;
 
-    QLineSeries *myWalletBalanceSeries;
-    QChart *myWalletBalanceChart;
-    QChartView *myWalletBalanceChartView;
-    QDateTimeAxis *myWalletBalanceAxisX;
-    QValueAxis *myWalletBalanceAxisY;
+    QLineSeries *myWalletBalanceSeries = nullptr;
+    QChart *myWalletBalanceChart = nullptr;
+    QChartView *myWalletBalanceChartView = nullptr;
+    QDateTimeAxis *myWalletBalanceAxisX = nullptr;
+    QValueAxis *myWalletBalanceAxisY = nullptr;
 
-    QLineSeries *myWalletValueSeries;
-    QChart *myWalletValueChart;
-    QChartView *myWalletValueChartView;
-    QDateTimeAxis *myWalletValueAxisX;
-    QValueAxis *myWalletValueAxisY;
+    QLineSeries *myWalletValueSeries = nullptr;
+    QChart *myWalletValueChart = nullptr;
+    QChartView *myWalletValueChartView = nullptr;
+    QDateTimeAxis *myWalletValueAxisX = nullptr;
+    QValueAxis *myWalletValueAxisY = nullptr;
 
     double pastScale = 0.0;
     QString pastLanguage = "en";

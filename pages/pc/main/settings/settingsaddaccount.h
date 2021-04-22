@@ -38,25 +38,25 @@ private:
     void refreshSize();
     void refreshLanguage();
 
-    QWidget *parent;
-    QMdiArea *thisMdiArea;
-    QWidget *thisWidget;
-    QMdiSubWindow *thisWindow;
+    QWidget *parent = nullptr;
+    QMdiArea *thisMdiArea = nullptr;
+    QWidget *thisWidget = nullptr;
+    QMdiSubWindow *thisWindow = nullptr;
 
-    QLabel *titleName;
+    QLabel *titleName = nullptr;
 
-    QPushButton *newAccountButton;
-    QPushButton *recoverAccountButton;
+    QPushButton *newAccountButton = nullptr;
+    QPushButton *recoverAccountButton = nullptr;
 
-    QLineEdit *accountNameLineEdit;
-    QLabel *accountNameCheck;
-    QLineEdit *privateKeyLineEdit;
-    QLabel *privateKeyCheck;
+    QLineEdit *accountNameLineEdit = nullptr;
+    QLabel *accountNameCheck = nullptr;
+    QLineEdit *privateKeyLineEdit = nullptr;
+    QLabel *privateKeyCheck = nullptr;
 
-    QLineEdit *passwordConfirmationLineEdit;
+    QLineEdit *passwordConfirmationLineEdit = nullptr;
 
-    QPushButton *cancelButton;
-    QPushButton *okButton;
+    QPushButton *cancelButton = nullptr;
+    QPushButton *okButton = nullptr;
 
     QString accountName;
     QString privateKey;

@@ -21,11 +21,12 @@ walletmain::walletmain() {
 }
 
 walletmain::~walletmain() {
-
+    parent->setVisible(false);
 }
 
 void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     parent = parentWindow;
+    this->mdiArea = mdiArea;
 
     myWalletLabel = new QLabel(mdiArea);
 

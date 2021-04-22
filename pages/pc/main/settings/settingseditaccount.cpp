@@ -13,7 +13,7 @@ settingseditaccount::settingseditaccount() {
 }
 
 settingseditaccount::~settingseditaccount() {
-
+    delete thisMdiArea;
 }
 
 void settingseditaccount::init(QMdiArea *mdiArea) {

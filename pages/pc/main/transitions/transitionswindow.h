@@ -33,7 +33,7 @@ public:
     void run();
     void setState(state_e state);
 
-    walletshowdetails *showDetailsWindow;
+    walletshowdetails *showDetailsWindow = nullptr;
 
 private:
     void refreshTable();
@@ -41,24 +41,24 @@ private:
     void refreshSize();
     void refreshLanguage();
     /* Window */
-    QWidget *parent;
-    QMdiSubWindow *window;
+    QWidget *parent = nullptr;
+    QMdiSubWindow *window = nullptr;
     //QMdiArea *mdiArea;
-    QMdiArea *mdiAreaTransitions;
-    QWidget *widgetTransitions;
-    QMdiSubWindow *windowTransitions;
+    QMdiArea *mdiAreaTransitions = nullptr;
+    QWidget *widgetTransitions = nullptr;
+    QMdiSubWindow *windowTransitions = nullptr;
 
-    QLabel *txDirectionLabel;
-    QComboBox *txDirectionComboBox;
+    QLabel *txDirectionLabel = nullptr;
+    QComboBox *txDirectionComboBox = nullptr;
 
-    QLabel *tokenLabel;
-    QComboBox *tokenComboBox;
+    QLabel *tokenLabel = nullptr;
+    QComboBox *tokenComboBox = nullptr;
 
-    QLabel *filterLabel;
-    QLineEdit *filterLineEdit;
+    QLabel *filterLabel = nullptr;
+    QLineEdit *filterLineEdit = nullptr;
 
-    QTableView *historyTableView;
-    QStandardItemModel *historyItemModel;
+    QTableView *historyTableView = nullptr;
+    QStandardItemModel *historyItemModel = nullptr;
 
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_TRANSITIONS;

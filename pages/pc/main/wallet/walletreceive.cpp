@@ -22,7 +22,7 @@ walletreceive::walletreceive() {
 }
 
 walletreceive::~walletreceive() {
-
+    parent->setVisible(false);
 }
 
 void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {

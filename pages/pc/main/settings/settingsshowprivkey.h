@@ -28,16 +28,16 @@ private:
     void refreshSize();
     void refreshLanguage();
 
-    QWidget *parent;
-    QMdiArea *thisMdiArea;
-    QWidget *thisWidget;
-    QMdiSubWindow *thisWindow;
+    QWidget *parent = nullptr;
+    QMdiArea *thisMdiArea = nullptr;
+    QWidget *thisWidget = nullptr;
+    QMdiSubWindow *thisWindow = nullptr;
 
-    QLabel *titleName;
+    QLabel *titleName = nullptr;
 
-    QLineEdit *privateKey;
+    QLineEdit *privateKey = nullptr;
 
-    QPushButton *okButton;
+    QPushButton *okButton = nullptr;
 
     runMode_e currentMode = NONE;
     runMode_e pastMode = NONE;

@@ -11,12 +11,7 @@ walletpage::walletpage() {
 }
 
 walletpage::~walletpage() {
-    /*delete windowReceive;
-    windowReceive = nullptr;
-    delete windowSend;
-    windowSend = nullptr;
-    delete windowWallet;
-    windowWallet= nullptr;*/
+
 }
 
 void walletpage::setVars(QMdiSubWindow *window, QWidget *parent) {
@@ -37,8 +32,6 @@ void walletpage::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowWallet->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/main/main.png)");
     windowWallet->setVisible(false);
 
-    walletMain = new walletmain();
-    walletMain->setVars(mdiAreaWallet, windowWallet);
 
     mdiAreaSend = new QMdiArea(window);
     mdiAreaSend->setAttribute(Qt::WA_TranslucentBackground);
@@ -54,8 +47,6 @@ void walletpage::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowSend->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/send/send.png)");
     windowSend->setVisible(false);
 
-    walletSend = new walletsend();
-    walletSend->setVars(mdiAreaSend, windowSend);
 
     mdiAreaReceive = new QMdiArea(window);
     mdiAreaReceive->setAttribute(Qt::WA_TranslucentBackground);
@@ -71,15 +62,35 @@ void walletpage::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowReceive->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/receive.png)");
     windowReceive->setVisible(false);
 
-    walletReceive = new walletreceive();
-    walletReceive->setVars(mdiAreaReceive, windowReceive);
 
 }
 
 void walletpage::run() {
+    if(currentState == state_e::STATE_MAIN) {
+        if(!walletMain) {
+            walletMain = new walletmain();
+            walletMain->setVars(mdiAreaWallet, windowWallet);
+        }
+    }
+    if(currentState == state_e::STATE_SEND) {
+        if(!walletSend) {
+            walletSend = new walletsend();
+            walletSend->setVars(mdiAreaSend, windowSend);
+        }
+    }
+    if(currentState == state_e::STATE_RECEIVE) {
+        if(!walletReceive) {
+            walletReceive = new walletreceive();
+            walletReceive->setVars(mdiAreaReceive, windowReceive);
+        }
+    }
     if(pastState != currentState) {
-        walletSend->showDetailsWindow->setDetailsVisible(false);
-        walletReceive->showDetailsWindow->setDetailsVisible(false);
+        if(walletSend) {
+            walletSend->showDetailsWindow->setDetailsVisible(false);
+        }
+        if(walletReceive) {
+            walletReceive->showDetailsWindow->setDetailsVisible(false);
+        }
     }
     if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
 
@@ -110,9 +121,15 @@ void walletpage::run() {
         pastScale = events::getScale();
         pastState = currentState;
     }
-    walletMain->run();
-    walletReceive->run();
-    walletSend->run();
+    if(walletMain) {
+        walletMain->run();
+    }
+    if(walletReceive) {
+        walletReceive->run();
+    }
+    if(walletSend) {
+        walletSend->run();
+    }
 }
 
 void walletpage::setState(state_e state) {

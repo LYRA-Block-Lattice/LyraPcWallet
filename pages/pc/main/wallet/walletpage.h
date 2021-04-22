@@ -35,20 +35,20 @@ private:
     QWidget *parent;
     QMdiSubWindow *window;
 
-    QMdiArea *mdiAreaWallet;
-    QWidget *widgetWallet;
-    QMdiSubWindow *windowWallet;
-    QMdiArea *mdiAreaSend;
-    QWidget *widgetSend;
-    QMdiSubWindow *windowSend;
-    QMdiArea *mdiAreaReceive;
-    QWidget *widgetReceive;
-    QMdiSubWindow *windowReceive;
+    QMdiArea *mdiAreaWallet = nullptr;
+    QWidget *widgetWallet = nullptr;
+    QMdiSubWindow *windowWallet = nullptr;
+    QMdiArea *mdiAreaSend = nullptr;
+    QWidget *widgetSend = nullptr;
+    QMdiSubWindow *windowSend = nullptr;
+    QMdiArea *mdiAreaReceive = nullptr;
+    QWidget *widgetReceive = nullptr;
+    QMdiSubWindow *windowReceive = nullptr;
 
 
-    walletmain *walletMain;
-    walletreceive *walletReceive;
-    walletsend *walletSend;
+    walletmain *walletMain = nullptr;
+    walletreceive *walletReceive = nullptr;
+    walletsend *walletSend = nullptr;
 
 
     state_e currentState = STATE_MAIN;

@@ -293,14 +293,14 @@ void mainboard::setVars(QMdiArea *mdiArea, QWidget *parent) {
     updateMenuButtonsLanguage();
     updateMenuButtonsSelected();
 
-    dashboardWindow = new dashboardpage();
-    dashboardWindow->setVars(windowMain, parent);
-    walletWindow = new walletpage();
-    walletWindow->setVars(windowMain, parent);
-    settingsWindow = new settingswindow();
-    settingsWindow->setVars(windowMain, parent);
-    transitionsWindow = new transitionswindow();
-    transitionsWindow->setVars(windowMain, parent);
+    //dashboardWindow = new dashboardpage();
+    //dashboardWindow->setVars(windowMain, parent);
+    //walletWindow = new walletpage();
+    //walletWindow->setVars(windowMain, parent);
+    //settingsWindow = new settingswindow();
+    //settingsWindow->setVars(windowMain, parent);
+    //transitionsWindow = new transitionswindow();
+    //transitionsWindow->setVars(windowMain, parent);
     windowMain->setVisible(false);
 }
 
@@ -693,9 +693,6 @@ void mainboard::updateObjects() {
 }
 
 void mainboard::run() {
-    if(events::getShowTransitionsWindow()) {
-        setState(STATE_TRANSITION);
-    }
     if(pastNetworkConnection != events::getNetworkConnected() || pastNetwork != events::getNetwork()) {
         pastNetworkConnection = events::getNetworkConnected();
         pastNetwork = events::getNetwork();
@@ -728,6 +725,33 @@ void mainboard::run() {
         pastMessages = events::getMessages();
         updateMessages();
     }
+    if(currentState == STATE_DASHBOARD) {
+        if(!dashboardWindow) {
+            dashboardWindow = new dashboardpage();
+            dashboardWindow->setVars(windowMain, parent);
+        }
+    }
+    if(currentState == STATE_TRANSITION) {
+        if(!transitionsWindow) {
+            transitionsWindow = new transitionswindow();
+            transitionsWindow->setVars(windowMain, parent);
+        }
+    }
+    if(currentState == STATE_SETTINGS) {
+        if(!settingsWindow) {
+            settingsWindow = new settingswindow();
+            settingsWindow->setVars(windowMain, parent);
+        }
+    }
+    if((currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)) {
+        if(!walletWindow) {
+            walletWindow = new walletpage();
+            walletWindow->setVars(windowMain, parent);
+        }
+    }
+    if(events::getShowTransitionsWindow()) {
+        setState(STATE_TRANSITION);
+    }
     if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
         infoSwitch = false;
         if(pastState != currentState) {
@@ -739,9 +763,15 @@ void mainboard::run() {
             windowHeader->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/header.png)");
             windowLeftMenu->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/sidebar.png)");
         }
-        dashboardWindow->setState(dashboardpage::STATE_NONE);
-        settingsWindow->setState(settingswindow::STATE_NONE);
-        transitionsWindow->setState(transitionswindow::STATE_NONE);
+        if(dashboardWindow) {
+            dashboardWindow->setState(dashboardpage::STATE_NONE);
+        }
+        if(settingsWindow) {
+            settingsWindow->setState(settingswindow::STATE_NONE);
+        }
+        if(transitionsWindow) {
+            transitionsWindow->setState(transitionswindow::STATE_NONE);
+        }
         myWalletReceiveIcoLabel->setVisible(false);
         myWalletReceiveTextLabel->setVisible(false);
         myWalletReceiveButton->setVisible(false);
@@ -763,20 +793,26 @@ void mainboard::run() {
         } else if(currentState == STATE_LYRA_TOKENS) {
 
         } else if(currentState == STATE_TRANSITION) {
-            transitionsWindow->setState(transitionswindow::STATE_TRANSITIONS);
+            if(transitionsWindow) {
+                transitionsWindow->setState(transitionswindow::STATE_TRANSITIONS);
+            }
+            parent->repaint();
         } else if(currentState == STATE_SWAP) {
 
         } else if(currentState == STATE_SETTINGS) {
             settingsWindow->setState(settingswindow::STATE_SETTINGS);
         }
-        if(currentState == STATE_MY_WALLET)
-            walletWindow->setState(walletpage::STATE_MAIN);
-        else if(currentState == STATE_MY_WALLET_SEND)
-            walletWindow->setState(walletpage::STATE_SEND);
-        else if(currentState == STATE_MY_WALLET_RECEIVE)
-            walletWindow->setState(walletpage::STATE_RECEIVE);
-        else
-            walletWindow->setState(walletpage::STATE_NONE);
+
+        if(walletWindow) {
+            if(currentState == STATE_MY_WALLET)
+                walletWindow->setState(walletpage::STATE_MAIN);
+            else if(currentState == STATE_MY_WALLET_SEND)
+                walletWindow->setState(walletpage::STATE_SEND);
+            else if(currentState == STATE_MY_WALLET_RECEIVE)
+                walletWindow->setState(walletpage::STATE_RECEIVE);
+            else
+                walletWindow->setState(walletpage::STATE_NONE);
+        }
         if(getWalletUserPasswordChanged != events::getWalletUserPasswordChangedCnt()) {
             getWalletUserPasswordChanged = events::getWalletUserPasswordChangedCnt();
             userNameLabel->setText(events::getWalletUserPassword().first);
@@ -811,10 +847,18 @@ void mainboard::run() {
         pastScale = events::getScale();
         pastState = currentState;
     }
-    dashboardWindow->run();
-    walletWindow->run();
-    settingsWindow->run();
-    transitionsWindow->run();
+    if(dashboardWindow) {
+        dashboardWindow->run();
+    }
+    if(walletWindow) {
+        walletWindow->run();
+    }
+    if(settingsWindow) {
+        settingsWindow->run();
+    }
+    if(transitionsWindow) {
+        transitionsWindow->run();
+    }
 }
 
 void mainboard::on_logOut_ButtonPressed() {

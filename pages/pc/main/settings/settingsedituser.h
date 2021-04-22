@@ -35,21 +35,21 @@ private:
     void refreshSize();
     void refreshLanguage();
 
-    QWidget *parent;
-    QMdiArea *thisMdiArea;
-    QWidget *thisWidget;
-    QMdiSubWindow *thisWindow;
+    QWidget *parent = nullptr;
+    QMdiArea *thisMdiArea = nullptr;
+    QWidget *thisWidget = nullptr;
+    QMdiSubWindow *thisWindow = nullptr;
 
-    QLabel *titleName;
+    QLabel *titleName = nullptr;
 
-    QLineEdit *userLineEdit;
-    QLabel *accountNameCheck;
-    QLineEdit *oldPasswordLineEdit;
-    QLineEdit *newPassword1LineEdit;
-    QLineEdit *newPassword2LineEdit;
+    QLineEdit *userLineEdit = nullptr;
+    QLabel *accountNameCheck = nullptr;
+    QLineEdit *oldPasswordLineEdit = nullptr;
+    QLineEdit *newPassword1LineEdit = nullptr;
+    QLineEdit *newPassword2LineEdit = nullptr;
 
-    QPushButton *cancelButton;
-    QPushButton *okButton;
+    QPushButton *cancelButton = nullptr;
+    QPushButton *okButton = nullptr;
 
     runMode_e currentMode = NONE;
     runMode_e pastMode = NONE;

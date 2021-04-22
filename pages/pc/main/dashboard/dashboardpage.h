@@ -30,16 +30,12 @@ public:
     void setState(state_e state);
 private:
     /* Window */
-    QWidget *parent;
-    QMdiSubWindow *window;
-    QWidget *widget;
+    QWidget *parent = nullptr;
+    QMdiSubWindow *window = nullptr;
+    QWidget *widget = nullptr;
     //QMdiArea *mdiArea;
-    QMdiArea *mdiAreaDashboard;
-    QMdiSubWindow *windowDashboard;
-    QMdiArea *mdiAreaRecentTransactions;
-    QMdiSubWindow *windowRecentTransactions;
-    QMdiArea *mdiAreaAssets;
-    QMdiSubWindow *windowAssets;
+    QMdiArea *mdiAreaDashboard = nullptr;
+    QMdiSubWindow *windowDashboard = nullptr;
 
     dashmain *dashMain = nullptr;
 

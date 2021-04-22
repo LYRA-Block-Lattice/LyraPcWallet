@@ -21,7 +21,9 @@ settingswindow::settingswindow() {
 }
 
 settingswindow::~settingswindow() {
-
+    mdiAreaSettings->setVisible(false);
+    windowSettings->setVisible(false);
+    delete windowSettings;
 }
 
 void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
@@ -42,7 +44,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowSettings->setWindowFlag(Qt::FramelessWindowHint, true);
     windowSettings->setGeometry(0, 0, mdiAreaSettings->width(), mdiAreaSettings->height());
     windowSettings->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/settings.png)");
-    windowSettings->setVisible(false);
+    windowSettings->setVisible(true);
 
     generalSettingsLabel = new QLabel(mdiAreaSettings);
 
@@ -78,11 +80,13 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     generalSettingsLabel->setStyleSheet("color: #555;");
     generalSettingsLabel->setAlignment(Qt::AlignLeft);
     generalSettingsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    generalSettingsLabel->setVisible(true);
 
 
     languageLabel->setStyleSheet("color: #555;");
     languageLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     languageLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    languageLabel->setVisible(true);
 
     languageComboBox->setCurrentIndex(0);
     languageComboBox->setAutoFillBackground(false);
@@ -106,12 +110,14 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "}"
     );
     languageComboBox->setCursor(Qt::PointingHandCursor);
+    languageComboBox->setVisible(true);
     connect(languageComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Language_Changed(const QString &)));
 
 
     appStyleLabel->setStyleSheet("color: #555;");
     appStyleLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     appStyleLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    appStyleLabel->setVisible(true);
 
     appStyleComboBox->setCurrentIndex(0);
     appStyleComboBox->setAutoFillBackground(false);
@@ -136,11 +142,13 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     );
     appStyleComboBox->addItems({"light"});
     appStyleComboBox->setCursor(Qt::PointingHandCursor);
+    appStyleComboBox->setVisible(true);
     connect(appStyleComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_AppStyle_Changed(const QString &)));
 
 
     networkLabel->setStyleSheet("color: #555;");
     networkLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    networkLabel->setVisible(true);
     networkLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
     networkComboBox->setCurrentIndex(0);
@@ -166,11 +174,13 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     );
     networkComboBox->addItems({"testnet", "mainnet"});
     networkComboBox->setCursor(Qt::PointingHandCursor);
+    networkComboBox->setVisible(true);
     connect(networkComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Network_Changed(const QString &)));
 
     alternativeValueLabel->setStyleSheet("color: #555;");
     alternativeValueLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     alternativeValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    alternativeValueLabel->setVisible(true);
 
     alternativeValueComboBox->setCurrentIndex(0);
     alternativeValueComboBox->setAutoFillBackground(false);
@@ -195,11 +205,13 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     );
     alternativeValueComboBox->addItems({"BTC", "USD"});
     alternativeValueComboBox->setCursor(Qt::PointingHandCursor);
+    alternativeValueComboBox->setVisible(true);
     connect(alternativeValueComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_AlternativeValue_Changed(const QString &)));
 
     windowScaleLabel->setStyleSheet("color: #555;");
     windowScaleLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     windowScaleLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    windowScaleLabel->setVisible(true);
 
     windowScaleComboBox->setCurrentIndex(0);
     windowScaleComboBox->setAutoFillBackground(false);
@@ -224,6 +236,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     );
     windowScaleComboBox->addItems({"0.7x", "0.8x", "0.9x", "1.0x", "1.1x", "1.2x", "1.3x", "1.4x", "1.5x"});
     windowScaleComboBox->setCursor(Qt::PointingHandCursor);
+    windowScaleComboBox->setVisible(true);
     connect(windowScaleComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_ScaleValue_Changed(const QString &)));
 
 
@@ -231,40 +244,49 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     userManagerSettingsLabel->setStyleSheet("color: #555;");
     userManagerSettingsLabel->setAlignment(Qt::AlignLeft);
     userManagerSettingsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    userManagerSettingsLabel->setVisible(true);
 
     userManagerSettingsBackgroundLabel->setStyleSheet("background-color: #F8F8F8;");
     userManagerSettingsBackgroundLabel->setAlignment(Qt::AlignLeft);
+    userManagerSettingsBackgroundLabel->setVisible(true);
 
 
     usernameLabel->setStyleSheet("color: #555;");
     usernameLabel->setAlignment(Qt::AlignLeft);
     usernameLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    usernameLabel->setVisible(true);
 
     usernameNameLabel->setStyleSheet("color: #999;");
     usernameNameLabel->setAlignment(Qt::AlignLeft);
     usernameNameLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    usernameNameLabel->setVisible(true);
 
     walletSettingsLabel->setStyleSheet("color: #555;");
     walletSettingsLabel->setAlignment(Qt::AlignLeft);
     walletSettingsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    walletSettingsLabel->setVisible(true);
 
     userPasswordLabel->setStyleSheet("color: #555;");
     userPasswordLabel->setAlignment(Qt::AlignLeft);
     userPasswordLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    userPasswordLabel->setVisible(true);
 
     userPasswordPassLabel->setStyleSheet("color: #999;");
     userPasswordPassLabel->setAlignment(Qt::AlignLeft);
     userPasswordPassLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    userPasswordPassLabel->setVisible(true);
 
 
     backupButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
     backupButton->setFlat(true);
     backupButton->setCursor(Qt::PointingHandCursor);
+    backupButton->setVisible(true);
     connect(backupButton, SIGNAL(clicked()),this, SLOT(on_Backup_ButtonPressed()));
 
     editButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/cyan_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
     editButton->setFlat(true);
     editButton->setCursor(Qt::PointingHandCursor);
+    editButton->setVisible(true);
     connect(editButton, SIGNAL(clicked()),this, SLOT(on_Edit_ButtonPressed()));
 
 
@@ -284,6 +306,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     accountsTableView->horizontalHeader()->setEnabled(false);
     accountsTableView->horizontalHeader()->setAutoFillBackground(false);
     accountsTableView->setAlternatingRowColors(true);
+    accountsTableView->setVisible(true);
     accountsTableView->setModel(accountsItemModel);
 
 
@@ -308,16 +331,6 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     refreshSize();
     refreshLanguage();
 
-    addAccountWindow = new settingsaddaccount();
-    addAccountWindow->init(mdiAreaSettings);
-    settingsDeleteAccount = new settingsdeleteaccount();
-    settingsDeleteAccount->init(mdiAreaSettings);
-    settingsEditAccount = new settingseditaccount();
-    settingsEditAccount->init(mdiAreaSettings);
-    settingsEditUser = new settingsedituser();
-    settingsEditUser->init(mdiAreaSettings);
-    settingsShowPrivKey = new settingsshowprivkey();
-    settingsShowPrivKey->init(mdiAreaSettings);
 }
 
 void settingswindow::updateWalletSettingsTable() {
@@ -597,6 +610,7 @@ void settingswindow::setState(state_e state) {
 }
 
 void settingswindow::run() {
+
     if(pastState != currentState) {
         pastState = currentState;
         if(currentState == STATE_SETTINGS) {
@@ -605,11 +619,21 @@ void settingswindow::run() {
         } else {
             mdiAreaSettings->setVisible(false);
             windowSettings->setVisible(false);
-            settingsEditAccount->setState(settingseditaccount::runMode_e::NONE);
-            settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::NONE);
-            settingsEditUser->setState(settingsedituser::runMode_e::NONE);
-            addAccountWindow->setState(settingsaddaccount::runMode_e::NONE);
-            settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::NONE);
+            if(settingsEditAccount) {
+                settingsEditAccount->setState(settingseditaccount::runMode_e::NONE);
+            }
+            if(settingsDeleteAccount) {
+                settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::NONE);
+            }
+            if(settingsEditUser) {
+                settingsEditUser->setState(settingsedituser::runMode_e::NONE);
+            }
+            if(addAccountWindow) {
+                addAccountWindow->setState(settingsaddaccount::runMode_e::NONE);
+            }
+            if(settingsShowPrivKey) {
+                settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::NONE);
+            }
         }
     }
     if(pastScale != events::getScale()) {
@@ -669,23 +693,53 @@ void settingswindow::run() {
             editButton->setVisible(false);
         }
     }
-    settingsaddaccount::return_e responseAddAccountWindow = addAccountWindow->run();
-    if(responseAddAccountWindow == settingsaddaccount::return_e::RETURN_OK) {
+    if(addAccountWindow) {
+        settingsaddaccount::return_e responseAddAccountWindow = addAccountWindow->run();
+        if(responseAddAccountWindow == settingsaddaccount::return_e::RETURN_OK) {
 
+        }
+        if(addAccountWindow->getState() == settingsaddaccount::runMode_e::NONE) {
+            delete addAccountWindow;
+            addAccountWindow = nullptr;
+        }
     }
-    settingsdeleteaccount::return_e responseAettingsDeleteAccount = settingsDeleteAccount->run();
-    if(responseAettingsDeleteAccount == settingsdeleteaccount::return_e::RETURN_OK) {
+    if(settingsDeleteAccount) {
+        settingsdeleteaccount::return_e responseAettingsDeleteAccount = settingsDeleteAccount->run();
+        if(responseAettingsDeleteAccount == settingsdeleteaccount::return_e::RETURN_OK) {
 
+        }
+        if(settingsDeleteAccount->getState() == settingsdeleteaccount::runMode_e::NONE) {
+            delete settingsDeleteAccount;
+            settingsDeleteAccount = nullptr;
+        }
     }
-    settingseditaccount::return_e responseSettingsEditAccount = settingsEditAccount->run();
-    if(responseSettingsEditAccount == settingseditaccount::return_e::RETURN_OK) {
+    if(settingsEditAccount) {
+        settingseditaccount::return_e responseSettingsEditAccount = settingsEditAccount->run();
+        if(responseSettingsEditAccount == settingseditaccount::return_e::RETURN_OK) {
 
+        }
+        if(settingsEditAccount->getState() == settingseditaccount::runMode_e::NONE) {
+            delete settingsEditAccount;
+            settingsEditAccount = nullptr;
+        }
     }
-    settingsedituser::return_e responseSettingsEditUser = settingsEditUser->run();
-    if(responseSettingsEditUser == settingsedituser::return_e::RETURN_OK) {
+    if(settingsEditUser) {
+        settingsedituser::return_e responseSettingsEditUser = settingsEditUser->run();
+        if(responseSettingsEditUser == settingsedituser::return_e::RETURN_OK) {
 
+        }
+        if(settingsEditUser->getState() == settingsedituser::runMode_e::NONE) {
+            delete settingsEditUser;
+            settingsEditUser = nullptr;
+        }
     }
-    settingsShowPrivKey->run();
+    if(settingsShowPrivKey) {
+        settingsShowPrivKey->run();
+        if(settingsShowPrivKey->getState() == settingsshowprivkey::runMode_e::NONE) {
+            delete settingsShowPrivKey;
+            settingsShowPrivKey = nullptr;
+        }
+    }
 }
 
 bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
@@ -701,16 +755,28 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                 }
                 QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
                 if (obj == editButton) {
+                    if(!settingsEditAccount) {
+                        settingsEditAccount = new settingseditaccount();
+                        settingsEditAccount->init(mdiAreaSettings);
+                    }
                     settingsEditAccount->setState(settingseditaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
                 QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
                 if (obj == deleteButton) {
+                    if(!settingsDeleteAccount) {
+                        settingsDeleteAccount = new settingsdeleteaccount();
+                        settingsDeleteAccount->init(mdiAreaSettings);
+                    }
                     settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
                 QPushButton *showPrivateKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 6));
                 if (obj == showPrivateKeyButton) {
+                    if(!settingsShowPrivKey) {
+                        settingsShowPrivKey = new settingsshowprivkey();
+                        settingsShowPrivKey->init(mdiAreaSettings);
+                    }
                     settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first, events::getWalletNameKeyList().at(cnt).second);
                     return true;
                 }
@@ -731,10 +797,18 @@ void settingswindow::on_Backup_ButtonPressed() {
 }
 
 void settingswindow::on_Edit_ButtonPressed() {
+    if(!settingsEditUser) {
+        settingsEditUser = new settingsedituser();
+        settingsEditUser->init(mdiAreaSettings);
+    }
     settingsEditUser->setState(settingsedituser::runMode_e::RUN);
 }
 
 void settingswindow::on_Add_ButtonPressed() {
+    if(!addAccountWindow) {
+        addAccountWindow = new settingsaddaccount();
+        addAccountWindow->init(mdiAreaSettings);
+    }
     addAccountWindow->setState(settingsaddaccount::runMode_e::CHOOSE);
 }
 

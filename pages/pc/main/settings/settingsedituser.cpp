@@ -12,7 +12,7 @@ settingsedituser::settingsedituser() {
 }
 
 settingsedituser::~settingsedituser() {
-
+    delete thisMdiArea;
 }
 
 void settingsedituser::init(QMdiArea *mdiArea) {

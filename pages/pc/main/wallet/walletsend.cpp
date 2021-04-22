@@ -25,7 +25,7 @@ walletsend::walletsend() {
 }
 
 walletsend::~walletsend() {
-
+    parent->setVisible(false);
 }
 
 void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {

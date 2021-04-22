@@ -10,7 +10,7 @@ settingsshowprivkey::settingsshowprivkey() {
 }
 
 settingsshowprivkey::~settingsshowprivkey() {
-
+    delete thisMdiArea;
 }
 
 void settingsshowprivkey::init(QMdiArea *mdiArea) {

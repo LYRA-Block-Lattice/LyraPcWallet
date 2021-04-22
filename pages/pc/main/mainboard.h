@@ -62,77 +62,77 @@ private:
 
 
     /* Window */
-    QWidget *parent;
-    QMdiArea *mdiArea;
-    QMdiSubWindow *windowMain;
+    QWidget *parent = nullptr;
+    QMdiArea *mdiArea = nullptr;
+    QMdiSubWindow *windowMain = nullptr;
     //QMdiArea mdiAreaMain;
-    QMdiArea *mdiAreaHeader;
-    QWidget *widgetHeader;
-    QMdiSubWindow *windowHeader;
-    QMdiArea *mdiAreaLeftMenu;
-    QWidget *widgetLeftMenu;
-    QMdiSubWindow *windowLeftMenu;
+    QMdiArea *mdiAreaHeader = nullptr;
+    QWidget *widgetHeader = nullptr;
+    QMdiSubWindow *windowHeader = nullptr;
+    QMdiArea *mdiAreaLeftMenu = nullptr;
+    QWidget *widgetLeftMenu = nullptr;
+    QMdiSubWindow *windowLeftMenu = nullptr;
 
-    dashboardpage *dashboardWindow;
-    walletpage *walletWindow;
-    settingswindow *settingsWindow;
-    transitionswindow *transitionsWindow;
+    dashboardpage *dashboardWindow = nullptr;
+    walletpage *walletWindow = nullptr;
+    transitionswindow *transitionsWindow = nullptr;
+    settingswindow *settingsWindow = nullptr;
 
-    QLabel *userNameLabel;
+    QLabel *userNameLabel = nullptr;
 
-    QLabel *walletSelectorLabel;
-    QComboBox *walletSelectorComboBox;
-    QLabel *networkLabelImage;
-    QLabel *networkLabel;
-    QLabel *bellImageLabel;
-    QLabel *bellNrLabel;
-    QLabel *messageImageLabel;
-    QLabel *messageNrLabel;
-    QLabel *userLabel;
-    QPushButton *logOutButton;
+    QLabel *walletSelectorLabel = nullptr;
+    QComboBox *walletSelectorComboBox = nullptr;
+    QLabel *networkLabelImage = nullptr;
+    QLabel *networkLabel = nullptr;
+    QLabel *bellImageLabel = nullptr;
+    QLabel *bellNrLabel = nullptr;
+    QLabel *messageImageLabel = nullptr;
+    QLabel *messageNrLabel = nullptr;
+    QLabel *userLabel = nullptr;
+    QPushButton *logOutButton = nullptr;
 
-    QLabel *dashboardIcoLabel;
-    QLabel *dashboardTextLabel;
-    QLabel *dashboardArowLabel;
-    QLabel *dashboardButton;
+    QLabel *dashboardIcoLabel = nullptr;
+    QLabel *dashboardTextLabel = nullptr;
+    QLabel *dashboardArowLabel = nullptr;
+    QLabel *dashboardButton = nullptr;
 
-    QLabel *myWalletIcoLabel;
-    QLabel *myWalletTextLabel;
-    QLabel *myWalletArowLabel;
-    QLabel *myWalletButton;
+    QLabel *myWalletIcoLabel = nullptr;
+    QLabel *myWalletTextLabel = nullptr;
+    QLabel *myWalletArowLabel = nullptr;
+    QLabel *myWalletButton = nullptr;
 
-    QLabel *myWalletReceiveIcoLabel;
-    QLabel *myWalletReceiveTextLabel;
-    QLabel *myWalletReceiveButton;
+    QLabel *myWalletReceiveIcoLabel = nullptr;
+    QLabel *myWalletReceiveTextLabel = nullptr;
+    QLabel *myWalletReceiveButton = nullptr;
 
-    QLabel *myWalletSendIcoLabel;
-    QLabel *myWalletSendTextLabel;
-    QLabel *myWalletSendButton;
+    QLabel *myWalletSendIcoLabel = nullptr;
+    QLabel *myWalletSendTextLabel = nullptr;
+    QLabel *myWalletSendButton = nullptr;
 
-    QLabel *lyraTokensIcoLabel;
-    QLabel *lyraTokensTextLabel;
-    QLabel *lyraTokensArowLabel;
-    QLabel *lyraTokenButton;
+    QLabel *lyraTokensIcoLabel = nullptr;
+    QLabel *lyraTokensTextLabel = nullptr;
+    QLabel *lyraTokensArowLabel = nullptr;
+    QLabel *lyraTokenButton = nullptr;
 
-    QLabel *swapIcoLabel;
-    QLabel *swapTextLabel;
-    QLabel *swapArowLabel;
-    QLabel *swapButton;
+    QLabel *swapIcoLabel = nullptr;
+    QLabel *swapTextLabel = nullptr;
+    QLabel *swapArowLabel = nullptr;
+    QLabel *swapButton = nullptr;
 
-    QLabel *transactionsIcoLabel;
-    QLabel *transactionsTextLabel;
-    QLabel *transactionsArowLabel;
-    QLabel *transactionsButton;
+    QLabel *transactionsIcoLabel = nullptr;
+    QLabel *transactionsTextLabel = nullptr;
+    QLabel *transactionsArowLabel = nullptr;
+    QLabel *transactionsButton = nullptr;
 
-    QLabel *searchIcoLabel;
-    QLabel *searchTextLabel;
-    QLabel *searchArowLabel;
-    QLabel *searchButton;
+    QLabel *searchIcoLabel = nullptr;
+    QLabel *searchTextLabel = nullptr;
+    QLabel *searchArowLabel = nullptr;
+    QLabel *searchButton = nullptr;
 
-    QLabel *settingsIcoLabel;
-    QLabel *settingsTextLabel;
-    QLabel *settingsArowLabel;
-    QLabel *settingsButton;
+    QLabel *settingsIcoLabel = nullptr;
+    QLabel *settingsTextLabel = nullptr;
+    QLabel *settingsArowLabel = nullptr;
+    QLabel *settingsButton = nullptr;
 
 
     state_e currentState = STATE_NONE;

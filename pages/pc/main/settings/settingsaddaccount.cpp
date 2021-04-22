@@ -15,7 +15,7 @@ settingsaddaccount::settingsaddaccount() {
 }
 
 settingsaddaccount::~settingsaddaccount() {
-
+    delete thisMdiArea;
 }
 
 void settingsaddaccount::init(QMdiArea *mdiArea) {

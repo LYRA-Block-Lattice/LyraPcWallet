@@ -22,7 +22,9 @@ transitionswindow::transitionswindow() {
 }
 
 transitionswindow::~transitionswindow() {
-
+    mdiAreaTransitions->setVisible(false);
+    windowTransitions->setVisible(false);
+    delete mdiAreaTransitions;
 }
 
 void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
@@ -43,7 +45,7 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowTransitions->setWindowFlag(Qt::FramelessWindowHint, true);
     windowTransitions->setGeometry(0, 0, mdiAreaTransitions->width(), mdiAreaTransitions->height());
     windowTransitions->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/transitions.png)");
-    windowTransitions->setVisible(false);
+    windowTransitions->setVisible(true);
 
     txDirectionLabel = new QLabel(mdiAreaTransitions);
     txDirectionComboBox = new QComboBox(mdiAreaTransitions);
@@ -60,6 +62,7 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     txDirectionLabel->setStyleSheet("color: #333;");
     txDirectionLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     txDirectionLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    txDirectionLabel->setVisible(true);
 
     txDirectionComboBox->setCurrentIndex(0);
     txDirectionComboBox->setAutoFillBackground(false);
@@ -83,11 +86,13 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "}"
     );
     txDirectionComboBox->setCursor(Qt::PointingHandCursor);
+    txDirectionComboBox->setVisible(true);
     connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
 
     tokenLabel->setStyleSheet("color: #333;");
     tokenLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     tokenLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    tokenLabel->setVisible(true);
 
     tokenComboBox->setCurrentIndex(0);
     tokenComboBox->setAutoFillBackground(false);
@@ -111,13 +116,16 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "}"
     );
     tokenComboBox->setCursor(Qt::PointingHandCursor);
+    tokenComboBox->setVisible(true);
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
 
     filterLabel->setStyleSheet("color: #333;");
     filterLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     filterLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    filterLabel->setVisible(true);
 
     filterLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    filterLineEdit->setVisible(true);
     connect(filterLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_Filter_Changed(const QString &)));
     filterLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #777;"
@@ -131,6 +139,7 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     showDetailsWindow->init(mdiAreaTransitions);
 
     refreshLanguage();
+    windowTransitions->repaint();
 }
 
 /*

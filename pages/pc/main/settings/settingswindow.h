@@ -42,49 +42,49 @@ private:
     void refreshLanguage();
     void updateWalletSettingsTable();
     /* Window */
-    QWidget *parent;
-    QMdiSubWindow *window;
+    QWidget *parent = nullptr;
+    QMdiSubWindow *window = nullptr;
     //QMdiArea *mdiArea;
-    QMdiArea *mdiAreaSettings;
-    QWidget *widgetSettings;
-    QMdiSubWindow *windowSettings;
+    QMdiArea *mdiAreaSettings = nullptr;
+    QWidget *widgetSettings = nullptr;
+    QMdiSubWindow *windowSettings = nullptr;
 
-    QLabel *generalSettingsLabel;
+    QLabel *generalSettingsLabel = nullptr;
 
-    QLabel *languageLabel;
-    QComboBox *languageComboBox;
+    QLabel *languageLabel = nullptr;
+    QComboBox *languageComboBox = nullptr;
 
-    QLabel *appStyleLabel;
-    QComboBox *appStyleComboBox;
+    QLabel *appStyleLabel = nullptr;
+    QComboBox *appStyleComboBox = nullptr;
 
-    QLabel *networkLabel;
-    QComboBox *networkComboBox;
+    QLabel *networkLabel = nullptr;
+    QComboBox *networkComboBox = nullptr;
 
-    QLabel *alternativeValueLabel;
-    QComboBox *alternativeValueComboBox;
+    QLabel *alternativeValueLabel = nullptr;
+    QComboBox *alternativeValueComboBox = nullptr;
 
-    QLabel *windowScaleLabel;
-    QComboBox *windowScaleComboBox;
+    QLabel *windowScaleLabel = nullptr;
+    QComboBox *windowScaleComboBox = nullptr;
 
-    QLabel *userManagerSettingsLabel;
-    QLabel *userManagerSettingsBackgroundLabel;
-    QLabel *usernameLabel;
-    QLabel *usernameNameLabel;
-    QLabel *walletSettingsLabel;
-    QLabel *userPasswordLabel;
-    QLabel *userPasswordPassLabel;
-    QPushButton *backupButton;
-    QPushButton *editButton;
+    QLabel *userManagerSettingsLabel = nullptr;
+    QLabel *userManagerSettingsBackgroundLabel = nullptr;
+    QLabel *usernameLabel = nullptr;
+    QLabel *usernameNameLabel = nullptr;
+    QLabel *walletSettingsLabel = nullptr;
+    QLabel *userPasswordLabel = nullptr;
+    QLabel *userPasswordPassLabel = nullptr;
+    QPushButton *backupButton = nullptr;
+    QPushButton *editButton = nullptr;
 
-    QTableView *accountsTableView;
-    QStandardItemModel *accountsItemModel;
+    QTableView *accountsTableView = nullptr;
+    QStandardItemModel *accountsItemModel = nullptr;
 
 
-    settingsaddaccount *addAccountWindow;
-    settingsdeleteaccount *settingsDeleteAccount;
-    settingseditaccount *settingsEditAccount;
-    settingsedituser *settingsEditUser;
-    settingsshowprivkey *settingsShowPrivKey;
+    settingsaddaccount *addAccountWindow = nullptr;
+    settingsdeleteaccount *settingsDeleteAccount = nullptr;
+    settingseditaccount *settingsEditAccount = nullptr;
+    settingsedituser *settingsEditUser = nullptr;
+    settingsshowprivkey *settingsShowPrivKey = nullptr;
 
 
     state_e currentState = STATE_NONE;
