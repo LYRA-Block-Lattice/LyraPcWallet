@@ -18,6 +18,8 @@
 #include "settings/settingswindow.h"
 #include "transitions/transitionswindow.h"
 
+#include "info.h"
+
 class mainboard : public QMainWindow {
     Q_OBJECT
 public:
@@ -78,6 +80,8 @@ private:
     transitionswindow *transitionsWindow = nullptr;
     settingswindow *settingsWindow = nullptr;
 
+    info *infoWindow = nullptr;
+
     QLabel *userNameLabel = nullptr;
 
     QLabel *walletSelectorLabel = nullptr;
@@ -134,6 +138,9 @@ private:
     QLabel *settingsArowLabel = nullptr;
     QLabel *settingsButton = nullptr;
 
+    QLabel *infoLabel = nullptr;
+    QPushButton *infoButton = nullptr;
+
 
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_NONE;
@@ -155,6 +162,7 @@ private:
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;
     void on_logOut_ButtonPressed();
+    void on_info_ButtonPressed();
     void on_Account_Changed(const QString &);
 };
 

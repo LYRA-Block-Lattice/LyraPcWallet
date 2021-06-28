@@ -85,7 +85,7 @@ void walletshowdetails::show(QList<QMap<QString, QString>> transaction) {
     if(tmp["IsReceive"].toInt()) {
         str.append(_tr("Direction") + ": " + _tr("RECEIVE") + "\n\r");
     } else {
-        str.append(_tr("Direction") + ": " + _tr("SEND") + "\n\r");
+        str.append(_tr("Direction") + ": " + _tr("SENDED") + "\n\r");
     }
     tmp = transaction[2];
     QDateTime date = QDateTime::fromMSecsSinceEpoch(tmp["TimeStamp"].toLongLong());

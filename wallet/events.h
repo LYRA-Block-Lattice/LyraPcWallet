@@ -74,7 +74,9 @@ public:
     static QPair<QString, QString> getWalletUserPassword();
     static int getWalletUserPasswordChangedCnt();
     static double getScale();
+    static double getScaleStore();
     static double getScaleLater();
+    static double getOsWindowScale();
     static bool getShowTransitionsWindow();
     static bool getWalletHistoryChanged();
     static bool getWalletHistoryChangedUnmodify();
@@ -123,6 +125,7 @@ public:
     static void setWalletUserPassword(QPair<QString, QString> usrPass);
     static void setScale(double s);
     static void setScaleLater(double s);
+    static void setOsWindowScale(double s);
     static void setShowTransitionsWindow();
     static void setWalletHistoryChanged();
     static void setUpdateHistory();

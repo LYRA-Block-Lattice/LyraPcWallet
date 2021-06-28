@@ -120,6 +120,9 @@ void mainboard::setVars(QMdiArea *mdiArea, QWidget *parent) {
     settingsArowLabel = new QLabel(windowLeftMenu);
     settingsButton = new QLabel(windowLeftMenu);
 
+    infoButton = new QPushButton(windowLeftMenu);
+    infoLabel = new QLabel(windowLeftMenu);
+
     dashboardIcoLabel->setScaledContents(true);
     dashboardIcoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     dashboardIcoLabel->setCursor(Qt::PointingHandCursor);
@@ -287,6 +290,19 @@ void mainboard::setVars(QMdiArea *mdiArea, QWidget *parent) {
 
     settingsButton->setCursor(Qt::PointingHandCursor);
     settingsButton->setAttribute(Qt::WA_TranslucentBackground, true);
+
+    infoButton->setCursor(Qt::PointingHandCursor);
+    infoButton->setAttribute(Qt::WA_TranslucentBackground, true);
+    connect(infoButton, SIGNAL(clicked()),this, SLOT(on_info_ButtonPressed()));
+
+    infoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    infoLabel->setCursor(Qt::PointingHandCursor);
+    infoLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    infoLabel->setStyleSheet("background-color: transparent; color: #aaa; ");
+    infoLabel->setAlignment(Qt::AlignCenter);
+    infoLabel->setText("lyra.inc");
+
+
 /***** !Wallet selector *****************************************/
     updateObjects();
     updateMenuButtonsSize();
@@ -526,6 +542,9 @@ void mainboard::updateMenuButtonsSize() {
     else
         settingsArowLabel->setGeometry(s(195), s(690 + 41), s(6), s(10));
     settingsButton->setGeometry(s(0), s(690 + 20), s(210), s(53));
+
+    infoButton->setGeometry(s(68), s(800), s(74), s(40));
+    infoLabel->setGeometry(s(68), s(800), s(74), s(40));
 
     updateMenuButtonsFont();
 }
@@ -828,6 +847,7 @@ void mainboard::run() {
             updateMenuButtonsSize();
             userNameLabel->setGeometry(s(1168), s(22), s(150), s(25));
             userNameLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.0)));
+            infoLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.0)));
         }
 
         if(pastLanguage.compare(translate::getCurrentLang())){
@@ -863,6 +883,13 @@ void mainboard::run() {
 
 void mainboard::on_logOut_ButtonPressed() {
     QApplication::closeAllWindows();
+}
+
+void mainboard::on_info_ButtonPressed() {
+    infoWindow = new info();
+    infoWindow->exec();
+    delete infoWindow;
+    infoWindow = nullptr;
 }
 
 bool mainboard::eventFilter(QObject *obj, QEvent *event) {

@@ -62,6 +62,7 @@ bool walletHistoryChanged = false;
 bool updateHistory = false;
 double totalLyraSendedLastWeek = 0.0;
 double totalLyraReceivedLastWeek = 0.0;
+double osWindowScale = 1.0;
 
 void events::setNetworkConnected(bool connected) {
     networkConnected = connected;
@@ -528,6 +529,10 @@ void events::setScale(double s) {
 }
 
 double events::getScale() {
+    return QString::asprintf("%1.1f", scale * osWindowScale).toDouble();
+}
+
+double events::getScaleStore() {
     return scale;
 }
 
@@ -537,6 +542,14 @@ void events::setScaleLater(double s) {
 
 double events::getScaleLater() {
     return scaleLater;
+}
+
+void events::setOsWindowScale(double s) {
+    osWindowScale = s;
+}
+
+double events::getOsWindowScale() {
+    return osWindowScale;
 }
 
 bool events::getShowTransitionsWindow() {

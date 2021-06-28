@@ -1,13 +1,5 @@
 QT       += core gui network charts websockets
-TARGET = ../../LyraWallet-Win32/lyra-pc-wallet
-
-
-#win32{
-#    LIBS += -LD:\Qt\Tools\OpenSSL\Win_x64\lib -llibcrypto
-#    LIBS += -LD:\Qt\Tools\OpenSSL\Win_x64\lib -llibssl
-#    LIBS += -L:/resource/lib -llibssl_static
-#    INCLUDEPATH += D:\Qt\Tools\OpenSSL\Win_x64\lib
-#}
+TARGET = ../../LyraWallet-Win32/Package/lyra-pc-wallet
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,7 +26,6 @@ SOURCES += \
     pages/pc/login/login.cpp \
     pages/pc/main/dashboard/dashboardpage.cpp \
     pages/pc/main/dashboard/dashmain.cpp \
-    pages/pc/main/info.cpp \
     pages/pc/main/mainboard.cpp \
     pages/pc/main/settings/settingsaddaccount.cpp \
     pages/pc/main/settings/settingsdeleteaccount.cpp \
@@ -77,7 +68,6 @@ HEADERS += \
     pages/pc/main/dashboard/dashboardpage.h \
     pages/pc/main/dashboard/dashmain.h \
     pages/pc/main/def.h \
-    pages/pc/main/info.h \
     pages/pc/main/mainboard.h \
     pages/pc/main/settings/settingsaddaccount.h \
     pages/pc/main/settings/settingsdeleteaccount.h \
@@ -93,6 +83,7 @@ HEADERS += \
     pages/pc/main/wallet/walletshowdetails.h \
     pages/pc/populate.h \
     pages/pc/textformating.h \
+    plat.h \
     storage/walletfile.h \
     wallet/check.h \
     wallet/events.h \
@@ -102,8 +93,7 @@ HEADERS += \
     wallet/tickedupdates.h
 
 FORMS += \
-    mainwindow.ui \
-    pages/pc/main/info.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

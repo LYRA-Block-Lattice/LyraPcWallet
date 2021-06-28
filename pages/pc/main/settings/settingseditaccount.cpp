@@ -54,6 +54,7 @@ void settingseditaccount::init(QMdiArea *mdiArea) {
                                                     "border: 1px solid #eee;"
                                                     "border-radius: 3px;"
                                                     ";}");
+    connect(nameLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_nameNameLineEdit_textChanged(const QString &)));
 
 
     passwordConfirmationLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
@@ -65,6 +66,7 @@ void settingseditaccount::init(QMdiArea *mdiArea) {
                                                     "border: 1px solid #eee;"
                                                     "border-radius: 3px;"
                                                     ";}");
+    connect(passwordConfirmationLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_passwordConfirmationLineEdit_textChanged(const QString &)));
 
 
     cancelButton->setCursor(Qt::PointingHandCursor);
@@ -175,4 +177,46 @@ void settingseditaccount::on_Ok_ButtonPressed() {
     }
 
 }
+
+void settingseditaccount::on_nameNameLineEdit_textChanged(const QString &arg1) {
+    if (!check::name(arg1)) {
+        nameLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #FF151F;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
+    } else {
+        nameLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #A0B9CE;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
+    }
+}
+
+void settingseditaccount::on_passwordConfirmationLineEdit_textChanged(const QString &) {
+    if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
+        passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #A0B9CE;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
+    } else {
+        passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #FF151F;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
+    }
+}
+
+
 

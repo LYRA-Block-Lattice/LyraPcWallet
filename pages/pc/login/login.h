@@ -37,7 +37,7 @@ public:
 
     login(QMdiArea *mdiArea = nullptr, QWidget *parent = nullptr);
     ~login();
-    //void setVars();
+    void setVars();
     void run();
     command_e getCommand();
     void setState(state_e state);
@@ -82,12 +82,15 @@ private:
 
     bool actionSemaphore = false;
 
+    int rfshCnt = 0;
+
 signals:
 
 private slots:
     void on_privateKeyLineEdit_textChanged(const QString &);
     void on_nameNameLineEdit_textChanged(const QString &);
     void on_pass1LineEdit_textChanged(const QString &);
+    void on_pass1EnterPushed();
     void on_pass2LineEdit_textChanged(const QString &);
     void on_createNewWallet_pushed();
     void on_openWallet_pushed();

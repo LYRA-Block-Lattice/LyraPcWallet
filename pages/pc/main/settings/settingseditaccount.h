@@ -61,6 +61,8 @@ private:
 private slots:
     void on_Cancel_ButtonPressed();
     void on_Ok_ButtonPressed();
+    void on_nameNameLineEdit_textChanged(const QString &arg1);
+    void on_passwordConfirmationLineEdit_textChanged(const QString &arg1);
 };
 
 #endif // SETTINGSEDITACCOUNT_H

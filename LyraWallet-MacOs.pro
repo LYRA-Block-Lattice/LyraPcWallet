@@ -37,6 +37,7 @@ SOURCES += \
     pages/pc/login/login.cpp \
     pages/pc/main/dashboard/dashboardpage.cpp \
     pages/pc/main/dashboard/dashmain.cpp \
+    pages/pc/main/info.cpp \
     pages/pc/main/mainboard.cpp \
     pages/pc/main/settings/settingsaddaccount.cpp \
     pages/pc/main/settings/settingsdeleteaccount.cpp \
@@ -79,6 +80,7 @@ HEADERS += \
     pages/pc/main/dashboard/dashboardpage.h \
     pages/pc/main/dashboard/dashmain.h \
     pages/pc/main/def.h \
+    pages/pc/main/info.h \
     pages/pc/main/mainboard.h \
     pages/pc/main/settings/settingsaddaccount.h \
     pages/pc/main/settings/settingsdeleteaccount.h \
@@ -103,7 +105,8 @@ HEADERS += \
     wallet/tickedupdates.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    pages/pc/main/info.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

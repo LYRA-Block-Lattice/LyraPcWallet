@@ -21,9 +21,9 @@ settingswindow::settingswindow() {
 }
 
 settingswindow::~settingswindow() {
-    mdiAreaSettings->setVisible(false);
-    windowSettings->setVisible(false);
-    delete windowSettings;
+    //mdiAreaSettings->setVisible(false);
+    //windowSettings->setVisible(false);
+    //delete windowSettings;
 }
 
 void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
@@ -640,7 +640,7 @@ void settingswindow::run() {
         pastScale = events::getScale();
         mdiAreaSettings->setGeometry(s(LEFT_MENU_WIDTH), s(HEADER_HEIGHT), s(WINDOW_WIDTH) - s(LEFT_MENU_WIDTH), s(WINDOW_HEIGHT) - s(HEADER_HEIGHT));
         windowSettings->setGeometry(0, 0, mdiAreaSettings->width(), mdiAreaSettings->height());
-        windowScaleComboBox->setCurrentText(QString::asprintf("%1.1f", pastScale) + "x");
+        windowScaleComboBox->setCurrentText(QString::asprintf("%1.1f", pastScale / events::getOsWindowScale()) + "x");
         refreshSize();
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {

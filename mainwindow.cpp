@@ -1,12 +1,14 @@
 #include <QResizeEvent>
 #include <QScreen>
-//#include <QDesktopWidget>
+#include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPainter>
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QSettings>
+#include <QCursor>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -35,6 +37,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
+
+
     walletfile::loadSettings();
 
     ui->setupUi(this);
@@ -88,6 +92,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     timerAppStart.start();
     timerLoop.start();
+
+    //qDebug() <<
 }
 
 MainWindow::~MainWindow() {
@@ -112,9 +118,14 @@ void MainWindow::mousePressEvent(QMouseEvent* event) {
 void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     if(cursorIsMoving){
         QPoint diff= event->pos() - cursorPressPos;
-        window()->move(window()->pos()+diff);
-        event->accept();
-    }
+        window()->move(window()->pos() + diff);
+    }/* else {
+        if (event->pos().y() < s(TITLEBAR_HEIGHT)){
+            cursorPressPos.setX(event->pos().x());
+            cursorIsMoving= true;
+        }
+    }*/
+    event->accept();
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
     cursorIsMoving= false;
@@ -311,6 +322,27 @@ void MainWindow::appMain() {
             populate::refreshAll();
         }
     }
+    int tmp = QApplication::desktop()->screenNumber(this);
+    QList<QScreen *> primaryScreen = QGuiApplication::screens();
+#ifdef Q_OS_OSX
+    int defaultDotsPerInch = 72;
+#elif defined (Q_OS_WIN32)
+    int defaultDotsPerInch = 96;
+#else
+    int defaultDotsPerInch = 96;
+#endif
+    if(primaryScreen[tmp] != nullptr && events::getOsWindowScale() != primaryScreen[tmp]->logicalDotsPerInch() / defaultDotsPerInch) {
+        events::setOsWindowScale(primaryScreen[tmp]->logicalDotsPerInch() / defaultDotsPerInch);
+        if(screenAt > tmp) {
+            QCursor::setPos(QPoint(QCursor::pos().x() - primaryScreen[tmp]->logicalDotsPerInch(), QCursor::pos().y()));
+            cursorPressPos.setX(cursorPressPos.x() + primaryScreen[tmp]->logicalDotsPerInch());
+        }
+        if(screenAt < tmp) {
+            QCursor::setPos(QPoint(QCursor::pos().x() + primaryScreen[screenAt]->logicalDotsPerInch(), QCursor::pos().y()));
+            cursorPressPos.setX(cursorPressPos.x() - primaryScreen[screenAt]->logicalDotsPerInch());
+        }
+    }
+    screenAt = tmp;
 }
 
 void MainWindow::appStart() {
@@ -319,4 +351,8 @@ void MainWindow::appStart() {
         loginPage->setState(login::state_e::STATE_LOGIN_PAGE);
     this->setWindowOpacity(1.0);
 }
+
+/*void MainWindow::logicalDotsPerInchChanged(qreal dpi) {
+    //qDebug() << dpi;
+}*/
 

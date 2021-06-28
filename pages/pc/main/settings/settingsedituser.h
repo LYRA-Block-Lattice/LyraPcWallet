@@ -64,6 +64,9 @@ private slots:
     void on_UserNameLineEdit_Changed(const QString &);
     void on_Cancel_ButtonPressed();
     void on_Ok_ButtonPressed();
+    void on_oldPasswordLineEdit_textChanged(const QString &arg1);
+    void on_newPassword1LineEdit_textChanged(const QString &arg1);
+    void on_newPassword2LineEdit_textChanged(const QString &arg1);
 };
 
 #endif // SETTINGSEDITUSER_H

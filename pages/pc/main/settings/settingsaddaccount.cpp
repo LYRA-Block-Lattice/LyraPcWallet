@@ -99,6 +99,7 @@ void settingsaddaccount::init(QMdiArea *mdiArea) {
                                                     "border: 1px solid #eee;"
                                                     "border-radius: 3px;"
                                                     ";}");
+    connect(passwordConfirmationLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_passwordConfirmationLineEdit_textChanged(const QString &)));
 
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
@@ -295,6 +296,26 @@ void settingsaddaccount::on_PrivateKeyLineEdit_Changed(const QString &text) {
         privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
     } else {
         privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+    }
+}
+
+void settingsaddaccount::on_passwordConfirmationLineEdit_textChanged(const QString &) {
+    if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
+        passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #A0B9CE;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
+    } else {
+        passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
+                                                        "color: #FF151F;"
+                                                        "border-color: white;"
+                                                        "background-color: white;"
+                                                        "border: 1px solid #eee;"
+                                                        "border-radius: 3px;"
+                                                        ";}");
     }
 }
 

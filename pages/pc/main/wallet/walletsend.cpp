@@ -808,7 +808,7 @@ void walletsend::on_tokenComboBox_TextChanget(const QString &) {
     if(tokenComboBox->count() != 0) {
         QList<QPair<QString, double>> list = events::getTokenList();
         double value = (events::getBtcUsdSelect() ? events::getTokenPricePair("LYR_USD") : events::getTokenPricePair("LYR_BTC")) * list[tokenComboBox->currentIndex()].second;
-        ammountLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(list[tokenComboBox->currentIndex()].second));
+        ammountLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(list[tokenComboBox->currentIndex()].second ? (list[tokenComboBox->currentIndex()].second - LYRA_TX_FEE) : 0.0));
         btcUsdLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(value, events::getBtcUsdSelect() ? 2 : 8));
         on_ammountLineEdit_Changed(ammountLineEdit->text());
         on_ammountUsdBtcLineEdit_Changed(ammountLineEdit->text());
@@ -817,7 +817,7 @@ void walletsend::on_tokenComboBox_TextChanget(const QString &) {
 
 void walletsend::on_ammountLineEdit_Changed(const QString &) {
     QList<QPair<QString, double>> list = events::getTokenList();
-    if(list[tokenComboBox->currentIndex()].second > ammountLineEdit->text().toDouble() + LYRA_TX_FEE) {
+    if(list[tokenComboBox->currentIndex()].second >= ammountLineEdit->text().toDouble() + LYRA_TX_FEE) {
         ammountValueStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
         btcUsdStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
     } else {
@@ -833,7 +833,7 @@ void walletsend::on_ammountLineEdit_Changed(const QString &) {
 
 void walletsend::on_ammountUsdBtcLineEdit_Changed(const QString &) {
     QList<QPair<QString, double>> list = events::getTokenList();
-    if(list[tokenComboBox->currentIndex()].second > ammountLineEdit->text().toDouble() + LYRA_TX_FEE) {
+    if(list[tokenComboBox->currentIndex()].second >= ammountLineEdit->text().toDouble() + LYRA_TX_FEE) {
         ammountValueStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
         btcUsdStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
     } else {
@@ -883,8 +883,7 @@ void walletsend::on_Send_ButtonPressed() {
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
     sendButton->setText(_tr("WAIT") + "...");
     if(pair.count() && !passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
-        if(walletErr_e::WALLET_ERR_OK == walletbalance::send(pair[index].second, destinationWalletIdLineEdit->text(), tokenComboBox->currentText(), ammountLineEdit->text().toDouble()))
-        {
+        if(walletErr_e::WALLET_ERR_OK == walletbalance::send(pair[index].second, destinationWalletIdLineEdit->text(), tokenComboBox->currentText(), ammountLineEdit->text().toDouble())) {
             wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
             wallethistory::setNote(pair[index].first, wallethistory::getWallet(pair[index].first).count() - 1, noteLineEdit->text());
             destinationWalletIdLineEdit->clear();

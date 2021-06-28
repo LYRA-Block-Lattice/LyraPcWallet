@@ -73,6 +73,7 @@ private:
     double windowScale = 0;
     login::command_e loginCommand = login::command_e::CMD_NONE;
     bool pastNetworkConnection = false;
+    int screenAt = 0;
 
 protected:
     virtual void resizeEvent(QResizeEvent *) override;
@@ -86,5 +87,9 @@ private slots:
 
     void on_closePushButton_clicked();
     void on_minimisePushButton_clicked();
+
+signals:
+    //void logicalDotsPerInchChanged(qreal dpi);
+
 };
 #endif // MAINWINDOW_H

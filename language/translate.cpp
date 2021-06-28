@@ -56,14 +56,14 @@ QString translate::getCurrentFontLight() {
 }
 
 int translate::getNumberFontSize(double scale) {
-    return _scale(DEFAULT_FONT_SIZE, scale);
+    return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
 }
 
 int translate::getCurrentFontSizeLight(double scale) {
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale);
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
     }
 }
 
@@ -77,9 +77,9 @@ QString translate::getCurrentFontMedium() {
 
 int translate::getCurrentFontSizeMedium(double scale) {
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale);
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
     }
 }
 
@@ -93,9 +93,9 @@ QString translate::getCurrentFontRegular() {
 
 int translate::getCurrentFontSizeRegular(double scale) {
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale);
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
     }
 }
 
@@ -107,7 +107,7 @@ QString _tr(QString str) {
         //++i;
     }*/
     if(languagemap.contains(str)) {
-        return languagemap[str].toString();
+        return languagemap[str].toString().replace("<__VERSION__>", APP_VERSION);
     }
     return /*"?" + */str;
 }

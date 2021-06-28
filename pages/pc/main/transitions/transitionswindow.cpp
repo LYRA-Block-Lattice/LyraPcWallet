@@ -22,9 +22,9 @@ transitionswindow::transitionswindow() {
 }
 
 transitionswindow::~transitionswindow() {
-    mdiAreaTransitions->setVisible(false);
-    windowTransitions->setVisible(false);
-    delete mdiAreaTransitions;
+    //mdiAreaTransitions->setVisible(false);
+    //windowTransitions->setVisible(false);
+    //delete mdiAreaTransitions;
 }
 
 void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
@@ -459,7 +459,7 @@ void transitionswindow::refreshLanguage() {
         tmp = 0;
     }
     txDirectionComboBox->clear();
-    txDirectionComboBox->addItems({_tr("ALL"), _tr("SEND"), _tr("RECEIVED")});
+    txDirectionComboBox->addItems({_tr("ALL"), _tr("SENDED"), _tr("RECEIVED")});
     txDirectionComboBox->setCurrentIndex(tmp);
 
     tokenLabel->setText(_tr("TOKEN") + ":");

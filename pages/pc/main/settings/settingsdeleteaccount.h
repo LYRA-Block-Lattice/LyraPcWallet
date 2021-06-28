@@ -59,6 +59,7 @@ private:
 private slots:
     void on_Cancel_ButtonPressed();
     void on_Ok_ButtonPressed();
+    void on_passwordConfirmationLineEdit_textChanged(const QString &arg1);
 };
 
 #endif // SETTINGSDELETEACCOUNT_H

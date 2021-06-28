@@ -29,18 +29,19 @@
 #define s(s) _scale(s)
 
 login::login(QMdiArea *mdiArea, QWidget *parent) {
-    this->setParent(parent);
+    //this->setParent(parent);
     this->parent = parent;
     this->mdiArea = mdiArea;
-    window = new QMdiSubWindow(mdiArea);
-    widget = new QWidget(window);
+    widget = new QWidget(mdiArea);
     widget->show();
+    window = new QMdiSubWindow(mdiArea);
     //window->installEventFilter(this);
-    setParent(parent);
+    setParent(mdiArea);
     window->setWidget(widget);
     window->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint);
     window->setWindowFlag(Qt::FramelessWindowHint, true);
-    window->resize(mdiArea->width(), mdiArea->height());
+    widget->setGeometry(0, 0, mdiArea->width(), mdiArea->height());
+    window->setGeometry(0, 0, mdiArea->width(), mdiArea->height());
 
     window->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_Light.png)");
 
@@ -71,16 +72,17 @@ login::login(QMdiArea *mdiArea, QWidget *parent) {
     pass1LineEdit = new QLineEdit(mdiArea);
     pass1LineEdit->setVisible(false);
     connect(pass1LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_pass1LineEdit_textChanged(const QString &)));
+    connect(pass1LineEdit, &QLineEdit::returnPressed, this, &login::on_pass1EnterPushed);
 
     pass2LineEdit = new QLineEdit(mdiArea);
     pass2LineEdit->setVisible(false);
     connect(pass2LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_pass2LineEdit_textChanged(const QString &)));
 
-    createNewUser = new QPushButton(window);
+    createNewUser = new QPushButton(mdiArea);
     createNewUser->setVisible(false);
     connect(createNewUser, SIGNAL(clicked()),this, SLOT(on_createNewWallet_pushed()));
 
-    loginManager = new QPushButton(window);
+    loginManager = new QPushButton(mdiArea);
     loginManager->setVisible(false);
     connect(loginManager, SIGNAL(clicked()),this, SLOT(on_login_pushed()));
 
@@ -88,25 +90,27 @@ login::login(QMdiArea *mdiArea, QWidget *parent) {
     getStarted->setVisible(false);
     connect(getStarted, SIGNAL(clicked()),this, SLOT(on_getStarted_pushed()));
 
-    back = new QPushButton(window);
+    back = new QPushButton(mdiArea);
     back->setVisible(false);
     connect(back, SIGNAL(clicked()),this, SLOT(on_back_pushed()));
 
-    info = new QPushButton(window);
+    info = new QPushButton(mdiArea);
     info->setVisible(false);
     connect(info, SIGNAL(clicked()),this, SLOT(on_info_pushed()));
 
-    infoMessage = new QLabel(window);
+    infoMessage = new QLabel(mdiArea);
     infoMessage->setVisible(false);
     //loginManagerUser = new QLabel(window);
     //loginManagerUser->setVisible(false);
-    lyraInc = new QLabel(window);
+    lyraInc = new QLabel(mdiArea);
     lyraInc->setVisible(false);
-
 }
 
 login::~login() {
 
+}
+
+void login::setVars() {
 }
 
 login::command_e login::getCommand() {
@@ -120,7 +124,10 @@ void login::setState(state_e state) {
 }
 
 void login::run() {
-    if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
+    if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang()) || rfshCnt != 0) {
+        if(rfshCnt > 0) {
+            rfshCnt--;
+        }
         infoSwitch = false;
         if(pastState != currentState) {
             titleText->setVisible(false);
@@ -148,7 +155,7 @@ void login::run() {
             pass2LineEdit->setText("");
         }
 
-        window->resize(mdiArea->width(), mdiArea->height());
+        //this->parent->repaint();
         if(!infoSwitch) {
             infoMessage->setVisible(false);
             window->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_Light.png)");
@@ -162,6 +169,11 @@ void login::run() {
             window->setVisible(true);
 
         pastLanguage = translate::getCurrentLang();
+
+        if(pastScale != events::getScale()) {
+            rfshCnt = 1;
+        }
+
         pastScale = events::getScale();
 
         if(currentState == STATE_LOGIN_PAGE) {
@@ -490,7 +502,10 @@ void login::run() {
             infoMessage->setWordWrap(true);
             infoMessage->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
         }
-        window->repaint();
+        widget->setGeometry(0, 0, mdiArea->width(), mdiArea->height());
+        window->setGeometry(0, 0, mdiArea->width(), mdiArea->height());
+
+        mdiArea->repaint();
         pastState = currentState;
     }
 }
@@ -630,6 +645,10 @@ void login::on_login_pushed() {
         }
     }
     actionSemaphore = false;;
+}
+
+void login::on_pass1EnterPushed() {
+    on_login_pushed();
 }
 
 void login::on_getStarted_pushed() {

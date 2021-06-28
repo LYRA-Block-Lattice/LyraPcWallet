@@ -78,6 +78,7 @@ private slots:
     void on_AccountNameLineEdit_Changed(const QString &);
     void on_PrivateKeyLineEdit_Changed(const QString &);
 
+    void on_passwordConfirmationLineEdit_textChanged(const QString &arg1);
 };
 
 #endif // SETTINGSADDACCOUNT_H

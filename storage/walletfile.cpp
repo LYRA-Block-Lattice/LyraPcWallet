@@ -160,6 +160,7 @@ bool walletfile::loadSettings() {
         events::setNetwork(rpc::network_e::NETWORK_MAINNET);
     }
     if(settingsObject.contains("window_scale")) {
+
         events::setScale(settingsObject["window_scale"].toDouble());
     } else {
         events::setScale(DEFAULT_SCALE);
@@ -190,7 +191,7 @@ bool walletfile::saveSettings() {
     } else {
         settingsObject.insert("def_value", "BTC");
     }
-    settingsObject.insert("window_scale", events::getScale());
+    settingsObject.insert("window_scale", events::getScaleStore());
     QJsonObject objectFile;
     objectFile.insert("settings", settingsObject);
     QDir directory = QDir(QString(USER_HOME) + "/" WALLET_PATH "/");

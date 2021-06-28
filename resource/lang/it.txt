@@ -1,4 +1,4 @@
-{
+﻿{
    "Lyra Wallet" :                          "Lyra Wallet",
    "CREATE NEW WALLET" :                    "CREA UN NUOVO WALLET",
    "OPEN WALLET" :                          "APRI WALLET",
@@ -11,11 +11,11 @@
    "Get started!" :                         "Cominciamo!",
    "or login wallet manager" :              "o effettua il login al wallet manager",
 
-   "CREATE NEW WALLET INFO" :               "Create new wallet says:\npigs never die, they always get killed...",
-   "OPEN WALLET INFO" :                     "Open wallet says:\npigs never die, they always get killed...",
-   "RESTORE WALLET INFO" :                  "Restore wallet says:\npigs never die, they always get killed...",
-   "CREATE NEW MANAGER USER INFO" :         "Lyra Wallet Manager:\n Wallet version: 0.1.2\n Lyra DeFi technology.",
-   "LOG IN INFO" :                          "Lyra Wallet Manager:\n Wallet version: 0.1.2\n Lyra DeFi technology.",
+   "CREATE NEW WALLET INFO" :               "Lyra Wallet Manager:\n Wallet version: <__VERSION__>\n Lyra DeFi technology.",
+   "OPEN WALLET INFO" :                     "Lyra Wallet Manager:\n Wallet version: <__VERSION__>\n Lyra DeFi technology.",
+   "RESTORE WALLET INFO" :                  "Lyra Wallet Manager:\n Wallet version: <__VERSION__>\n Lyra DeFi technology.",
+   "CREATE NEW MANAGER USER INFO" :         "Lyra Wallet Manager:\n Wallet version: <__VERSION__>\n Lyra DeFi technology.",
+   "LOG IN INFO" :                          "Lyra Wallet Manager:\n Wallet version: <__VERSION__>\n Lyra DeFi technology.",
    "Are you sure you want to exit?" :       "Sei sicuro che vuoi uscire?",
    "Private KEY" :                          "Private KEY",
    "Username" :                             "Username",
@@ -89,6 +89,7 @@
    "Destination to wallet ID" :             "Wallet ID di destinazione",
    "Password Confirmation" :                "Password di conferma",
    "Note" :                                 "Nota",
+   "SENDED" :                               "INVIA",
    "SEND" :                                 "INVIA",
    "LAST SEND TRANSACTIONS" :                "ULTIME TRANSAZIONI INVIATE",
    "ACCOUNT BALANCE" :                      "BILANCIO ACCOUNT",

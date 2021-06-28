@@ -66,7 +66,7 @@ bool populate::refreshAll() {
             if(isReceived) {
                 recentTransactions.append("RECEIVE");
             } else {
-                recentTransactions.append("SEND");
+                recentTransactions.append("SENDED");
             }
             QList<QString>key = transaction[7].keys();
             if(key.count() > 1) {
