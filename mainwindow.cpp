@@ -56,7 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     //this->setWindowFlag(Qt::FramelessWindowHint, true);
     ui->closePushButton->setWindowFlag(Qt::FramelessWindowHint, true);
     ui->minimisePushButton->setWindowFlag(Qt::FramelessWindowHint, true);
-
+#ifdef Q_OS_OSX
+    ui->minimisePushButton->setVisible(false);
+#endif
     mainPixMap.fill(Qt::white);
 
     ui->mainMdiArea->setParent(this);
@@ -110,25 +112,20 @@ void MainWindow::resizeEvent(QResizeEvent *) {
 
 void MainWindow::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && event->pos().y() < s(TITLEBAR_HEIGHT)){
-        cursorPressPos= event->pos();
-        cursorIsMoving= true;
+        cursorPressPos = event->pos();
+        cursorIsMoving = true;
         event->accept();
     }
 }
 void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     if(cursorIsMoving){
-        QPoint diff= event->pos() - cursorPressPos;
+        QPoint diff = event->pos() - cursorPressPos;
         window()->move(window()->pos() + diff);
-    }/* else {
-        if (event->pos().y() < s(TITLEBAR_HEIGHT)){
-            cursorPressPos.setX(event->pos().x());
-            cursorIsMoving= true;
-        }
-    }*/
-    event->accept();
+        event->accept();
+    }
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
-    cursorIsMoving= false;
+    cursorIsMoving = false;
     event->accept();
 }
 
@@ -178,7 +175,16 @@ void MainWindow::on_closePushButton_clicked() {
 }
 
 void MainWindow::on_minimisePushButton_clicked() {
+#ifdef Q_OS_OSX
+    /*setWindowFlags((windowFlags() | Qt::CustomizeWindowHint) & (~Qt::WindowTitleHint));
+    showMinimized();
+    setWindowFlags(windowFlags() & (~Qt::CustomContextMenu & ~Qt::WindowTitleHint) | Qt::FramelessWindowHint);
+    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint);
+    show();*/
     this->showMinimized();
+#else
+    this->showMinimized();
+#endif
 }
 
 void MainWindow::windowToMain() {
@@ -323,23 +329,25 @@ void MainWindow::appMain() {
         }
     }
     int tmp = QApplication::desktop()->screenNumber(this);
+    events::setScreenNumber(tmp);
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
+    double osWindowScale = 0;
 #ifdef Q_OS_OSX
-    int defaultDotsPerInch = 72;
+    osWindowScale = ((primaryScreen[tmp]->logicalDotsPerInch() / 72) * ((double)primaryScreen[tmp]->geometry().height() / (double)WINDOW_HEIGHT / 2) / FONT_REDUCTION);
 #elif defined (Q_OS_WIN32)
-    int defaultDotsPerInch = 96;
+    osWindowScale = ((primaryScreen[tmp]->logicalDotsPerInch() / 96) * ((double)primaryScreen[tmp]->geometry().height() / (double)WINDOW_HEIGHT / 2) / FONT_REDUCTION);
 #else
-    int defaultDotsPerInch = 96;
+    osWindowScale = ((primaryScreen[tmp]->logicalDotsPerInch() / 96) * ((double)primaryScreen[tmp]->geometry().height() / (double)WINDOW_HEIGHT / 2) / FONT_REDUCTION);
 #endif
-    if(primaryScreen[tmp] != nullptr && events::getOsWindowScale() != primaryScreen[tmp]->logicalDotsPerInch() / defaultDotsPerInch) {
-        events::setOsWindowScale(primaryScreen[tmp]->logicalDotsPerInch() / defaultDotsPerInch);
+    if(primaryScreen[tmp] != nullptr && events::getOsWindowScale() != osWindowScale) {
+        events::setOsWindowScale(osWindowScale);
         if(screenAt > tmp) {
-            QCursor::setPos(QPoint(QCursor::pos().x() - primaryScreen[tmp]->logicalDotsPerInch(), QCursor::pos().y()));
-            cursorPressPos.setX(cursorPressPos.x() + primaryScreen[tmp]->logicalDotsPerInch());
+            QCursor::setPos(QPoint(QCursor::pos().x() - (primaryScreen[tmp]->logicalDotsPerInch() * 2), QCursor::pos().y()));
+            cursorPressPos.setX(cursorPressPos.x() + (primaryScreen[tmp]->logicalDotsPerInch() * 2));
         }
         if(screenAt < tmp) {
-            QCursor::setPos(QPoint(QCursor::pos().x() + primaryScreen[screenAt]->logicalDotsPerInch(), QCursor::pos().y()));
-            cursorPressPos.setX(cursorPressPos.x() - primaryScreen[screenAt]->logicalDotsPerInch());
+            QCursor::setPos(QPoint(QCursor::pos().x() + (primaryScreen[screenAt]->logicalDotsPerInch() * 2), QCursor::pos().y()));
+            cursorPressPos.setX(cursorPressPos.x() - (primaryScreen[screenAt]->logicalDotsPerInch() * 2));
         }
     }
     screenAt = tmp;

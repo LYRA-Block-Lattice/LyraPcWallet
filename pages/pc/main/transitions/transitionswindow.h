@@ -18,8 +18,7 @@
 #include "wallet/events.h"
 #include "../wallet/walletshowdetails.h"
 
-class transitionswindow : public QMainWindow
-{
+class transitionswindow : public QMainWindow {
     Q_OBJECT
 public:
     typedef enum {
@@ -43,7 +42,7 @@ private:
     /* Window */
     QWidget *parent = nullptr;
     QMdiSubWindow *window = nullptr;
-    //QMdiArea *mdiArea;
+
     QMdiArea *mdiAreaTransitions = nullptr;
     QWidget *widgetTransitions = nullptr;
     QMdiSubWindow *windowTransitions = nullptr;
@@ -63,7 +62,7 @@ private:
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_TRANSITIONS;
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
     QList<QList<QMap<QString, QString>>> cumulatedWallet;
     bool refreshTableSemaphore = false;

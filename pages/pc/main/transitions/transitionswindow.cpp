@@ -22,9 +22,7 @@ transitionswindow::transitionswindow() {
 }
 
 transitionswindow::~transitionswindow() {
-    //mdiAreaTransitions->setVisible(false);
-    //windowTransitions->setVisible(false);
-    //delete mdiAreaTransitions;
+
 }
 
 void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {

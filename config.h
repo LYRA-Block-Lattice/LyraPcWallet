@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.1.3"
+#define APP_VERSION                                 "0.1.4"
 
 #define TITLEBAR_HEIGHT                             30
 #define WINDOW_WIDTH                                1350
@@ -23,7 +23,7 @@
 #define LYRA_TOKEN_PAGE_IMPLEMENTED                 0
 #define SWAP_PAGE_IMPLEMENTED                       0
 #define TRANSITIONS_PAGE_IMPLEMENTED                1
-#define SEARCH_PAGE_IMPLEMENTED                     0
+#define SEARCH_PAGE_IMPLEMENTED                     1
 
 #define HEADER_HEIGHT                               112
 #define LEFT_MENU_WIDTH                             228
@@ -56,7 +56,12 @@
 /* ICO location definition */
 #define ICO_WINDOW_SMALL                            ":/resource/ico/256color.ico"
 
-/* FILE */
-#define WALLET_FILE_NAME                            "pig1"
+#ifdef Q_OS_OSX
+#define FONT_REDUCTION  0.7
+#else
+#define FONT_REDUCTION  1
+#endif
+
+
 
 #endif // DEF_H

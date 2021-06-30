@@ -36,6 +36,7 @@ SOURCES += \
     pages/pc/main/dashboard/dashmain.cpp \
     pages/pc/main/info.cpp \
     pages/pc/main/mainboard.cpp \
+    pages/pc/main/search/searchwindow.cpp \
     pages/pc/main/settings/settingsaddaccount.cpp \
     pages/pc/main/settings/settingsdeleteaccount.cpp \
     pages/pc/main/settings/settingseditaccount.cpp \
@@ -79,6 +80,7 @@ HEADERS += \
     pages/pc/main/def.h \
     pages/pc/main/info.h \
     pages/pc/main/mainboard.h \
+    pages/pc/main/search/searchwindow.h \
     pages/pc/main/settings/settingsaddaccount.h \
     pages/pc/main/settings/settingsdeleteaccount.h \
     pages/pc/main/settings/settingseditaccount.h \

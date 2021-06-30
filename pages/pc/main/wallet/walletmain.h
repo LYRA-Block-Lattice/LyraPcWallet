@@ -89,7 +89,7 @@ private:
     QValueAxis *myWalletValueAxisY = nullptr;
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
     double ballance = 1.0;
     QString unreceivedBallance;

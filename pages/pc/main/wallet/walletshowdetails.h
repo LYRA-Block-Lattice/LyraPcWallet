@@ -37,7 +37,7 @@ private:
     QGraphicsScene *scene;
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
     bool back = false;
     int size = 0;
 private slots:

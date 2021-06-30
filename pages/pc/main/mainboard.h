@@ -17,6 +17,7 @@
 #include "wallet/walletpage.h"
 #include "settings/settingswindow.h"
 #include "transitions/transitionswindow.h"
+#include "search/searchwindow.h"
 
 #include "info.h"
 
@@ -78,6 +79,7 @@ private:
     dashboardpage *dashboardWindow = nullptr;
     walletpage *walletWindow = nullptr;
     transitionswindow *transitionsWindow = nullptr;
+    searchwindow *searchWindow = nullptr;
     settingswindow *settingsWindow = nullptr;
 
     info *infoWindow = nullptr;
@@ -145,7 +147,7 @@ private:
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_NONE;
     double pastScale = DEFAULT_SCALE;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
     bool pastNetworkConnection = false;
     int pastWalletNameKeyListChanged = -1;
     int selectedNameKeyIndex = -1;

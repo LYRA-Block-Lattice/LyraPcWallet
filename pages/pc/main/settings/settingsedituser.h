@@ -58,7 +58,7 @@ private:
     QString walletNames;
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
 private slots:
     void on_UserNameLineEdit_Changed(const QString &);

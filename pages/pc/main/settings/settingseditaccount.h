@@ -56,7 +56,7 @@ private:
     QString walletName;
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
 private slots:
     void on_Cancel_ButtonPressed();

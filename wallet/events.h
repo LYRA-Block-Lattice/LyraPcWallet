@@ -27,6 +27,7 @@ public:
     static double getTotalSupply();
     static double getPercentageOfTotalSupply();
     static double getTeamLockedPercentageOfTotalSupply();
+    static double getBurnedSupply();
     static qint64 getCreationDateTime();
     static qint64 getLastSyncDateTime();
     static int getNumberOfTransactions();
@@ -81,6 +82,7 @@ public:
     static bool getWalletHistoryChanged();
     static bool getWalletHistoryChangedUnmodify();
     static bool getUpdateHistory();
+    static int getScreenNumber();
 
 
     static void setNetworkConnected(bool connected);
@@ -96,6 +98,7 @@ public:
     static void setBallance(double bal);
     static void setUnreceivedBallance(QString bal);
     static void setTotalSupply(double bal);
+    static void setBurnedSupply(double bal);
     static void setCreationDateTime(qint64 dateTime);
     static void setLastSyncDateTime(qint64 dateTime);
     static void setNumberOfTransactions(int trans);
@@ -129,6 +132,7 @@ public:
     static void setShowTransitionsWindow();
     static void setWalletHistoryChanged();
     static void setUpdateHistory();
+    static void setScreenNumber(int screen);
 };
 
 #endif // EVENTS_H

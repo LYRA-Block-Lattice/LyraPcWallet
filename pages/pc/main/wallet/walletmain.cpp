@@ -409,11 +409,11 @@ void walletmain::refreshSize() {
     walletAddressLabel->setGeometry(s(0), s(195), s(200), s(30));
     walletAddressIdLabel->setGeometry(s(220), s(193), s(870), s(30));
 
-    startBalanceDateEdit->setGeometry(s(262), s(355), s(127), s(25));
-    endBalanceDateEdit->setGeometry(s(407), s(355), s(127), s(25));
+    startBalanceDateEdit->setGeometry(s(262), s(355), s(127), s(30));
+    endBalanceDateEdit->setGeometry(s(407), s(355), s(127), s(30));
 
-    startValueDateEdit->setGeometry(s(805), s(355), s(127), s(25));
-    endValueDateEdit->setGeometry(s(950), s(355), s(127), s(25));
+    startValueDateEdit->setGeometry(s(805), s(355), s(127), s(30));
+    endValueDateEdit->setGeometry(s(950), s(355), s(127), s(30));
 
     btcUsdLabel->setGeometry(s(880), s(410), s(160), s(20));
     btcUsdSwitchLabel->setGeometry(s(950), s(415), s(24), s(12));

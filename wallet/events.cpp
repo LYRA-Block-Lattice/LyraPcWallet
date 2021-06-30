@@ -15,6 +15,7 @@ QList<QPair<QString, bool>> rpcNodeList[2] = {RPC_TESTNET_IP_LIST, RPC_MAINNET_I
 double ballance = 0.0;
 QString unreceivedBallance;
 double totalSupply = LYRA_MAX_SUPPLY;
+double burnedSupply = 0.0;
 qint64 creationDateTime = 0;
 qint64 lastSyncDateTime = 0;
 int nrOfTransactions = 0;
@@ -29,7 +30,7 @@ int myWalletValueChartModifyedCnt = 0;
 bool udsSelected = false;
 double teamLockedReserved = 9432576934;
 double circulatingSupply = 567423066;
-double totalBlockCount = 4856;
+double totalBlockCount = 38254;
 QList<QStringList> recentTransactionsList = QList<QStringList>();
 int recentTransactionsListModifyedCnt = 0;
 QList<QStringList> recentRxTransactionsList = QList<QStringList>();
@@ -63,6 +64,7 @@ bool updateHistory = false;
 double totalLyraSendedLastWeek = 0.0;
 double totalLyraReceivedLastWeek = 0.0;
 double osWindowScale = 1.0;
+int screenNumber = 0;
 
 void events::setNetworkConnected(bool connected) {
     networkConnected = connected;
@@ -195,7 +197,7 @@ void events::setUnreceivedBallance(QString bal) {
 }
 
 double events::getTotalSupply() {
-    return totalSupply;
+    return totalSupply - burnedSupply;
 }
 
 void events::setTotalSupply(double bal) {
@@ -203,11 +205,19 @@ void events::setTotalSupply(double bal) {
 }
 
 double events::getPercentageOfTotalSupply() {
-    return (ballance / totalSupply) * 100;
+    return (ballance / (totalSupply - burnedSupply)) * 100;
 }
 
 double events::getTeamLockedPercentageOfTotalSupply() {
-    return (teamLockedReserved / totalSupply) * 100;
+    return (teamLockedReserved / (totalSupply - burnedSupply)) * 100;
+}
+
+double events::getBurnedSupply() {
+    return burnedSupply;
+}
+
+void events::setBurnedSupply(double bal) {
+    burnedSupply = bal;
 }
 
 qint64 events::getCreationDateTime() {
@@ -306,7 +316,7 @@ double events::getCirculatingSupply() {
 }
 
 double events::getCirculatingSupplyPercentage() {
-    return (circulatingSupply / totalSupply) * 100;
+    return (circulatingSupply / (totalSupply - burnedSupply)) * 100;
 }
 
 qint64 events::getTotalBlockCount() {
@@ -585,3 +595,12 @@ bool events::getUpdateHistory() {
 void events::setUpdateHistory() {
     updateHistory = true;
 }
+
+void events::setScreenNumber(int screen) {
+    screenNumber = screen;
+}
+
+int events::getScreenNumber() {
+    return screenNumber;
+}
+

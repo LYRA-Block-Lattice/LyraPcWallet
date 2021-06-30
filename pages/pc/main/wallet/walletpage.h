@@ -54,7 +54,7 @@ private:
     state_e currentState = STATE_MAIN;
     state_e pastState = STATE_MAIN;
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 signals:
 
 };

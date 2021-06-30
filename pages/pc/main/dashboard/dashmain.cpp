@@ -427,10 +427,10 @@ void dashmain::refreshSize() {
     orLabel->setGeometry(s(760), s(186), s(50), s(20));
 
     startLabel->setGeometry(s(800), s(175), s(50), s(10));
-    startDateEdit->setGeometry(s(795), s(183), s(127), s(25));
+    startDateEdit->setGeometry(s(795), s(183), s(127), s(30));
 
     endLabel->setGeometry(s(945), s(175), s(50), s(10));
-    endDateEdit->setGeometry(s(940), s(183), s(127), s(25));
+    endDateEdit->setGeometry(s(940), s(183), s(127), s(30));
 
     myWalletValueChartView->setGeometry(s(40) - 35, s(230) - 35, s(1053) + 65, s(315) + 65);
 

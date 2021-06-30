@@ -532,8 +532,8 @@ void mainboard::updateMenuButtonsSize() {
     if(currentState == state_e::STATE_SEARCH)
         searchArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
     else
-        searchArowLabel.setGeometry(s(195), s(yCount + 41), s(6), s(10));
-    searchButton.setGeometry(s(0), s(yCount + 20), s(210), s(53));
+        searchArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+    searchButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 #endif
     settingsIcoLabel->setGeometry(s(28), s(690 + 30), s(30), s(30));
     settingsTextLabel->setGeometry(s(72), s(690 + 28), s(150), s(30));
@@ -756,6 +756,12 @@ void mainboard::run() {
             transitionsWindow->setVars(windowMain, parent);
         }
     }
+    if(currentState == STATE_SEARCH) {
+        if(!searchWindow) {
+            searchWindow = new searchwindow();
+            searchWindow->setVars(windowMain, parent);
+        }
+    }
     if(currentState == STATE_SETTINGS) {
         if(!settingsWindow) {
             settingsWindow = new settingswindow();
@@ -785,11 +791,14 @@ void mainboard::run() {
         if(dashboardWindow) {
             dashboardWindow->setState(dashboardpage::STATE_NONE);
         }
-        if(settingsWindow) {
-            settingsWindow->setState(settingswindow::STATE_NONE);
-        }
         if(transitionsWindow) {
             transitionsWindow->setState(transitionswindow::STATE_NONE);
+        }
+        if(searchWindow) {
+            searchWindow->setState(searchwindow::STATE_NONE);
+        }
+        if(settingsWindow) {
+            settingsWindow->setState(settingswindow::STATE_NONE);
         }
         myWalletReceiveIcoLabel->setVisible(false);
         myWalletReceiveTextLabel->setVisible(false);
@@ -816,6 +825,10 @@ void mainboard::run() {
                 transitionsWindow->setState(transitionswindow::STATE_TRANSITIONS);
             }
             parent->repaint();
+        } else if(currentState == STATE_SEARCH) {
+            if(searchWindow) {
+                searchWindow->setState(searchwindow::STATE_SEARCH);
+            }
         } else if(currentState == STATE_SWAP) {
 
         } else if(currentState == STATE_SETTINGS) {
@@ -878,6 +891,9 @@ void mainboard::run() {
     }
     if(transitionsWindow) {
         transitionsWindow->run();
+    }
+    if(searchWindow) {
+        searchWindow->run();
     }
 }
 

@@ -90,7 +90,7 @@ private:
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_SETTINGS;
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
     int walletNameKeyListChanged = -1;
     int styleCnt = -1;
     int getWalletUserPasswordChanged = -1;

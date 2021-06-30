@@ -5,13 +5,15 @@
 #include <QTextStream>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QScreen>
+#include <QApplication>
+#include <QDesktopWidget>
 
 #include "config.h"
 #include "wallet/events.h"
 
 QJsonObject languagemap;
 QString language = "en";
-
 
 bool translate::loadLanguage(QString lan) {
     QStringList trList;
@@ -56,14 +58,16 @@ QString translate::getCurrentFontLight() {
 }
 
 int translate::getNumberFontSize(double scale) {
-    return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
+    QList<QScreen *> primaryScreen = QGuiApplication::screens();
+    return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
 }
 
 int translate::getCurrentFontSizeLight(double scale) {
+    QList<QScreen *> primaryScreen = QGuiApplication::screens();
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 }
 
@@ -76,10 +80,11 @@ QString translate::getCurrentFontMedium() {
 }
 
 int translate::getCurrentFontSizeMedium(double scale) {
+    QList<QScreen *> primaryScreen = QGuiApplication::screens();
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 }
 
@@ -92,10 +97,11 @@ QString translate::getCurrentFontRegular() {
 }
 
 int translate::getCurrentFontSizeRegular(double scale) {
+    QList<QScreen *> primaryScreen = QGuiApplication::screens();
     if(language == "cn") {
-        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
-        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale());
+        return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 }
 

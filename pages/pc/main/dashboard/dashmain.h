@@ -84,7 +84,7 @@ private:
 
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
     qint64 totalSupply = 1;
     qint64 teamLockedReserved = 1;

@@ -43,7 +43,7 @@ private:
     runMode_e pastMode = NONE;
 
     double pastScale = 0.0;
-    QString pastLanguage = "en";
+    QString pastLanguage = "";
 
 private slots:
     void on_Ok_ButtonPressed();
