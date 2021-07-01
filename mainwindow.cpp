@@ -52,7 +52,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     this->installEventFilter(this);
+#if (TITLEBAR_HEIGHT == 0)
+    this->setWindowFlags( Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+#else
     this->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint);
+#endif
     //this->setWindowFlag(Qt::FramelessWindowHint, true);
     ui->closePushButton->setWindowFlag(Qt::FramelessWindowHint, true);
     ui->minimisePushButton->setWindowFlag(Qt::FramelessWindowHint, true);
@@ -316,6 +320,8 @@ void MainWindow::appMain() {
     if(windowScale != events::getScale()) {
         windowScale = events::getScale();
         this->resize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
+        this->setMinimumSize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
+        this->setMaximumSize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
         ui->mainMdiArea->setGeometry(0, s(TITLEBAR_HEIGHT), s(WINDOW_WIDTH), s(WINDOW_HEIGHT));
         ui->closePushButton->setGeometry(this->width() - s(41), s(ui->closePushButton->y()), s(41), s(TITLEBAR_HEIGHT));
         ui->minimisePushButton->setGeometry(this->width() - s(82), s(ui->minimisePushButton->y()), s(41), s(TITLEBAR_HEIGHT));

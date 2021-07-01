@@ -909,7 +909,7 @@ void mainboard::on_info_ButtonPressed() {
 }
 
 bool mainboard::eventFilter(QObject *obj, QEvent *event) {
-    if (obj == windowHeader) {
+    /*if (obj == windowHeader) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         if (event->type() == QEvent::MouseButtonPress) {
             if(mouseEvent->button() == Qt::LeftButton){
@@ -928,7 +928,7 @@ bool mainboard::eventFilter(QObject *obj, QEvent *event) {
        } else {
            return false;
        }
-   } else if (obj == windowLeftMenu) {
+   } else */if (obj == windowLeftMenu) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         if(event->type() == QEvent::MouseButtonRelease) {
             if(mouseEvent->button() == Qt::LeftButton) {

@@ -16,6 +16,7 @@
 #include "crypto/signatures.h"
 #include "storage/walletfile.h"
 #include "language/translate.h"
+#include "api/nebula.h"
 
 #include "config.h"
 
@@ -113,56 +114,19 @@ void tickedupdates::on_FetchNode() {
 
     qDebug() << "Start fetch nebula for network data.";
     /* Fetch data from nebula */
-    QString resp = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live/" : "https://blockexplorer.testnet.lyra.live/");
-    QStringList dataList = resp.split("\n");
-    QStringList tmp;
-    bool success;
-    foreach( QString line, dataList) {
-        if(line.contains("Total Supply:")) {
-            line = line.remove(',');
-            tmp = line.split(" ");
-            foreach(QString number, tmp) {
-                double value = number.toDouble(&success);
-                if(success) {
-                    events::setTotalSupply(value);
-                    break;
-                }
-            }
-        } else if(line.contains("Burned:")) {
-            line = line.remove(',');
-            tmp = line.split(" ");
-            double value = 0.0;
-            foreach(QString number, tmp) {
-                value = number.toDouble(&success);
-                if(success) {
-                    events::setBurnedSupply(value);
-                    break;
-                }
-            }
-        } else if(line.contains("Team/Locked/Reserved:")) {
-            line = line.remove(',');
-            tmp = line.split(" ");
-            double value = 0.0;
-            foreach(QString number, tmp) {
-                value = number.toDouble(&success);
-                if(success) {
-                    events::setTeamLockedReserved(value);
-                    break;
-                }
-            }
-        } else if(line.contains("Circulating Supply:")) {
-            line = line.remove(',');
-            tmp = line.split(" ");
-            double value = 0.0;
-            foreach(QString number, tmp) {
-                value = number.toDouble(&success);
-                if(success) {
-                    events::setCirculatingSupply(value);
-                    break;
-                }
-            }
-        }
+    double teamTotal = 0.0;
+    double circulate = 0.0;
+    double burned = 0.0;
+    qint64 height = 0;
+    if(nebula::getCirculation(&teamTotal, &circulate, &burned)) {
+        events::setBurnedSupply(burned);
+        events::setTeamLockedReserved(teamTotal);
+        events::setCirculatingSupply(circulate);
     }
+    if(nebula::getBlockHeight(&height)) {
+        events::setTotalBlockCount(height);
+    }
+
     qDebug() << "End fetch nebula for network data.";
 
     int index = events::getSelectedNameKeyIndex();

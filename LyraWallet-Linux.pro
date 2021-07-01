@@ -10,6 +10,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    api/nebula.cpp \
     crypto/aes.cpp \
     crypto/base58Encoding.cpp \
     crypto/ecc.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
     wallet/tickedupdates.cpp
 
 HEADERS += \
+    api/nebula.h \
     config.h \
     configlyra.h \
     crypto/aes.h \

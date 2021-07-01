@@ -234,7 +234,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "selection-background-color: darkgray;"
                "}"
     );
-    windowScaleComboBox->addItems({"0.7x", "0.8x", "0.9x", "1.0x", "1.1x", "1.2x", "1.3x", "1.4x", "1.5x"});
+    windowScaleComboBox->addItems(SCALE_LIST);
     windowScaleComboBox->setCursor(Qt::PointingHandCursor);
     windowScaleComboBox->setVisible(true);
     connect(windowScaleComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_ScaleValue_Changed(const QString &)));

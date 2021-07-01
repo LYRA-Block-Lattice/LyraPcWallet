@@ -160,10 +160,14 @@ bool walletfile::loadSettings() {
         events::setNetwork(rpc::network_e::NETWORK_MAINNET);
     }
     if(settingsObject.contains("window_scale")) {
-
         events::setScale(settingsObject["window_scale"].toDouble());
     } else {
         events::setScale(DEFAULT_SCALE);
+    }
+    if(settingsObject.contains("lastHeight")) {
+        events::setTotalBlockCount(settingsObject["lastHeight"].toVariant().toLongLong());
+    } else {
+        events::setTotalBlockCount(0);
     }
     if(settingsObject.contains("def_value")) {
         if(!settingsObject["def_value"].toString().compare("BTC")) {
@@ -192,6 +196,7 @@ bool walletfile::saveSettings() {
         settingsObject.insert("def_value", "BTC");
     }
     settingsObject.insert("window_scale", events::getScaleStore());
+    settingsObject.insert("lastHeight", events::getTotalBlockCount());
     QJsonObject objectFile;
     objectFile.insert("settings", settingsObject);
     QDir directory = QDir(QString(USER_HOME) + "/" WALLET_PATH "/");
