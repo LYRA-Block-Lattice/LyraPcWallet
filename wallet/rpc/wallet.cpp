@@ -35,7 +35,9 @@ void wallet::checkNewTransactions() {
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
     bool newTransaction = false;
     int height = 0;
-    walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &newTransaction);
+    if(pair.count()) {
+        walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &newTransaction);
+    }
     events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
 }
 
