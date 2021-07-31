@@ -20,6 +20,7 @@ class wallet
 {
 public:
     static void sync();
+    static void checkNewTransactions();
     static void calculateLastWeek();
 };
 

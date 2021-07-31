@@ -8,6 +8,7 @@
 #include "language/translate.h"
 #include "wallet/events.h"
 #include "pages/pc/textformating.h"
+#include "pages/pc/populate.h"
 
 #include "pages/pc/main/mainboard.h"
 
@@ -624,6 +625,7 @@ void dashmain::run() {
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         refreshLanguage();
+        populate::refreshAll();
         pastLanguage = translate::getCurrentLang();
         updateAssetsTables();
         updateLastTransactionsTables();
@@ -646,7 +648,11 @@ void dashmain::run() {
     }
     if(totalBlockCount != events::getTotalBlockCount()) {
         totalBlockCount = events::getTotalBlockCount();
-        totalBlockCountLabel->setText(QString::number(totalBlockCount));
+        if(totalBlockCount) {
+            totalBlockCountLabel->setText(QString::number(totalBlockCount));
+        } else {
+            totalBlockCountLabel->setText(_tr("WAIT"));
+        }
     }
     if(minimumDateTime != events::getMinimumDateTime()) {
         minimumDateTime = events::getMinimumDateTime();

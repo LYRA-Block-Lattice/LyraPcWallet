@@ -304,7 +304,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Destination"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
@@ -581,7 +581,7 @@ void walletsend::refreshLanguage() {
 
     syncButton->setText(_tr("SYNC"));
 
-    totalLyrSendedLabel->setText(_tr("TOTAL LYRA SENDED LAST WEEK"));
+    totalLyrSendedLabel->setText(_tr("TOTAL LYRA SENT LAST WEEK"));
     totalLyrSendedValueLabel->setText("1,158,010.00 LYR");
     totalLyrSendedLastWeekLabel->setText("12.58 %" + _tr("of Total Wallet"));
 
@@ -604,7 +604,7 @@ void walletsend::refreshLanguage() {
 
     sendButton->setText(_tr("SEND"));
 
-    ammountLabel->setText(_tr("Ammount") + ":");
+    ammountLabel->setText(_tr("Amount") + ":");
     ammountApproximateLabel->setText("~");
     if(events::getBtcUsdSelect())
         btcUsdTextLabel->setText("USD");
@@ -624,7 +624,7 @@ void walletsend::refreshLanguage() {
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Destination"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
@@ -738,6 +738,8 @@ void walletsend::run() {
         walletAddressIdLabel->setText(events::getId());
         showDetailsWindow->setDetailsVisible(false);
         events::setUnreceivedBallance("Please wait");
+        run();
+        wallet::checkNewTransactions();
     }
     if(tokenListModifyedCnt != events::getTokenListModifyedCnt()) {
         tokenListModifyedCnt = events::getTokenListModifyedCnt();

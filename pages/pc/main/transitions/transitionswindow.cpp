@@ -457,7 +457,7 @@ void transitionswindow::refreshLanguage() {
         tmp = 0;
     }
     txDirectionComboBox->clear();
-    txDirectionComboBox->addItems({_tr("ALL"), _tr("SENDED"), _tr("RECEIVED")});
+    txDirectionComboBox->addItems({_tr("ALL"), _tr("SENT"), _tr("RECEIVED")});
     txDirectionComboBox->setCurrentIndex(tmp);
 
     tokenLabel->setText(_tr("TOKEN") + ":");

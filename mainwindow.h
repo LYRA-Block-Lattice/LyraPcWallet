@@ -45,6 +45,7 @@ private:
     void windowToLogin();
 
     Ui::MainWindow *ui;
+
     tokenpairing tokenPairing;
     tickedupdates tickedUpdates;
     QPoint cursorPressPos;
@@ -70,16 +71,16 @@ private:
 
     rpc *rpcConnection = nullptr;
     rpcapi *rpcApi = nullptr;
-    double windowScale = 0;
+    double windowScale = -1;
     login::command_e loginCommand = login::command_e::CMD_NONE;
     bool pastNetworkConnection = false;
     int screenAt = 0;
 
 protected:
     virtual void resizeEvent(QResizeEvent *) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* /*event*/) override;
+    //void mousePressEvent(QMouseEvent* event) override;
+    //void mouseMoveEvent(QMouseEvent* event) override;
+    //void mouseReleaseEvent(QMouseEvent* /*event*/) override;
     bool eventFilter(QObject *obj, QEvent *ev) override;
 private slots:
     void appStart();

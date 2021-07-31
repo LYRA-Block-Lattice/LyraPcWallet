@@ -23,26 +23,20 @@ bool nebula::getCirculation(double *teamTotal, double *circulate, double *burned
 }
 
 bool nebula::getBlockHeight(long long *height) {
-    QString response = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live/api/nebula/history" : "https://blockexplorer.testnet.lyra.live/api/nebula/history");
+    qDebug() << ((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://mainnet.lyra.live/api/node/GetLastBlock" : "https://testnet.lyra.live/api/node/GetLastBlock");
+    QString response = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://mainnet.lyra.live/api/node/GetLastBlock" : "https://testnet.lyra.live/api/node/GetLastBlock");
     if(response == "") {
         return false;
     }
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
-    QJsonArray jsonArray = jsonResponse.array();
-    int count = jsonArray.count();
-    if (count) {
-        QJsonValue value = jsonArray[count - 1];
-        QJsonObject nodeStatus = value["nodeStatus"].toObject();
-        foreach(const QJsonValue &node, nodeStatus) {
-            QJsonObject nodeStatus = node["status"].toObject();
-            *height = nodeStatus["totalBlockCount"].toVariant().toLongLong();
-            if(*height) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+    QJsonObject blockDataObject = jsonResponse.object();
+    QJsonValue blockDataValue = blockDataObject["blockData"].toString();
 
-    }
+    jsonResponse = QJsonDocument::fromJson(blockDataValue.toString().toUtf8());
+    blockDataObject = jsonResponse.object();
+    *height = blockDataObject["totalBlockCount"].toVariant().toLongLong();
+    /*if(!*height){
+        return false;
+    }*/
     return true;
 }

@@ -280,7 +280,7 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Source"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
@@ -563,7 +563,7 @@ void walletreceive::refreshLanguage() {
 
     requestToWalletIdLabel->setText(_tr("Request to wallet ID") + ":");
 
-    ammountLabel->setText(_tr("Ammount") + ":");
+    ammountLabel->setText(_tr("Amount") + ":");
 
     ammountApproximateLabel->setText("~");
 
@@ -586,7 +586,7 @@ void walletreceive::refreshLanguage() {
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Source"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Ammount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
@@ -703,6 +703,8 @@ void walletreceive::run() {
         walletAddressIdLabel->setText(events::getId());
         showDetailsWindow->setDetailsVisible(false);
         events::setUnreceivedBallance("Please wait");
+        run();
+        wallet::checkNewTransactions();
     }
     if(tokenListModifyedCnt != events::getTokenListModifyedCnt()) {
         tokenListModifyedCnt = events::getTokenListModifyedCnt();

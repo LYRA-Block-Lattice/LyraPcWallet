@@ -64,9 +64,9 @@ bool populate::refreshAll() {
             QStringList recentTransactions;
             recentTransactions.append(date.toString("hh:mm:ss yyyy-MM-dd"));
             if(isReceived) {
-                recentTransactions.append("RECEIVE");
+                recentTransactions.append("RECEIVED");
             } else {
-                recentTransactions.append("SENDED");
+                recentTransactions.append("SENT");
             }
             QList<QString>key = transaction[7].keys();
             if(key.count() > 1) {
@@ -80,7 +80,7 @@ bool populate::refreshAll() {
 
             recentTransactionsList.append(recentTransactions);
 
-/* Sended Transactions */
+/* Sent Transactions */
 /* Received Transactions */
             recentTransactions.clear();
             recentTransactions.append(date.toString("hh:mm:ss yyyy-MM-dd"));

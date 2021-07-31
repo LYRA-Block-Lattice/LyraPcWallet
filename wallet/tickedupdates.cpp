@@ -122,12 +122,21 @@ void tickedupdates::on_FetchNode() {
         events::setBurnedSupply(burned);
         events::setTeamLockedReserved(teamTotal);
         events::setCirculatingSupply(circulate);
+        qDebug() << "Fetch";
+    } else {
+        qDebug() << "Failed";
     }
+    qDebug() << "End fetch nebula for network data.";
+    qDebug() << "Start fetch node for data.";
     if(nebula::getBlockHeight(&height)) {
         events::setTotalBlockCount(height);
+        qDebug() << "Fetch";
+    } else {
+        events::setTotalBlockCount(0);
+        qDebug() << "Failed";
     }
 
-    qDebug() << "End fetch nebula for network data.";
+    qDebug() << "End fetch node for data.";
 
     int index = events::getSelectedNameKeyIndex();
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();

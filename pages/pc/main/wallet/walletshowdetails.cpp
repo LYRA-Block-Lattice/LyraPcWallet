@@ -83,9 +83,9 @@ void walletshowdetails::show(QList<QMap<QString, QString>> transaction) {
     str.append(_tr("Height") + ": " + tmp["Height"] + "\n\r");
     tmp = transaction[1];
     if(tmp["IsReceive"].toInt()) {
-        str.append(_tr("Direction") + ": " + _tr("RECEIVE") + "\n\r");
+        str.append(_tr("Direction") + ": " + _tr("RECEIVED") + "\n\r");
     } else {
-        str.append(_tr("Direction") + ": " + _tr("SENDED") + "\n\r");
+        str.append(_tr("Direction") + ": " + _tr("SENT") + "\n\r");
     }
     tmp = transaction[2];
     QDateTime date = QDateTime::fromMSecsSinceEpoch(tmp["TimeStamp"].toLongLong());
@@ -99,14 +99,14 @@ void walletshowdetails::show(QList<QMap<QString, QString>> transaction) {
     tmp = transaction[6];
     str.append(_tr("Receive hash") + ": " + tmp["RecvHash"] + "\n\r");
     tmp = transaction[7];
-    str.append(_tr("Ammount transfered") + ": ");
+    str.append(_tr("Amount transferred") + ": ");
     QStringList tmpKeys = tmp.keys();
     foreach(key, tmpKeys) {
         str.append(key + ": " + textformating::toValue(tmp[key]) + "\n\r");
     }
     tmp = transaction[8];
     tmpKeys = tmp.keys();
-    str.append(_tr("Ammount in this account") + ": ");
+    str.append(_tr("Amount in this account") + ": ");
     foreach(key, tmpKeys) {
         str.append(key + ": " + textformating::toValue(tmp[key]) + "\n\r");
     }

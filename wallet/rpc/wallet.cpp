@@ -15,6 +15,7 @@ void wallet::sync() {
         events::setUnreceivedBallance(_tr("Please wait"));
         bool newTransaction = false;
         walletbalance::receive(pair[index].second, &newTransaction);
+        events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
         bool unreceived = false;
         int height = 0;
         walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &unreceived);
@@ -26,6 +27,16 @@ void wallet::sync() {
             events::setUpdateHistory();
         }
     }
+}
+
+void wallet::checkNewTransactions() {
+    events::setUnreceivedBallance(_tr("Please wait"));
+    int index = events::getSelectedNameKeyIndex();
+    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
+    bool newTransaction = false;
+    int height = 0;
+    walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &newTransaction);
+    events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
 }
 
 void wallet::calculateLastWeek() {

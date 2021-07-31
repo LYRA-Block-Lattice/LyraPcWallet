@@ -613,6 +613,8 @@ void walletmain::run() {
         idModifyedCnt = events::getIdModifyedCnt();
         walletAddressIdLabel->setText(events::getId());
         events::setUnreceivedBallance("Please wait");
+        run();
+        wallet::checkNewTransactions();
     }
 }
 
