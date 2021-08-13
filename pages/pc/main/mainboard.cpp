@@ -744,6 +744,9 @@ void mainboard::run() {
         pastMessages = events::getMessages();
         updateMessages();
     }
+    if(events::getShowTransitionsWindow()) {
+        setState(STATE_TRANSITION);
+    }
     if(currentState == STATE_DASHBOARD) {
         if(!dashboardWindow) {
             dashboardWindow = new dashboardpage();
@@ -773,9 +776,6 @@ void mainboard::run() {
             walletWindow = new walletpage();
             walletWindow->setVars(windowMain, parent);
         }
-    }
-    if(events::getShowTransitionsWindow()) {
-        setState(STATE_TRANSITION);
     }
     if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
         infoSwitch = false;
@@ -809,8 +809,12 @@ void mainboard::run() {
         myWalletSendButton->setVisible(false);
 
         if(currentState == STATE_DASHBOARD) {
+            walletSelectorLabel->setVisible(false);
+            walletSelectorComboBox->setVisible(false);
             dashboardWindow->setState(dashboardpage::STATE_MAIN);
         } else if(currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE) {
+            walletSelectorLabel->setVisible(true);
+            walletSelectorComboBox->setVisible(true);
             myWalletReceiveIcoLabel->setVisible(true);
             myWalletReceiveTextLabel->setVisible(true);
             myWalletReceiveButton->setVisible(true);
@@ -821,17 +825,23 @@ void mainboard::run() {
         } else if(currentState == STATE_LYRA_TOKENS) {
 
         } else if(currentState == STATE_TRANSITION) {
+            walletSelectorLabel->setVisible(true);
+            walletSelectorComboBox->setVisible(true);
             if(transitionsWindow) {
                 transitionsWindow->setState(transitionswindow::STATE_TRANSITIONS);
             }
             parent->repaint();
         } else if(currentState == STATE_SEARCH) {
+            walletSelectorLabel->setVisible(false);
+            walletSelectorComboBox->setVisible(false);
             if(searchWindow) {
                 searchWindow->setState(searchwindow::STATE_SEARCH);
             }
         } else if(currentState == STATE_SWAP) {
 
         } else if(currentState == STATE_SETTINGS) {
+            walletSelectorLabel->setVisible(false);
+            walletSelectorComboBox->setVisible(false);
             settingsWindow->setState(settingswindow::STATE_SETTINGS);
         }
 

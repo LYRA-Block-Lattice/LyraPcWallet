@@ -85,7 +85,7 @@ void searchwindow::run() {
 }
 
 void searchwindow::on_openNebula_ButtonPressed() {
-    QString link = (events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live/" : "https://blockexplorer.testnet.lyra.live/";
+    QString link = (events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live" : "https://nebulatestnet.lyra.live";
     QDesktopServices::openUrl(QUrl(link));
 }
 

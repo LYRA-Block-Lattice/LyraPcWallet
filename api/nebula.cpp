@@ -9,7 +9,7 @@
 #include "wallet/events.h"
 
 bool nebula::getCirculation(double *teamTotal, double *circulate, double *burned) {
-    QString response = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live/api/nebula/supply" : "https://blockexplorer.testnet.lyra.live/api/nebula/supply");
+    QString response = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://nebula.lyra.live/api/nebula/supply" : "https://nebulatestnet.lyra.live/api/nebula/supply");
     if(response == "") {
         return false;
     }

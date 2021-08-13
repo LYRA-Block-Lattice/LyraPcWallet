@@ -665,14 +665,21 @@ void dashmain::run() {
         endDateEdit->setMaximumDate(QDate::currentDate());
         myWalletValueAxisX->setRange(QDateTime(QDate(startDateEdit->date()), QTime(0, 0, 0, 0)), QDateTime(QDate(endDateEdit->date()), QTime(0, 0, 0, 0)));
     }
-    if(dateRangeModifyedCnt != events::getDateRangeModifyedCnt()) {
-        dateRangeModifyedCnt = events::getDateRangeModifyedCnt();
-        startDateEdit->setMinimumDate(events::getMinimumDateRange());
-        startDateEdit->setMaximumDate(events::getMaximumDateRange().addDays(1));
-        startDateEdit->setDate(events::getMinimumDateRange());
-        endDateEdit->setMinimumDate(events::getMinimumDateRange());
-        endDateEdit->setMaximumDate(events::getMaximumDateRange().addDays(1));
-        endDateEdit->setDate(events::getMaximumDateRange());
+    if(dateRangeModifyedCnt != dateRangeModifyedCntN/*events::getDateRangeModifyedCnt()*/) {
+        dateRangeModifyedCnt = dateRangeModifyedCntN/*events::getDateRangeModifyedCnt()*/;
+        //startDateEdit->setMinimumDate(events::getMinimumDateRange());
+        //startDateEdit->setMaximumDate(events::getMaximumDateRange().addDays(1));
+        //startDateEdit->setDate(events::getMinimumDateRange());
+        //endDateEdit->setMinimumDate(events::getMinimumDateRange());
+        //endDateEdit->setMaximumDate(events::getMaximumDateRange().addDays(1));
+        //endDateEdit->setDate(events::getMaximumDateRange());
+
+        startDateEdit->setMinimumDate(minimumDateRange);
+        startDateEdit->setMaximumDate(maximumDateRange.addDays(1));
+        startDateEdit->setDate(minimumDateRange);
+        endDateEdit->setMinimumDate(minimumDateRange);
+        endDateEdit->setMaximumDate(maximumDateRange.addDays(1));
+        endDateEdit->setDate(maximumDateRange);
         myWalletValueAxisX->setRange(QDateTime(QDate(startDateEdit->date()), QTime(0, 0, 0, 0)), QDateTime(QDate(endDateEdit->date()), QTime(0, 0, 0, 0)).addDays(1));
     }
     if(myWalletValueAllChartModifyedCnt != events::getMyWalletValueAllChartModifyedCnt() || usdSelected != events::getBtcUsdSelect()) {
@@ -693,14 +700,20 @@ void dashmain::run() {
         if(list.count()) {
             QDate startDate = QDateTime::fromMSecsSinceEpoch(list[0].first).date();
             QDate endDate = QDateTime::fromMSecsSinceEpoch(list[list.count() - 1].first).date();
-            events::setDateRange(startDate, endDate);
+            minimumDateRange = startDate;
+            maximumDateRange = endDate;
+            dateRangeModifyedCntN++;
+            //events::setDateRange(startDate, endDate);
         }
         QList<QtCharts::QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
         if(list.count() != 0) {
             abstract.first()->setRange(minimum, maximum);
         } else {
             abstract.first()->setRange(0, 1);
-            events::setDateRange(QDate::currentDate(), QDate::currentDate());
+            minimumDateRange = QDate::currentDate();
+            maximumDateRange = QDate::currentDate();
+            dateRangeModifyedCntN++;
+            //events::setDateRange(QDate::currentDate(), QDate::currentDate());
         }
     }
     if(recentTransactionsListModifyedCnt != events::getRecentTransactionsModifyedCnt()) {
@@ -762,17 +775,17 @@ void dashmain::run() {
                     break;
                 assetsTableView->setRowHidden(cnt, false);
                 tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
-                tmp->setText(list[list.count() - cnt - 1][0]);
+                tmp->setText(list[cnt][0]);
                 tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
-                if(list[list.count() - cnt - 1][1].toDouble() == 0.0)
+                if(list[cnt][1].toDouble() == 0.0)
                     tmp->setIcon(arrowNone);
-                else if(list[list.count() - cnt - 1][1].toDouble() > 0.0)
+                else if(list[cnt][1].toDouble() > 0.0)
                     tmp->setIcon(arrowUp);
                 else
                     tmp->setIcon(arrowDown);
-                tmp->setText(list[list.count() - cnt - 1][1] + " %");
+                tmp->setText(list[cnt][1] + " %");
                 tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
-                tmp->setText(list[list.count() - cnt - 1][2]);
+                tmp->setText(list[cnt][2]);
             }
         }
     }

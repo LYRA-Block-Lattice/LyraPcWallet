@@ -86,6 +86,9 @@ private:
     double pastScale = 0.0;
     QString pastLanguage = "";
 
+    QDate minimumDateRange;
+    QDate maximumDateRange;
+    int dateRangeModifyedCntN = 0;
     qint64 totalSupply = 1;
     qint64 teamLockedReserved = 1;
     qint64 circulatingSupply = 1;
