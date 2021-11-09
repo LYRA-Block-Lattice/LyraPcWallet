@@ -3,6 +3,8 @@
 #include <QVariant>
 #include <QApplication>
 
+#include "wallet/events.h"
+
 tokenpairing *tokenPairing = nullptr;
 
 tokenpairing::tokenpairing() {
@@ -42,6 +44,8 @@ QString tokenpairing::get(QString url) {
         if(!busy)
             return read;
         QApplication::processEvents();
+        if(events::getAppClosing())
+            return read;
     }
 }
 

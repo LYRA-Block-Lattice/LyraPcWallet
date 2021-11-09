@@ -11,6 +11,7 @@
 class events {
 public:
     typedef rpc::network_e network_e;
+    static bool getAppClosing();
     static bool getNetworkConnected();
     static QList<QPair<QString, QString>>  getWalletNameKeyList();
     static QStringList getWalletNameList();
@@ -85,6 +86,7 @@ public:
     static int getScreenNumber();
 
 
+    static void setAppClosing(bool closing);
     static void setNetworkConnected(bool connected);
     static void addWalletNameKeyList(QPair<QString, QString> wallet);
     static void removeWalletNameKeyList(QString wallet);

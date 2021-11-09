@@ -4,6 +4,7 @@
 
 #include <QDateTime>
 
+bool appClosing = false;
 bool networkConnected = false;
 QList<QPair<QString, QString>> walletNameKeyList;
 int walletNameKeyListChanged = 0;
@@ -65,6 +66,14 @@ double totalLyraSendedLastWeek = 0.0;
 double totalLyraReceivedLastWeek = 0.0;
 double osWindowScale = 1.0;
 int screenNumber = 0;
+
+bool events::getAppClosing() {
+    return appClosing;
+}
+
+void events::setAppClosing(bool closing) {
+    appClosing = closing;
+}
 
 void events::setNetworkConnected(bool connected) {
     networkConnected = connected;

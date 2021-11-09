@@ -317,6 +317,8 @@ void dashmain::refreshFonts() {
     viewAllAssetsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
     recentTransactionsTableView->horizontalHeader()->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
+    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     QStandardItem *tmp;
     if(recentTransactionsItemModel->rowCount() != 0) {
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 0));
@@ -545,6 +547,8 @@ void dashmain::updateLastTransactionsTables() {
     recentTransactionsTableView->horizontalHeader()->setEnabled(false);
     recentTransactionsTableView->setAlternatingRowColors(true);
     recentTransactionsTableView->setModel(recentTransactionsItemModel);
+    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
 
     QStandardItem *tmp;
@@ -596,6 +600,8 @@ void dashmain::updateAssetsTables() {
     assetsTableView->horizontalHeader()->setVisible(false);
     assetsTableView->setAlternatingRowColors(true);
     assetsTableView->setModel(assetsItemModel);
+    assetsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    assetsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
     QStandardItem *tmp;
     for(int cnt = 0;  cnt < 5; cnt++) {

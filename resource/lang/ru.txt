@@ -199,8 +199,6 @@
    "Seats" :                               "Seats",
    "Profiting ID" :                        "Profiting ID",
    "Days to stake" :                       "Days to stake",
-   "Available tokens:" :                   "Available tokens:",
-   "CREATE DIVIDENDS" :                    "CREATE DIVIDENDS",
-   "Do you want to create dividends for" : "Do you want to create dividends for"
+   "Available tokens:" :                   "Available tokens:"
 
 }

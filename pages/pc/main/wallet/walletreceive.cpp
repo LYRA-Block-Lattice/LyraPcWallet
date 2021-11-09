@@ -5,6 +5,7 @@
 #include <QHeaderView>
 #include <QMouseEvent>
 #include <QThread>
+#include <QMessageBox>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -300,6 +301,8 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     recentTransactionsTableView->horizontalHeader()->setEnabled(false);
     recentTransactionsTableView->setAlternatingRowColors(true);
     recentTransactionsTableView->setModel(recentTransactionsItemModel);
+    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
     QStandardItem *tmp;
     for(int cnt = 0;  cnt < 6; cnt++) {
@@ -417,8 +420,8 @@ void walletreceive::refreshFonts() {
     lastReceivedDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
     lastReceivedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
-    walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
-    walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
+    walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
 
     requestToWalletIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     requestToWalletIdLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
@@ -747,6 +750,10 @@ bool walletreceive::eventFilter(QObject *obj, QEvent *event) {
             } else if(obj == walletAddressIdLabel) {
                 QClipboard* clipboard = QApplication::clipboard();
                 clipboard->setText(walletAddressIdLabel->text());
+                QMessageBox::information( this, this->windowTitle(),
+                        _tr("Account ID copied to clipboard."),
+                        QMessageBox::Ok,
+                        QMessageBox::Ok);
             } else if(obj == qrCodeImageLabel) {
                 showDetailsWindow->show(walletAddressIdLabel->text());
             }

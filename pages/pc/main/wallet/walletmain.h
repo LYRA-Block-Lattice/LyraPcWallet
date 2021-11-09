@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QDateEdit>
+#include <QLineEdit>
 #include <QStandardItemModel>
 #include <QtCharts/QChartView>
 #include <QChart>
@@ -16,6 +17,8 @@
 #include <QLineSeries>
 #include <QDateTimeAxis>
 #include <QCategoryAxis>
+
+#include "stake.h"
 
 #include "config.h"
 #include "wallet/events.h"
@@ -26,10 +29,16 @@ class walletmain : public QMainWindow
 {
     Q_OBJECT
 public:
+    typedef enum {
+        STATE_NONE = 0,
+        STATE_WALLET
+    }state_e;
+
     walletmain();
     ~walletmain();
     void setVars(QMdiArea *mdiArea = nullptr, QMdiSubWindow *parentWindow = nullptr);
     void run();
+    void resetWindow();
 
 private:
     void refreshFonts();
@@ -62,6 +71,8 @@ private:
     QLabel *walletAddressLabel = nullptr;
     QLabel *walletAddressIdLabel = nullptr;
 
+    QPushButton *voteUnvoteButton = nullptr;
+
     QDateEdit *startBalanceDateEdit = nullptr;
     QDateEdit *endBalanceDateEdit = nullptr;
 
@@ -88,6 +99,10 @@ private:
     QDateTimeAxis *myWalletValueAxisX = nullptr;
     QValueAxis *myWalletValueAxisY = nullptr;
 
+    stake *stakeWindow = nullptr;
+
+    state_e currentState = STATE_WALLET;
+    state_e pastState = STATE_NONE;
     double pastScale = 0.0;
     QString pastLanguage = "";
 
@@ -113,6 +128,7 @@ private slots:
     void on_StartDateValue_EditFinished();
     void on_EndDateValue_EditFinished();
     void on_Sync_ButtonPressed();
+    void on_VoteUnvote_ButtonPressed();
 };
 
 #endif // WALLETMAIN_H

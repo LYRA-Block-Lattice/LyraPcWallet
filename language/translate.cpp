@@ -115,7 +115,7 @@ QString _tr(QString str) {
     if(languagemap.contains(str)) {
         return languagemap[str].toString().replace("<__VERSION__>", APP_VERSION);
     }
-    return /*"?" + */str;
+    return "?" + str;
 }
 
 int _scale(int value, double extra) {

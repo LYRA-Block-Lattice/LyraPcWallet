@@ -38,6 +38,7 @@ SOURCES += \
     pages/pc/main/info.cpp \
     pages/pc/main/mainboard.cpp \
     pages/pc/main/search/searchwindow.cpp \
+    pages/pc/main/settings/createprofitaccount.cpp \
     pages/pc/main/settings/settingsaddaccount.cpp \
     pages/pc/main/settings/settingsdeleteaccount.cpp \
     pages/pc/main/settings/settingseditaccount.cpp \
@@ -45,6 +46,7 @@ SOURCES += \
     pages/pc/main/settings/settingsshowprivkey.cpp \
     pages/pc/main/settings/settingswindow.cpp \
     pages/pc/main/transitions/transitionswindow.cpp \
+    pages/pc/main/wallet/stake.cpp \
     pages/pc/main/wallet/walletmain.cpp \
     pages/pc/main/wallet/walletpage.cpp \
     pages/pc/main/wallet/walletreceive.cpp \
@@ -55,6 +57,8 @@ SOURCES += \
     storage/walletfile.cpp \
     wallet/check.cpp \
     wallet/events.cpp \
+    wallet/rpc/profiting.cpp \
+    wallet/rpc/sign.cpp \
     wallet/rpc/wallet.cpp \
     wallet/rpc/walletbalance.cpp \
     wallet/rpc/wallethistory.cpp \
@@ -83,6 +87,7 @@ HEADERS += \
     pages/pc/main/info.h \
     pages/pc/main/mainboard.h \
     pages/pc/main/search/searchwindow.h \
+    pages/pc/main/settings/createprofitaccount.h \
     pages/pc/main/settings/settingsaddaccount.h \
     pages/pc/main/settings/settingsdeleteaccount.h \
     pages/pc/main/settings/settingseditaccount.h \
@@ -90,6 +95,7 @@ HEADERS += \
     pages/pc/main/settings/settingsshowprivkey.h \
     pages/pc/main/settings/settingswindow.h \
     pages/pc/main/transitions/transitionswindow.h \
+    pages/pc/main/wallet/stake.h \
     pages/pc/main/wallet/walletmain.h \
     pages/pc/main/wallet/walletpage.h \
     pages/pc/main/wallet/walletreceive.h \
@@ -100,6 +106,8 @@ HEADERS += \
     storage/walletfile.h \
     wallet/check.h \
     wallet/events.h \
+    wallet/rpc/profiting.h \
+    wallet/rpc/sign.h \
     wallet/rpc/wallet.h \
     wallet/rpc/walletbalance.h \
     wallet/rpc/wallethistory.h \

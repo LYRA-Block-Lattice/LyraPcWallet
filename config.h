@@ -3,12 +3,18 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.1.7"
+#define APP_VERSION                                 "0.2.0"
 
 #define TITLEBAR_HEIGHT                             0
 #define WINDOW_WIDTH                                1350
 #define WINDOW_HEIGHT                               960
+#ifdef Q_OS_OSX
+#define DEFAULT_SCALE                               0.8
+#elif defined(Q_OS_WIN32)
 #define DEFAULT_SCALE                               1.0
+#else
+#define DEFAULT_SCALE                               1.1
+#endif
 #define SCALE_LIST                                  {"0.7x", "0.8x", "0.9x", "1.0x", "1.1x", "1.2x", "1.3x", "1.4x", "1.5x", "1.6x", "1.7x", "1.8x", "1.9x"}
 #define DEFAULT_THEME                               "light"
 #ifdef Q_OS_OSX
@@ -53,8 +59,8 @@
                                                     {"wss://seed2.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}}
-#define RPC_CONNECT_TIMEOUT                         500 // mS
-#define RPC_MESSAGE_RESPONSE_TIMEOUT                5000 // mS
+#define RPC_CONNECT_TIMEOUT                         1000 // mS
+#define RPC_MESSAGE_RESPONSE_TIMEOUT                10000 // mS
 
 #define EXCHANGES_PRICE_BTC_PAIR_LIST               {{"finexbox", "https://xapi.finexbox.com/v1/ticker?market=lyr_btc"}}
 #define EXCHANGES_PRICE_USD_PAIR_LIST               {{"latoken", "https://api.latoken.com/v2/ticker"}}

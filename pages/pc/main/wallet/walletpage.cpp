@@ -92,6 +92,9 @@ void walletpage::run() {
             walletReceive->showDetailsWindow->setDetailsVisible(false);
         }
     }
+    if(pastState != currentState) {
+        walletMain->resetWindow();
+    }
     if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
 
         mdiAreaWallet->setGeometry(s(LEFT_MENU_WIDTH), s(HEADER_HEIGHT), s(WINDOW_WIDTH) - s(LEFT_MENU_WIDTH), s(WINDOW_HEIGHT) - s(HEADER_HEIGHT));

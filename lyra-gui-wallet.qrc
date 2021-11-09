@@ -90,5 +90,9 @@
         <file>resource/ico/light/mainDashBoard/transitions/orange.png</file>
         <file>resource/ico/light/mainDashBoard/settings/whiteBack.png</file>
         <file>resource/ico/light/mainDashBoard/transitions/red.png</file>
+        <file>resource/ico/light/mainDashBoard/wallet/cyan.png</file>
+        <file>resource/ico/light/mainDashBoard/wallet/green1.png</file>
+        <file>resource/ico/light/mainDashBoard/wallet/red1.png</file>
+        <file>resource/lang/ru.txt</file>
     </qresource>
 </RCC>

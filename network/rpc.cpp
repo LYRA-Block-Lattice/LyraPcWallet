@@ -71,6 +71,8 @@ void rpc::on_connect() {
                 connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
                 break;
             }
+            if(events::getAppClosing())
+                return;
         }
     } else if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING) {
         if(sslWebSocket->getConnected()) {
@@ -153,6 +155,8 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
             }
             if(sendMsgTimedOut)
                 break;
+            if(events::getAppClosing())
+                break;
         }
     }
     qDebug() << "Response fail" << Qt::endl;
@@ -173,6 +177,8 @@ QString rpc::sendSimpleMessage(QString message) {
                 return response;
             }
             if(sendMsgTimedOut)
+                break;
+            if(events::getAppClosing())
                 break;
         }
     }

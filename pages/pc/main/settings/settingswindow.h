@@ -21,6 +21,8 @@
 #include "settingseditaccount.h"
 #include "settingsedituser.h"
 #include "settingsshowprivkey.h"
+#include "createprofitaccount.h"
+
 
 class settingswindow : public QMainWindow
 {
@@ -85,6 +87,7 @@ private:
     settingseditaccount *settingsEditAccount = nullptr;
     settingsedituser *settingsEditUser = nullptr;
     settingsshowprivkey *settingsShowPrivKey = nullptr;
+    createprofitaccount *createProfitAccount = nullptr;
 
 
     state_e currentState = STATE_NONE;

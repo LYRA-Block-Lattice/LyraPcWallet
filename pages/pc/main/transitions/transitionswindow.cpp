@@ -193,6 +193,8 @@ void transitionswindow::refreshTable() {
     //historyTableView.setSelectionBehavior(QAbstractItemView::SelectRows);
     historyTableView->setAutoScroll(false);
     historyTableView->setModel(historyItemModel);
+    historyTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    historyTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
     scroll = historyTableView->horizontalScrollBar();
     scroll->setVisible(false);
@@ -412,7 +414,7 @@ void transitionswindow::refreshSize() {
     filterLabel->setGeometry(s(600), s(30), s(100), s(39));
     filterLineEdit->setGeometry(s(600), s(80), s(450), s(39));
 
-    historyTableView->setGeometry(s(45), s(200), s(1040), s(620));
+    historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
     historyTableView->setColumnWidth(0, s(25));
     historyTableView->setColumnWidth(1, s(190));
     historyTableView->setColumnWidth(2, s(30));
@@ -431,7 +433,7 @@ void transitionswindow::refreshSize() {
      */
     refreshFonts();
     historyTableView->repaint();
-    historyTableView->setGeometry(s(45), s(200), s(1040), s(620));
+    historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
     historyTableView->setColumnWidth(0, s(25));
     historyTableView->setColumnWidth(1, s(190));
     historyTableView->setColumnWidth(2, s(30));

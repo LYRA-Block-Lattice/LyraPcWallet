@@ -162,6 +162,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
                 event->ignore();
             } else {
                 timerLoop.stop();
+                events::setAppClosing(true);
                 /*if(mainboardWindow)
                     mainboardWindow->close();*/
                 walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);

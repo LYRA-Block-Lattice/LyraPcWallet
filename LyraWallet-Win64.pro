@@ -18,6 +18,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    api/nebula.cpp \
     crypto/aes.cpp \
     crypto/base58Encoding.cpp \
     crypto/ecc.cpp \
@@ -34,7 +35,10 @@ SOURCES += \
     pages/pc/login/login.cpp \
     pages/pc/main/dashboard/dashboardpage.cpp \
     pages/pc/main/dashboard/dashmain.cpp \
+    pages/pc/main/info.cpp \
     pages/pc/main/mainboard.cpp \
+    pages/pc/main/search/searchwindow.cpp \
+    pages/pc/main/settings/createprofitaccount.cpp \
     pages/pc/main/settings/settingsaddaccount.cpp \
     pages/pc/main/settings/settingsdeleteaccount.cpp \
     pages/pc/main/settings/settingseditaccount.cpp \
@@ -42,6 +46,7 @@ SOURCES += \
     pages/pc/main/settings/settingsshowprivkey.cpp \
     pages/pc/main/settings/settingswindow.cpp \
     pages/pc/main/transitions/transitionswindow.cpp \
+    pages/pc/main/wallet/stake.cpp \
     pages/pc/main/wallet/walletmain.cpp \
     pages/pc/main/wallet/walletpage.cpp \
     pages/pc/main/wallet/walletreceive.cpp \
@@ -52,6 +57,8 @@ SOURCES += \
     storage/walletfile.cpp \
     wallet/check.cpp \
     wallet/events.cpp \
+    wallet/rpc/profiting.cpp \
+    wallet/rpc/sign.cpp \
     wallet/rpc/wallet.cpp \
     wallet/rpc/walletbalance.cpp \
     wallet/rpc/wallethistory.cpp \
@@ -60,6 +67,7 @@ SOURCES += \
 HEADERS += \
     config.h \
     configlyra.h \
+    api/nebula.h \
     crypto/aes.h \
     crypto/base58Encoding.h \
     crypto/ecc.h \
@@ -76,7 +84,10 @@ HEADERS += \
     pages/pc/main/dashboard/dashboardpage.h \
     pages/pc/main/dashboard/dashmain.h \
     pages/pc/main/def.h \
+    pages/pc/main/info.h \
     pages/pc/main/mainboard.h \
+    pages/pc/main/search/searchwindow.h \
+    pages/pc/main/settings/createprofitaccount.h \
     pages/pc/main/settings/settingsaddaccount.h \
     pages/pc/main/settings/settingsdeleteaccount.h \
     pages/pc/main/settings/settingseditaccount.h \
@@ -84,6 +95,7 @@ HEADERS += \
     pages/pc/main/settings/settingsshowprivkey.h \
     pages/pc/main/settings/settingswindow.h \
     pages/pc/main/transitions/transitionswindow.h \
+    pages/pc/main/wallet/stake.h \
     pages/pc/main/wallet/walletmain.h \
     pages/pc/main/wallet/walletpage.h \
     pages/pc/main/wallet/walletreceive.h \
@@ -94,13 +106,17 @@ HEADERS += \
     storage/walletfile.h \
     wallet/check.h \
     wallet/events.h \
+    wallet/rpc/profiting.h \
+    wallet/rpc/sign.h \
     wallet/rpc/wallet.h \
     wallet/rpc/walletbalance.h \
     wallet/rpc/wallethistory.h \
     wallet/tickedupdates.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    pages/pc/main/info.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

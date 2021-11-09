@@ -4,6 +4,7 @@
 #include <QClipboard>
 #include <QApplication>
 #include <QThread>
+#include <QMessageBox>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -50,6 +51,8 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 
     walletAddressLabel = new QLabel(mdiArea);
     walletAddressIdLabel = new QLabel(mdiArea);
+
+    voteUnvoteButton = new QPushButton(mdiArea);
 
     startBalanceDateEdit = new QDateEdit(mdiArea);
     endBalanceDateEdit = new QDateEdit(mdiArea);
@@ -135,6 +138,12 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletAddressIdLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     walletAddressIdLabel->setCursor(Qt::PointingHandCursor);
     walletAddressIdLabel->installEventFilter(this);
+
+
+    voteUnvoteButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/sync.png); border-radius: 1px; color: #eee; ");
+    voteUnvoteButton->setFlat(true);
+    voteUnvoteButton->setCursor(Qt::PointingHandCursor);
+    connect(voteUnvoteButton, SIGNAL(clicked()),this, SLOT(on_VoteUnvote_ButtonPressed()));
 
 
     btcUsdLabel->setStyleSheet("color: #333;");
@@ -360,8 +369,10 @@ void walletmain::refreshFonts() {
     numberOfTransactionsCountLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
     numberOfTransactionsCountWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
-    walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
-    walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
+    walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+
+    voteUnvoteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
 
     btcUsdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
 
@@ -407,7 +418,9 @@ void walletmain::refreshSize() {
     numberOfTransactionsCountWeekLabel->setGeometry(s(877), s(119), s(370), s(20));
 
     walletAddressLabel->setGeometry(s(0), s(195), s(200), s(30));
-    walletAddressIdLabel->setGeometry(s(220), s(193), s(870), s(30));
+    walletAddressIdLabel->setGeometry(s(205), s(195), s(870), s(30));
+
+    voteUnvoteButton->setGeometry(s(1030), s(195), s(48), s(27));
 
     startBalanceDateEdit->setGeometry(s(262), s(355), s(127), s(30));
     endBalanceDateEdit->setGeometry(s(407), s(355), s(127), s(30));
@@ -444,6 +457,8 @@ void walletmain::refreshLanguage() {
 
     walletAddressLabel->setText(_tr("Your wallet's address ID") + ":");
 
+    voteUnvoteButton->setText(_tr("STAKE"));
+
     btcUsdLabel->setText("BTC            USD");
 
     walletBalanceChartLabel->setText(_tr("My Account Balance") + " - LYR");
@@ -456,6 +471,19 @@ void walletmain::refreshLanguage() {
 }
 
 void walletmain::run() {
+    if(pastState != currentState) {
+        pastState = currentState;
+        if(currentState == STATE_WALLET) {
+            this->mdiArea->setVisible(true);
+            parent->setVisible(true);
+        } else {
+            this->mdiArea->setVisible(false);
+            parent->setVisible(false);
+            if(stakeWindow) {
+                stakeWindow->setState(stake::runMode_e::NONE);
+            }
+        }
+    }
     if(pastScale != events::getScale()) {
         refreshSize();
         pastScale = events::getScale();
@@ -613,8 +641,24 @@ void walletmain::run() {
         idModifyedCnt = events::getIdModifyedCnt();
         walletAddressIdLabel->setText(events::getId());
         events::setUnreceivedBallance("Please wait");
+        if(stakeWindow) {
+            stakeWindow->setState(stake::runMode_e::NONE);
+        }
         run();
         wallet::checkNewTransactions();
+    }
+    if(stakeWindow) {
+        stakeWindow->run();
+        if(stakeWindow->getState() == stake::runMode_e::NONE) {
+            delete stakeWindow;
+            stakeWindow = nullptr;
+        }
+    }
+}
+
+void walletmain::resetWindow() {
+    if(stakeWindow) {
+        stakeWindow->setState(stake::runMode_e::NONE);
     }
 }
 
@@ -628,6 +672,10 @@ bool walletmain::eventFilter(QObject *obj, QEvent *event) {
             } else if(obj == walletAddressIdLabel) {
                 QClipboard* clipboard = QApplication::clipboard();
                 clipboard->setText(walletAddressIdLabel->text());
+                QMessageBox::information( this, this->windowTitle(),
+                        _tr("Account ID copied to clipboard."),
+                        QMessageBox::Ok,
+                        QMessageBox::Ok);
             }
         }
     }
@@ -690,4 +738,11 @@ void walletmain::on_Sync_ButtonPressed() {
     userInputSemaphore = false;
 }
 
+void walletmain::on_VoteUnvote_ButtonPressed() {
+    if(!stakeWindow) {
+        stakeWindow = new stake();
+        stakeWindow->init(this->mdiArea, events::getSelectedNameKeyIndex());
+    }
+    stakeWindow->setState(stake::runMode_e::RUN);
 
+}

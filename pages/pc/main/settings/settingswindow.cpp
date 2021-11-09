@@ -308,6 +308,8 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     accountsTableView->setAlternatingRowColors(true);
     accountsTableView->setVisible(true);
     accountsTableView->setModel(accountsItemModel);
+    accountsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    accountsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
 
     usernameNameLabel->setVisible(false);
@@ -336,14 +338,14 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 void settingswindow::updateWalletSettingsTable() {
     QList<QPair<QString, QString>> accountList = events::getWalletNameKeyList();
     accountsItemModel->clear();
-    accountsItemModel->setColumnCount(7);
+    accountsItemModel->setColumnCount(6);
     accountsItemModel->setRowCount(0);
 
     accountsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Wallet ID"));
     accountsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    accountsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Voted for"));
+    accountsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Wallet name"));
     accountsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    accountsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Wallet name"));
+    accountsItemModel->setHeaderData(2, Qt::Horizontal, "");
     accountsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     accountsItemModel->setHeaderData(3, Qt::Horizontal, "");
     accountsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
@@ -351,8 +353,6 @@ void settingswindow::updateWalletSettingsTable() {
     accountsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     accountsItemModel->setHeaderData(5, Qt::Horizontal, "");
     accountsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    accountsItemModel->setHeaderData(6, Qt::Horizontal, "");
-    accountsItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     QScrollBar *scroll = accountsTableView->horizontalScrollBar();
     scroll->setVisible(false);
     scroll = accountsTableView->verticalScrollBar();
@@ -366,12 +366,6 @@ void settingswindow::updateWalletSettingsTable() {
         it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         it->setEnabled(false);
         it->setText(signatures::getAccountIdFromPrivateKey(pair.second));
-        item.append(it);
-        it = new QStandardItem();
-        it->setForeground(QBrush(0x909090));
-        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        it->setEnabled(false);
-        it->setText("");
         item.append(it);
         it = new QStandardItem();
         it->setForeground(QBrush(0x909090));
@@ -397,40 +391,37 @@ void settingswindow::updateWalletSettingsTable() {
     QPushButton *showPrivateKeyButton;
     for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
         voteForButton = new QPushButton();
-        voteForButton->setText(_tr("VOTE"));
+        voteForButton->setText(_tr("PROFITING"));
         voteForButton->setCursor(Qt::PointingHandCursor);
         voteForButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
         voteForButton->installEventFilter(this);
-        //accountsTableView.setIndexWidget(accountsItemModel.index(cnt, 3), voteForButton);
+        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 2), voteForButton);
 
         editButton = new QPushButton();
         editButton->setText(_tr("EDIT"));
         editButton->setCursor(Qt::PointingHandCursor);
         editButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
         editButton->installEventFilter(this);
-        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 4), editButton);
+        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 3), editButton);
 
         deleteButton = new QPushButton();
         deleteButton->setText(_tr("DELETE"));
         deleteButton->setCursor(Qt::PointingHandCursor);
         deleteButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/red.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
         deleteButton->installEventFilter(this);
-        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 5), deleteButton);
+        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 4), deleteButton);
 
         showPrivateKeyButton = new QPushButton();
         showPrivateKeyButton->setText(_tr("SHOW KEY"));
         showPrivateKeyButton->setCursor(Qt::PointingHandCursor);
         showPrivateKeyButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
         showPrivateKeyButton->installEventFilter(this);
-        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 6), showPrivateKeyButton);
+        accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 5), showPrivateKeyButton);
 
     }
     if(events::getWalletLoaded()) {
         QList<QStandardItem *> item = QList<QStandardItem *>();
         QStandardItem *it;
-        it = new QStandardItem();
-        it->setEnabled(false);
-        item.append(it);
         it = new QStandardItem();
         it->setEnabled(false);
         item.append(it);
@@ -456,7 +447,7 @@ void settingswindow::updateWalletSettingsTable() {
         addButton->setCursor(Qt::PointingHandCursor);
         addButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
         connect(addButton, SIGNAL(clicked()),this, SLOT(on_Add_ButtonPressed()));
-        accountsTableView->setIndexWidget(accountsItemModel->index(accountsTableView->verticalHeader()->count() - 1, 6), addButton);
+        accountsTableView->setIndexWidget(accountsItemModel->index(accountsTableView->verticalHeader()->count() - 1, 5), addButton);
     }
 
 
@@ -499,18 +490,16 @@ void settingswindow::refreshFonts() {
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = accountsItemModel->itemFromIndex(accountsItemModel->index(cnt, 1));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = accountsItemModel->itemFromIndex(accountsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        QPushButton *voteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
+        QPushButton *voteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 2));
         if(voteButton != 0)
             voteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
-        QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
+        QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
         if(editButton != 0)
             editButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
-        QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
+        QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
         if(deleteButton != 0)
             deleteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
-        QPushButton *showPrivKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 6));
+        QPushButton *showPrivKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
         if(showPrivKeyButton != 0)
             showPrivKeyButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
     }
@@ -549,14 +538,13 @@ void settingswindow::refreshSize() {
     editButton->setGeometry(s(1000), s(264), s(58), s(27));
 
 
-    accountsTableView->setGeometry(s(50), s(401), s(1035), s(423));
-    accountsTableView->setColumnWidth(0, s(255));
-    accountsTableView->setColumnWidth(1, s(255));
-    accountsTableView->setColumnWidth(2, s(150));
+    accountsTableView->setGeometry(s(50), s(401), s(1010), s(423));
+    accountsTableView->setColumnWidth(0, s(500));
+    accountsTableView->setColumnWidth(1, s(150));
+    accountsTableView->setColumnWidth(2, s(90));
     accountsTableView->setColumnWidth(3, s(90));
     accountsTableView->setColumnWidth(4, s(90));
     accountsTableView->setColumnWidth(5, s(90));
-    accountsTableView->setColumnWidth(6, s(90));
     for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
         accountsTableView->setRowHeight(cnt, s(39));
     }
@@ -564,14 +552,13 @@ void settingswindow::refreshSize() {
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
      */
-    accountsTableView->setGeometry(s(50), s(401), s(1035), s(423));
-    accountsTableView->setColumnWidth(0, s(255));
-    accountsTableView->setColumnWidth(1, s(255));
-    accountsTableView->setColumnWidth(2, s(150));
+    accountsTableView->setGeometry(s(50), s(401), s(1010), s(423));
+    accountsTableView->setColumnWidth(0, s(500));
+    accountsTableView->setColumnWidth(1, s(150));
+    accountsTableView->setColumnWidth(2, s(90));
     accountsTableView->setColumnWidth(3, s(90));
     accountsTableView->setColumnWidth(4, s(90));
     accountsTableView->setColumnWidth(5, s(90));
-    accountsTableView->setColumnWidth(6, s(90));
     for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
         accountsTableView->setRowHeight(cnt, s(39));
     }
@@ -633,6 +620,9 @@ void settingswindow::run() {
             }
             if(settingsShowPrivKey) {
                 settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::NONE);
+            }
+            if(createProfitAccount) {
+                createProfitAccount->setState(createprofitaccount::runMode_e::NONE);
             }
         }
     }
@@ -740,6 +730,16 @@ void settingswindow::run() {
             settingsShowPrivKey = nullptr;
         }
     }
+    if(createProfitAccount) {
+        createprofitaccount::return_e responseCreateProfitAccountUser = createProfitAccount->run();
+        if(responseCreateProfitAccountUser == createprofitaccount::return_e::RETURN_OK) {
+
+        }
+        if(createProfitAccount->getState() == createprofitaccount::runMode_e::NONE) {
+            delete createProfitAccount;
+            createProfitAccount = nullptr;
+        }
+    }
 }
 
 bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
@@ -747,13 +747,16 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count() - 1; cnt++) {
-                QPushButton *voteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
+                QPushButton *voteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 2));
                 if (obj == voteButton) {
-                    /*settingsEditAccount.init(&mdiAreaSettings, events::getWalletNameKeyList().at(cnt).first);
-                    settingsEditAccount.setState(settingseditaccount::runMode_e::RUN);*/
+                    if(!createProfitAccount) {
+                        createProfitAccount = new createprofitaccount();
+                        createProfitAccount->init(mdiAreaSettings, cnt);
+                    }
+                    createProfitAccount->setState(createprofitaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
-                QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
+                QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
                 if (obj == editButton) {
                     if(!settingsEditAccount) {
                         settingsEditAccount = new settingseditaccount();
@@ -762,7 +765,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                     settingsEditAccount->setState(settingseditaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
-                QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
+                QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
                 if (obj == deleteButton) {
                     if(!settingsDeleteAccount) {
                         settingsDeleteAccount = new settingsdeleteaccount();
@@ -771,7 +774,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                     settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
                     return true;
                 }
-                QPushButton *showPrivateKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 6));
+                QPushButton *showPrivateKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
                 if (obj == showPrivateKeyButton) {
                     if(!settingsShowPrivKey) {
                         settingsShowPrivKey = new settingsshowprivkey();
