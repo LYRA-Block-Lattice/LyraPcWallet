@@ -88,6 +88,7 @@ Will display all transactions occurred in the selected account along with a filt
 * A network selection dropdown where the user can select the network that want to operate ( testnet/mainnet).
 * Default alternative value dropdown is the default conversion that is used by the wallet to display account value (BTC/USD).
 * Window scale dropdown where user can chose the wallet window magnification for better visualisation on different display resolutions.
+* Custom node IP, if you desire to connect to your own node or a node that you trust you can enter the node IP, they are separate for testnet and for mainnet and saved in the settings file.
 
 *User manager settings:*
 * User can backup the wallet.
