@@ -66,6 +66,8 @@ double totalLyraSendedLastWeek = 0.0;
 double totalLyraReceivedLastWeek = 0.0;
 double osWindowScale = 1.0;
 int screenNumber = 0;
+QString customIp[2];
+int customIpChanged = 0;
 
 bool events::getAppClosing() {
     return appClosing;
@@ -174,6 +176,7 @@ int events::getMessages() {
 }
 
 void events::setNetwork(network_e net) {
+    customIpChanged++;
     network = net;
 }
 
@@ -611,5 +614,42 @@ void events::setScreenNumber(int screen) {
 
 int events::getScreenNumber() {
     return screenNumber;
+}
+
+void events::setCustomIp(QString ip, events::network_e net) {
+    customIpChanged++;
+    if(net == events::network_e::NETWORK_NONE) {
+        if(network == events::network_e::NETWORK_TESTNET)
+            customIp[0] = ip;
+        else if(network == events::network_e::NETWORK_MAINNET)
+            customIp[1] = ip;
+    } else {
+        if(net == events::network_e::NETWORK_TESTNET)
+            customIp[0] = ip;
+        else if(net == events::network_e::NETWORK_MAINNET)
+            customIp[1] = ip;
+    }
+}
+
+int events::getCustomIpChanged() {
+    return customIpChanged;
+}
+
+QString events::getCustomIp(events::network_e net) {
+    if(net == events::network_e::NETWORK_NONE) {
+        if(network == events::network_e::NETWORK_TESTNET)
+            return customIp[0];
+        else if(network == events::network_e::NETWORK_MAINNET)
+            return customIp[1];
+        else
+            return "";
+    } else {
+        if(net == events::network_e::NETWORK_TESTNET)
+            return customIp[0];
+        else if(net == events::network_e::NETWORK_MAINNET)
+            return customIp[1];
+        else
+            return "";
+    }
 }
 

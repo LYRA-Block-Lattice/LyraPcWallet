@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.0"
+#define APP_VERSION                                 "0.2.1"
 
 #define TITLEBAR_HEIGHT                             0
 #define WINDOW_WIDTH                                1350

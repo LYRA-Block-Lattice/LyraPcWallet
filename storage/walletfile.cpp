@@ -178,6 +178,16 @@ bool walletfile::loadSettings() {
             events::setBtcUsdSelect(false);
         }
     }
+    if(settingsObject.contains("custom_nede_ip_testnet")) {
+        events::setCustomIp(settingsObject["custom_nede_ip_testnet"].toString(), events::network_e::NETWORK_TESTNET);
+    } else {
+        events::setCustomIp("", events::network_e::NETWORK_TESTNET);
+    }
+    if(settingsObject.contains("custom_nede_ip_mainnet")) {
+        events::setCustomIp(settingsObject["custom_nede_ip_mainnet"].toString(), events::network_e::NETWORK_MAINNET);
+    } else {
+        events::setCustomIp("", events::network_e::NETWORK_MAINNET);
+    }
     return true;
 }
 
@@ -197,6 +207,8 @@ bool walletfile::saveSettings() {
     }
     settingsObject.insert("window_scale", events::getScaleStore());
     settingsObject.insert("lastHeight", events::getTotalBlockCount());
+    settingsObject.insert("custom_nede_ip_testnet", events::getCustomIp(events::network_e::NETWORK_TESTNET));
+    settingsObject.insert("custom_nede_ip_mainnet", events::getCustomIp(events::network_e::NETWORK_MAINNET));
     QJsonObject objectFile;
     objectFile.insert("settings", settingsObject);
     QDir directory = QDir(QString(USER_HOME) + "/" WALLET_PATH "/");

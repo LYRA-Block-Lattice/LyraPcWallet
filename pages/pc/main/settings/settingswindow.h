@@ -68,6 +68,10 @@ private:
     QLabel *windowScaleLabel = nullptr;
     QComboBox *windowScaleComboBox = nullptr;
 
+    QLabel *customNodeIpLabel = nullptr;
+    QLineEdit *customNodeIpLineEdit = nullptr;
+    QPushButton *customNodeIpButton = nullptr;
+
     QLabel *userManagerSettingsLabel = nullptr;
     QLabel *userManagerSettingsBackgroundLabel = nullptr;
     QLabel *usernameLabel = nullptr;
@@ -100,6 +104,7 @@ private:
     bool walletLoaded = false;
     bool udsSelected = false;
     rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
+    int customIpChanged = -1;
 
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;
@@ -111,6 +116,7 @@ private slots:
     void on_Network_Changed(const QString &);
     void on_AlternativeValue_Changed(const QString &);
     void on_ScaleValue_Changed(const QString &);
+    void on_CustomNodeIp_ButtonPressed();
 };
 
 #endif // SETTINGSWINDOW_H

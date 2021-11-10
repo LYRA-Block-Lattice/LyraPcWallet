@@ -25,8 +25,6 @@ rpc::rpc(QMainWindow *parent) : QObject(parent) {
     timerRetryConnect.setInterval(10);
     connect(&timerRetryConnect, SIGNAL(timeout()), this, SLOT(on_connect()));
     timerRetryConnect.start();
-
-    connect(&timerRetryConnect, SIGNAL(timeout()), this, SLOT(on_connect()));
 }
 
 rpc::~rpc() {
@@ -40,39 +38,57 @@ void rpc::populateNodeList(){
 void rpc::on_connect() {
     timerRetryConnect.stop();
     if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_DISCONNECT) {
-        if(network != events::getNetwork()) {
-            network = events::getNetwork();
-            populateNodeList();
-            qDebug() << "Network changed";
-        }
-        timeoutCount = RPC_CONNECT_TIMEOUT;
-        QPair<QString, bool> node;
-        foreach(node, rpcNodeList) {
-            if(node.second) {
-                break;
+        if(events::getCustomIp(events::getNetwork()).length() == 0) {
+            if(network != events::getNetwork()) {
+                network = events::getNetwork();
+                populateNodeList();
+                qDebug() << "Network changed";
             }
-        }
-        if(!node.second) {
-            /* Retry with entire list */
-            qDebug() << "Repopulate list";
-            populateNodeList();
-            timerRetryConnect.setInterval(1);
-            timerRetryConnect.start();
-            return;
-        }
-        while(1) {
-            quint32 value = QRandomGenerator::global()->generate() % (rpcNodeList.count());
-            if(rpcNodeList[value].second) {
-                rpcNodeList[value].second = false;
-                if(sslWebSocket)
-                    delete sslWebSocket;
-                sslWebSocket = new sslwebsocket(rpcNodeList[value].first, parent);
-                qDebug() << "Connecting " << value;
-                connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
-                break;
+            timeoutCount = RPC_CONNECT_TIMEOUT;
+            QPair<QString, bool> node;
+            foreach(node, rpcNodeList) {
+                if(node.second) {
+                    break;
+                }
             }
-            if(events::getAppClosing())
+            if(!node.second) {
+                /* Retry with entire list */
+                qDebug() << "Repopulate list";
+                populateNodeList();
+                timerRetryConnect.setInterval(1);
+                timerRetryConnect.start();
                 return;
+            }
+            while(1) {
+                if(events::getCustomIp().length())
+                    break;
+                quint32 value = QRandomGenerator::global()->generate() % (rpcNodeList.count());
+                if(rpcNodeList[value].second) {
+                    rpcNodeList[value].second = false;
+                    if(sslWebSocket)
+                        delete sslWebSocket;
+                    sslWebSocket = new sslwebsocket(rpcNodeList[value].first, parent);
+                    qDebug() << "Connecting " << value;
+                    qDebug() << "Connecting " << rpcNodeList[value].first;
+                    connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
+                    break;
+                }
+                if(events::getAppClosing())
+                    return;
+            }
+        } else {
+            if(network != events::getNetwork()) {
+                network = events::getNetwork();
+                qDebug() << "Network changed";
+            }
+            timeoutCount = RPC_CONNECT_TIMEOUT;
+            if(sslWebSocket)
+                delete sslWebSocket;
+            QString tmp = "wss://" + events::getCustomIp(events::getNetwork()) + ":" + (events::getNetwork() == events::network_e::NETWORK_TESTNET ? "4504" : "5504") + "/api/v1/socket";
+            sslWebSocket = new sslwebsocket(QUrl(tmp), parent);
+
+            qDebug() << "Connecting " << events::getCustomIp(events::getNetwork());
+            connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
         }
     } else if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING) {
         if(sslWebSocket->getConnected()) {
@@ -91,7 +107,8 @@ void rpc::on_connect() {
             }
         }
     } else if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTED) {
-        if(!sslWebSocket->getConnected() || network != events::getNetwork()) {
+        if(!sslWebSocket->getConnected() || network != events::getNetwork() || customIpChanged != events::getCustomIpChanged()) {
+            customIpChanged = events::getCustomIpChanged();
             connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_DISCONNECT;
             qDebug() << "Disconnected";
             events::setNetworkConnected(false);

@@ -15,7 +15,8 @@ class rpc : public QObject
 public:
     typedef enum {
         NETWORK_TESTNET = 0,
-        NETWORK_MAINNET
+        NETWORK_MAINNET,
+        NETWORK_NONE = -1,
     }network_e;
 
     typedef enum {
@@ -47,6 +48,7 @@ private:
     QTimer timerSendMsgTimeout;
     bool sendMsgTimedOut = false;
     int LocalId = 1;
+    int customIpChanged = 0;
 
     sslwebsocket *sslWebSocket = nullptr;
 signals:

@@ -6,6 +6,7 @@
 #include <QScrollBar>
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -62,6 +63,10 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 
     windowScaleLabel = new QLabel(mdiAreaSettings);
     windowScaleComboBox = new QComboBox(mdiAreaSettings);
+
+    customNodeIpLabel = new QLabel(mdiAreaSettings);
+    customNodeIpLineEdit = new QLineEdit(mdiAreaSettings);
+    customNodeIpButton = new QPushButton(mdiAreaSettings);
 
     userManagerSettingsLabel = new QLabel(mdiAreaSettings);
     userManagerSettingsBackgroundLabel = new QLabel(mdiAreaSettings);
@@ -239,6 +244,27 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowScaleComboBox->setVisible(true);
     connect(windowScaleComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_ScaleValue_Changed(const QString &)));
 
+    customNodeIpLabel->setStyleSheet("color: #555;");
+    customNodeIpLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    customNodeIpLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    customNodeIpLabel->setVisible(true);
+
+    customNodeIpLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    customNodeIpLineEdit->setAlignment(Qt::AlignCenter);
+    customNodeIpLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #555;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: 3px;"
+                                                    ";}");
+    customNodeIpLineEdit->setVisible(true);
+
+    customNodeIpButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    customNodeIpButton->setFlat(true);
+    customNodeIpButton->setCursor(Qt::PointingHandCursor);
+    customNodeIpButton->setVisible(true);
+    connect(customNodeIpButton, SIGNAL(clicked()),this, SLOT(on_CustomNodeIp_ButtonPressed()));
 
 
     userManagerSettingsLabel->setStyleSheet("color: #555;");
@@ -474,6 +500,10 @@ void settingswindow::refreshFonts() {
     windowScaleLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     windowScaleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
 
+    customNodeIpLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    customNodeIpLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    customNodeIpButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+
     userManagerSettingsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
     usernameLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     usernameNameLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
@@ -522,6 +552,10 @@ void settingswindow::refreshSize() {
 
     windowScaleLabel->setGeometry(s(610), s(52), s(160), s(39));
     windowScaleComboBox->setGeometry(s(770), s(52), s(100), s(39));
+
+    customNodeIpLabel->setGeometry(s(610), s(100), s(160), s(39));
+    customNodeIpLineEdit->setGeometry(s(770), s(100), s(130), s(39));
+    customNodeIpButton->setGeometry(s(910), s(105), s(58), s(27));
 
     userManagerSettingsLabel->setGeometry(s(28), s(165), s(370), s(39));
     userManagerSettingsBackgroundLabel->setGeometry(s(50), s(258), s(1015), s(39));
@@ -577,6 +611,10 @@ void settingswindow::refreshLanguage() {
     alternativeValueLabel->setText(_tr("Default alternative value") + ":");
 
     windowScaleLabel->setText(_tr("Window scale") + ":");
+
+    customNodeIpLabel->setText(_tr("Custom node IP") + ":");
+    customNodeIpLineEdit->setPlaceholderText(_tr("Node IP"));
+    customNodeIpButton->setText(_tr("APPLY"));
 
     userManagerSettingsLabel->setText(_tr("User manager settings"));
     usernameLabel->setText(_tr("Username"));
@@ -682,6 +720,10 @@ void settingswindow::run() {
             backupButton->setVisible(false);
             editButton->setVisible(false);
         }
+    }
+    if(customIpChanged != events::getCustomIpChanged()) {
+        customIpChanged = events::getCustomIpChanged();
+        customNodeIpLineEdit->setText(events::getCustomIp(events::getNetwork()));
     }
     if(addAccountWindow) {
         settingsaddaccount::return_e responseAddAccountWindow = addAccountWindow->run();
@@ -852,4 +894,33 @@ void settingswindow::on_ScaleValue_Changed(const QString &scale) {
     events::setScale(sc.replace("x", "").toDouble());
 }
 
-
+void settingswindow::on_CustomNodeIp_ButtonPressed() {
+    if(!customNodeIpLineEdit->text().length() && events::getCustomIp().length() != 0) {
+        events::setCustomIp("");
+        return;
+    }
+    bool ok = true;
+    QStringList s = customNodeIpLineEdit->text().split(".");
+    if(s.count() != 4)
+        ok = false;
+    foreach (const QString& s, s) {
+        if(!ok)
+            break;
+        int intIp = s.toInt(&ok);
+        if(intIp > 255 || ok == false) {
+            ok = false;
+        }
+    }
+    if(ok) {
+        events::setCustomIp(customNodeIpLineEdit->text(), events::getNetwork());
+        QMessageBox::information( this, this->windowTitle(),
+                _tr("Custom IP successfully set."),
+                  QMessageBox::Ok,
+                  QMessageBox::Ok);
+    } else {
+        QMessageBox::critical( this, this->windowTitle(),
+            _tr("ERROR: invalid IP."),
+            QMessageBox::Ok,
+            QMessageBox::Ok);
+    }
+}

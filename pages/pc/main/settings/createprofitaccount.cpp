@@ -460,6 +460,12 @@ bool createprofitaccount::eventFilter(QObject *obj, QEvent *event) {
                                 _tr("ERROR creating dividends."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
+                    } else {
+                        QMessageBox::information( this, this->windowTitle(),
+                                _tr("Dividends created successfully."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::Ok);
+
                     }
                 }
             }

@@ -282,6 +282,9 @@ void stake::refreshLanguage() {
 void stake::refreshStakingTable() {
     stakingAccItemModel->clear();
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
+    if(!pair.count()) {
+        return;
+    }
     QString id = signatures::getAccountIdFromPrivateKey(pair[this->accCnt].second);
     QString response = profiting::getBrokerAccounts(id);
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
@@ -546,7 +549,7 @@ void stake::on_StakeOk_ButtonPressed() {
     }
     QStandardItem *tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(stakingAccountNr, 1));
     QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
-                            _tr("Do you want to stake " + textformating::toValue(events::getBallance()) +" LYR to this account ID:\n" +
+                            _tr("Do you want to stake " + textformating::toValue(tokenAmount->text().toDouble()) +" LYR to this account ID:\n" +
                                 tmp->text()) ,
                             QMessageBox::No | QMessageBox::Yes,
                             QMessageBox::No);

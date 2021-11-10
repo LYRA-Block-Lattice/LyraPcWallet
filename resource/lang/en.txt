@@ -201,6 +201,14 @@
    "Days to stake" :                       "Days to stake",
    "Available tokens:" :                   "Available tokens:",
    "CREATE DIVIDENDS" :                    "CREATE DIVIDENDS",
-   "Do you want to create dividends for" : "Do you want to create dividends for"
+   "Do you want to create dividends for" : "Do you want to create dividends for",
+   "Custom node IP" :                      "Custom node IP",
+   "Node IP" :                             "Node IP",
+   "APPLY" :                               "APPLY",
+   "Custom IP successfully set." :         "Custom IP successfully set.",
+   "ERROR: invalid IP." :                  "ERROR: invalid IP.",
+   "Invalid account name." :               "Invalid account name.",
+   "Invalid days name." :                  "Invalid days name.",
+   "Invalid account ID." :                 "Invalid account ID."
 
 }
