@@ -11,7 +11,7 @@ QJsonObject sign::signMessage(QString ownerPKey, QString response, int id) {
     QJsonObject result = jsonObject["result"].toObject();
     int idRec = jsonObject["id"].toInt();
     QString signRec = jsonObject["method"].toString();
-    qDebug() << signRec;
+    qDebug() << "SIGN 1: " << signRec;
     if(!signRec.compare("Sign")) {
         QJsonArray jsonArray = jsonObject["params"].toArray();
         if(jsonArray.count() != 0) {

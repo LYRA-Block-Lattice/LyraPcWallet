@@ -7,6 +7,7 @@ class check
 {
 public:
     static bool name(QString name);
+    static bool nameSpace(QString name);
     static bool privateKey(QString privateKey);
     static bool accountId(QString accountId);
     static bool password(QString password1, QString password2);

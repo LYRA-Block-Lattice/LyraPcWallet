@@ -1,6 +1,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QApplication>
 
 #include "walletbalance.h"
 #include "network/rpcapi.h"
@@ -44,6 +45,7 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
     *newTransactions = false;
     int idRec = 1;
     while(1) {
+        QApplication::processEvents();
         if(response.length() == 0)
             return walletErr_e::WALLET_ERR_UNKNOWN;
         QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
@@ -58,7 +60,7 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
 
         idRec = jsonObject["id"].toInt();
         QString signRec = jsonObject["method"].toString();
-        qDebug() << signRec;
+        qDebug() << "WALLETBALANCE 1: " << signRec;
         if(!signRec.compare("Sign")) {
             QJsonArray jsonArray = jsonObject["params"].toArray();
             if(jsonArray.count() != 0) {
@@ -99,7 +101,7 @@ walletErr_e walletbalance::send(QString privateKey, QString destAccId, QString t
     QJsonObject result = jsonObject["result"].toObject();
     int idRec = jsonObject["id"].toInt();
     QString signRec = jsonObject["method"].toString();
-    qDebug() << signRec;
+    qDebug() << "WALLETBALANCE 2: " << signRec;
     if(!signRec.compare("Sign")) {
         QJsonArray jsonArray = jsonObject["params"].toArray();
         if(jsonArray.count() != 0) {

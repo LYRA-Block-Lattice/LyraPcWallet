@@ -94,5 +94,6 @@
         <file>resource/ico/light/mainDashBoard/wallet/green1.png</file>
         <file>resource/ico/light/mainDashBoard/wallet/red1.png</file>
         <file>resource/lang/ru.txt</file>
+        <file>qt/etc/qt.conf</file>
     </qresource>
 </RCC>

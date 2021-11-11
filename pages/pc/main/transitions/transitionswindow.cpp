@@ -148,6 +148,8 @@ void transitionswindow::refreshTable() {
     /*if(refreshTableSemaphore)
         return;
     refreshTableSemaphore = true;*/
+    supressTableUpdate = true;
+    qDebug() << "TRANSACTIONSWINDOW 1: Start refresh table.";
 
     QScrollBar *scroll = historyTableView->verticalScrollBar();
     int vScrolPos = scroll->value();
@@ -212,163 +214,164 @@ void transitionswindow::refreshTable() {
     int index = events::getSelectedNameKeyIndex();
     QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
     QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(pair[index].first);
-    /*foreach(pair, accountsList)*/ {
-        //QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(pair[index].first);//wallethistory::getWallet(pair.first);
-        for (int cnt = 0; cnt < wallet.count(); cnt++) {
-            //QApplication::processEvents();
-            QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
-            cumulatedWallet.append(transaction);
-            QMap<QString, QString> tmp;
-            tmp = transaction[0];
-            QString height = tmp["Height"];
-            tmp = transaction[2];
-            QString timeStamp = tmp["TimeStamp"];
-            tmp = transaction[3];
-            QString sendAcc = tmp["SendAccountId"];
-            tmp = transaction[4];
-            QString sendHash = tmp["SendHash"];
-            tmp = transaction[5];
-            QString recvAcc = tmp["RecvAccountId"];
-            tmp = transaction[6];
-            QString recvHash = tmp["RecvHash"];
-            if(filterLineEdit->text().length() != 0 && !sendAcc.contains(filterLineEdit->text()) && !sendHash.contains(filterLineEdit->text()) && !recvAcc.contains(filterLineEdit->text()) && !recvHash.contains(filterLineEdit->text())) {
-                continue;
-            }
-            tmp = transaction[7];
-            QStringList tmpKeys = tmp.keys();
-            QString amount;
-            QString token;
-            if(tmpKeys.count() > 1) {
-                tmpKeys.removeAll("LYR");
-                foreach(QString key, tmpKeys) {
-                    amount = textformating::toValue(tmp[key]);
-                    token = key;
-                }
-            } else {
-                amount = textformating::toValue(tmp["LYR"]);
-                token = "LYR";
-            }
-            if(tokenComboBox->currentText().compare(_tr("ALL")) && tokenComboBox->currentText().compare(token)) {
-                continue;
-            }
-            tmp = transaction[1];
-            if(txDirectionComboBox->currentIndex() == 1 && tmp["IsReceive"].toInt() == 1) {
-                continue;
-            } else if(txDirectionComboBox->currentIndex() == 2 && tmp["IsReceive"].toInt() == 0) {
-                continue;
-            }
-            if(tmp["IsReceive"].toInt()) {
-                dirs.append("R");
-            } else {
-                dirs.append("S");
-            }
-            QString note;
-            if(transaction.count() >= 10) {
-                tmp = transaction[9];
-                note = tmp["note"];
-            }
-            QList<QStandardItem *> item = QList<QStandardItem *>();
-            QStandardItem *it;
-
-            it = new QStandardItem(); // Account
-            it->setForeground(QBrush(0x909090));
-            it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(height);
-            item.append(it);
-
-            it = new QStandardItem(); // Account
-            it->setForeground(QBrush(0x909090));
-            it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(pair[index].first);
-            item.append(it);
-
-            it = new QStandardItem(); // Tx Type
-            //it->setText("");
-            item.append(it);
-
-            it = new QStandardItem(); // Token
-            it->setForeground(QBrush(0x909090));
-            it->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(token);
-            item.append(it);
-
-            it = new QStandardItem(); // Date
-            it->setForeground(QBrush(0x909090));
-            it->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            it->setEnabled(false);
-            QDateTime date = QDateTime::fromMSecsSinceEpoch(timeStamp.toLongLong());
-            it->setText(date.toString("hh:mm:ss yyyy-MM-dd"));
-            item.append(it);
-
-            it = new QStandardItem(); // Amount
-            it->setForeground(QBrush(0x909090));
-            it->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(amount);
-            item.append(it);
-
-            it = new QStandardItem(); // Hash
-            it->setForeground(QBrush(0x0093EE));
-            it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(sendHash + "\n" + recvHash);
-            item.append(it);
-
-            it = new QStandardItem(); // From
-            it->setForeground(QBrush(0x0093EE));
-            it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(sendAcc);
-            item.append(it);
-
-            it = new QStandardItem(); // To
-            it->setForeground(QBrush(0x0093EE));
-            it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-            it->setEnabled(false);
-            it->setText(recvAcc);
-            item.append(it);
-
-            it = new QStandardItem();
-            item.append(it);
-
-            historyItemModel->appendRow(item);
+    qDebug() << "TRANSACTIONSWINDOW 2: Start refresh table.";
+    for (int cnt = 0; cnt < wallet.count(); cnt++) {
+        QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
+        cumulatedWallet.append(transaction);
+        QMap<QString, QString> tmp;
+        tmp = transaction[3];
+        QString sendAcc = tmp["SendAccountId"];
+        tmp = transaction[4];
+        QString sendHash = tmp["SendHash"];
+        tmp = transaction[5];
+        QString recvAcc = tmp["RecvAccountId"];
+        tmp = transaction[6];
+        QString recvHash = tmp["RecvHash"];
+        if(filterLineEdit->text().length() != 0 && !sendAcc.contains(filterLineEdit->text()) && !sendHash.contains(filterLineEdit->text()) && !recvAcc.contains(filterLineEdit->text()) && !recvHash.contains(filterLineEdit->text())) {
+            continue;
         }
-        QLabel *dir;
-        QPushButton *detailsButton;
-        for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
-            //QApplication::processEvents();
-            dir = new QLabel();
-            QString txt = dirs[cnt];
-            if(!txt.compare("R")) {
-                dir->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/receive.png); border: 0px; ");
-            } else if(!txt.compare("S")){
-                dir->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/send.png); border: 0px; ");
+        tmp = transaction[0];
+        QString height = tmp["Height"];
+        tmp = transaction[2];
+        QString timeStamp = tmp["TimeStamp"];
+        tmp = transaction[7];
+        QStringList tmpKeys = tmp.keys();
+        QString amount;
+        QString token;
+        if(tmpKeys.count() > 1) {
+            tmpKeys.removeAll("LYR");
+            foreach(QString key, tmpKeys) {
+                amount = textformating::toValue(tmp[key]);
+                token = key;
             }
-            dir->setScaledContents(true);
-            dir->repaint();
-            historyTableView->setIndexWidget(historyItemModel->index(cnt, 2), dir);
-
-            detailsButton = new QPushButton();
-            detailsButton->setText(_tr("DETAILS"));
-            detailsButton->setCursor(Qt::PointingHandCursor);
-            detailsButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
-            detailsButton->installEventFilter(this);
-            historyTableView->setIndexWidget(historyItemModel->index(cnt, 9), detailsButton);
+        } else {
+            amount = textformating::toValue(tmp["LYR"]);
+            token = "LYR";
         }
+        if(tokenComboBox->currentText().compare(_tr("ALL")) && tokenComboBox->currentText().compare(token)) {
+            continue;
+        }
+        tmp = transaction[1];
+        if(txDirectionComboBox->currentIndex() == 1 && tmp["IsReceive"].toInt() == 1) {
+            continue;
+        } else if(txDirectionComboBox->currentIndex() == 2 && tmp["IsReceive"].toInt() == 0) {
+            continue;
+        }
+        if(tmp["IsReceive"].toInt()) {
+            dirs.append("R");
+        } else {
+            dirs.append("S");
+        }
+        QString note;
+        if(transaction.count() >= 10) {
+            tmp = transaction[9];
+            note = tmp["note"];
+        }
+        QList<QStandardItem *> item = QList<QStandardItem *>();
+        QStandardItem *it;
+
+        it = new QStandardItem(); // Account
+        it->setForeground(QBrush(0x909090));
+        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(height);
+        item.append(it);
+
+        it = new QStandardItem(); // Account
+        it->setForeground(QBrush(0x909090));
+        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(pair[index].first);
+        item.append(it);
+
+        it = new QStandardItem(); // Tx Type
+        //it->setText("");
+        item.append(it);
+
+        it = new QStandardItem(); // Token
+        it->setForeground(QBrush(0x909090));
+        it->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(token);
+        item.append(it);
+
+        it = new QStandardItem(); // Date
+        it->setForeground(QBrush(0x909090));
+        it->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        it->setEnabled(false);
+        QDateTime date = QDateTime::fromMSecsSinceEpoch(timeStamp.toLongLong());
+        it->setText(date.toString("hh:mm:ss yyyy-MM-dd"));
+        item.append(it);
+
+        it = new QStandardItem(); // Amount
+        it->setForeground(QBrush(0x909090));
+        it->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(amount);
+        item.append(it);
+
+        it = new QStandardItem(); // Hash
+        it->setForeground(QBrush(0x0093EE));
+        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(sendHash + "\n" + recvHash);
+        item.append(it);
+
+        it = new QStandardItem(); // From
+        it->setForeground(QBrush(0x0093EE));
+        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(sendAcc);
+        item.append(it);
+
+        it = new QStandardItem(); // To
+        it->setForeground(QBrush(0x0093EE));
+        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setEnabled(false);
+        it->setText(recvAcc);
+        item.append(it);
+
+        it = new QStandardItem();
+        item.append(it);
+
+        historyItemModel->appendRow(item);
+    }
+    QLabel *dir;
+    QPushButton *detailsButton;
+    qDebug() << "TRANSACTIONSWINDOW 3: Middle refresh table: " << historyTableView->verticalHeader()->count();
+    for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
+        dir = new QLabel();
+        QString txt = dirs[cnt];
+        if(!txt.compare("R")) {
+            dir->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/receive.png); border: 0px; ");
+        } else if(!txt.compare("S")){
+            dir->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/send.png); border: 0px; ");
+        }
+        dir->setScaledContents(true);
+        dir->repaint();
+        historyTableView->setIndexWidget(historyItemModel->index(cnt, 2), dir);
+
+        detailsButton = new QPushButton();
+        detailsButton->setText(_tr("DETAILS"));
+        detailsButton->setCursor(Qt::PointingHandCursor);
+        detailsButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        detailsButton->installEventFilter(this);
+        historyTableView->setIndexWidget(historyItemModel->index(cnt, 9), detailsButton);
     }
     if(vScrolPos <= scroll->maximum()) {
         scroll->setValue(vScrolPos);
     }
+    qDebug() << "TRANSACTIONSWINDOW 4: End refresh table.";
     refreshSize();
     refreshFonts();
     historyTableView->setVisible(true);
     //refreshTableSemaphore = false;
+    qDebug() << "TRANSACTIONSWINDOW 5: End refresh table.";
+    supressTableUpdate = false;
 }
 
 void transitionswindow::refreshFonts() {
+    qDebug() << "TRANSACTIONSWINDOW 6: Start refresh fonts.";
     txDirectionLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     txDirectionComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
 
@@ -402,9 +405,11 @@ void transitionswindow::refreshFonts() {
             detailsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
         }
     }
+    qDebug() << "TRANSACTIONSWINDOW 7: End refresh fonts.";
 }
 
 void transitionswindow::refreshSize() {
+    qDebug() << "TRANSACTIONSWINDOW 8: Start refresh size.";
     txDirectionLabel->setGeometry(s(50), s(30), s(130), s(39));
     txDirectionComboBox->setGeometry(s(50), s(80), s(200), s(39));
 
@@ -450,9 +455,13 @@ void transitionswindow::refreshSize() {
 
     refreshFonts();
     historyTableView->repaint();
+    qDebug() << "TRANSACTIONSWINDOW 9: End refresh size.";
 }
 
 void transitionswindow::refreshLanguage() {
+    qDebug() << "TRANSACTIONSWINDOW 10: Start refresh language.";
+    disconnect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
+    disconnect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
     txDirectionLabel->setText(_tr("DIRECTION") + ":");
     int tmp = txDirectionComboBox->currentIndex();
     if(tmp < 0) {
@@ -481,6 +490,9 @@ void transitionswindow::refreshLanguage() {
     filterLineEdit->setPlaceholderText(_tr("ID, Hash"));
 
     refreshFonts();
+    connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
+    connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
+    qDebug() << "TRANSACTIONSWINDOW 11: End refresh language.";
 }
 
 void transitionswindow::setState(state_e state) {
@@ -527,8 +539,8 @@ bool transitionswindow::eventFilter(QObject *obj, QEvent *event) {
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
-                QPushButton *voteButton = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 9));
-                if (obj == voteButton) {
+                QPushButton *details = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 9));
+                if (obj == details) {
                     QScrollBar *scroll = historyTableView->verticalScrollBar();
                     int vScrolPos = scroll->value();
                     QList<QMap<QString, QString>> transaction = cumulatedWallet[cnt];

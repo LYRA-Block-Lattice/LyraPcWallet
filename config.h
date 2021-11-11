@@ -3,7 +3,17 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.1"
+#define APP_VERSION                                 "0.2.2"
+
+#define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
+
+#ifdef Q_OS_OSX
+#define USE_WINDOWS_SCALING                         true
+#elif defined(Q_OS_WIN32)
+#define USE_WINDOWS_SCALING                         true
+#else
+#define USE_WINDOWS_SCALING                         true
+#endif
 
 #define TITLEBAR_HEIGHT                             0
 #define WINDOW_WIDTH                                1350
@@ -11,11 +21,11 @@
 #ifdef Q_OS_OSX
 #define DEFAULT_SCALE                               0.8
 #elif defined(Q_OS_WIN32)
-#define DEFAULT_SCALE                               1.0
+#define DEFAULT_SCALE                               0.8
 #else
-#define DEFAULT_SCALE                               1.1
+#define DEFAULT_SCALE                               1.0
 #endif
-#define SCALE_LIST                                  {"0.7x", "0.8x", "0.9x", "1.0x", "1.1x", "1.2x", "1.3x", "1.4x", "1.5x", "1.6x", "1.7x", "1.8x", "1.9x"}
+#define SCALE_LIST                                  {"0.5x", "0.6x", "0.7x", "0.8x", "0.9x", "1.0x", "1.1x", "1.2x", "1.3x", "1.4x", "1.5x", "1.6x", "1.7x", "1.8x", "1.9x"}
 #define DEFAULT_THEME                               "light"
 #ifdef Q_OS_OSX
 #define DEFAULT_FONT_SIZE                           17
@@ -59,6 +69,13 @@
                                                     {"wss://seed2.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}}
+
+#define RPC_DEV_IP_LIST                             {{"wss://81.196.64.78:4504/api/v1/socket", true},  /*Iulian Gheorghiu node*/\
+                                                    {"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
+                                                    {"wss://seed2.testnet.lyra.live:443/api/v1/socket", true}, \
+                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}, \
+                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}}
+
 #define RPC_CONNECT_TIMEOUT                         1000 // mS
 #define RPC_MESSAGE_RESPONSE_TIMEOUT                10000 // mS
 

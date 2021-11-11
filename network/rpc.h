@@ -16,6 +16,7 @@ public:
     typedef enum {
         NETWORK_TESTNET = 0,
         NETWORK_MAINNET,
+        NETWORK_DEV,
         NETWORK_NONE = -1,
     }network_e;
 

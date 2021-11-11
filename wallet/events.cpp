@@ -12,7 +12,7 @@ int selectedNameKeyIndex = 0;
 int bellsNr = 0;
 int messagesNr = 0;
 rpc::network_e network = events::network_e::DEFAULT_NETWORK;
-QList<QPair<QString, bool>> rpcNodeList[2] = {RPC_TESTNET_IP_LIST, RPC_MAINNET_IP_LIST};
+QList<QPair<QString, bool>> rpcNodeList[3] = {RPC_TESTNET_IP_LIST, RPC_MAINNET_IP_LIST, RPC_DEV_IP_LIST};
 double ballance = 0.0;
 QString unreceivedBallance;
 double totalSupply = LYRA_MAX_SUPPLY;
@@ -66,7 +66,7 @@ double totalLyraSendedLastWeek = 0.0;
 double totalLyraReceivedLastWeek = 0.0;
 double osWindowScale = 1.0;
 int screenNumber = 0;
-QString customIp[2];
+QString customIp[3];
 int customIpChanged = 0;
 
 bool events::getAppClosing() {
@@ -551,7 +551,11 @@ void events::setScale(double s) {
 }
 
 double events::getScale() {
+#if USE_WINDOWS_SCALING
     return QString::asprintf("%1.1f", scale * osWindowScale).toDouble();
+#else
+    return QString::asprintf("%1.1f", scale ).toDouble();
+#endif
 }
 
 double events::getScaleStore() {
@@ -571,7 +575,11 @@ void events::setOsWindowScale(double s) {
 }
 
 double events::getOsWindowScale() {
+#if USE_WINDOWS_SCALING
     return osWindowScale;
+#else
+    return 1.0;
+#endif
 }
 
 bool events::getShowTransitionsWindow() {
@@ -623,11 +631,15 @@ void events::setCustomIp(QString ip, events::network_e net) {
             customIp[0] = ip;
         else if(network == events::network_e::NETWORK_MAINNET)
             customIp[1] = ip;
+        else if(network == events::network_e::NETWORK_DEV)
+            customIp[2] = ip;
     } else {
         if(net == events::network_e::NETWORK_TESTNET)
             customIp[0] = ip;
         else if(net == events::network_e::NETWORK_MAINNET)
             customIp[1] = ip;
+        else if(net == events::network_e::NETWORK_DEV)
+            customIp[2] = ip;
     }
 }
 
@@ -641,6 +653,8 @@ QString events::getCustomIp(events::network_e net) {
             return customIp[0];
         else if(network == events::network_e::NETWORK_MAINNET)
             return customIp[1];
+        else if(network == events::network_e::NETWORK_DEV)
+            return customIp[2];
         else
             return "";
     } else {
@@ -648,6 +662,8 @@ QString events::getCustomIp(events::network_e net) {
             return customIp[0];
         else if(net == events::network_e::NETWORK_MAINNET)
             return customIp[1];
+        else if(net == events::network_e::NETWORK_DEV)
+            return customIp[2];
         else
             return "";
     }

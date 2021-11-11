@@ -42,7 +42,7 @@ void rpc::on_connect() {
             if(network != events::getNetwork()) {
                 network = events::getNetwork();
                 populateNodeList();
-                qDebug() << "Network changed";
+                qDebug() << "RPC 1: Network changed";
             }
             timeoutCount = RPC_CONNECT_TIMEOUT;
             QPair<QString, bool> node;
@@ -53,7 +53,7 @@ void rpc::on_connect() {
             }
             if(!node.second) {
                 /* Retry with entire list */
-                qDebug() << "Repopulate list";
+                qDebug() << "RPC 2: Repopulate list";
                 populateNodeList();
                 timerRetryConnect.setInterval(1);
                 timerRetryConnect.start();
@@ -68,8 +68,8 @@ void rpc::on_connect() {
                     if(sslWebSocket)
                         delete sslWebSocket;
                     sslWebSocket = new sslwebsocket(rpcNodeList[value].first, parent);
-                    qDebug() << "Connecting " << value;
-                    qDebug() << "Connecting " << rpcNodeList[value].first;
+                    qDebug() << "RPC 3 :Connecting " << value;
+                    qDebug() << "RPC 3 :Connecting " << rpcNodeList[value].first;
                     connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
                     break;
                 }
@@ -79,7 +79,7 @@ void rpc::on_connect() {
         } else {
             if(network != events::getNetwork()) {
                 network = events::getNetwork();
-                qDebug() << "Network changed";
+                qDebug() << "RPC 4: Network changed";
             }
             timeoutCount = RPC_CONNECT_TIMEOUT;
             if(sslWebSocket)
@@ -87,7 +87,7 @@ void rpc::on_connect() {
             QString tmp = "wss://" + events::getCustomIp(events::getNetwork()) + ":" + (events::getNetwork() == events::network_e::NETWORK_TESTNET ? "4504" : "5504") + "/api/v1/socket";
             sslWebSocket = new sslwebsocket(QUrl(tmp), parent);
 
-            qDebug() << "Connecting " << events::getCustomIp(events::getNetwork());
+            qDebug() << "RPC 5: Connecting " << events::getCustomIp(events::getNetwork());
             connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
         }
     } else if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING) {
@@ -95,14 +95,14 @@ void rpc::on_connect() {
             connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTED;
             timerRetryConnect.setInterval(100);
             timerRetryConnect.start();
-            qDebug() << "Connected";
+            qDebug() << "RPC 6: Connected";
             events::setNetworkConnected(true);
             return;
         } else {
             timeoutCount--;
             if(!timeoutCount) {
                 connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_DISCONNECT;
-                qDebug() << "Timed out";
+                qDebug() << "RPC 7: Timed out";
                 events::setNetworkConnected(false);
             }
         }
@@ -110,7 +110,7 @@ void rpc::on_connect() {
         if(!sslWebSocket->getConnected() || network != events::getNetwork() || customIpChanged != events::getCustomIpChanged()) {
             customIpChanged = events::getCustomIpChanged();
             connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_DISCONNECT;
-            qDebug() << "Disconnected";
+            qDebug() << "RPC 8: Disconnected";
             events::setNetworkConnected(false);
         }
     }
@@ -149,7 +149,7 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
 
     QJsonDocument doc(object);
     QString sendMsg = QString((doc.toJson(QJsonDocument::Compact)));
-    qDebug() << sendMsg;
+    qDebug() << "RPC 9: " + sendMsg;
     if(sendText(sendMsg)) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
@@ -164,7 +164,7 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
                 QJsonObject jsonObject = jsonResponse.object();
                 int idRet = jsonObject["id"].toInt();
                 if(*id == idRet || jsonObject.contains("method")) {
-                    qDebug() << response << Qt::endl;
+                    qDebug() << "RPC 10: " + response << Qt::endl;
                     return response;
                 } else {
                     sslWebSocket->setTextMessage(response);
@@ -176,12 +176,12 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
                 break;
         }
     }
-    qDebug() << "Response fail" << Qt::endl;
+    qDebug() << "RPC 11: Response fail" << Qt::endl;
     return QString("");
 }
 
 QString rpc::sendSimpleMessage(QString message) {
-    qDebug() << message;
+    qDebug() << "RPC 12: " + message;
     if(sendText(message)) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
@@ -190,7 +190,7 @@ QString rpc::sendSimpleMessage(QString message) {
             QApplication::processEvents();
             QString response = getResponse();
             if(response.length()) {
-                qDebug() << response << Qt::endl;
+                qDebug() << "RPC 13: " + response << Qt::endl;
                 return response;
             }
             if(sendMsgTimedOut)
@@ -199,7 +199,7 @@ QString rpc::sendSimpleMessage(QString message) {
                 break;
         }
     }
-    qDebug() << "Response fail" << Qt::endl;
+    qDebug() << "RPC 14: Response fail" << Qt::endl;
     return QString("");
 }
 

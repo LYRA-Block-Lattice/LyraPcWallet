@@ -5,13 +5,24 @@
 #include "crypto/base58Encoding.h"
 
 bool check::name(QString name) {
-    QRegularExpression hexMatcher("^[a-zA-Z0-9_-]*$", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpressionMatch match = hexMatcher.match(name);
+    QRegularExpression nameMatcher("^[a-zA-Z0-9_-]*$", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = nameMatcher.match(name);
     if (!match.hasMatch() || name.length() < 1) {
         return false;
     } else {
         return true;
     }
+}
+
+bool check::nameSpace(QString name) {
+    QRegularExpression nameMatcher("^[a-zA-Z0-9_-]*$", QRegularExpression::CaseInsensitiveOption);
+    foreach(const QString &tmp, name.split(" ")) {
+        QRegularExpressionMatch match = nameMatcher.match(tmp);
+        if (!match.hasMatch() || name.length() < 1) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool check::privateKey(QString privateKey) {

@@ -474,7 +474,7 @@ void stake::createStakingAccount() {
 }
 
 void stake::on_Ok_ButtonPressed() {
-    if(check::name(accName->text())) {
+    if(check::nameSpace(accName->text())) {
         if(daysToStake->text().toInt() > 0 && daysToStake->text().toInt() < 36500) {
             if(check::accountId(voteId->text())) {
                 QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),

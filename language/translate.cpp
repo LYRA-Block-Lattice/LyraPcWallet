@@ -59,16 +59,28 @@ QString translate::getCurrentFontLight() {
 
 int translate::getNumberFontSize(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
+#if USE_WINDOWS_SCALING
     return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
+#else
+    return _scale(DEFAULT_FONT_SIZE, scale);
+#endif
 }
 
 int translate::getCurrentFontSizeLight(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
+#if USE_WINDOWS_SCALING
     if(language == "cn") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
+#else
+    if(language == "cn") {
+        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+    } else {
+        return _scale(DEFAULT_FONT_SIZE, scale);
+    }
+#endif
 }
 
 QString translate::getCurrentFontMedium() {
@@ -81,11 +93,19 @@ QString translate::getCurrentFontMedium() {
 
 int translate::getCurrentFontSizeMedium(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
+#if USE_WINDOWS_SCALING
     if(language == "cn") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
+#else
+    if(language == "cn") {
+        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+    } else {
+        return _scale(DEFAULT_FONT_SIZE, scale);
+    }
+#endif
 }
 
 QString translate::getCurrentFontRegular() {
@@ -98,11 +118,19 @@ QString translate::getCurrentFontRegular() {
 
 int translate::getCurrentFontSizeRegular(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
+#if USE_WINDOWS_SCALING
     if(language == "cn") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
+#else
+    if(language == "cn") {
+        return _scale(DEFAULT_FONT_SIZE + 4, scale);
+    } else {
+        return _scale(DEFAULT_FONT_SIZE, scale);
+    }
+#endif
 }
 
 

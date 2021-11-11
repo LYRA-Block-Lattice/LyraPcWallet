@@ -334,7 +334,7 @@ void MainWindow::appMain() {
     }
     if(windowScale != events::getScale()) {
         windowScale = events::getScale();
-        qDebug() << "Scale := " << windowScale;
+        qDebug() << "MAINWINDOW 1: Scale := " << windowScale;
         this->resize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
         this->setMinimumSize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
         this->setMaximumSize(s(WINDOW_WIDTH), s(WINDOW_HEIGHT) + s(TITLEBAR_HEIGHT));
@@ -350,6 +350,7 @@ void MainWindow::appMain() {
             populate::refreshAll();
         }
     }
+#if USE_WINDOWS_SCALING
     int tmp = QApplication::desktop()->screenNumber(this);
     events::setScreenNumber(tmp);
     QList<QScreen *> screens = QGuiApplication::screens();
@@ -363,7 +364,8 @@ void MainWindow::appMain() {
 #endif
     if(screens[tmp] != nullptr && events::getOsWindowScale() != osWindowScale) {
         events::setOsWindowScale(osWindowScale);
-        qDebug() << "osWindowScale" << osWindowScale;
+        qDebug() << "MAINWINDOW 2: osWindowScale" << osWindowScale;
+        qDebug() << "MAINWINDOW 3: logicalDotsPerInch" << screens[tmp]->logicalDotsPerInch();
         if(screenAt > tmp) {
             QCursor::setPos(QPoint(QCursor::pos().x() - (screens[tmp]->logicalDotsPerInch() * 2), QCursor::pos().y()));
             cursorPressPos.setX(cursorPressPos.x() + (screens[tmp]->logicalDotsPerInch() * 2));
@@ -374,6 +376,13 @@ void MainWindow::appMain() {
         }
     }
     screenAt = tmp;
+#else
+    /*int tmp = QApplication::desktop()->screenNumber(this);
+    events::setScreenNumber(tmp);
+    QList<QScreen *> screens = QGuiApplication::screens();
+    events::setOsWindowScale(screens[tmp]->logicalDotsPerInch() / 96);*/
+
+#endif
 }
 
 void MainWindow::appStart() {

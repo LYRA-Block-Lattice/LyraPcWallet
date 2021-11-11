@@ -23,7 +23,7 @@ bool nebula::getCirculation(double *teamTotal, double *circulate, double *burned
 }
 
 bool nebula::getBlockHeight(long long *height) {
-    qDebug() << ((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://mainnet.lyra.live/api/node/GetLastBlock" : "https://testnet.lyra.live/api/node/GetLastBlock");
+    qDebug() << "NEBULA 1 :" << ((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://mainnet.lyra.live/api/node/GetLastBlock" : "https://testnet.lyra.live/api/node/GetLastBlock");
     QString response = tokenpairing::getStatic((events::getNetwork() == events::network_e::NETWORK_MAINNET) ? "https://mainnet.lyra.live/api/node/GetLastBlock" : "https://testnet.lyra.live/api/node/GetLastBlock");
     if(response == "") {
         return false;

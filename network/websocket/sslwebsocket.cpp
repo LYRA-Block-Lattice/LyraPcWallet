@@ -59,7 +59,7 @@ void sslwebsocket::onConnected() {
 
 void sslwebsocket::onDisconnected() {
     connected = false;
-    qDebug() << m_webSocket.errorString();
+    qDebug() << "SSLWEBSOCKET 1 :" << m_webSocket.errorString();
 }
 
 void sslwebsocket::onTextMessageReceived(QString message) {

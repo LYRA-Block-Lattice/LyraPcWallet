@@ -8,6 +8,7 @@
 QMap<QString, QList<QList<QMap<QString, QString>>>> walletHistory[2];
 
 QList<QList<QMap<QString, QString>>> wallethistory::parseData(QString data) {
+    qDebug() << "WALLETHISTORY 1 Start parse data";
     QList<QList<QMap<QString, QString>>> list;
     QJsonDocument jsonResponse = QJsonDocument::fromJson(data.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
@@ -62,10 +63,12 @@ QList<QList<QMap<QString, QString>>> wallethistory::parseData(QString data) {
         list[list.count() - 1].append(balances);
         list[list.count() - 1].append(note);
     }
+    qDebug() << "WALLETHISTORY 2: End parse data";
     return list;
 }
 
 QList<QList<QMap<QString, QString>>> wallethistory::parseData(QJsonArray jsonArray) {
+    qDebug() << "WALLETHISTORY 3: Start parse data";
     QList<QList<QMap<QString, QString>>> list;
     foreach (const QJsonValue & value, jsonArray) {
         list.append(QList<QMap<QString, QString>>());
@@ -115,10 +118,12 @@ QList<QList<QMap<QString, QString>>> wallethistory::parseData(QJsonArray jsonArr
         list[list.count() - 1].append(balances);
         list[list.count() - 1].append(note);
     }
+    qDebug() << "WALLETHISTORY 4: End parse data";
     return list;
 }
 
 QJsonArray wallethistory::getWalletHistoryJson(QString name, int network) {
+    qDebug() << "WALLETHISTORY 5: Start get wallet history";
     QList<QList<QMap<QString, QString>>> wallet = walletHistory[network == -1 ? events::getNetwork() : network].find(name).value();//getWallet(name);
     QList<QMap<QString, QString>> transactionList;
     QJsonArray transactionsObject;
@@ -148,13 +153,13 @@ QJsonArray wallethistory::getWalletHistoryJson(QString name, int network) {
         }
         transactionsObject.append(transactionObject);
     }
+    qDebug() << "WALLETHISTORY 6: End get wallet history";
     return transactionsObject;
 }
 
 bool wallethistory::addWallet(QString name, int network) {
     if(walletHistory[network == -1 ? events::getNetwork() : network].contains(name))
         return false;
-    QDateTime lm = QDateTime::currentDateTimeUtc();
     walletHistory[network == -1 ? events::getNetwork() : network].insert(name, parseData(""));
     return true;
 }
@@ -218,9 +223,12 @@ bool wallethistory::setNote(QString accountName, int transaction, QString note) 
 }
 
 bool wallethistory::updateWallet(QString name, QString accountId) {
+    qDebug() << "WALLETHISTORY 7: Start update wallet history";
     int network = events::getNetwork();
-    if(!walletHistory[network].contains(name))
+    if(!walletHistory[network].contains(name)) {
+        qDebug() << "WALLETHISTORY 8: Update wallet history";
         return false;
+    }
     QDateTime lm = QDateTime::currentDateTimeUtc();
     connection_t connection = rpcapi::getConnection();
     QString response;
@@ -230,8 +238,10 @@ bool wallethistory::updateWallet(QString name, QString accountId) {
                                                   QString::number(0),
                                                   QString::number(lm.toMSecsSinceEpoch()),
                                                   QString::number(0)}));
-    if(response.length() == 0)
+    if(response.length() == 0) {
+        qDebug() << "WALLETHISTORY 9: Update wallet history";
         return false;
+    }
     QList<QList<QMap<QString, QString>>> srcAcc = getWallet(name);
     QList<QList<QMap<QString, QString>>> destAcc = parseData(response);
     for(int cnt = 0; cnt < srcAcc.count(); cnt++) {
@@ -247,6 +257,7 @@ bool wallethistory::updateWallet(QString name, QString accountId) {
     if(srcAcc.count() != destAcc.count()) {
         events::setWalletHistoryChanged();
     }
+    qDebug() << "WALLETHISTORY 10: End update wallet history";
     return true;
 }
 
@@ -266,11 +277,13 @@ bool wallethistory::updateWalletName(QString oldName, QString newName) {
 }
 
 bool wallethistory::updateWallets() {
+    qDebug() << "WALLETHISTORY 11: Start update wallets";
     QList<QPair<QString, QString>> list = events::getWalletNameKeyList();
     QPair<QString, QString> pair;
     foreach(pair, list) {
         wallethistory::updateWallet(pair.first, signatures::getAccountIdFromPrivateKey(pair.second));
     }
+    qDebug() << "WALLETHISTORY 12: End update wallets";
     return true;
 }
 

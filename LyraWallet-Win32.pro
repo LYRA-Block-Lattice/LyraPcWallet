@@ -1,7 +1,6 @@
 QT       += core gui network charts websockets
 TARGET = ../../LyraWallet-Win32/lyra-pc-wallet
 
-
 #win32{
 #    LIBS += -LD:\Qt\Tools\OpenSSL\Win_x64\lib -llibcrypto
 #    LIBS += -LD:\Qt\Tools\OpenSSL\Win_x64\lib -llibssl

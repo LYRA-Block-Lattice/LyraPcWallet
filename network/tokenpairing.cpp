@@ -54,7 +54,7 @@ void tokenpairing::replyFinished(QNetworkReply *resp){
     if(status_code.isValid()){
         // Print or catch the status code
         status = status_code.toString(); // or status_code.toInt();
-        //qDebug() << status;
+        //qDebug() << "TOKENPAIRING 1: " << status;
     }
 }
 

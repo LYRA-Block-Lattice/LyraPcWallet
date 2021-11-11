@@ -72,6 +72,7 @@ private:
     int selectedNameKeyIndex = -1;
     int assetsListModifyedCnt = -1;
     bool updateHistory = false;
+    bool supressTableUpdate = false;
     rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;

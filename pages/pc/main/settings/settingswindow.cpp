@@ -177,7 +177,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "selection-background-color: darkgray;"
                "}"
     );
-    networkComboBox->addItems({"testnet", "mainnet"});
+    networkComboBox->addItems(NETWORKS);
     networkComboBox->setCursor(Qt::PointingHandCursor);
     networkComboBox->setVisible(true);
     connect(networkComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Network_Changed(const QString &)));
@@ -871,6 +871,8 @@ void settingswindow::on_Network_Changed(const QString &arg1) {
         events::setNetwork(rpc::network_e::NETWORK_TESTNET);
     } else if(!arg1.compare("mainnet")) {
         events::setNetwork(rpc::network_e::NETWORK_MAINNET);
+    } else if(!arg1.compare("dev")) {
+        events::setNetwork(rpc::network_e::NETWORK_DEV);
     } else {
         events::setNetwork(rpc::network_e::NETWORK_TESTNET);
     }

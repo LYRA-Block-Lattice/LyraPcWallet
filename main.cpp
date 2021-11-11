@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     //QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     //QCoreApplication::addLibraryPath("/snap/gnome-3-34-1804/36/usr/lib/x86_64-linux-gnu");
 #endif
+    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
     MainWindow w;
     w.show();
     return a.exec();

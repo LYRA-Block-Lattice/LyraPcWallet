@@ -383,7 +383,7 @@ void createprofitaccount::on_Ok_ButtonPressed() {
                 QMessageBox::Ok);
         return;
     }
-    if(check::name(accName->text())) {
+    if(check::nameSpace(accName->text())) {
         if(shareRatio->text().toDouble() >= 0.0 && shareRatio->text().toDouble() <= 100.0) {
             if(seats->text().toInt() >= 0 && seats->text().toInt() <= 100) {
                 QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
