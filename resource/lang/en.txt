@@ -168,10 +168,10 @@
    "CREATE" :				   "CREATE",
    "Account ID copied to clipboard." :	   "Account ID copied to clipboard.",
    "You stacked to address" :              "You stacked to address",
-   "Invalid name." :                       "Invalid name.",
-   "Invalid percentage." :                 "Invalid percentage.",
-   "Invalid seats number." :               "Invalid seats number.",
-   "Invalid window initialization." :      "Invalid window initialization.",
+   "ERROR: Invalid name." :                "ERROR: Invalid name.",
+   "ERROR: Invalid percentage." :          "ERROR: Invalid percentage.",
+   "ERROR: Invalid seats number." :        "ERROR: Invalid seats number.",
+   "ERROR: Invalid window initialization." :"ERROR: Invalid window initialization.",
    "ERROR creating profiting account." :   "ERROR creating profiting account.",
    "Are you sure you want to create this profiting account?" : "Are you sure you want to create this profiting account?",
    "Account name" :                        "Account name",
@@ -207,8 +207,12 @@
    "APPLY" :                               "APPLY",
    "Custom IP successfully set." :         "Custom IP successfully set.",
    "ERROR: invalid IP." :                  "ERROR: invalid IP.",
-   "Invalid account name." :               "Invalid account name.",
-   "Invalid days name." :                  "Invalid days name.",
-   "Invalid account ID." :                 "Invalid account ID."
-
+   "ERROR: Invalid account name." :        "ERROR: Invalid account name.",
+   "ERROR: Invalid days number." :         "ERROR: Invalid days number.",
+   "ERROR: Invalid account ID." :          "ERROR: Invalid account ID.",
+   "Pending funds" :                       "Pending funds",
+   "Pending fee" :                         "Pending fee",
+   "ERROR: Creating dividends." :          "ERROR: Creating dividends.",
+   "Tokens successfully ustaked." :        "Tokens successfully ustaked.",
+   "Are you sure you want to unstake from this account?" : "Are you sure you want to unstake from this account?"
 }

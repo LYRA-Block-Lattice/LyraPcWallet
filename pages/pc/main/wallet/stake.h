@@ -10,6 +10,8 @@
 #include <QTableView>
 #include <QStandardItemModel>
 
+#include "wallet/events.h"
+
 class stake : public QMainWindow
 {
     Q_OBJECT
@@ -36,7 +38,6 @@ private:
     void refreshSize();
     void refreshLanguage();
     void refreshStakingTable();
-    void refreshProfitingTable();
     QWidget *parent = nullptr;
     QMdiArea *thisMdiArea = nullptr;
     QWidget *thisWidget = nullptr;
@@ -69,6 +70,7 @@ private:
 
     double pastScale = 0.0;
     QString pastLanguage = "";
+    rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
 
     int accCnt = -1;
 private slots:

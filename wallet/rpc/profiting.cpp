@@ -17,10 +17,21 @@ walletErr_e profiting::createProfitingAcc(QString ownerPKey, QString accName, QS
     }
 
     QJsonObject result = sign::signMessage(ownerPKey, response, id);
-    if(result.contains("pftid")) {
+    if(result["result"].toObject().contains("pftid")) {
         return  walletErr_e::WALLET_ERR_OK;
+    } else {
+        QJsonObject jsonObject = result["error"].toObject();
+        QString message = jsonObject["message"].toString();
+        if(message.contains("SendTransactionValidationFailed")) {
+            return walletErr_e::WALLET_ERR_NO_FUNDS;
+        } else if(message.contains("DuplicatedName")){
+            return walletErr_e::WALLET_ERR_DUPLICATED_NAME;
+        } else if(message.contains("InvalidBlockTags")){
+            return walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS;
+        } else {
+            return walletErr_e::WALLET_ERR_UNKNOWN;
+        }
     }
-    return  walletErr_e::WALLET_ERR_UNKNOWN;
 }
 
 walletErr_e profiting::createStakingAcc(QString ownerPKey, QString accName, QString voteFor, int daysToStake, bool compoundMode) {
@@ -34,10 +45,21 @@ walletErr_e profiting::createStakingAcc(QString ownerPKey, QString accName, QStr
     }
 
     QJsonObject result = sign::signMessage(ownerPKey, response, id);
-    if(result.contains("stkid") && !voteFor.compare(result["voting"].toString())) {
+    if(result["result"].toObject().contains("stkid") && !voteFor.compare(result["result"].toObject()["voting"].toString())) {
         return  walletErr_e::WALLET_ERR_OK;
+    } else {
+        QJsonObject jsonObject = result["error"].toObject();
+        QString message = jsonObject["message"].toString();
+        if(message.contains("SendTransactionValidationFailed")) {
+            return walletErr_e::WALLET_ERR_NO_FUNDS;
+        } else if(message.contains("DuplicatedName")){
+            return walletErr_e::WALLET_ERR_DUPLICATED_NAME;
+        } else if(message.contains("InvalidBlockTags")){
+            return walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS;
+        } else {
+            return walletErr_e::WALLET_ERR_UNKNOWN;
+        }
     }
-    return  walletErr_e::WALLET_ERR_UNKNOWN;
 }
 
 walletErr_e profiting::addStaking(QString ownerPKey, QString stakingId, double amount) {
@@ -51,6 +73,7 @@ walletErr_e profiting::addStaking(QString ownerPKey, QString stakingId, double a
     }
 
     QJsonObject result = sign::signMessage(ownerPKey, response, id);
+    result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;
     }
@@ -68,6 +91,7 @@ walletErr_e profiting::unStaking(QString ownerPKey, QString stakingId) {
     }
 
     QJsonObject result = sign::signMessage(ownerPKey, response, id);
+    result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;
     }
@@ -85,6 +109,7 @@ walletErr_e profiting::createDividents(QString ownerPKey, QString profitingId) {
     }
 
     QJsonObject result = sign::signMessage(ownerPKey, response, id);
+    result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;
     }
@@ -95,5 +120,12 @@ QString profiting::getBrokerAccounts(QString accId) {
     connection_t connection = rpcapi::getConnection();
     int id = 0;
     return connection->sendMessage(&id, "GetBrokerAccounts",
+                                                  QStringList({accId}));
+}
+
+QString profiting::getPendingStats(QString accId) {
+    connection_t connection = rpcapi::getConnection();
+    int id = 0;
+    return connection->sendMessage(&id, "GetPendingStats",
                                                   QStringList({accId}));
 }

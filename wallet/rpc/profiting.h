@@ -18,6 +18,7 @@ public:
     static walletErr_e unStaking(QString ownerPKey, QString stakingId);
     static walletErr_e createDividents(QString ownerPKey, QString profitingId);
     static QString getBrokerAccounts(QString accId);
+    static QString getPendingStats(QString accId);
 };
 
 #endif // PROFITING_H

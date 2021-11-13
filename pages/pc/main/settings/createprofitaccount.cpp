@@ -9,12 +9,12 @@
 
 #include "createprofitaccount.h"
 
-#include "wallet/events.h"
 
 #include "language/translate.h"
 #include "wallet/check.h"
 #include "wallet/rpc/profiting.h"
 #include "crypto/signatures.h"
+#include "pages/pc/textformating.h"
 
 #define s(s) _scale(s)
 
@@ -166,7 +166,7 @@ void createprofitaccount::refreshFonts() {
     profitingAccTableView->horizontalHeader()->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     QStandardItem *tmp;
     for(int cnt = 0;  cnt < profitingAccTableView->verticalHeader()->count(); cnt++) {
-        QPushButton *viewDetails = (QPushButton *)profitingAccTableView->indexWidget(profitingAccItemModel->index(cnt, 5));
+        QPushButton *viewDetails = (QPushButton *)profitingAccTableView->indexWidget(profitingAccItemModel->index(cnt, 7));
         viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
         tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 0));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
@@ -180,7 +180,12 @@ void createprofitaccount::refreshFonts() {
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 5));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 6));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 7));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
     }
+    network = events::getNetwork();
 }
 
 void createprofitaccount::refreshSize() {
@@ -199,8 +204,10 @@ void createprofitaccount::refreshSize() {
     profitingAccTableView->setColumnWidth(1, s(70));
     profitingAccTableView->setColumnWidth(2, s(70));
     profitingAccTableView->setColumnWidth(3, s(70));
-    profitingAccTableView->setColumnWidth(4, s(530));
-    profitingAccTableView->setColumnWidth(5, s(120));
+    profitingAccTableView->setColumnWidth(4, s(330));
+    profitingAccTableView->setColumnWidth(5, s(100));
+    profitingAccTableView->setColumnWidth(6, s(100));
+    profitingAccTableView->setColumnWidth(7, s(120));
     for( int cnt = 0; cnt < profitingAccTableView->verticalHeader()->count(); cnt++) {
         profitingAccTableView->setRowHeight(cnt, s(34));
     }
@@ -213,8 +220,10 @@ void createprofitaccount::refreshSize() {
     profitingAccTableView->setColumnWidth(1, s(70));
     profitingAccTableView->setColumnWidth(2, s(70));
     profitingAccTableView->setColumnWidth(3, s(70));
-    profitingAccTableView->setColumnWidth(4, s(530));
-    profitingAccTableView->setColumnWidth(5, s(120));
+    profitingAccTableView->setColumnWidth(4, s(330));
+    profitingAccTableView->setColumnWidth(5, s(100));
+    profitingAccTableView->setColumnWidth(6, s(100));
+    profitingAccTableView->setColumnWidth(7, s(120));
     for( int cnt = 0; cnt < profitingAccTableView->verticalHeader()->count(); cnt++) {
         profitingAccTableView->setRowHeight(cnt, s(34));
     }
@@ -239,8 +248,12 @@ void createprofitaccount::refreshLanguage() {
     profitingAccItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     profitingAccItemModel->setHeaderData(4, Qt::Horizontal, _tr("Profiting ID"));
     profitingAccItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    profitingAccItemModel->setHeaderData(5, Qt::Horizontal, "");
+    profitingAccItemModel->setHeaderData(5, Qt::Horizontal, _tr("Pending funds"));
     profitingAccItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    profitingAccItemModel->setHeaderData(6, Qt::Horizontal, _tr("Pending fee"));
+    profitingAccItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    profitingAccItemModel->setHeaderData(7, Qt::Horizontal, "");
+    profitingAccItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
 
     refreshFonts();
 }
@@ -253,6 +266,15 @@ void createprofitaccount::refreshProfitingTable() {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
+
+    response = profiting::getPendingStats(id);
+    QJsonObject pendingStatsObject;
+    if(response.length()) {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
+        QJsonObject res = jsonResponse.object();
+        pendingStatsObject = res["result"].toObject();
+    }
+
     if(!result["owner"].toString().compare(id)) {
         QJsonArray profits = result["profits"].toArray();
         //res.stakings = jsonObject["stakings"].toArray();
@@ -279,7 +301,7 @@ void createprofitaccount::refreshProfitingTable() {
             item.append(tmp);
 
             tmp= new QStandardItem();
-            tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             tmp->setForeground(QBrush(0x909090));
             tmp->setEnabled(false);
             tmp->setSelectable(false);
@@ -287,7 +309,7 @@ void createprofitaccount::refreshProfitingTable() {
             item.append(tmp);
 
             tmp = new QStandardItem();
-            tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             tmp->setForeground(QBrush(0x909090));
             tmp->setEnabled(false);
             tmp->setSelectable(false);
@@ -304,6 +326,24 @@ void createprofitaccount::refreshProfitingTable() {
             item.append(tmp);
 
             tmp = new QStandardItem();
+            tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            tmp->setForeground(QBrush(0x909090));
+            tmp->setEnabled(true);
+            tmp->setSelectable(false);
+            tmp->setText(textformating::toValue(pendingStatsObject["funds"].toDouble(), 2));
+            tmp->setEditable(false);
+            item.append(tmp);
+
+            tmp = new QStandardItem();
+            tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            tmp->setForeground(QBrush(0x909090));
+            tmp->setEnabled(true);
+            tmp->setSelectable(false);
+            tmp->setText(textformating::toValue(pendingStatsObject["fees"].toDouble(), 2));
+            tmp->setEditable(false);
+            item.append(tmp);
+
+            tmp = new QStandardItem();
             item.append(tmp);
 
             profitingAccItemModel->appendRow(item);
@@ -315,7 +355,7 @@ void createprofitaccount::refreshProfitingTable() {
             stakeButton->setCursor(Qt::PointingHandCursor);
             stakeButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
             stakeButton->installEventFilter(this);
-            profitingAccTableView->setIndexWidget(profitingAccItemModel->index(cnt, 5), stakeButton);
+            profitingAccTableView->setIndexWidget(profitingAccItemModel->index(cnt, 7), stakeButton);
         }
         refreshSize();
         refreshLanguage();
@@ -336,17 +376,21 @@ void createprofitaccount::setState(runMode_e state, QString walletName) {
 }
 
 createprofitaccount::return_e createprofitaccount::run() {
+    if(network != events::getNetwork()) {
+        network = events::getNetwork();
+        refreshProfitingTable();
+    }
+    if(pastScale != events::getScale()) {
+        pastScale = events::getScale();
+        thisMdiArea->setGeometry(0, 0, parent->width(), parent->height());
+        thisWindow->setGeometry(0, 0, thisMdiArea->width(), thisMdiArea->height());
+        refreshSize();
+    }
+    if(pastLanguage.compare(translate::getCurrentLang())) {
+        pastLanguage = translate::getCurrentLang();
+        refreshLanguage();
+    }
     if(pastMode != currentMode) {
-        if(pastScale != events::getScale()) {
-            pastScale = events::getScale();
-            thisMdiArea->setGeometry(0, 0, parent->width(), parent->height());
-            thisWindow->setGeometry(0, 0, thisMdiArea->width(), thisMdiArea->height());
-            refreshSize();
-        }
-        if(pastLanguage.compare(translate::getCurrentLang())) {
-            pastLanguage = translate::getCurrentLang();
-            refreshLanguage();
-        }
         if(currentMode == runMode_e::RUN) {
             thisMdiArea->setVisible(true);
             thisWindow->setVisible(true);
@@ -384,8 +428,8 @@ void createprofitaccount::on_Ok_ButtonPressed() {
         return;
     }
     if(check::nameSpace(accName->text())) {
-        if(shareRatio->text().toDouble() >= 0.0 && shareRatio->text().toDouble() <= 100.0) {
-            if(seats->text().toInt() >= 0 && seats->text().toInt() <= 100) {
+        if(shareRatio->text().length() > 0 && shareRatio->text().toDouble() >= 0.0 && shareRatio->text().toDouble() <= 100.0) {
+            if(seats->text().length() > 0 && seats->text().toInt() >= 0 && seats->text().toInt() <= 100) {
                 QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
                                                             _tr("Are you sure you want to create this profiting account?") + "\n\n" +
                                                                             "Profiting account name:        " + accName->text() + "\n" +
@@ -400,10 +444,27 @@ void createprofitaccount::on_Ok_ButtonPressed() {
                 QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
                 walletErr_e response = profiting::createProfitingAcc(pair[this->accCnt].second, accName->text(), accType->currentText(), shareRatio->text().toDouble(), seats->text().toInt());
                 if(response != walletErr_e::WALLET_ERR_OK) {
-                    QMessageBox::critical( this, this->windowTitle(),
-                            _tr("ERROR creating profiting account."),
-                            QMessageBox::Ok,
-                            QMessageBox::Ok);
+                    if(response == walletErr_e::WALLET_ERR_NO_FUNDS) {
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: No funds."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_DUPLICATED_NAME){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Duplicated name."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Invalid block tag."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else {
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Unknown."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    }
                     return;
                 }
                 accName->clear();
@@ -413,21 +474,21 @@ void createprofitaccount::on_Ok_ButtonPressed() {
                 return;
             } else {
                 QMessageBox::critical( this, this->windowTitle(),
-                        _tr("Invalid seats number."),
+                        _tr("ERROR: Invalid seats number."),
                         QMessageBox::Ok,
                         QMessageBox::Ok);
                 return;
             }
         } else {
             QMessageBox::critical( this, this->windowTitle(),
-                    _tr("Invalid percentage."),
+                    _tr("ERROR: Invalid percentage."),
                     QMessageBox::Ok,
                     QMessageBox::Ok);
             return;
         }
     } else {
         QMessageBox::critical( this, this->windowTitle(),
-                _tr("Invalid name."),
+                _tr("ERROR: Invalid name."),
                 QMessageBox::Ok,
                 QMessageBox::Ok);
         return;
@@ -440,7 +501,7 @@ bool createprofitaccount::eventFilter(QObject *obj, QEvent *event) {
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < profitingAccTableView->verticalHeader()->count(); cnt++) {
-                QPushButton *voteButton = (QPushButton *)profitingAccTableView->indexWidget(profitingAccItemModel->index(cnt, 5));
+                QPushButton *voteButton = (QPushButton *)profitingAccTableView->indexWidget(profitingAccItemModel->index(cnt, 7));
                 if (obj == voteButton) {
                     QStandardItem *tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4));
                     QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
@@ -457,10 +518,11 @@ bool createprofitaccount::eventFilter(QObject *obj, QEvent *event) {
                     walletErr_e response = profiting::createDividents(pair[this->accCnt].second, profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4))->text());
                     if(response != walletErr_e::WALLET_ERR_OK) {
                         QMessageBox::critical( this, this->windowTitle(),
-                                _tr("ERROR creating dividends."),
+                                _tr("ERROR: Creating dividends."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
                     } else {
+                        refreshProfitingTable();
                         QMessageBox::information( this, this->windowTitle(),
                                 _tr("Dividends created successfully."),
                                   QMessageBox::Ok,

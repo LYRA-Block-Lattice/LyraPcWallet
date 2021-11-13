@@ -7,8 +7,6 @@
 #include <QDate>
 #include <QMessageBox>
 
-#include "wallet/events.h"
-
 #include "wallet/check.h"
 #include "wallet/rpc/profiting.h"
 #include "crypto/signatures.h"
@@ -290,12 +288,19 @@ void stake::refreshStakingTable() {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
+    QDateTime now = QDateTime::currentDateTime();
     if(!result["owner"].toString().compare(id)) {
         QJsonArray stakings = result["stakings"].toArray();
         QStandardItem *tmp;
         QJsonObject obj = QJsonValue(stakings[0]).toObject();
         foreach(const QJsonValue & value, stakings) {
             QJsonObject obj = value.toObject();
+            QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
+            QDateTime date = endDate.addDays(obj["days"].toVariant().toLongLong());
+
+            if(now.secsTo(date) < 0 && obj["amount"].toDouble() == 0.0) {
+                continue;
+            }
             //recentTransactionsTableView->setRowHidden(cnt, true);
             QList<QStandardItem *> item = QList<QStandardItem *>();
 
@@ -323,9 +328,6 @@ void stake::refreshStakingTable() {
             tmp->setText(obj["voting"].toString());
             item.append(tmp);
 
-            QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
-            QDateTime date = endDate.addDays(obj["days"].toVariant().toLongLong());
-
             tmp= new QStandardItem();
             tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
             tmp->setForeground(QBrush(0x909090));
@@ -335,7 +337,7 @@ void stake::refreshStakingTable() {
             item.append(tmp);
 
             tmp = new QStandardItem();
-            tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             tmp->setForeground(QBrush(0x909090));
             tmp->setEnabled(false);
             tmp->setSelectable(false);
@@ -437,6 +439,10 @@ void stake::run() {
         }
         pastMode = currentMode;
     }
+    if(network != events::getNetwork()) {
+        network = events::getNetwork();
+        refreshStakingTable();
+    }
     if(pastState != currentState) {
         if(currentState == state_e::STATE_NONE) {
             accName->setVisible(false);
@@ -448,7 +454,6 @@ void stake::run() {
             tokenAmount->setVisible(false);
             stakeOkButton->setVisible(false);
             refreshButton->setVisible(true);
-            refreshStakingTable();
         } else if(currentState == state_e::STATE_CREATE_STACK_ACC) {
             accName->setVisible(true);
             daysToStake->setVisible(true);
@@ -475,7 +480,7 @@ void stake::createStakingAccount() {
 
 void stake::on_Ok_ButtonPressed() {
     if(check::nameSpace(accName->text())) {
-        if(daysToStake->text().toInt() > 0 && daysToStake->text().toInt() < 36500) {
+        if(daysToStake->text().toInt() >= 3 && daysToStake->text().toInt() < 36500) {
             if(check::accountId(voteId->text())) {
                 QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
                                                             _tr("Are you sure you want to create this staking account?") + "\n\n" +
@@ -490,10 +495,27 @@ void stake::on_Ok_ButtonPressed() {
                 QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
                 walletErr_e response = profiting::createStakingAcc(pair[this->accCnt].second, accName->text(), voteId->text(), daysToStake->text().toInt(), true);
                 if(response != walletErr_e::WALLET_ERR_OK) {
-                    QMessageBox::critical( this, this->windowTitle(),
-                            _tr("ERROR creating staking account."),
-                            QMessageBox::Ok,
-                            QMessageBox::Ok);
+                    if(response == walletErr_e::WALLET_ERR_NO_FUNDS) {
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: No funds."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_DUPLICATED_NAME){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Duplicated name."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Invalid block tag."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    } else {
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Unknown."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
+                    }
                     return;
                 }
                 accName->clear();
@@ -504,21 +526,21 @@ void stake::on_Ok_ButtonPressed() {
                 return;
             } else {
                 QMessageBox::critical( this, this->windowTitle(),
-                        _tr("Invalid account ID."),
+                        _tr("ERROR: Invalid account ID."),
                         QMessageBox::Ok,
                         QMessageBox::Ok);
                 return;
             }
         } else {
             QMessageBox::critical( this, this->windowTitle(),
-                    _tr("Invalid days number."),
+                    _tr("ERROR: Days out of range."),
                     QMessageBox::Ok,
                     QMessageBox::Ok);
             return;
         }
     } else {
         QMessageBox::critical( this, this->windowTitle(),
-                _tr("Invalid account name."),
+                _tr("ERROR: Invalid account name."),
                 QMessageBox::Ok,
                 QMessageBox::Ok);
         return;

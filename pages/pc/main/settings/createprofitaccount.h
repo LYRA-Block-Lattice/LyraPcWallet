@@ -11,6 +11,7 @@
 #include <QTableView>
 #include <QStandardItemModel>
 
+#include "wallet/events.h"
 
 class createprofitaccount : public QMainWindow
 {
@@ -66,6 +67,7 @@ private:
     double pastScale = 0.0;
     QString pastLanguage = "";
     int accCnt = -1;
+    rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
 
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;
