@@ -294,13 +294,13 @@ void stake::refreshStakingTable() {
         QStandardItem *tmp;
         QJsonObject obj = QJsonValue(stakings[0]).toObject();
         foreach(const QJsonValue & value, stakings) {
-            QJsonObject obj = value.toObject();
             QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
             QDateTime date = endDate.addDays(obj["days"].toVariant().toLongLong());
+            QJsonObject obj = value.toObject();
 
-            if(now.secsTo(date) < 0 && obj["amount"].toDouble() == 0.0) {
+            /*if(now.secsTo(date) < 0 && obj["amount"].toDouble() == 0.0) {
                 continue;
-            }
+            }*/
             //recentTransactionsTableView->setRowHidden(cnt, true);
             QList<QStandardItem *> item = QList<QStandardItem *>();
 

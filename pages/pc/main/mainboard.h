@@ -146,7 +146,7 @@ private:
 
     state_e currentState = STATE_NONE;
     state_e pastState = STATE_NONE;
-    double pastScale = DEFAULT_SCALE;
+    double pastScale = 0.0;
     QString pastLanguage = "";
     bool pastNetworkConnection = false;
     int pastWalletNameKeyListChanged = -1;
