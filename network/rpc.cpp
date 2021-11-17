@@ -76,6 +76,7 @@ void rpc::on_connect() {
                 if(events::getAppClosing())
                     return;
             }
+            events::setRpcNetwork(events::getNetwork());
         } else {
             if(network != events::getNetwork()) {
                 network = events::getNetwork();
@@ -89,6 +90,7 @@ void rpc::on_connect() {
 
             qDebug() << "RPC 5: Connecting " << events::getCustomIp(events::getNetwork());
             connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
+            events::setRpcNetwork(events::getNetwork());
         }
     } else if(connectionState == rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING) {
         if(sslWebSocket->getConnected()) {

@@ -14,6 +14,7 @@ DEFINES += MY_LIB_PATH=/
 #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
 MACDEPLOY = `echo $$QMAKE_QMAKE | sed 's/qmake/macdeployqt/g'`
 QMAKE_POST_LINK = $$MACDEPLOY $$OUT_PWD/$$TARGET\.app -qmldir=$$PWD -verbose=3
+#QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../Frameworks/
 
 
 # You can make your code fail to compile if it uses deprecated APIs.

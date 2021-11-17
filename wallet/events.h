@@ -22,6 +22,7 @@ public:
     static int getBells();
     static int getMessages();
     static rpc::network_e getNetwork();
+    static rpc::network_e getRpcNetwork();
     static QList<QPair<QString, bool>> getNodeList();
     static double getBallance();
     static QString getUnreceivedBallance();
@@ -98,6 +99,7 @@ public:
     static void setBells(int bells);
     static void setMessages(int messages);
     static void setNetwork(rpc::network_e net);
+    static void setRpcNetwork(rpc::network_e net);
     static void setNodeList(QList<QPair<QString, bool>> nodes);
     static void setBallance(double bal);
     static void setUnreceivedBallance(QString bal);

@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.4"
+#define APP_VERSION                                 "0.2.5"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -90,6 +90,8 @@
 #else
 #define FONT_REDUCTION  1
 #endif
+
+#define     BREAKING_STAKE_CONTRACT_FEE             "0.8"
 
 
 

@@ -459,6 +459,11 @@ void createprofitaccount::on_Ok_ButtonPressed() {
                                 _tr("ERROR: Invalid block tag."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_INVALID_AUTHORIZER_COUNT){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Invalid combination between seats and share."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
                     } else {
                         QMessageBox::critical( this, this->windowTitle(),
                                 _tr("ERROR: Unknown."),

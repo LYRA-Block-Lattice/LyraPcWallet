@@ -200,7 +200,7 @@
    "Days to stake" :                       "Zile de stake",
    "Available tokens:" :                   "Tokeni disponibili:",
    "CREATE DIVIDENDS" :                    "DISTRIBUIE DIVIDENDE",
-   "Do you want to create dividends for" : "Doresti sa creezi dividente pentru",
+   "Do you want to create dividends for" : "Doresti să creezi dividente pentru",
    "Custom node IP" :                      "Custom node IP",
    "Node IP" :                             "Node IP",
    "APPLY" :                               "APPLY",
@@ -213,5 +213,10 @@
    "Pending fee" :                         "Fees in asteptare",
    "ERROR: Creating dividends." :          "EROARE: Creare dividende.",
    "Tokens successfully ustaked." :        "Tokens successfully ustaked.",
-   "Are you sure you want to unstake from this account?" : "Are you sure you want to unstake from this account?"
+   "ERROR: Invalid combination between seats and share." : "ERROR: Invalid combination between seats and share.",
+   "ERROR: Invalid profiting account." : "ERROR: Profiting account invalid.",
+   "Are you sure you want to unstake from this account?" : "Sunteti sigur că vreti să dezactivati stakingul pentru acest cont?",
+   "If you unstake before the expiration date" : "Dacă dezactivati stakingul inaintea expirarii",
+   "a" :                                   "",
+   "penalty will be charged." :            "penalitate va fi dedusă."
 }

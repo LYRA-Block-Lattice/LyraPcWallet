@@ -510,6 +510,11 @@ void stake::on_Ok_ButtonPressed() {
                                 _tr("ERROR: Invalid block tag."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_INVALID_PROFITING_ACCOUNT){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Invalid profiting account."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
                     } else {
                         QMessageBox::critical( this, this->windowTitle(),
                                 _tr("ERROR: Unknown."),
@@ -622,7 +627,9 @@ bool stake::eventFilter(QObject *obj, QEvent *event) {
                 QPushButton *unstakeButton = (QPushButton *)stakingAccTableView->indexWidget(stakingAccItemModel->index(cnt, 6));
                 if (obj == unstakeButton) {
                     QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
-                                            _tr("Are you sure you want to unstake from this account?") ,
+                                            _tr("Are you sure you want to unstake from this account?") + "\n\n" +
+                                                _tr("If you unstake before the expiration date") + "\n" +
+                                                   "    " + _tr("a") + " " + BREAKING_STAKE_CONTRACT_FEE + "% " + _tr("penalty will be charged."),
                                             QMessageBox::No | QMessageBox::Yes,
                                             QMessageBox::No);
                     if (resBtn != QMessageBox::Yes) {

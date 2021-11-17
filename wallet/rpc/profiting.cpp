@@ -28,6 +28,8 @@ walletErr_e profiting::createProfitingAcc(QString ownerPKey, QString accName, QS
             return walletErr_e::WALLET_ERR_DUPLICATED_NAME;
         } else if(message.contains("InvalidBlockTags")){
             return walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS;
+        } else if(message.contains("InvalidAuthorizerCount")){
+            return walletErr_e::WALLET_ERR_INVALID_AUTHORIZER_COUNT;
         } else {
             return walletErr_e::WALLET_ERR_UNKNOWN;
         }
@@ -56,6 +58,8 @@ walletErr_e profiting::createStakingAcc(QString ownerPKey, QString accName, QStr
             return walletErr_e::WALLET_ERR_DUPLICATED_NAME;
         } else if(message.contains("InvalidBlockTags")){
             return walletErr_e::WALLET_ERR_INVALID_BLOCK_TAGS;
+        } else if(message.contains("InvalidProfitingAccount")){
+            return walletErr_e::WALLET_ERR_INVALID_PROFITING_ACCOUNT;
         } else {
             return walletErr_e::WALLET_ERR_UNKNOWN;
         }

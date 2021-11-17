@@ -214,5 +214,10 @@
    "Pending fee" :                         "Pending fee",
    "ERROR: Creating dividends." :          "ERROR: Creating dividends.",
    "Tokens successfully ustaked." :        "Tokens successfully ustaked.",
-   "Are you sure you want to unstake from this account?" : "Are you sure you want to unstake from this account?"
+   "ERROR: Invalid combination between seats and share." : "ERROR: Invalid combination between seats and share.",
+   "ERROR: Invalid profiting account." : "ERROR: Invalid profiting account.",
+   "Are you sure you want to unstake from this account?" : "Are you sure you want to unstake from this account?",
+   "If you unstake before the expiration date" : "If you unstake before the expiration date",
+   "a" :                                   "a",
+   "penalty will be charged." :            "penalty will be charged."
 }

@@ -615,11 +615,11 @@ void mainboard::updateNetwork() {
     networkLabelImage->setGeometry(s(843), s(44), s(25), s(25));
 
     networkLabel->setStyleSheet("color: #eee;");
-    /*if(events::getNetwork() == events::network_e::NETWORK_DEV)
+    /*if(events::getRpcNetwork() == events::network_e::NETWORK_DEV)
         networkLabel.setText(_tr("Dev network"));*/
-    if(events::getNetwork() == events::network_e::NETWORK_TESTNET)
+    if(events::getRpcNetwork() == events::network_e::NETWORK_TESTNET)
         networkLabel->setText(_tr("Testnet network"));
-    if(events::getNetwork() == events::network_e::NETWORK_MAINNET)
+    if(events::getRpcNetwork() == events::network_e::NETWORK_MAINNET)
         networkLabel->setText(_tr("Mainnet network"));
 
     networkLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
@@ -712,9 +712,9 @@ void mainboard::updateObjects() {
 }
 
 void mainboard::run() {
-    if(pastNetworkConnection != events::getNetworkConnected() || pastNetwork != events::getNetwork()) {
+    if(pastNetworkConnection != events::getNetworkConnected() || pastNetwork != events::getRpcNetwork()) {
         pastNetworkConnection = events::getNetworkConnected();
-        pastNetwork = events::getNetwork();
+        pastNetwork = events::getRpcNetwork();
         updateNetwork();
     }
     if(pastWalletNameKeyListChanged != events::getWalletNameKeyListChanged()) {

@@ -12,6 +12,7 @@ int selectedNameKeyIndex = 0;
 int bellsNr = 0;
 int messagesNr = 0;
 rpc::network_e network = events::network_e::DEFAULT_NETWORK;
+rpc::network_e networkRpc = events::network_e::DEFAULT_NETWORK;
 QList<QPair<QString, bool>> rpcNodeList[3] = {RPC_TESTNET_IP_LIST, RPC_MAINNET_IP_LIST, RPC_DEV_IP_LIST};
 double ballance = 0.0;
 QString unreceivedBallance;
@@ -182,6 +183,15 @@ void events::setNetwork(network_e net) {
 
 events::network_e events::getNetwork() {
     return network;
+}
+
+void events::setRpcNetwork(network_e net) {
+    //customIpChanged++;
+    networkRpc = net;
+}
+
+events::network_e events::getRpcNetwork() {
+    return networkRpc;
 }
 
 QList<QPair<QString, bool>> events::getNodeList() {
