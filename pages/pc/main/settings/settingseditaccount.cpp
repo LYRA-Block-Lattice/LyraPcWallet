@@ -168,14 +168,19 @@ void settingseditaccount::on_Cancel_ButtonPressed() {
 
 void settingseditaccount::on_Ok_ButtonPressed() {
     if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second) && nameLineEdit->text().length() != 0) {
+        okButton->setText(_tr("WAIT"));
+        okButton->repaint();
+        cancelButton->setVisible(false);
+        cancelButton->repaint();
         events::replaceWalletNameKeyList(walletName, nameLineEdit->text());
         wallethistory::updateWalletName(walletName, nameLineEdit->text());
         events::setWalletHistoryChanged();
         walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
         passwordConfirmationLineEdit->clear();
         currentMode = runMode_e::OK;
+        okButton->setText(_tr("OK"));
+        cancelButton->setVisible(true);
     }
-
 }
 
 void settingseditaccount::on_nameNameLineEdit_textChanged(const QString &arg1) {

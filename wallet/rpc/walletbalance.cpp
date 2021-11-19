@@ -6,6 +6,7 @@
 #include "walletbalance.h"
 #include "network/rpcapi.h"
 #include "crypto/signatures.h"
+#include "wallet/events.h"
 
 ballance_t walletbalance::balance(QString accountId, int *height, bool *unreceived) {
     connection_t connection = rpcapi::getConnection();
@@ -22,6 +23,8 @@ ballance_t walletbalance::balance(QString accountId, int *height, bool *unreceiv
     QStringList balanceKeyList = jsonBalance.keys();
     foreach(QString key,  balanceKeyList) {
         balance.insert(key , jsonBalance[key].toDouble());
+        if(events::getAppClosing())
+            break;
     }
     return balance;
 }
@@ -45,6 +48,8 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
     *newTransactions = false;
     int idRec = 1;
     while(1) {
+        if(events::getAppClosing())
+            break;
         QApplication::processEvents();
         if(response.length() == 0)
             return walletErr_e::WALLET_ERR_UNKNOWN;
@@ -61,6 +66,8 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
         idRec = jsonObject["id"].toInt();
         QString signRec = jsonObject["method"].toString();
         qDebug() << "WALLETBALANCE 1: " << signRec;
+        if(!signRec.length())
+            break;
         if(!signRec.compare("Sign")) {
             QJsonArray jsonArray = jsonObject["params"].toArray();
             if(jsonArray.count() != 0) {

@@ -268,6 +268,10 @@ void settingsaddaccount::on_Cancel_ButtonPressed() {
 
 void settingsaddaccount::on_Ok_ButtonPressed() {
     if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second) && signatures::validatePrivateKey(privateKeyLineEdit->text()) && check::name(accountNameLineEdit->text())) {
+        okButton->setText(_tr("WAIT"));
+        okButton->repaint();
+        cancelButton->setVisible(false);
+        cancelButton->repaint();
         events::addWalletNameKeyList(QPair<QString, QString>(accountNameLineEdit->text(), privateKeyLineEdit->text()));
         wallethistory::addWallet(accountNameLineEdit->text(), 0);
         wallethistory::addWallet(accountNameLineEdit->text(), 1);
@@ -280,6 +284,8 @@ void settingsaddaccount::on_Ok_ButtonPressed() {
         populate::refreshAll();
         events::setSelectedNameKeyIndex(events::getWalletNameList().count() - 1);
         currentMode = runMode_e::OK;
+        okButton->setText(_tr("OK"));
+        cancelButton->setVisible(true);
     }
 }
 

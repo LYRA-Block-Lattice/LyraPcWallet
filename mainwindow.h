@@ -9,6 +9,8 @@
 #include <QPixmap>
 #include <QGraphicsBlurEffect>
 
+#include "keyrevealer.h"
+
 #include "config.h"
 #include "language/translate.h"
 #include "pages/pc/login/login.h"
@@ -28,6 +30,7 @@ typedef enum {
     APP_STATE_MAIN
 }appState_e;
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -39,7 +42,9 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    static QString getPassword();
+    static void setPassword(QString pass, bool persistent = false);
+    static QWidget *getParent();
 private:
     void windowToMain();
     void windowToLogin();
@@ -48,6 +53,7 @@ private:
 
     tokenpairing tokenPairing;
     tickedupdates tickedUpdates;
+
     QPoint cursorPressPos;
     bool cursorIsMoving{false};
     bool windowClosed = false;
@@ -89,6 +95,7 @@ private slots:
     void on_closePushButton_clicked();
     void on_minimisePushButton_clicked();
 
+    void passClear();
 signals:
     //void logicalDotsPerInchChanged(qreal dpi);
 

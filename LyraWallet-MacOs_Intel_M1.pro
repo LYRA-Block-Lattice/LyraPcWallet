@@ -28,6 +28,7 @@ SOURCES += \
     crypto/ecc.cpp \
     crypto/signatures.cpp \
     extensions/qrcodegen.cpp \
+    keyrevealer.cpp \
     language/translate.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -77,6 +78,7 @@ HEADERS += \
     crypto/ecc.h \
     crypto/signatures.h \
     extensions/qrcodegen.h \
+    keyrevealer.h \
     language/translate.h \
     mainwindow.h \
     network/rpc.h \
@@ -118,6 +120,7 @@ HEADERS += \
     wallet/tickedupdates.h
 
 FORMS += \
+    keyrevealer.ui \
     mainwindow.ui \
     pages/pc/main/info.ui
 

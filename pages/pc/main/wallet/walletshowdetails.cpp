@@ -120,6 +120,8 @@ void walletshowdetails::show(QList<QMap<QString, QString>> transaction) {
         QApplication::processEvents();
         if(back)
             break;
+        if(events::getAppClosing())
+            break;
     }
     detailTextEdit->setVisible(false);
     thisMdiArea->setVisible(false);
@@ -161,6 +163,8 @@ void walletshowdetails::show(QString text) {
     while(1) {
         QApplication::processEvents();
         if(back)
+            break;
+        if(events::getAppClosing())
             break;
     }
     graphicsView->setVisible(false);

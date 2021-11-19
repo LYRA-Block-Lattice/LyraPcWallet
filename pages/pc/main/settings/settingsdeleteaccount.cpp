@@ -139,6 +139,10 @@ void settingsdeleteaccount::on_Cancel_ButtonPressed() {
 
 void settingsdeleteaccount::on_Ok_ButtonPressed() {
     if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
+        okButton->setText(_tr("WAIT"));
+        okButton->repaint();
+        cancelButton->setVisible(false);
+        cancelButton->repaint();
         events::removeWalletNameKeyList(walletName);
         wallethistory::removeWallet(walletName);
         events::setWalletHistoryChanged();
@@ -149,6 +153,8 @@ void settingsdeleteaccount::on_Ok_ButtonPressed() {
             events::setId("");
         }
         currentMode = runMode_e::OK;
+        okButton->setText(_tr("OK"));
+        cancelButton->setVisible(true);
     }
 }
 

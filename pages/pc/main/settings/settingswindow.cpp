@@ -822,7 +822,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                         settingsShowPrivKey = new settingsshowprivkey();
                         settingsShowPrivKey->init(mdiAreaSettings);
                     }
-                    settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first, events::getWalletNameKeyList().at(cnt).second);
+                    settingsShowPrivKey->setState(settingsshowprivkey::runMode_e::RUN, cnt);
                     return true;
                 }
             }

@@ -48,6 +48,11 @@ public:
     void run();
     command_e getCommand();
     void setState(state_e state);
+
+    /* Window */
+    QWidget *parent = nullptr;
+    QMdiArea *mdiArea = nullptr;
+    QMdiSubWindow *windowMain = nullptr;
 private:
     void updateWallet();
     void updateNetwork();
@@ -64,10 +69,6 @@ private:
 
 
 
-    /* Window */
-    QWidget *parent = nullptr;
-    QMdiArea *mdiArea = nullptr;
-    QMdiSubWindow *windowMain = nullptr;
     //QMdiArea mdiAreaMain;
     QMdiArea *mdiAreaHeader = nullptr;
     QWidget *widgetHeader = nullptr;

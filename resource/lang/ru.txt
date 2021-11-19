@@ -219,5 +219,6 @@
    "Are you sure you want to unstake from this account?" : "Are you sure you want to unstake from this account?",
    "If you unstake before the expiration date" : "If you unstake before the expiration date",
    "a" :                                   "a",
-   "penalty will be charged." :            "penalty will be charged."
+   "penalty will be charged." :            "penalty will be charged.",
+   "ERROR: Consensus timeout." :           "ERROR: Consensus timeout."
 }

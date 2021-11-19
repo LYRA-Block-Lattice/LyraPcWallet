@@ -218,5 +218,6 @@
    "Are you sure you want to unstake from this account?" : "Sunteti sigur că vreti să dezactivati stakingul pentru acest cont?",
    "If you unstake before the expiration date" : "Dacă dezactivati stakingul inaintea expirarii",
    "a" :                                   "",
-   "penalty will be charged." :            "penalitate va fi dedusă."
+   "penalty will be charged." :            "penalitate va fi dedusă.",
+   "ERROR: Consensus timeout." :           "EROARE: Consensus timeout."
 }

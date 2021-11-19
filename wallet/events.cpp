@@ -69,6 +69,7 @@ double osWindowScale = 1.0;
 int screenNumber = 0;
 QString customIp[3];
 int customIpChanged = 0;
+bool walletUnlocked = true;
 
 bool events::getAppClosing() {
     return appClosing;
@@ -93,17 +94,20 @@ void events::addWalletNameKeyList(QPair<QString, QString> wallet) {
 
 void events::removeWalletNameKeyList(QString wallet) {
     for (int cnt = 0; cnt < walletNameKeyList.count(); cnt++) {
-        if(walletNameKeyList[cnt].first.contains(wallet))
+        if(!walletNameKeyList[cnt].first.compare(wallet)) {
             walletNameKeyList.removeAt(cnt);
+            break;
+        }
         walletNameKeyListChanged++;
     }
 }
 
 void events::replaceWalletNameKeyList(QString oldName, QString newName) {
     for (int cnt = 0; cnt < walletNameKeyList.count(); cnt++) {
-        if(walletNameKeyList[cnt].first.contains(oldName)) {
+        if(!walletNameKeyList[cnt].first.compare(oldName)) {
             walletNameKeyList.replace(cnt, QPair<QString, QString>(newName, walletNameKeyList[cnt].second));
             walletNameKeyListChanged++;
+            break;
         }
     }
 }
@@ -678,4 +682,14 @@ QString events::getCustomIp(events::network_e net) {
             return "";
     }
 }
+
+void events::setWalletUnlocked(bool unlocked) {
+    walletUnlocked = unlocked;
+}
+
+bool events::getWalletUnlocked() {
+    return walletUnlocked;
+}
+
+
 

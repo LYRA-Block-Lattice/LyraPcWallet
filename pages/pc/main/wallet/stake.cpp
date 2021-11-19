@@ -515,6 +515,11 @@ void stake::on_Ok_ButtonPressed() {
                                 _tr("ERROR: Invalid profiting account."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
+                    } else if(response == walletErr_e::WALLET_ERR_CONSENSUS_TIMEOUT){
+                        QMessageBox::critical( this, this->windowTitle(),
+                                _tr("ERROR: Consensus timeout."),
+                                QMessageBox::Ok,
+                                QMessageBox::Ok);
                     } else {
                         QMessageBox::critical( this, this->windowTitle(),
                                 _tr("ERROR: Unknown."),

@@ -8,6 +8,8 @@
 #include <QLineEdit>
 #include <QLabel>
 
+#include "keyrevealer.h"
+
 class settingsshowprivkey : public QMainWindow
 {
     Q_OBJECT
@@ -21,7 +23,7 @@ public:
     void init(QMdiArea *mdiArea = nullptr);
     void run();
     runMode_e getState();
-    void setState(runMode_e state, QString walletName = "", QString privKey = "");
+    void setState(runMode_e state, int keyNr = -1);
 
 private:
     void refreshFonts();

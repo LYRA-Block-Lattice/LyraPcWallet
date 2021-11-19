@@ -1,3 +1,6 @@
+#include <QApplication>
+
+#include "mainwindow.h"
 #include "wallet/events.h"
 
 #include "settingsshowprivkey.h"
@@ -88,10 +91,22 @@ settingsshowprivkey::runMode_e settingsshowprivkey::getState() {
     return currentMode;
 }
 
-void settingsshowprivkey::setState(runMode_e state, QString walletName, QString privKey) {
-    titleName->setText(walletName);
-    privateKey->setText(privKey);
+void settingsshowprivkey::setState(runMode_e state, int keyNr) {
     currentMode = state;
+    if(keyNr >= 0) {
+        keyrevealer keyRevealer(keyNr, true, false, parent);
+        QString key = keyRevealer.getKey();
+        QList<QPair<QString, QString>> tmp = events::getWalletNameKeyList();
+        if(tmp.count() > keyNr) {
+            if(key.length()) {
+                titleName->setText(tmp[keyNr].first);
+                privateKey->setText(key);
+            } else {
+                currentMode = runMode_e::NONE;
+            }
+        }
+    }
+    qDebug() << state;
 }
 
 void settingsshowprivkey::run() {

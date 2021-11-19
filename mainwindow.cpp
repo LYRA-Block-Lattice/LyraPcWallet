@@ -33,15 +33,17 @@
 
 #define s(s) _scale(s)
 
+QString walletPassword;
+QTimer clearTimer;
+QWidget *par;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
 
-
     walletfile::loadSettings();
 
-
+    par = this;
     ui->setupUi(this);
     this->repaint();
     QApplication::processEvents();
@@ -100,6 +102,9 @@ MainWindow::MainWindow(QWidget *parent)
     rpcConnection = new rpc(this);
     rpcApi = new rpcapi(rpcConnection);
 
+    clearTimer.setInterval(300000);
+    connect(&clearTimer, SIGNAL(timeout()), this, SLOT(passClear()));
+    clearTimer.stop();
 
     timerAppStart.start();
     timerLoop.start();
@@ -395,4 +400,27 @@ void MainWindow::appStart() {
 /*void MainWindow::logicalDotsPerInchChanged(qreal dpi) {
     //qDebug() << dpi;
 }*/
+
+QString MainWindow::getPassword() {
+    return walletPassword;
+}
+
+void MainWindow::setPassword(QString pass, bool persistent) {
+    if(persistent) {
+        clearTimer.start(300000);
+        walletPassword = pass;
+        events::setWalletUnlocked(true);
+    }
+}
+
+void MainWindow::passClear() {
+    clearTimer.stop();
+    walletPassword = "";
+    qDebug() << "Password cleared";
+    events::setWalletUnlocked(false);
+}
+
+QWidget *MainWindow::getParent() {
+    return par;
+}
 

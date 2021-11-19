@@ -87,6 +87,7 @@ public:
     static int getScreenNumber();
     static QString getCustomIp(events::network_e net = events::network_e::NETWORK_NONE);
     static int getCustomIpChanged();
+    static bool getWalletUnlocked();
 
 
     static void setAppClosing(bool closing);
@@ -140,6 +141,7 @@ public:
     static void setUpdateHistory();
     static void setScreenNumber(int screen);
     static void setCustomIp(QString ip, events::network_e net = events::network_e::NETWORK_NONE);
+    static void setWalletUnlocked(bool unlocked);
 };
 
 #endif // EVENTS_H
