@@ -207,13 +207,12 @@ void transitionswindow::refreshTable() {
     //QPair<QString, QString> pair;
     QStringList dirs;
     cumulatedWallet.clear();
-    QList<QPair<QString, QString>> accountsList = events::getWalletNameKeyList();
+    QStringList accountsList = events::getWalletNameList();
     if(accountsList.count() == 0) {
         return;
     }
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(pair[index].first);
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(accountsList[index]);
     qDebug() << "TRANSACTIONSWINDOW 2: Start refresh table.";
     for (int cnt = 0; cnt < wallet.count(); cnt++) {
         QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
@@ -281,7 +280,7 @@ void transitionswindow::refreshTable() {
         it->setForeground(QBrush(0x909090));
         it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         it->setEnabled(false);
-        it->setText(pair[index].first);
+        it->setText(accountsList[index]);
         item.append(it);
 
         it = new QStandardItem(); // Tx Type

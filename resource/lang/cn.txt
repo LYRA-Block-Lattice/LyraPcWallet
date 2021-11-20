@@ -220,5 +220,6 @@
    "If you unstake before the expiration date" : "如果在质押期间赎回",
    "a" :                                   "一个",
    "penalty will be charged." :            "罚金将会被支付。",
-   "ERROR: Consensus timeout." :           "ERROR: Consensus timeout."
+   "ERROR: Consensus timeout." :           "错误: 超时。",
+   "ERROR: Unstaking tokens." :            "错误: 赎回。"
 }

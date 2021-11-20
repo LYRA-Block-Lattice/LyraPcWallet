@@ -37,12 +37,15 @@ walletErr_e walletbalance::monitor(QString accountId, bool */*unreceived*/) {
     return walletErr_e::WALLET_ERR_UNKNOWN;
 }
 
-walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
+walletErr_e walletbalance::receive(int accNr, bool *newTransactions) {
+    QString accPKey = events::getWalletKey(accNr, false, true);
+    QString accId = events::getWalletId(accNr);
+    if(!accPKey.length() || !accId.length())
+        return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
-    QString accountId = signatures::getAccountIdFromPrivateKey(privateKey);
     int id = 0;
     QString response = connection->sendMessage(&id, "Receive",
-                                                  QStringList({accountId}));
+                                                  QStringList({accId}));
     if(response.length() == 0)
         return walletErr_e::WALLET_ERR_TIMEOUT;
     *newTransactions = false;
@@ -51,8 +54,10 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
         if(events::getAppClosing())
             break;
         QApplication::processEvents();
-        if(response.length() == 0)
+        if(!response.length()) {
+            qDebug() << "WALLETBALANCE 1: No response";
             return walletErr_e::WALLET_ERR_UNKNOWN;
+        }
         QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
         QJsonObject jsonObject = jsonResponse.object();
         //QJsonObject result = jsonObject["result"].toObject();
@@ -65,7 +70,7 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
 
         idRec = jsonObject["id"].toInt();
         QString signRec = jsonObject["method"].toString();
-        qDebug() << "WALLETBALANCE 1: " << signRec;
+        qDebug() << "WALLETBALANCE 2: " << signRec;
         if(!signRec.length())
             break;
         if(!signRec.compare("Sign")) {
@@ -73,7 +78,7 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
             if(jsonArray.count() != 0) {
                 QString signature;
                 if(!jsonArray[0].toString().compare("hash")) {
-                    signature = signatures::getSignature(privateKey, jsonArray[1].toString(), accountId);
+                    signature = signatures::getSignature(accPKey, jsonArray[1].toString(), accId);
                 } else {
                     return walletErr_e::WALLET_ERR_NOT_SUPPORTED;
                 }
@@ -95,26 +100,31 @@ walletErr_e walletbalance::receive(QString privateKey, bool *newTransactions) {
     return walletErr_e::WALLET_ERR_TIMEOUT;
 }
 
-walletErr_e walletbalance::send(QString privateKey, QString destAccId, QString token, double amount) {
+walletErr_e walletbalance::send(int accNr, QString destAccId, QString token, double amount) {
+    QString accPKey = events::getWalletKey(accNr, true, false);
+    QString accId = events::getWalletId(accNr);
+    if(!accPKey.length() || !accId.length())
+        return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
-    QString accountId = signatures::getAccountIdFromPrivateKey(privateKey);
     int id = 0;
     QString response = connection->sendMessage(&id, "Send",
-                                                  QStringList({accountId, QString::asprintf("%.8f", amount), destAccId, token}));
-    if(response.length() == 0)
-        return walletErr_e::WALLET_ERR_TIMEOUT;
+                                                  QStringList({accId, QString::asprintf("%.8f", amount), destAccId, token}));
+    if(!response.length()) {
+        qDebug() << "WALLETBALANCE 3: No response";
+        return walletErr_e::WALLET_ERR_UNKNOWN;
+    }
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
     int idRec = jsonObject["id"].toInt();
     QString signRec = jsonObject["method"].toString();
-    qDebug() << "WALLETBALANCE 2: " << signRec;
+    qDebug() << "WALLETBALANCE 4: " << signRec;
     if(!signRec.compare("Sign")) {
         QJsonArray jsonArray = jsonObject["params"].toArray();
         if(jsonArray.count() != 0) {
             QString signature;
             if(!jsonArray[0].toString().compare("hash")) {
-                signature = signatures::getSignature(privateKey, jsonArray[1].toString(), accountId);
+                signature = signatures::getSignature(accPKey, jsonArray[1].toString(), accId);
             } else {
                 return walletErr_e::WALLET_ERR_NOT_SUPPORTED;
             }

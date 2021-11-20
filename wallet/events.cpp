@@ -4,9 +4,12 @@
 
 #include <QDateTime>
 
+#include "crypto/signatures.h"
+#include "keyrevealer.h"
+
 bool appClosing = false;
 bool networkConnected = false;
-QList<QPair<QString, QString>> walletNameKeyList;
+QList<QPair<QString, QPair<QString, QString>>> walletNameKeyList;
 int walletNameKeyListChanged = 0;
 int selectedNameKeyIndex = 0;
 int bellsNr = 0;
@@ -88,7 +91,11 @@ bool events::getNetworkConnected() {
 }
 
 void events::addWalletNameKeyList(QPair<QString, QString> wallet) {
-    walletNameKeyList.append(wallet);
+    QPair<QString, QPair<QString, QString>>tmp2;
+    tmp2.first = wallet.first;
+    tmp2.second.first = wallet.second;
+    tmp2.second.second = signatures::getAccountIdFromPrivateKey(wallet.second);
+    walletNameKeyList.append(tmp2);
     walletNameKeyListChanged++;
 }
 
@@ -105,7 +112,7 @@ void events::removeWalletNameKeyList(QString wallet) {
 void events::replaceWalletNameKeyList(QString oldName, QString newName) {
     for (int cnt = 0; cnt < walletNameKeyList.count(); cnt++) {
         if(!walletNameKeyList[cnt].first.compare(oldName)) {
-            walletNameKeyList.replace(cnt, QPair<QString, QString>(newName, walletNameKeyList[cnt].second));
+            walletNameKeyList.replace(cnt, QPair<QString, QPair<QString, QString>>(newName, walletNameKeyList[cnt].second));
             walletNameKeyListChanged++;
             break;
         }
@@ -114,37 +121,65 @@ void events::replaceWalletNameKeyList(QString oldName, QString newName) {
 
 void events::setWalletNameKeyList(QList<QPair<QString, QString>> walletList) {
     walletNameKeyList.clear();
-    walletNameKeyList = walletList;
+    QPair<QString, QString> tmp;
+    foreach(tmp, walletList) {
+        QPair<QString, QPair<QString, QString>>tmp2;
+        tmp2.first = tmp.first;
+        tmp2.second.first = tmp.second;
+        tmp2.second.second = signatures::getAccountIdFromPrivateKey(tmp.second);
+        walletNameKeyList.append(tmp2);
+    }
     walletNameKeyListChanged++;
 }
 
-QList<QPair<QString, QString>> events::getWalletNameKeyList() {
-    return walletNameKeyList;
+QList<QPair<QString, QString>> events::getWalletNameIdList() {
+    QPair<QString, QPair<QString, QString>>tmp;
+    QList<QPair<QString, QString>>tmp3;
+    foreach(tmp, walletNameKeyList) {
+        QPair<QString, QString>tmp2;
+        tmp2.first = tmp.first;
+        tmp2.second = tmp.second.second;
+        tmp3.append(tmp2);
+    }
+    return tmp3;
+}
+
+QString events::getWalletKey(int keyNr, bool immediate, bool persistent) {
+    if(keyNr < walletNameKeyList.count()) {
+        keyrevealer keyRevealer(keyNr, immediate, persistent);
+        return keyRevealer.getKey();
+    }
+    return "";
+}
+
+QString events::getWalletKeyNoP(int keyNr) {
+    if(keyNr < walletNameKeyList.count()) {
+        return walletNameKeyList[keyNr].second.first;
+    }
+    return "";
+}
+
+QString events::getWalletId(int idNr) {
+    if(idNr < walletNameKeyList.count()) {
+        return walletNameKeyList[idNr].second.second;
+    }
+    return "";
 }
 
 QStringList events::getWalletNameList() {
     QStringList walletList;
-    QPair<QString, QString>pair;
+    QPair<QString, QPair<QString, QString>>pair;
     foreach(pair, walletNameKeyList) {
         walletList.append(pair.first);
     }
     return walletList;
 }
 
-QStringList events::getWalletKeyList() {
-    QStringList keyList;
-    QPair<QString, QString>pair;
-    foreach(pair, walletNameKeyList) {
-        keyList.append(pair.second);
-    }
-    return keyList;
-}
-
 QString events::getWalletKey(QString name) {
     QMap<QString, QString> pair;
-    QPair<QString, QString> _pair;
+    QPair<QString, QPair<QString, QString>> _pair;
     foreach(_pair, walletNameKeyList) {
-        pair.insert(_pair.first, _pair.second);
+        pair.insert(_pair.first, _pair.second.first);
     }
     return pair.value(name);
 }

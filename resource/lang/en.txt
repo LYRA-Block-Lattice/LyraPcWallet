@@ -220,5 +220,6 @@
    "If you unstake before the expiration date" : "If you unstake before the expiration date",
    "a" :                                   "a",
    "penalty will be charged." :            "penalty will be charged.",
-   "ERROR: Consensus timeout." :           "ERROR: Consensus timeout."
+   "ERROR: Consensus timeout." :           "ERROR: Consensus timeout.",
+   "ERROR: Unstaking tokens." :            "ERROR: Unstaking tokens."
 }

@@ -84,9 +84,9 @@ private:
     QLabel *btcUsdSwitchLabel;
     bool usdSelected = true;
 
-    QLabel *passwordConfirmationLabel;
-    QLineEdit *passwordConfirmationLineEdit;
-    QLabel *passwordConfirmationStatusLabel;
+    //QLabel *passwordConfirmationLabel;
+    //QLineEdit *passwordConfirmationLineEdit;
+    //QLabel *passwordConfirmationStatusLabel;
 
     QLabel *noteLabel;
     QLineEdit *noteLineEdit;
@@ -121,7 +121,7 @@ private slots:
     void on_tokenComboBox_TextChanget(const QString &);
     void on_ammountLineEdit_Changed(const QString &);
     void on_ammountUsdBtcLineEdit_Changed(const QString &);
-    void on_PasswordLineEdit_Changed(const QString &);
+    //void on_PasswordLineEdit_Changed(const QString &);
     void on_Sync_ButtonPressed();
     void on_Send_ButtonPressed();
     void on_viewDetails0_PushButton();

@@ -11,8 +11,8 @@ class walletbalance
 public:
     static ballance_t balance(QString accountId, int *height, bool *unreceived);
     static walletErr_e monitor(QString accountId, bool *unreceived);
-    static walletErr_e receive(QString privateKey, bool *newTransactions);
-    static walletErr_e send(QString privateKey, QString destAccId, QString token, double amount);
+    static walletErr_e receive(int accNr, bool *newTransactions);
+    static walletErr_e send(int accNr, QString destAccId, QString token, double amount);
 };
 
 #endif // WALLETBALANCE_H

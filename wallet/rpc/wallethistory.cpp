@@ -278,10 +278,10 @@ bool wallethistory::updateWalletName(QString oldName, QString newName) {
 
 bool wallethistory::updateWallets() {
     qDebug() << "WALLETHISTORY 11: Start update wallets";
-    QList<QPair<QString, QString>> list = events::getWalletNameKeyList();
     QPair<QString, QString> pair;
+    QList<QPair<QString, QString>> list = events::getWalletNameIdList();
     foreach(pair, list) {
-        wallethistory::updateWallet(pair.first, signatures::getAccountIdFromPrivateKey(pair.second));
+        wallethistory::updateWallet(pair.first, pair.second);
     }
     qDebug() << "WALLETHISTORY 12: End update wallets";
     return true;

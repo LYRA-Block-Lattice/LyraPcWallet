@@ -729,9 +729,9 @@ void mainboard::run() {
     }
     if(selectedNameKeyIndex != events::getSelectedNameKeyIndex()) {
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
-        QStringList keys = events::getWalletKeyList();
-        if(keys.count() != 0) {
-            events::setId(signatures::getAccountIdFromPrivateKey(keys[selectedNameKeyIndex]));
+        QString id = events::getWalletId(selectedNameKeyIndex);
+        if(id.length()) {
+            events::setId(id);
             walletSelectorComboBox->setCurrentIndex(selectedNameKeyIndex);
         }
 

@@ -276,9 +276,9 @@ void settingsaddaccount::on_Ok_ButtonPressed() {
         wallethistory::addWallet(accountNameLineEdit->text(), 0);
         wallethistory::addWallet(accountNameLineEdit->text(), 1);
         events::setId(signatures::getAccountIdFromPrivateKey(privateKeyLineEdit->text()));
-        QList<QPair<QString, QString>> list = events::getWalletNameKeyList();
+        QList<QPair<QString, QString>> list = events::getWalletNameIdList();
         QPair<QString, QString> pair = list[list.count() - 1];
-        wallethistory::updateWallet(pair.first, signatures::getAccountIdFromPrivateKey(pair.second));
+        wallethistory::updateWallet(pair.first, pair.second);
         events::setWalletHistoryChanged();
         walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
         populate::refreshAll();

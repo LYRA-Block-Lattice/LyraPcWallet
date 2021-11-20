@@ -139,21 +139,24 @@ void tickedupdates::on_FetchNode() {
     qDebug() << "TICKEDUPDATES 8: End fetch node for data.";
 
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
+    QString accId = events::getWalletId(index);
+    /*if(!accId.length())
+        return;*/
+    QStringList names = events::getWalletNameList();
     if(index < 0) {
-        if(pair.count() != 0) {
+        if(names.count() != 0) {
             index = 0;
         } else {
             return;
         }
     }
-    if(pair.count()) {
+    if(names.count()) {
         bool unreceived = false;
         int height = 0;
-        walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &unreceived);
+        walletbalance::balance(accId, &height, &unreceived);
         events::setUnreceivedBallance(unreceived ? "Yes" : "No");
-        if(height != wallethistory::getCount(pair[index].first)) {
-            wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
+        if(height != wallethistory::getCount(names[index])) {
+            wallethistory::updateWallet(names[index], accId);
             populate::refreshAll();
             events::setWalletHistoryChanged();
             events::setUpdateHistory();

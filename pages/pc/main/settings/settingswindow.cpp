@@ -362,7 +362,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 }
 
 void settingswindow::updateWalletSettingsTable() {
-    QList<QPair<QString, QString>> accountList = events::getWalletNameKeyList();
+    QList<QPair<QString, QString>> accountList = events::getWalletNameIdList();
     accountsItemModel->clear();
     accountsItemModel->setColumnCount(6);
     accountsItemModel->setRowCount(0);
@@ -391,7 +391,7 @@ void settingswindow::updateWalletSettingsTable() {
         it->setForeground(QBrush(0x909090));
         it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         it->setEnabled(false);
-        it->setText(signatures::getAccountIdFromPrivateKey(pair.second));
+        it->setText(pair.second);
         item.append(it);
         it = new QStandardItem();
         it->setForeground(QBrush(0x909090));
@@ -786,6 +786,7 @@ void settingswindow::run() {
 
 bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+    QStringList names = events::getWalletNameList();
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count() - 1; cnt++) {
@@ -795,7 +796,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                         createProfitAccount = new createprofitaccount();
                         createProfitAccount->init(mdiAreaSettings, cnt);
                     }
-                    createProfitAccount->setState(createprofitaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
+                    createProfitAccount->setState(createprofitaccount::runMode_e::RUN, names[cnt]);
                     return true;
                 }
                 QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
@@ -804,7 +805,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                         settingsEditAccount = new settingseditaccount();
                         settingsEditAccount->init(mdiAreaSettings);
                     }
-                    settingsEditAccount->setState(settingseditaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
+                    settingsEditAccount->setState(settingseditaccount::runMode_e::RUN, names[cnt]);
                     return true;
                 }
                 QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
@@ -813,7 +814,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
                         settingsDeleteAccount = new settingsdeleteaccount();
                         settingsDeleteAccount->init(mdiAreaSettings);
                     }
-                    settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN, events::getWalletNameKeyList().at(cnt).first);
+                    settingsDeleteAccount->setState(settingsdeleteaccount::runMode_e::RUN, names[cnt]);
                     return true;
                 }
                 QPushButton *showPrivateKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));

@@ -10,18 +10,22 @@
 
 void wallet::sync() {
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    if(pair.count()) {
+    QString accId = events::getWalletId(index);
+    QStringList nameList = events::getWalletNameList();
+    if(accId.length()) {
         events::setUnreceivedBallance(_tr("Please wait"));
         bool newTransaction = false;
-        walletbalance::receive(pair[index].second, &newTransaction);
+        if(walletErr_e::WALLET_ERR_OK != walletbalance::receive(index, &newTransaction)) {
+            events::setUnreceivedBallance(_tr("ERROR"));
+            return;
+        }
         events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
         bool unreceived = false;
         int height = 0;
-        walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &unreceived);
+        walletbalance::balance(accId, &height, &unreceived);
         events::setUnreceivedBallance(unreceived ? "Yes" : "No");
-        if(newTransaction || height != wallethistory::getCount(pair[index].first)) {
-            wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
+        if(newTransaction || height != wallethistory::getCount(nameList[index])) {
+            wallethistory::updateWallet(nameList[index], accId);
             populate::refreshAll();
             events::setWalletHistoryChanged();
             events::setUpdateHistory();
@@ -32,29 +36,29 @@ void wallet::sync() {
 void wallet::checkNewTransactions() {
     events::setUnreceivedBallance(_tr("Please wait"));
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
     bool newTransaction = false;
     int height = 0;
-    if(pair.count()) {
-        walletbalance::balance(signatures::getAccountIdFromPrivateKey(pair[index].second), &height, &newTransaction);
+    QString accId = events::getWalletId(index);
+    if(accId.length()) {
+        walletbalance::balance(accId, &height, &newTransaction);
     }
     events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
 }
 
 void wallet::calculateLastWeek() {
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    if(pair.count() != 0) {
-        QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(pair[index].first);
+    QStringList nameList = events::getWalletNameList();
+    if(nameList.count()) {
+        QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(nameList[index]);
         qlonglong timeInterval =  QDateTime::currentDateTime().addDays(-7).toMSecsSinceEpoch();
         double amountSend = 0;
         double amountReceived = 0;
         for(int cnt = 0; cnt < wallet.count(); cnt++) {
-            if(wallethistory::getTimeStamp(pair[index].first, cnt).toDouble() > timeInterval) {
-                if(!wallethistory::getIsReceive(pair[index].first, cnt)) {
-                    amountSend += wallethistory::getChanges(pair[index].first, cnt, "LYR");
+            if(wallethistory::getTimeStamp(nameList[index], cnt).toDouble() > timeInterval) {
+                if(!wallethistory::getIsReceive(nameList[index], cnt)) {
+                    amountSend += wallethistory::getChanges(nameList[index], cnt, "LYR");
                 } else {
-                    amountReceived += wallethistory::getChanges(pair[index].first, cnt, "LYR");
+                    amountReceived += wallethistory::getChanges(nameList[index], cnt, "LYR");
                 }
             }
         }

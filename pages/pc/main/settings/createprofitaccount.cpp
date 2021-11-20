@@ -260,14 +260,12 @@ void createprofitaccount::refreshLanguage() {
 
 void createprofitaccount::refreshProfitingTable() {
     profitingAccItemModel->clear();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    QString id = signatures::getAccountIdFromPrivateKey(pair[this->accCnt].second);
-    QString response = profiting::getBrokerAccounts(id);
+    QString response = profiting::getBrokerAccounts(this->accCnt);
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
 
-    response = profiting::getPendingStats(id);
+    response = profiting::getPendingStats(this->accCnt);
     QJsonObject pendingStatsObject;
     if(response.length()) {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
@@ -275,7 +273,11 @@ void createprofitaccount::refreshProfitingTable() {
         pendingStatsObject = res["result"].toObject();
     }
 
-    if(!result["owner"].toString().compare(id)) {
+    QString accId = events::getWalletId(this->accCnt);
+    if(!accId.length())
+        return;
+
+    if(!result["owner"].toString().compare(accId)) {
         QJsonArray profits = result["profits"].toArray();
         //res.stakings = jsonObject["stakings"].toArray();
         QStandardItem *tmp;
@@ -441,8 +443,7 @@ void createprofitaccount::on_Ok_ButtonPressed() {
                 if (resBtn != QMessageBox::Yes) {
                     return;
                 }
-                QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-                walletErr_e response = profiting::createProfitingAcc(pair[this->accCnt].second, accName->text(), accType->currentText(), shareRatio->text().toDouble(), seats->text().toInt());
+                walletErr_e response = profiting::createProfitingAcc(this->accCnt, accName->text(), accType->currentText(), shareRatio->text().toDouble(), seats->text().toInt());
                 if(response != walletErr_e::WALLET_ERR_OK) {
                     if(response == walletErr_e::WALLET_ERR_NO_FUNDS) {
                         QMessageBox::critical( this, this->windowTitle(),
@@ -524,8 +525,7 @@ bool createprofitaccount::eventFilter(QObject *obj, QEvent *event) {
                     if (resBtn != QMessageBox::Yes) {
                         return true;
                     }
-                    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-                    walletErr_e response = profiting::createDividents(pair[this->accCnt].second, profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4))->text());
+                    walletErr_e response = profiting::createDividents(this->accCnt, profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4))->text());
                     if(response != walletErr_e::WALLET_ERR_OK) {
                         QMessageBox::critical( this, this->windowTitle(),
                                 _tr("ERROR: Creating dividends."),

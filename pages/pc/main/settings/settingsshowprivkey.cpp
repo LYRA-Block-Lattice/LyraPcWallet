@@ -96,10 +96,10 @@ void settingsshowprivkey::setState(runMode_e state, int keyNr) {
     if(keyNr >= 0) {
         keyrevealer keyRevealer(keyNr, true, false, parent);
         QString key = keyRevealer.getKey();
-        QList<QPair<QString, QString>> tmp = events::getWalletNameKeyList();
+        QStringList tmp = events::getWalletNameList();
         if(tmp.count() > keyNr) {
             if(key.length()) {
-                titleName->setText(tmp[keyNr].first);
+                titleName->setText(tmp[keyNr]);
                 privateKey->setText(key);
             } else {
                 currentMode = runMode_e::NONE;

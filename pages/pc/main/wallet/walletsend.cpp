@@ -72,9 +72,9 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     btcUsdLabel = new QLabel(mdiArea);
     btcUsdSwitchLabel = new QLabel(mdiArea);
 
-    passwordConfirmationLabel = new QLabel(mdiArea);
-    passwordConfirmationLineEdit = new QLineEdit(mdiArea);
-    passwordConfirmationStatusLabel = new QLabel(mdiArea);
+    //passwordConfirmationLabel = new QLabel(mdiArea);
+    //passwordConfirmationLineEdit = new QLineEdit(mdiArea);
+    //passwordConfirmationStatusLabel = new QLabel(mdiArea);
 
     noteLabel = new QLabel(mdiArea);
     noteLineEdit = new QLineEdit(mdiArea);
@@ -255,7 +255,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     btcUsdSwitchLabel->setPixmap(image2);
 
 
-    passwordConfirmationLabel->setStyleSheet("color: #333;");
+    /*passwordConfirmationLabel->setStyleSheet("color: #333;");
     passwordConfirmationLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     passwordConfirmationLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -271,7 +271,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     connect(passwordConfirmationLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_PasswordLineEdit_Changed(const QString &)));
 
     passwordConfirmationStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
-    passwordConfirmationStatusLabel->setScaledContents(true);
+    passwordConfirmationStatusLabel->setScaledContents(true);*/
 
     noteLabel->setStyleSheet("color: #333;");
     noteLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
@@ -461,9 +461,9 @@ void walletsend::refreshFonts() {
 
     btcUsdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
 
-    passwordConfirmationLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
-    passwordConfirmationLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    passwordConfirmationStatusLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    //passwordConfirmationLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
+    //passwordConfirmationLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    //passwordConfirmationStatusLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
 
     noteLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     noteLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
@@ -538,9 +538,9 @@ void walletsend::refreshSize() {
     btcUsdLabel->setGeometry(s(953), s(288), s(160), s(20));
     btcUsdSwitchLabel->setGeometry(s(1020), s(295), s(24), s(12));
 
-    passwordConfirmationLabel->setGeometry(s(0), s(328), s(200), s(39));
-    passwordConfirmationLineEdit->setGeometry(s(215), s(328), s(850), s(39));
-    passwordConfirmationStatusLabel->setGeometry(s(1070), s(338), s(20), s(20));
+    //passwordConfirmationLabel->setGeometry(s(0), s(328), s(200), s(39));
+    //passwordConfirmationLineEdit->setGeometry(s(215), s(328), s(850), s(39));
+    //passwordConfirmationStatusLabel->setGeometry(s(1070), s(338), s(20), s(20));
 
     noteLabel->setGeometry(s(0), s(379), s(200), s(39));
     noteLineEdit->setGeometry(s(215), s(379), s(665), s(39));
@@ -601,7 +601,7 @@ void walletsend::refreshLanguage() {
 
     destinationWalletIdLabel->setText(_tr("Destination to wallet ID") + ":");
 
-    passwordConfirmationLabel->setText(_tr("Password Confirmation") + ":");
+    //passwordConfirmationLabel->setText(_tr("Password Confirmation") + ":");
 
     noteLabel->setText(_tr("Note") + ":");
 
@@ -618,7 +618,7 @@ void walletsend::refreshLanguage() {
     lastSendedTransitionsLabel->setText(_tr("LAST SEND TRANSACTIONS"));
 
 
-    passwordConfirmationLineEdit->setPlaceholderText(_tr("Password"));
+    //passwordConfirmationLineEdit->setPlaceholderText(_tr("Password"));
     noteLineEdit->setPlaceholderText(_tr("Note"));
 
     unreceivedBalanceValueLabel->setText(_tr(events::getUnreceivedBallance()));
@@ -856,7 +856,7 @@ void walletsend::on_ammountUsdBtcLineEdit_Changed(const QString &) {
         ammountLineEdit.setText("");*/
 }
 
-void walletsend::on_PasswordLineEdit_Changed(const QString &) {
+/*void walletsend::on_PasswordLineEdit_Changed(const QString &) {
     if(!passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
         passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
                                                         "color: #A0B9CE;"
@@ -874,7 +874,7 @@ void walletsend::on_PasswordLineEdit_Changed(const QString &) {
                                                         "border-radius: 3px;"
                                                         ";}");
     }
-}
+}*/
 
 void walletsend::on_Sync_ButtonPressed() {
     if(userInputSemaphore)
@@ -889,15 +889,18 @@ void walletsend::on_Send_ButtonPressed() {
         return;
     userInputSemaphore = true;
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
+    QString accId = events::getWalletId(index);
+    if(!accId.length())
+        return;
+    QStringList names = events::getWalletNameList();
     sendButton->setText(_tr("WAIT") + "...");
-    if(pair.count() && !passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)) {
-        if(walletErr_e::WALLET_ERR_OK == walletbalance::send(pair[index].second, destinationWalletIdLineEdit->text(), tokenComboBox->currentText(), ammountLineEdit->text().toDouble())) {
-            wallethistory::updateWallet(pair[index].first, signatures::getAccountIdFromPrivateKey(pair[index].second));
-            wallethistory::setNote(pair[index].first, wallethistory::getWallet(pair[index].first).count() - 1, noteLineEdit->text());
+    if(names.count()/* && !passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)*/) {
+        if(walletErr_e::WALLET_ERR_OK == walletbalance::send(index, destinationWalletIdLineEdit->text(), tokenComboBox->currentText(), ammountLineEdit->text().toDouble())) {
+            wallethistory::updateWallet(names[index], accId);
+            wallethistory::setNote(names[index], wallethistory::getWallet(names[index]).count() - 1, noteLineEdit->text());
             destinationWalletIdLineEdit->clear();
             ammountLineEdit->clear();
-            passwordConfirmationLineEdit->clear();
+            //passwordConfirmationLineEdit->clear();
             noteLineEdit->clear();
             populate::refreshAll();
             events::setWalletHistoryChanged();
@@ -918,8 +921,8 @@ void walletsend::showDetails(int order) {
     QList<QStringList> list = events::getRecentTxTransactions();
     int transactionNr = list[order][6].toInt() - 1;
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(pair[index].first);
+    QStringList names = events::getWalletNameList();
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(names[index]);
     QList<QMap<QString, QString>> transaction = wallet[transactionNr];
     showDetailsWindow->show(transaction);
 }

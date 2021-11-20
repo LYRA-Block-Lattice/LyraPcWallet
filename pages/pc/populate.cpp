@@ -20,22 +20,22 @@ struct QPairFirstComparer {
 bool populate::refreshAll() {
     QList<QStringList> recentTransactionsList;
     int index = events::getSelectedNameKeyIndex();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
+    QStringList listId = events::getWalletNameList();
     if(index < 0 ) {
-        if(pair.count() != 0) {
+        if(listId.count() != 0) {
             index = 0;
         } else {
             return false;
         }
     }
-    if(pair.count() == 0)
+    if(listId.count() == 0)
         return false;
     int transactionCount = 0;
     double balance = 0.0;
     QList<QPair<qint64, double>> allList;
-    QList<QPair<QString, double>> tokList[pair.count()];
-    for(int ind = 0; ind < pair.count(); ind++) {
-        QString walletName = pair[ind].first;
+    QList<QPair<QString, double>> tokList[listId.count()];
+    for(int ind = 0; ind < listId.count(); ind++) {
+        QString walletName = listId[ind];
         transactionCount = wallethistory::getCount(walletName);
 
         for(int cnt = 0; cnt < transactionCount; cnt++) {
@@ -86,7 +86,7 @@ bool populate::refreshAll() {
     }
     QList<QStringList> assets;
     QList<QPair<QString, double>> tokenAllValue;
-    for(int cntAcc = 0; cntAcc < pair.count(); cntAcc++) {
+    for(int cntAcc = 0; cntAcc < listId.count(); cntAcc++) {
         for(int tokenCnt = 0; tokenCnt < tokList[cntAcc].count(); tokenCnt++) {
             if(tokenAllValue.count()) {
                 bool found = false;
@@ -123,7 +123,7 @@ bool populate::refreshAll() {
     events::setAssets(assets);
 
 
-    QString walletName = pair[index].first;
+    QString walletName = listId[index];
     transactionCount = wallethistory::getCount(walletName);
     QList<QPair<qint64, double>> balanceList;
     QList<QPair<QString, double>> tokenList;

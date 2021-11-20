@@ -279,24 +279,22 @@ void stake::refreshLanguage() {
 
 void stake::refreshStakingTable() {
     stakingAccItemModel->clear();
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    if(!pair.count()) {
+    QString id = events::getWalletId(this->accCnt);
+    if(!id.length())
         return;
-    }
-    QString id = signatures::getAccountIdFromPrivateKey(pair[this->accCnt].second);
-    QString response = profiting::getBrokerAccounts(id);
+    QString response = profiting::getBrokerAccounts(this->accCnt);
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
-    QDateTime now = QDateTime::currentDateTime();
+    //QDateTime now = QDateTime::currentDateTime();
     if(!result["owner"].toString().compare(id)) {
         QJsonArray stakings = result["stakings"].toArray();
         QStandardItem *tmp;
         QJsonObject obj = QJsonValue(stakings[0]).toObject();
         foreach(const QJsonValue & value, stakings) {
+            QJsonObject obj = value.toObject();
             QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
             QDateTime date = endDate.addDays(obj["days"].toVariant().toLongLong());
-            QJsonObject obj = value.toObject();
 
             /*if(now.secsTo(date) < 0 && obj["amount"].toDouble() == 0.0) {
                 continue;
@@ -492,8 +490,7 @@ void stake::on_Ok_ButtonPressed() {
                 if (resBtn != QMessageBox::Yes) {
                     return;
                 }
-                QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-                walletErr_e response = profiting::createStakingAcc(pair[this->accCnt].second, accName->text(), voteId->text(), daysToStake->text().toInt(), true);
+                walletErr_e response = profiting::createStakingAcc(this->accCnt, accName->text(), voteId->text(), daysToStake->text().toInt(), true);
                 if(response != walletErr_e::WALLET_ERR_OK) {
                     if(response == walletErr_e::WALLET_ERR_NO_FUNDS) {
                         QMessageBox::critical( this, this->windowTitle(),
@@ -588,8 +585,7 @@ void stake::on_StakeOk_ButtonPressed() {
     if (resBtn != QMessageBox::Yes) {
         return;
     }
-    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-    if(profiting::addStaking(pair[this->accCnt].second, tmp->text(), tokenAmount->text().toDouble()) == walletErr_e::WALLET_ERR_OK) {
+    if(profiting::addStaking(this->accCnt, tmp->text(), tokenAmount->text().toDouble()) == walletErr_e::WALLET_ERR_OK) {
         QMessageBox::information( this, this->windowTitle(),
                 _tr("Staking successfull."),
                 QMessageBox::Ok,
@@ -642,8 +638,7 @@ bool stake::eventFilter(QObject *obj, QEvent *event) {
                     }
                     QStandardItem *tmp;
                     tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 1));
-                    QList<QPair<QString, QString>> pair = events::getWalletNameKeyList();
-                    if(profiting::unStaking(pair[this->accCnt].second, tmp->text()) == walletErr_e::WALLET_ERR_OK) {
+                    if(profiting::unStaking(this->accCnt, tmp->text()) == walletErr_e::WALLET_ERR_OK) {
                         QMessageBox::information( this, this->windowTitle(),
                                 _tr("Tokens successfully ustaked."),
                                 QMessageBox::Ok,
@@ -651,7 +646,7 @@ bool stake::eventFilter(QObject *obj, QEvent *event) {
                         refreshStakingTable();
                     } else {
                         QMessageBox::critical( this, this->windowTitle(),
-                                _tr("ERROR Unstaking tokens."),
+                                _tr("ERROR: Unstaking tokens."),
                                 QMessageBox::Ok,
                                 QMessageBox::Ok);
                     }

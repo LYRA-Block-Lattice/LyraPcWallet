@@ -13,9 +13,11 @@ public:
     typedef rpc::network_e network_e;
     static bool getAppClosing();
     static bool getNetworkConnected();
-    static QList<QPair<QString, QString>>  getWalletNameKeyList();
+    static QList<QPair<QString, QString>>  getWalletNameIdList();
+    static QString getWalletKey(int keyNr, bool immediate = true, bool persistent = false);
+    static QString getWalletKeyNoP(int keyNr);
+    static QString getWalletId(int idNr);
     static QStringList getWalletNameList();
-    static QStringList getWalletKeyList();
     static QString getWalletKey(QString name);
     static int getWalletNameKeyListChanged();
     static int getSelectedNameKeyIndex();

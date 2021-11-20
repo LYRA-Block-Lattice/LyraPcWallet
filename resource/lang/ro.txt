@@ -219,5 +219,6 @@
    "If you unstake before the expiration date" : "Dacă dezactivati stakingul inaintea expirarii",
    "a" :                                   "",
    "penalty will be charged." :            "penalitate va fi dedusă.",
-   "ERROR: Consensus timeout." :           "EROARE: Consensus timeout."
+   "ERROR: Consensus timeout." :           "EROARE: Consensus timeout.",
+   "ERROR: Unstaking tokens." :            "EROARE: Unstake tokens."
 }
