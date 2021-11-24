@@ -236,7 +236,7 @@ void transitionswindow::refreshTable() {
         QStringList tmpKeys = tmp.keys();
         QString amount;
         QString token;
-        if(tmpKeys.count() > 1) {
+        if(tmpKeys.count() > 1 || !tmpKeys.contains("LYR")) {
             tmpKeys.removeAll("LYR");
             foreach(QString key, tmpKeys) {
                 amount = textformating::toValue(tmp[key]);

@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.8"
+#define APP_VERSION                                 "0.2.9"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 

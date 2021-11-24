@@ -191,9 +191,10 @@ bool populate::refreshAll() {
                 recentTransactions.append(transaction[3]["SendAccountId"]);
             else
                 recentTransactions.append(transaction[5]["RecvAccountId"]);
-            value = QString::number(isReceived ? transaction[7][key[0]].toDouble() : 0.0 - transaction[7][key[0]].toDouble());
+            int usedKey = key.count() > 1 ? 1 : 0;
+            value = QString::number(isReceived ? transaction[7][key[usedKey]].toDouble() : 0.0 - transaction[7][key[usedKey]].toDouble());
             QString tokenValue;
-            tokenValue = textformating::toValue(value) + " " + key[0];
+            tokenValue = textformating::toValue(value) + " " + key[usedKey];
             recentTransactions.append(tokenValue);
             recentTransactions.append(_tr("View details"));
             recentTransactions.append(_tr("Completed"));
