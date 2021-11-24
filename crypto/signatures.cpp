@@ -16,14 +16,14 @@ QString signatures::getAccountIdFromPrivateKey(QString privKey) {
     return base58Encoding::encodeAccountId(puKey);
 }
 
-signatures::generatedWallet signatures::generateWallet(QByteArray key) {
-    signatures::generatedWallet acc;
+signatures::generatedAccount signatures::generateAccount(QByteArray key) {
+    signatures::generatedAccount acc;
     acc.accountId = getAccountIdFromPrivateKey(key);
     acc.privateKey = base58Encoding::encodePrivateKey(key);
     return acc;
 }
 
-signatures::generatedWallet signatures::generateWallet() {
+signatures::generatedAccount signatures::generateAccount() {
     quint32 array[8];
     QRandomGenerator::global()->fillRange(array);
     QByteArray key;
@@ -33,7 +33,7 @@ signatures::generatedWallet signatures::generateWallet() {
         key.append((tmp >> 8) & 0xFF);
         key.append(tmp & 0xFF);
     }
-    return generateWallet(key);
+    return generateAccount(key);
 }
 
 bool signatures::validateAccountId(QString id) {
@@ -67,7 +67,6 @@ bool signatures::verifySignature(QString message, QString accountId, QString sig
         sig.x[cnt] = signatureBytes[cnt];
         sig.y[cnt] = signatureBytes[cnt + 32];
     }
-
     QCryptographicHash sha256 (QCryptographicHash::Sha256);
     sha256.reset();
     sha256.addData(message.toUtf8().data(), message.length());
@@ -80,10 +79,8 @@ QString signatures::getSignature(QString privateKey, QString message, QString /*
     //QByteArray publicKeyBytes = base58Encoding::decodeAccountId(accountId);
     uint8_t pKey[NUM_ECC_DIGITS];
     int cnt = 0;
-    for(; cnt < 32; cnt++) {
+    for(; cnt < 32; cnt++)
         pKey[cnt] = privateKeyBytes[cnt];
-    }
-
     QCryptographicHash sha256 (QCryptographicHash::Sha256);
     sha256.reset();
     sha256.addData(message.toUtf8(), message.length());

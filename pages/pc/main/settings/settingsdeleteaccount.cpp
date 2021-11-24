@@ -143,12 +143,12 @@ void settingsdeleteaccount::on_Ok_ButtonPressed() {
         okButton->repaint();
         cancelButton->setVisible(false);
         cancelButton->repaint();
-        events::removeWalletNameKeyList(walletName);
-        wallethistory::removeWallet(walletName);
+        events::removeAccountNameKeyList(walletName);
+        wallethistory::removeAccount(walletName);
         events::setWalletHistoryChanged();
         walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
-        if(events::getWalletNameList().count() != 0) {
-            events::setSelectedNameKeyIndex(events::getWalletNameList().count() - 1);
+        if(events::getAccountNameList().count() != 0) {
+            events::setSelectedNameKeyIndex(events::getAccountNameList().count() - 1);
         } else {
             events::setId("");
         }

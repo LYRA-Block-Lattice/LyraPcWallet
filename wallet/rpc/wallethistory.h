@@ -24,18 +24,18 @@ public:
         BALANCES
     }variable_e;
 
-    static bool addWallet(QString name, int network = -1);
-    static bool addWallet(QString name, QString accountId, int network = -1);
-    static bool addWallet(QString name, QJsonArray jsonArray, int network = -1);
-    static QJsonArray getWalletHistoryJson(QString name, int network = -1);
-    static QJsonObject getWalletJson();
-    static bool removeWallet(QString name);
-    static bool updateWallet(QString name, QString accountId);
-    static bool updateWalletName(QString oldName, QString newName);
-    static bool updateWallets();
-    static int getWalletsCount();
-    static QList<QList<QMap<QString, QString>>> getWallet(QString name);
-    static QMap<QString, QList<QList<QMap<QString, QString>>>> getWallets(int network = -1);
+    static bool addAccount(QString name, int network = -1);
+    static bool addAccount(QString name, QString accountId, int network = -1);
+    static bool addAccount(QString name, QJsonArray jsonArray, int network = -1);
+    static QJsonArray getAccountHistoryJson(QString name, int network = -1);
+    static QJsonObject getAccountJson();
+    static bool removeAccount(QString name);
+    static bool updateAccount(QString name, QString accountId);
+    static bool updateAccountName(QString oldName, QString newName);
+    static bool updateAccounts();
+    static int getAccountsCount();
+    static QList<QList<QMap<QString, QString>>> getAccount(QString name);
+    static QMap<QString, QList<QList<QMap<QString, QString>>>> getAccounts(int network = -1);
     static int getCount(QString name);
     static bool setNote(QString accountName, int transaction, QString note);
 

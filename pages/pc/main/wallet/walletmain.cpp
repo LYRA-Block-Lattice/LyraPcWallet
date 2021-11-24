@@ -566,13 +566,13 @@ void walletmain::run() {
         myWalletValueAxisX->setRange(QDateTime(QDate(startValueDateEdit->date()), QTime(0, 0, 0, 0)), QDateTime(QDate(endValueDateEdit->date()), QTime(0, 0, 0, 0)).addDays(1));
         parent->repaint();
     }
-    if(myWalletBalanceChartModifyedCnt != events::getMyWalletBalanceChartModifyedCnt()) {
-        myWalletBalanceChartModifyedCnt = events::getMyWalletBalanceChartModifyedCnt();
+    if(myWalletBalanceChartModifyedCnt != events::getMyAccountBalanceChartModifyedCnt()) {
+        myWalletBalanceChartModifyedCnt = events::getMyAccountBalanceChartModifyedCnt();
         QPair<qint64, double> tmp;
         myWalletBalanceSeries->clear();
         double minimum = std::numeric_limits<double>::max();
         double maximum = std::numeric_limits<double>::min();
-        QList<QPair<qint64, double>> list = events::getMyWalletBalanceChart();
+        QList<QPair<qint64, double>> list = events::getMyAccountBalanceChart();
         foreach(tmp, list) {
             double value = tmp.second;
             if(value < minimum)
@@ -594,13 +594,13 @@ void walletmain::run() {
             events::setDateRange(QDate::currentDate(), QDate::currentDate());
         }
     }
-    if(myWalletValueChartModifyedCnt != events::getMyWalletValueChartModifyedCnt() || usdSelected != events::getBtcUsdSelect()) {
-        myWalletValueChartModifyedCnt = events::getMyWalletValueChartModifyedCnt();
+    if(myWalletValueChartModifyedCnt != events::getMyAccountValueChartModifyedCnt() || usdSelected != events::getBtcUsdSelect()) {
+        myWalletValueChartModifyedCnt = events::getMyAccountValueChartModifyedCnt();
         QPair<qint64, double> tmp;
         myWalletValueSeries->clear();
         double minimum = std::numeric_limits<double>::max();
         double maximum = std::numeric_limits<double>::min();
-        QList<QPair<qint64, double>> list = events::getMyWalletValueChart();
+        QList<QPair<qint64, double>> list = events::getMyAccountValueChart();
         foreach(tmp, list) {
             double value = (events::getBtcUsdSelect() ? events::getTokenPricePair("LYR_USD") : events::getTokenPricePair("LYR_BTC")) * tmp.second;
             if(value < minimum)

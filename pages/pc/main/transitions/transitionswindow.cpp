@@ -207,16 +207,15 @@ void transitionswindow::refreshTable() {
     //QPair<QString, QString> pair;
     QStringList dirs;
     cumulatedWallet.clear();
-    QStringList accountsList = events::getWalletNameList();
+    QStringList accountsList = events::getAccountNameList();
     if(accountsList.count() == 0) {
         return;
     }
     int index = events::getSelectedNameKeyIndex();
-    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(accountsList[index]);
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(accountsList[index]);
     qDebug() << "TRANSACTIONSWINDOW 2: Start refresh table.";
     for (int cnt = 0; cnt < wallet.count(); cnt++) {
         QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
-        cumulatedWallet.append(transaction);
         QMap<QString, QString> tmp;
         tmp = transaction[3];
         QString sendAcc = tmp["SendAccountId"];
@@ -256,6 +255,7 @@ void transitionswindow::refreshTable() {
         } else if(txDirectionComboBox->currentIndex() == 2 && tmp["IsReceive"].toInt() == 0) {
             continue;
         }
+        cumulatedWallet.append(transaction);
         if(tmp["IsReceive"].toInt()) {
             dirs.append("R");
         } else {
@@ -419,8 +419,8 @@ void transitionswindow::refreshSize() {
     filterLineEdit->setGeometry(s(600), s(80), s(450), s(39));
 
     historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
-    historyTableView->setColumnWidth(0, s(25));
-    historyTableView->setColumnWidth(1, s(190));
+    historyTableView->setColumnWidth(0, s(35));
+    historyTableView->setColumnWidth(1, s(180));
     historyTableView->setColumnWidth(2, s(30));
     historyTableView->setColumnWidth(3, s(90));
     historyTableView->setColumnWidth(4, s(150));
@@ -438,8 +438,8 @@ void transitionswindow::refreshSize() {
     refreshFonts();
     historyTableView->repaint();
     historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
-    historyTableView->setColumnWidth(0, s(25));
-    historyTableView->setColumnWidth(1, s(190));
+    historyTableView->setColumnWidth(0, s(35));
+    historyTableView->setColumnWidth(1, s(180));
     historyTableView->setColumnWidth(2, s(30));
     historyTableView->setColumnWidth(3, s(90));
     historyTableView->setColumnWidth(4, s(150));

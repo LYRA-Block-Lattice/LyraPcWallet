@@ -122,7 +122,7 @@ QList<QList<QMap<QString, QString>>> wallethistory::parseData(QJsonArray jsonArr
     return list;
 }
 
-QJsonArray wallethistory::getWalletHistoryJson(QString name, int network) {
+QJsonArray wallethistory::getAccountHistoryJson(QString name, int network) {
     qDebug() << "WALLETHISTORY 5: Start get wallet history";
     QList<QList<QMap<QString, QString>>> wallet = walletHistory[network == -1 ? events::getNetwork() : network].find(name).value();//getWallet(name);
     QList<QMap<QString, QString>> transactionList;
@@ -157,14 +157,14 @@ QJsonArray wallethistory::getWalletHistoryJson(QString name, int network) {
     return transactionsObject;
 }
 
-bool wallethistory::addWallet(QString name, int network) {
+bool wallethistory::addAccount(QString name, int network) {
     if(walletHistory[network == -1 ? events::getNetwork() : network].contains(name))
         return false;
     walletHistory[network == -1 ? events::getNetwork() : network].insert(name, parseData(""));
     return true;
 }
 
-bool wallethistory::addWallet(QString name, QString accountId, int network) {
+bool wallethistory::addAccount(QString name, QString accountId, int network) {
     if(walletHistory[network == -1 ? events::getNetwork() : network].contains(name))
         return false;
     QDateTime lm = QDateTime::currentDateTimeUtc();
@@ -181,14 +181,14 @@ bool wallethistory::addWallet(QString name, QString accountId, int network) {
     return true;
 }
 
-bool wallethistory::addWallet(QString name, QJsonArray jsonArray, int network) {
+bool wallethistory::addAccount(QString name, QJsonArray jsonArray, int network) {
     if(walletHistory[network == -1 ? events::getNetwork() : network].contains(name))
         return false;
     walletHistory[network == -1 ? events::getNetwork() : network].insert(name, parseData(jsonArray));
     return true;
 }
 
-bool wallethistory::removeWallet(QString name){
+bool wallethistory::removeAccount(QString name){
     if(!walletHistory[0].contains(name))
         return false;
     walletHistory[0].remove(name);
@@ -198,21 +198,21 @@ bool wallethistory::removeWallet(QString name){
     return true;
 }
 
-int wallethistory::getWalletsCount() {
+int wallethistory::getAccountsCount() {
     return walletHistory[events::getNetwork()].count();
 }
 
-QList<QList<QMap<QString, QString>>> wallethistory::getWallet(QString name) {
+QList<QList<QMap<QString, QString>>> wallethistory::getAccount(QString name) {
     QMap<QString, QList<QList<QMap<QString, QString>>>>::iterator i = walletHistory[events::getNetwork()].find(name);
     return i.value();
 }
 
-QMap<QString, QList<QList<QMap<QString, QString>>>> wallethistory::getWallets(int network) {
+QMap<QString, QList<QList<QMap<QString, QString>>>> wallethistory::getAccounts(int network) {
     return walletHistory[network == -1 ? events::getNetwork() : network];
 }
 
 bool wallethistory::setNote(QString accountName, int transaction, QString note) {
-    QList<QList<QMap<QString, QString>>> srcAcc = getWallet(accountName);
+    QList<QList<QMap<QString, QString>>> srcAcc = getAccount(accountName);
     if(srcAcc[transaction].count() >= 10)
         srcAcc[transaction].replace(9, QMap<QString, QString>({{"note", note}}));
     else
@@ -222,7 +222,7 @@ bool wallethistory::setNote(QString accountName, int transaction, QString note) 
     return true;
 }
 
-bool wallethistory::updateWallet(QString name, QString accountId) {
+bool wallethistory::updateAccount(QString name, QString accountId) {
     qDebug() << "WALLETHISTORY 7: Start update wallet history";
     int network = events::getNetwork();
     if(!walletHistory[network].contains(name)) {
@@ -242,7 +242,7 @@ bool wallethistory::updateWallet(QString name, QString accountId) {
         qDebug() << "WALLETHISTORY 9: Update wallet history";
         return false;
     }
-    QList<QList<QMap<QString, QString>>> srcAcc = getWallet(name);
+    QList<QList<QMap<QString, QString>>> srcAcc = getAccount(name);
     QList<QList<QMap<QString, QString>>> destAcc = parseData(response);
     for(int cnt = 0; cnt < srcAcc.count(); cnt++) {
         if(cnt < destAcc.count() && srcAcc[cnt].count() >= 10) {
@@ -261,7 +261,7 @@ bool wallethistory::updateWallet(QString name, QString accountId) {
     return true;
 }
 
-bool wallethistory::updateWalletName(QString oldName, QString newName) {
+bool wallethistory::updateAccountName(QString oldName, QString newName) {
     QList<QList<QMap<QString, QString>>> tmp = walletHistory[0][oldName];
     if(walletHistory[0].contains(oldName)) {
         tmp = walletHistory[0][oldName];
@@ -276,12 +276,12 @@ bool wallethistory::updateWalletName(QString oldName, QString newName) {
     return true;
 }
 
-bool wallethistory::updateWallets() {
+bool wallethistory::updateAccounts() {
     qDebug() << "WALLETHISTORY 11: Start update wallets";
     QPair<QString, QString> pair;
-    QList<QPair<QString, QString>> list = events::getWalletNameIdList();
+    QList<QPair<QString, QString>> list = events::getAccountNameIdList();
     foreach(pair, list) {
-        wallethistory::updateWallet(pair.first, pair.second);
+        wallethistory::updateAccount(pair.first, pair.second);
     }
     qDebug() << "WALLETHISTORY 12: End update wallets";
     return true;

@@ -351,7 +351,7 @@ void MainWindow::appMain() {
     if(pastNetworkConnection != events::getNetworkConnected()) {
         pastNetworkConnection = events::getNetworkConnected();
         if(pastNetworkConnection) {
-            wallethistory::updateWallets();
+            wallethistory::updateAccounts();
             populate::refreshAll();
         }
     }

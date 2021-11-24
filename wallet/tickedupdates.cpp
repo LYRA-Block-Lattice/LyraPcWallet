@@ -50,10 +50,10 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
 }
 
 void tickedupdates::run() {
-    if(selectedNameKeyIndex != events::getSelectedNameKeyIndex() || walletNameKeyListChanged != events::getWalletNameKeyListChanged() || network != events::getNetwork()) {
+    if(selectedNameKeyIndex != events::getSelectedNameKeyIndex() || walletNameKeyListChanged != events::getAccountNameKeyListChanged() || network != events::getNetwork()) {
         network = events::getNetwork();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
-        walletNameKeyListChanged = events::getWalletNameKeyListChanged();
+        walletNameKeyListChanged = events::getAccountNameKeyListChanged();
         fetchNode.setInterval(2000);
         fetchNode.start();
     }
@@ -139,10 +139,10 @@ void tickedupdates::on_FetchNode() {
     qDebug() << "TICKEDUPDATES 8: End fetch node for data.";
 
     int index = events::getSelectedNameKeyIndex();
-    QString accId = events::getWalletId(index);
+    QString accId = events::getAccountId(index);
     /*if(!accId.length())
         return;*/
-    QStringList names = events::getWalletNameList();
+    QStringList names = events::getAccountNameList();
     if(index < 0) {
         if(names.count() != 0) {
             index = 0;
@@ -156,7 +156,7 @@ void tickedupdates::on_FetchNode() {
         walletbalance::balance(accId, &height, &unreceived);
         events::setUnreceivedBallance(unreceived ? "Yes" : "No");
         if(height != wallethistory::getCount(names[index])) {
-            wallethistory::updateWallet(names[index], accId);
+            wallethistory::updateAccount(names[index], accId);
             populate::refreshAll();
             events::setWalletHistoryChanged();
             events::setUpdateHistory();

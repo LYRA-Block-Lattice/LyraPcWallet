@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.7"
+#define APP_VERSION                                 "0.2.8"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -57,8 +57,7 @@
 #endif
 /* RPC nodes DNS/IP */
 /* Those nodes are selected randomly thru elimination from the full list, if all nodes are tried the list is refreshed and the cicle continue */
-#define RPC_TESTNET_IP_LIST                         {{"wss://81.196.64.78:4504/api/v1/socket", true},  /*Iulian Gheorghiu node*/\
-                                                    {"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
+#define RPC_TESTNET_IP_LIST                         {{"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed2.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}}
@@ -91,7 +90,6 @@
 #define FONT_REDUCTION  1
 #endif
 
-#define     BREAKING_STAKE_CONTRACT_FEE             "0.8"
 
 
 

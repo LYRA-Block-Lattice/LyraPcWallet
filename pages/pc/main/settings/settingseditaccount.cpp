@@ -172,8 +172,8 @@ void settingseditaccount::on_Ok_ButtonPressed() {
         okButton->repaint();
         cancelButton->setVisible(false);
         cancelButton->repaint();
-        events::replaceWalletNameKeyList(walletName, nameLineEdit->text());
-        wallethistory::updateWalletName(walletName, nameLineEdit->text());
+        events::replaceAccountNameKeyList(walletName, nameLineEdit->text());
+        wallethistory::updateAccountName(walletName, nameLineEdit->text());
         events::setWalletHistoryChanged();
         walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
         passwordConfirmationLineEdit->clear();

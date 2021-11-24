@@ -10,8 +10,8 @@
 
 void wallet::sync() {
     int index = events::getSelectedNameKeyIndex();
-    QString accId = events::getWalletId(index);
-    QStringList nameList = events::getWalletNameList();
+    QString accId = events::getAccountId(index);
+    QStringList nameList = events::getAccountNameList();
     if(accId.length()) {
         events::setUnreceivedBallance(_tr("Please wait"));
         bool newTransaction = false;
@@ -25,7 +25,7 @@ void wallet::sync() {
         walletbalance::balance(accId, &height, &unreceived);
         events::setUnreceivedBallance(unreceived ? "Yes" : "No");
         if(newTransaction || height != wallethistory::getCount(nameList[index])) {
-            wallethistory::updateWallet(nameList[index], accId);
+            wallethistory::updateAccount(nameList[index], accId);
             populate::refreshAll();
             events::setWalletHistoryChanged();
             events::setUpdateHistory();
@@ -38,28 +38,26 @@ void wallet::checkNewTransactions() {
     int index = events::getSelectedNameKeyIndex();
     bool newTransaction = false;
     int height = 0;
-    QString accId = events::getWalletId(index);
-    if(accId.length()) {
+    QString accId = events::getAccountId(index);
+    if(accId.length())
         walletbalance::balance(accId, &height, &newTransaction);
-    }
     events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
 }
 
 void wallet::calculateLastWeek() {
     int index = events::getSelectedNameKeyIndex();
-    QStringList nameList = events::getWalletNameList();
+    QStringList nameList = events::getAccountNameList();
     if(nameList.count()) {
-        QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(nameList[index]);
+        QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(nameList[index]);
         qlonglong timeInterval =  QDateTime::currentDateTime().addDays(-7).toMSecsSinceEpoch();
         double amountSend = 0;
         double amountReceived = 0;
         for(int cnt = 0; cnt < wallet.count(); cnt++) {
             if(wallethistory::getTimeStamp(nameList[index], cnt).toDouble() > timeInterval) {
-                if(!wallethistory::getIsReceive(nameList[index], cnt)) {
+                if(!wallethistory::getIsReceive(nameList[index], cnt))
                     amountSend += wallethistory::getChanges(nameList[index], cnt, "LYR");
-                } else {
+                else
                     amountReceived += wallethistory::getChanges(nameList[index], cnt, "LYR");
-                }
             }
         }
         events::setTotalLyraSendedLastWeek(amountSend);

@@ -273,7 +273,7 @@ void createprofitaccount::refreshProfitingTable() {
         pendingStatsObject = res["result"].toObject();
     }
 
-    QString accId = events::getWalletId(this->accCnt);
+    QString accId = events::getAccountId(this->accCnt);
     if(!accId.length())
         return;
 

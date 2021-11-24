@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QMessageBox>
 
+#include "configlyra.h"
 #include "wallet/check.h"
 #include "wallet/rpc/profiting.h"
 #include "crypto/signatures.h"
@@ -279,7 +280,7 @@ void stake::refreshLanguage() {
 
 void stake::refreshStakingTable() {
     stakingAccItemModel->clear();
-    QString id = events::getWalletId(this->accCnt);
+    QString id = events::getAccountId(this->accCnt);
     if(!id.length())
         return;
     QString response = profiting::getBrokerAccounts(this->accCnt);
@@ -296,10 +297,6 @@ void stake::refreshStakingTable() {
             QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
             QDateTime date = endDate.addDays(obj["days"].toVariant().toLongLong());
 
-            /*if(now.secsTo(date) < 0 && obj["amount"].toDouble() == 0.0) {
-                continue;
-            }*/
-            //recentTransactionsTableView->setRowHidden(cnt, true);
             QList<QStandardItem *> item = QList<QStandardItem *>();
 
             tmp = new QStandardItem();
@@ -578,8 +575,8 @@ void stake::on_StakeOk_ButtonPressed() {
     }
     QStandardItem *tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(stakingAccountNr, 1));
     QMessageBox::StandardButton resBtn = QMessageBox::question( this, this->windowTitle(),
-                            _tr("Do you want to stake " + textformating::toValue(tokenAmount->text().toDouble()) +" LYR to this account ID:\n" +
-                                tmp->text()) ,
+                            _tr("Do you want to stake") + " " + textformating::toValue(tokenAmount->text().toDouble()) + " " + _tr("LYR to this account ID:") + "\n" +
+                                tmp->text() ,
                             QMessageBox::No | QMessageBox::Yes,
                             QMessageBox::No);
     if (resBtn != QMessageBox::Yes) {

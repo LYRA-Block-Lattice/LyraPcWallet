@@ -9,11 +9,11 @@ public:
     typedef struct {
         QString privateKey;
         QString accountId;
-    }generatedWallet;
+    }generatedAccount;
 
     static QString getAccountIdFromPrivateKey(QString privKey);
-    static generatedWallet generateWallet(QByteArray key);
-    static generatedWallet generateWallet();
+    static generatedAccount generateAccount(QByteArray key);
+    static generatedAccount generateAccount();
     static bool validateAccountId(QString id);
     static bool validatePublicKey(QString pubKey);
     static bool validatePrivateKey(QString privKey);

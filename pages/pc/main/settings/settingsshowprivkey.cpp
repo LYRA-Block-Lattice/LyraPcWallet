@@ -96,7 +96,7 @@ void settingsshowprivkey::setState(runMode_e state, int keyNr) {
     if(keyNr >= 0) {
         keyrevealer keyRevealer(keyNr, true, false, parent);
         QString key = keyRevealer.getKey();
-        QStringList tmp = events::getWalletNameList();
+        QStringList tmp = events::getAccountNameList();
         if(tmp.count() > keyNr) {
             if(key.length()) {
                 titleName->setText(tmp[keyNr]);

@@ -350,14 +350,13 @@ void aes256_decrypt_ecb(aes256_context *ctx, uint8_t *buf)
 QByteArray aes::aesEncrypt(QByteArray data, QString password) {
     QCryptographicHash sha256 (QCryptographicHash::Sha256);
     sha256.reset();
-    sha256 .addData(password.toUtf8());
+    sha256.addData(password.toUtf8());
     QByteArray hash1 = sha256 .result();
     aes256_context ctxt;
     int destSize = ((data.length() % 16) != 0) ? ((data.length() / 16) * 16) + 16 : data.length();
     aes256_init(&ctxt, reinterpret_cast<unsigned char*>(hash1.data()));
     uint8_t dataByte[destSize + 1];
     memset(dataByte, 0, destSize + 1);
-
     memcpy(dataByte, reinterpret_cast<unsigned char*>(data.data()), data.length());
     for(int cnt = 0; cnt < data.length(); cnt += 16) {
         QApplication::processEvents();
@@ -371,13 +370,12 @@ QByteArray aes::aesEncrypt(QByteArray data, QString password) {
 QByteArray aes::aesDecrypt(QByteArray data, QString password) {
     QCryptographicHash sha256 (QCryptographicHash::Sha256);
     sha256.reset();
-    sha256 .addData(password.toUtf8());
+    sha256.addData(password.toUtf8());
     QByteArray hash1 = sha256 .result();
     aes256_context ctxt;
     aes256_init(&ctxt, reinterpret_cast<unsigned char*>(hash1.data()));
     uint8_t dataByte[data.length() + 1];
     memset(dataByte, 0, data.length() + 1);
-
     memcpy(dataByte, reinterpret_cast<unsigned char*>(data.data()), data.length());
     for(int cnt = 0; cnt < data.length(); cnt += 16) {
         QApplication::processEvents();

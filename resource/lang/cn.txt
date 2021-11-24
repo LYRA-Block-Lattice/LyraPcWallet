@@ -221,5 +221,9 @@
    "a" :                                   "一个",
    "penalty will be charged." :            "罚金将会被支付。",
    "ERROR: Consensus timeout." :           "错误: 超时。",
-   "ERROR: Unstaking tokens." :            "错误: 赎回。"
+   "ERROR: Unstaking tokens." :            "错误: 赎回。",
+   "Staking successfull." :                "质押成功。",
+   "Are you sure you want to create this staking account?" : "确认创建质押账号吗？",
+   "Do you want to stake" :               "Do you want to stake",
+   "LYR to this account ID:" :            "LYR to this account ID:"
 }

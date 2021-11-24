@@ -23,7 +23,7 @@ keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *paren
     if(MainWindow::getPassword().length() != 0 && !immediate) {
         if(!events::getWalletUserPassword().second.compare(MainWindow::getPassword())) {
             qDebug() << "KEYREVEALER 1: " << "Nonimediate OK";
-            pKey = events::getWalletKeyNoP(nr);
+            pKey = events::getAccountKeyNoP(nr);
             this->hide();
         } else {
             qDebug() << "KEYREVEALER 2: " << "Nonimediate unmatched";
@@ -41,7 +41,7 @@ void keyrevealer::on_buttonBox_accepted(){
         if(!events::getWalletUserPassword().second.compare(ui->lineEdit->text())) {
             qDebug() << "KEYREVEALER 3: " << "Persistent OK";
             MainWindow::setPassword(ui->lineEdit->text(), persistent);
-            pKey = events::getWalletKeyNoP(nr);
+            pKey = events::getAccountKeyNoP(nr);
         } else {
             qDebug() << "KEYREVEALER 4: " << "Persistent unmatched";
             pKey = "";
@@ -50,7 +50,7 @@ void keyrevealer::on_buttonBox_accepted(){
     } else {
         if(!events::getWalletUserPassword().second.compare(ui->lineEdit->text())) {
             qDebug() << "KEYREVEALER 5: " << "Nonpersistent OK";
-            pKey = events::getWalletKeyNoP(nr);
+            pKey = events::getAccountKeyNoP(nr);
         } else {
             qDebug() << "KEYREVEALER 6: " << "Nonpersistent unmatched";
             pKey = "";

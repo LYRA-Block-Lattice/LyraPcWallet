@@ -717,11 +717,11 @@ void mainboard::run() {
         pastNetwork = events::getRpcNetwork();
         updateNetwork();
     }
-    if(pastWalletNameKeyListChanged != events::getWalletNameKeyListChanged()) {
-        pastWalletNameKeyListChanged = events::getWalletNameKeyListChanged();
+    if(pastWalletNameKeyListChanged != events::getAccountNameKeyListChanged()) {
+        pastWalletNameKeyListChanged = events::getAccountNameKeyListChanged();
         QString tmp = walletSelectorComboBox->currentText();
         walletSelectorComboBox->clear();
-        walletSelectorComboBox->addItems(events::getWalletNameList());
+        walletSelectorComboBox->addItems(events::getAccountNameList());
         walletSelectorComboBox->setCurrentText(tmp);
         events::setSelectedNameKeyIndex(walletSelectorComboBox->currentIndex());
         updateWallet();
@@ -729,7 +729,7 @@ void mainboard::run() {
     }
     if(selectedNameKeyIndex != events::getSelectedNameKeyIndex()) {
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
-        QString id = events::getWalletId(selectedNameKeyIndex);
+        QString id = events::getAccountId(selectedNameKeyIndex);
         if(id.length()) {
             events::setId(id);
             walletSelectorComboBox->setCurrentIndex(selectedNameKeyIndex);

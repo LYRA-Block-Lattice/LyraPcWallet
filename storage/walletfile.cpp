@@ -56,13 +56,13 @@ bool walletfile::load(QString fileName, QString password) {
 
         QJsonObject testnetObject = accountObject["testnet"].toObject();
         QJsonArray historyArray = testnetObject["history"].toArray();
-        wallethistory::addWallet(account, historyArray, 0);
+        wallethistory::addAccount(account, historyArray, 0);
 
         QJsonObject mainnetObject = accountObject["mainnet"].toObject();
         historyArray = mainnetObject["history"].toArray();
-        wallethistory::addWallet(account, historyArray, 1);
+        wallethistory::addAccount(account, historyArray, 1);
     }
-    events::setWalletNameKeyList(accounts);
+    events::setAccountNameKeyList(accounts);
     populate::refreshAll();
     return true;
 }
@@ -82,17 +82,17 @@ bool walletfile::save(QString fileName, QString password, QString directory) {
         lastPairs.insert(pairName, QString::number(pairList.value(pairName)));
     }
 
-    QMap<QString, QList<QList<QMap<QString, QString>>>> accounts = wallethistory::getWallets(0);
+    QMap<QString, QList<QList<QMap<QString, QString>>>> accounts = wallethistory::getAccounts(0);
     QJsonObject accountObject;
     QStringList accountNameList = accounts.keys();
     foreach(QString accountName, accountNameList) {
-        accountObject.insert("key", events::getWalletKey(accountName));
-        QJsonArray historyArrayTestnet = wallethistory::getWalletHistoryJson(accountName, 0);
+        accountObject.insert("key", events::getAccountKeyNoP(accountName));
+        QJsonArray historyArrayTestnet = wallethistory::getAccountHistoryJson(accountName, 0);
         QJsonObject historyTestnet;
         historyTestnet.insert("history", historyArrayTestnet);
         accountObject.insert("testnet", historyTestnet);
         QJsonObject historyMainnet;
-        QJsonArray historyArrayMainnet = wallethistory::getWalletHistoryJson(accountName, 1);
+        QJsonArray historyArrayMainnet = wallethistory::getAccountHistoryJson(accountName, 1);
         historyTestnet.insert("history", historyArrayMainnet);
         accountObject.insert("mainnet", historyTestnet);
         objectAccounts.insert(accountName, accountObject);

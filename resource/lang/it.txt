@@ -221,5 +221,9 @@
    "a" :                                   "a",
    "penalty will be charged." :            "penalty will be charged.",
    "ERROR: Consensus timeout." :           "ERROR: Consensus timeout.",
-   "ERROR: Unstaking tokens." :            "ERROR: Unstaking tokens."
+   "ERROR: Unstaking tokens." :            "ERROR: Unstaking tokens.",
+   "Staking successfull." :                "Staking successfull.",
+   "Are you sure you want to create this staking account?" : "Are you sure you want to create this staking account?",
+   "Do you want to stake" :               "Do you want to stake",
+   "LYR to this account ID:" :            "LYR to this account ID:"
 }

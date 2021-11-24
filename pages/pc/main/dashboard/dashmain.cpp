@@ -688,13 +688,13 @@ void dashmain::run() {
         endDateEdit->setDate(maximumDateRange);
         myWalletValueAxisX->setRange(QDateTime(QDate(startDateEdit->date()), QTime(0, 0, 0, 0)), QDateTime(QDate(endDateEdit->date()), QTime(0, 0, 0, 0)).addDays(1));
     }
-    if(myWalletValueAllChartModifyedCnt != events::getMyWalletValueAllChartModifyedCnt() || usdSelected != events::getBtcUsdSelect()) {
-        myWalletValueAllChartModifyedCnt = events::getMyWalletValueAllChartModifyedCnt();
+    if(myWalletValueAllChartModifyedCnt != events::getMyAccountValueAllChartModifyedCnt() || usdSelected != events::getBtcUsdSelect()) {
+        myWalletValueAllChartModifyedCnt = events::getMyAccountValueAllChartModifyedCnt();
         QPair<qint64, double> tmp;
         myWalletValueSeries->clear();
         double minimum = std::numeric_limits<double>::max();
         double maximum = std::numeric_limits<double>::min();
-        QList<QPair<qint64, double>> list = events::getMyWalletValueAllChart();
+        QList<QPair<qint64, double>> list = events::getMyAccountValueAllChart();
         foreach(tmp, list) {
             double value = (events::getBtcUsdSelect() ? events::getTokenPricePair("LYR_USD") : events::getTokenPricePair("LYR_BTC")) * tmp.second;
             if(value < minimum)

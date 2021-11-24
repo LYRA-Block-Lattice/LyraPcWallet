@@ -626,7 +626,7 @@ void login::on_login_pushed() {
                     currentState = STATE_NONE;
                     command = command_e::CMD_LOGIN_WALLET;
 
-                    wallethistory::updateWallets();
+                    wallethistory::updateAccounts();
                     walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
                     events::setUpdateHistory();
                     loginManager->setText(_tr("LOG IN"));

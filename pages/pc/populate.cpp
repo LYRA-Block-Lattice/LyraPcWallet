@@ -20,7 +20,7 @@ struct QPairFirstComparer {
 bool populate::refreshAll() {
     QList<QStringList> recentTransactionsList;
     int index = events::getSelectedNameKeyIndex();
-    QStringList listId = events::getWalletNameList();
+    QStringList listId = events::getAccountNameList();
     if(index < 0 ) {
         if(listId.count() != 0) {
             index = 0;
@@ -35,11 +35,11 @@ bool populate::refreshAll() {
     QList<QPair<qint64, double>> allList;
     QList<QPair<QString, double>> tokList[listId.count()];
     for(int ind = 0; ind < listId.count(); ind++) {
-        QString walletName = listId[ind];
-        transactionCount = wallethistory::getCount(walletName);
+        QString accountName = listId[ind];
+        transactionCount = wallethistory::getCount(accountName);
 
         for(int cnt = 0; cnt < transactionCount; cnt++) {
-            transaction_t transaction = wallethistory::getTransaction(walletName, cnt);
+            transaction_t transaction = wallethistory::getTransaction(accountName, cnt);
             qint64 time = wallethistory::timestampToQint64(transaction[2]["TimeStamp"]);
             balance = transaction[8]["LYR"].toDouble();
             allList.append(QPair<qint64, double>(time, transaction[7]["LYR"].toDouble()));
@@ -123,14 +123,14 @@ bool populate::refreshAll() {
     events::setAssets(assets);
 
 
-    QString walletName = listId[index];
-    transactionCount = wallethistory::getCount(walletName);
+    QString accountName = listId[index];
+    transactionCount = wallethistory::getCount(accountName);
     QList<QPair<qint64, double>> balanceList;
     QList<QPair<QString, double>> tokenList;
     QList<QPair<QString, QString>> rxTr;
     QList<QPair<QString, QString>> txTr;
     for(int cnt = 0; cnt < transactionCount; cnt++) {
-        transaction_t transaction = wallethistory::getTransaction(walletName, cnt);
+        transaction_t transaction = wallethistory::getTransaction(accountName, cnt);
         qint64 time = wallethistory::timestampToQint64(transaction[2]["TimeStamp"]);
         balance = transaction[8]["LYR"].toDouble();
         balanceList.append(QPair<qint64, double>(time, transaction[8]["LYR"].toDouble()));
@@ -146,9 +146,9 @@ bool populate::refreshAll() {
     }
 
     events::setTokenList(tokenList);
-    events::setMyWalletValueAllChart(allList);
-    events::setMyWalletValueChart(balanceList);
-    events::setMyWalletBalanceChart(balanceList);
+    events::setMyAccountValueAllChart(allList);
+    events::setMyAccountValueChart(balanceList);
+    events::setMyAccountBalanceChart(balanceList);
     events::setNumberOfTransactions(transactionCount);
     events::setBallance(balance);
     if(transactionCount == 0) {
@@ -158,7 +158,7 @@ bool populate::refreshAll() {
     QList<QStringList> txTransactions;
     if(transactionCount) {
         for (int cnt = transactionCount - 1; cnt >= 0; cnt--) {
-            transaction_t transaction = wallethistory::getTransaction(walletName, cnt);
+            transaction_t transaction = wallethistory::getTransaction(accountName, cnt);
             int isReceived = transaction[1]["IsReceive"].toInt();
             qint64 time = wallethistory::timestampToQint64(transaction[2]["TimeStamp"]);
             QDateTime date = QDateTime::fromMSecsSinceEpoch(time);

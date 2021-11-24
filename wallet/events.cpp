@@ -90,18 +90,18 @@ bool events::getNetworkConnected() {
     return networkConnected;
 }
 
-void events::addWalletNameKeyList(QPair<QString, QString> wallet) {
+void events::addAccountNameKeyList(QPair<QString, QString> account) {
     QPair<QString, QPair<QString, QString>>tmp2;
-    tmp2.first = wallet.first;
-    tmp2.second.first = wallet.second;
-    tmp2.second.second = signatures::getAccountIdFromPrivateKey(wallet.second);
+    tmp2.first = account.first;
+    tmp2.second.first = account.second;
+    tmp2.second.second = signatures::getAccountIdFromPrivateKey(account.second);
     walletNameKeyList.append(tmp2);
     walletNameKeyListChanged++;
 }
 
-void events::removeWalletNameKeyList(QString wallet) {
+void events::removeAccountNameKeyList(QString accountName) {
     for (int cnt = 0; cnt < walletNameKeyList.count(); cnt++) {
-        if(!walletNameKeyList[cnt].first.compare(wallet)) {
+        if(!walletNameKeyList[cnt].first.compare(accountName)) {
             walletNameKeyList.removeAt(cnt);
             break;
         }
@@ -109,7 +109,7 @@ void events::removeWalletNameKeyList(QString wallet) {
     }
 }
 
-void events::replaceWalletNameKeyList(QString oldName, QString newName) {
+void events::replaceAccountNameKeyList(QString oldName, QString newName) {
     for (int cnt = 0; cnt < walletNameKeyList.count(); cnt++) {
         if(!walletNameKeyList[cnt].first.compare(oldName)) {
             walletNameKeyList.replace(cnt, QPair<QString, QPair<QString, QString>>(newName, walletNameKeyList[cnt].second));
@@ -119,10 +119,10 @@ void events::replaceWalletNameKeyList(QString oldName, QString newName) {
     }
 }
 
-void events::setWalletNameKeyList(QList<QPair<QString, QString>> walletList) {
+void events::setAccountNameKeyList(QList<QPair<QString, QString>> accountList) {
     walletNameKeyList.clear();
     QPair<QString, QString> tmp;
-    foreach(tmp, walletList) {
+    foreach(tmp, accountList) {
         QPair<QString, QPair<QString, QString>>tmp2;
         tmp2.first = tmp.first;
         tmp2.second.first = tmp.second;
@@ -132,7 +132,7 @@ void events::setWalletNameKeyList(QList<QPair<QString, QString>> walletList) {
     walletNameKeyListChanged++;
 }
 
-QList<QPair<QString, QString>> events::getWalletNameIdList() {
+QList<QPair<QString, QString>> events::getAccountNameIdList() {
     QPair<QString, QPair<QString, QString>>tmp;
     QList<QPair<QString, QString>>tmp3;
     foreach(tmp, walletNameKeyList) {
@@ -144,7 +144,21 @@ QList<QPair<QString, QString>> events::getWalletNameIdList() {
     return tmp3;
 }
 
-QString events::getWalletKey(int keyNr, bool immediate, bool persistent) {
+QString events::getAccountId(int idNr) {
+    if(idNr < walletNameKeyList.count())
+        return walletNameKeyList[idNr].second.second;
+    return "";
+}
+
+QStringList events::getAccountNameList() {
+    QStringList walletList;
+    QPair<QString, QPair<QString, QString>>pair;
+    foreach(pair, walletNameKeyList)
+        walletList.append(pair.first);
+    return walletList;
+}
+
+QString events::getAccountKey(int keyNr, bool immediate, bool persistent) {
     if(keyNr < walletNameKeyList.count()) {
         keyrevealer keyRevealer(keyNr, immediate, persistent);
         return keyRevealer.getKey();
@@ -152,39 +166,21 @@ QString events::getWalletKey(int keyNr, bool immediate, bool persistent) {
     return "";
 }
 
-QString events::getWalletKeyNoP(int keyNr) {
-    if(keyNr < walletNameKeyList.count()) {
+QString events::getAccountKeyNoP(int keyNr) {
+    if(keyNr < walletNameKeyList.count())
         return walletNameKeyList[keyNr].second.first;
-    }
     return "";
 }
 
-QString events::getWalletId(int idNr) {
-    if(idNr < walletNameKeyList.count()) {
-        return walletNameKeyList[idNr].second.second;
-    }
-    return "";
-}
-
-QStringList events::getWalletNameList() {
-    QStringList walletList;
-    QPair<QString, QPair<QString, QString>>pair;
-    foreach(pair, walletNameKeyList) {
-        walletList.append(pair.first);
-    }
-    return walletList;
-}
-
-QString events::getWalletKey(QString name) {
+QString events::getAccountKeyNoP(QString name) {
     QMap<QString, QString> pair;
     QPair<QString, QPair<QString, QString>> _pair;
-    foreach(_pair, walletNameKeyList) {
+    foreach(_pair, walletNameKeyList)
         pair.insert(_pair.first, _pair.second.first);
-    }
     return pair.value(name);
 }
 
-int events::getWalletNameKeyListChanged() {
+int events::getAccountNameKeyListChanged() {
     return walletNameKeyListChanged;
 }
 
@@ -321,41 +317,41 @@ void events::setMinimumDateTime(qint64 dateTime) {
     minimumDateTime = dateTime;
 }
 
-QList<QPair<qint64, double>> events::getMyWalletBalanceChart() {
+QList<QPair<qint64, double>> events::getMyAccountBalanceChart() {
     return myWalletBalanceChart;
 }
 
-int events::getMyWalletBalanceChartModifyedCnt() {
+int events::getMyAccountBalanceChartModifyedCnt() {
     return myWalletBalanceChartModifyedCnt;
 }
 
-QList<QPair<qint64, double>> events::getMyWalletValueAllChart() {
+QList<QPair<qint64, double>> events::getMyAccountValueAllChart() {
     return myWalletValueAllChart;
 }
 
-int events::getMyWalletValueAllChartModifyedCnt() {
+int events::getMyAccountValueAllChartModifyedCnt() {
     return myWalletValueAllChartModifyedCnt;
 }
 
-QList<QPair<qint64, double>> events::getMyWalletValueChart() {
+QList<QPair<qint64, double>> events::getMyAccountValueChart() {
     return myWalletValueChart;
 }
 
-int events::getMyWalletValueChartModifyedCnt() {
+int events::getMyAccountValueChartModifyedCnt() {
     return myWalletValueChartModifyedCnt;
 }
 
-void events::setMyWalletBalanceChart(QList<QPair<qint64, double>> list) {
+void events::setMyAccountBalanceChart(QList<QPair<qint64, double>> list) {
     myWalletBalanceChart = list;
     myWalletBalanceChartModifyedCnt++;
 }
 
-void events::setMyWalletValueAllChart(QList<QPair<qint64, double>> list) {
+void events::setMyAccountValueAllChart(QList<QPair<qint64, double>> list) {
     myWalletValueAllChart = list;
     myWalletValueAllChartModifyedCnt++;
 }
 
-void events::setMyWalletValueChart(QList<QPair<qint64, double>> list) {
+void events::setMyAccountValueChart(QList<QPair<qint64, double>> list) {
     myWalletValueChart = list;
     myWalletValueChartModifyedCnt++;
 }

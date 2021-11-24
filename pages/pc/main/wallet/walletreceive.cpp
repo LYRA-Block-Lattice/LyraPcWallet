@@ -816,8 +816,8 @@ void walletreceive::showDetails(int order) {
     QList<QStringList> list = events::getRecentRxTransactions();
     int transactionNr = list[order][6].toInt() - 1;
     int index = events::getSelectedNameKeyIndex();
-    QStringList names = events::getWalletNameList();
-    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(names[index]);
+    QStringList names = events::getAccountNameList();
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(names[index]);
     QList<QMap<QString, QString>> transaction = wallet[transactionNr];
     showDetailsWindow->show(transaction);
 }

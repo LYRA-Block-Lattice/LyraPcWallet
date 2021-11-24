@@ -8,8 +8,8 @@
 #include "profiting.h"
 
 walletErr_e profiting::createProfitingAcc(int accNr, QString accName, QString accType, double shareRatio, int maxVoter) {
-    QString accPKey = events::getWalletKey(accNr, true, false);
-    QString accId = events::getWalletId(accNr);
+    QString accPKey = events::getAccountKey(accNr, true, false);
+    QString accId = events::getAccountId(accNr);
     if(!accPKey.length() || !accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
@@ -43,8 +43,8 @@ walletErr_e profiting::createProfitingAcc(int accNr, QString accName, QString ac
 }
 
 walletErr_e profiting::createStakingAcc(int accNr, QString accName, QString voteFor, int daysToStake, bool compoundMode) {
-    QString accPKey = events::getWalletKey(accNr);
-    QString accId = events::getWalletId(accNr);
+    QString accPKey = events::getAccountKey(accNr);
+    QString accId = events::getAccountId(accNr);
     if(!accPKey.length() || !accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
@@ -79,8 +79,8 @@ walletErr_e profiting::createStakingAcc(int accNr, QString accName, QString vote
 }
 
 walletErr_e profiting::addStaking(int accNr, QString stakingId, double amount) {
-    QString accPKey = events::getWalletKey(accNr, true, false);
-    QString accId = events::getWalletId(accNr);
+    QString accPKey = events::getAccountKey(accNr, true, false);
+    QString accId = events::getAccountId(accNr);
     if(!accPKey.length() || !accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
@@ -100,8 +100,8 @@ walletErr_e profiting::addStaking(int accNr, QString stakingId, double amount) {
 }
 
 walletErr_e profiting::unStaking(int accNr, QString stakingId) {
-    QString accPKey = events::getWalletKey(accNr, true, false);
-    QString accId = events::getWalletId(accNr);
+    QString accPKey = events::getAccountKey(accNr, true, false);
+    QString accId = events::getAccountId(accNr);
     if(!accPKey.length() || !accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
@@ -121,8 +121,8 @@ walletErr_e profiting::unStaking(int accNr, QString stakingId) {
 }
 
 walletErr_e profiting::createDividents(int accNr, QString profitingId) {
-    QString accPKey = events::getWalletKey(accNr, true, false);
-    QString accId = events::getWalletId(accNr);
+    QString accPKey = events::getAccountKey(accNr, true, false);
+    QString accId = events::getAccountId(accNr);
     if(!accPKey.length() || !accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
@@ -142,7 +142,7 @@ walletErr_e profiting::createDividents(int accNr, QString profitingId) {
 }
 
 QString profiting::getBrokerAccounts(int accNr) {
-    QString accId = events::getWalletId(accNr);
+    QString accId = events::getAccountId(accNr);
     if(!accId.length())
         return "";
     connection_t connection = rpcapi::getConnection();
@@ -152,7 +152,7 @@ QString profiting::getBrokerAccounts(int accNr) {
 }
 
 QString profiting::getPendingStats(int accNr) {
-    QString accId = events::getWalletId(accNr);
+    QString accId = events::getAccountId(accNr);
     if(!accId.length())
         return "";
     connection_t connection = rpcapi::getConnection();

@@ -889,15 +889,15 @@ void walletsend::on_Send_ButtonPressed() {
         return;
     userInputSemaphore = true;
     int index = events::getSelectedNameKeyIndex();
-    QString accId = events::getWalletId(index);
+    QString accId = events::getAccountId(index);
     if(!accId.length())
         return;
-    QStringList names = events::getWalletNameList();
+    QStringList names = events::getAccountNameList();
     sendButton->setText(_tr("WAIT") + "...");
     if(names.count()/* && !passwordConfirmationLineEdit->text().compare(events::getWalletUserPassword().second)*/) {
         if(walletErr_e::WALLET_ERR_OK == walletbalance::send(index, destinationWalletIdLineEdit->text(), tokenComboBox->currentText(), ammountLineEdit->text().toDouble())) {
-            wallethistory::updateWallet(names[index], accId);
-            wallethistory::setNote(names[index], wallethistory::getWallet(names[index]).count() - 1, noteLineEdit->text());
+            wallethistory::updateAccount(names[index], accId);
+            wallethistory::setNote(names[index], wallethistory::getAccount(names[index]).count() - 1, noteLineEdit->text());
             destinationWalletIdLineEdit->clear();
             ammountLineEdit->clear();
             //passwordConfirmationLineEdit->clear();
@@ -921,8 +921,8 @@ void walletsend::showDetails(int order) {
     QList<QStringList> list = events::getRecentTxTransactions();
     int transactionNr = list[order][6].toInt() - 1;
     int index = events::getSelectedNameKeyIndex();
-    QStringList names = events::getWalletNameList();
-    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getWallet(names[index]);
+    QStringList names = events::getAccountNameList();
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(names[index]);
     QList<QMap<QString, QString>> transaction = wallet[transactionNr];
     showDetailsWindow->show(transaction);
 }

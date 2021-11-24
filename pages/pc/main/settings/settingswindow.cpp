@@ -362,7 +362,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 }
 
 void settingswindow::updateWalletSettingsTable() {
-    QList<QPair<QString, QString>> accountList = events::getWalletNameIdList();
+    QList<QPair<QString, QString>> accountList = events::getAccountNameIdList();
     accountsItemModel->clear();
     accountsItemModel->setColumnCount(6);
     accountsItemModel->setRowCount(0);
@@ -681,8 +681,8 @@ void settingswindow::run() {
         getWalletUserPasswordChanged = events::getWalletUserPasswordChangedCnt();
         refreshLanguage();
     }
-    if(walletNameKeyListChanged != events::getWalletNameKeyListChanged()) {
-        walletNameKeyListChanged = events::getWalletNameKeyListChanged();
+    if(walletNameKeyListChanged != events::getAccountNameKeyListChanged()) {
+        walletNameKeyListChanged = events::getAccountNameKeyListChanged();
         updateWalletSettingsTable();
     }
     if(styleCnt != events::getStyleChangedCnt()) {
@@ -786,7 +786,7 @@ void settingswindow::run() {
 
 bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-    QStringList names = events::getWalletNameList();
+    QStringList names = events::getAccountNameList();
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count() - 1; cnt++) {
