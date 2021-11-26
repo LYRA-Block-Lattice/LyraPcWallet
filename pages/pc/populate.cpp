@@ -56,6 +56,7 @@ bool populate::refreshAll() {
             int isReceived = transaction[1]["IsReceive"].toInt();
 /* All transactions */
             QStringList recentTransactions;
+            recentTransactions.append(accountName);
             recentTransactions.append(date.toString("yyyy-MM-dd hh:mm:ss"));
             if(isReceived) {
                 recentTransactions.append("RECEIVED");
@@ -63,15 +64,24 @@ bool populate::refreshAll() {
                 recentTransactions.append("SENT");
             }
             QList<QString>key = transaction[7].keys();
-            if(key.count() > 1) {
-                key.removeAll("LYR");
+            QString value;
+            QString tokenValue;
+            foreach(QString tmp, key)  {
+                value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
+                tokenValue += "\n" + textformating::toValue(value) + " " + tmp;
             }
-            recentTransactions.append(key[0]);
-            QString value = QString::number(isReceived ? transaction[7][key[0]].toDouble() : 0.0 - transaction[7][key[0]].toDouble());
-            recentTransactions.append(textformating::toValue(value));
-            value = transaction[8][key[0]];
-            recentTransactions.append(textformating::toValue(value));
-
+            if(tokenValue.length())
+                tokenValue.remove(0, 1);
+            recentTransactions.append(tokenValue);
+            key = transaction[8].keys();
+            tokenValue = "";
+            foreach(QString tmp, key)  {
+                value = QString::number(transaction[8][tmp].toDouble());
+                tokenValue += "\n" + textformating::toValue(value) + " " + tmp;
+            }
+            if(tokenValue.length())
+                tokenValue.remove(0, 1);
+            recentTransactions.append(tokenValue);
             recentTransactionsList.append(recentTransactions);
 
         }
@@ -191,10 +201,12 @@ bool populate::refreshAll() {
                 recentTransactions.append(transaction[3]["SendAccountId"]);
             else
                 recentTransactions.append(transaction[5]["RecvAccountId"]);
-            int usedKey = key.count() > 1 ? 1 : 0;
-            value = QString::number(isReceived ? transaction[7][key[usedKey]].toDouble() : 0.0 - transaction[7][key[usedKey]].toDouble());
             QString tokenValue;
-            tokenValue = textformating::toValue(value) + " " + key[usedKey];
+            foreach(QString tmp, key)  {
+                value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
+                tokenValue += textformating::toValue(value) + " " + tmp + "\n";
+            }
+
             recentTransactions.append(tokenValue);
             recentTransactions.append(_tr("View details"));
             recentTransactions.append(_tr("Completed"));

@@ -80,39 +80,39 @@ void walletshowdetails::show(QList<QMap<QString, QString>> transaction) {
     QString key;
     QMap<QString, QString> tmp;
     tmp = transaction[0];
-    str.append(_tr("Height") + ": " + tmp["Height"] + "\n\r");
+    str.append(_tr("Height") + ": " + tmp["Height"] + "\n\n");
     tmp = transaction[1];
     if(tmp["IsReceive"].toInt()) {
-        str.append(_tr("Direction") + ": " + _tr("RECEIVED") + "\n\r");
+        str.append(_tr("Direction") + ": " + _tr("RECEIVED") + "\n\n");
     } else {
-        str.append(_tr("Direction") + ": " + _tr("SENT") + "\n\r");
+        str.append(_tr("Direction") + ": " + _tr("SENT") + "\n\n");
     }
     tmp = transaction[2];
     QDateTime date = QDateTime::fromMSecsSinceEpoch(tmp["TimeStamp"].toLongLong());
-    str.append(_tr("Time stamp") + ": " + date.toString("hh:mm:ss yyyy-MM-dd") + "\n\r");
+    str.append(_tr("Time stamp") + ": " + date.toString("hh:mm:ss yyyy-MM-dd") + "\n\n");
     tmp = transaction[3];
-    str.append(_tr("Send Account ID") + ": " + tmp["SendAccountId"] + "\n\r");
+    str.append(_tr("Send Account ID") + ": " + tmp["SendAccountId"] + "\n\n");
     tmp = transaction[4];
-    str.append(_tr("Send hash") + ": " + tmp["SendHash"] + "\n\r");
+    str.append(_tr("Send hash") + ": " + tmp["SendHash"] + "\n\n");
     tmp = transaction[5];
-    str.append(_tr("Receive Account ID") + ": " + tmp["RecvAccountId"] + "\n\r");
+    str.append(_tr("Receive Account ID") + ": " + tmp["RecvAccountId"] + "\n\n");
     tmp = transaction[6];
-    str.append(_tr("Receive hash") + ": " + tmp["RecvHash"] + "\n\r");
+    str.append(_tr("Receive hash") + ": " + tmp["RecvHash"] + "\n\n");
     tmp = transaction[7];
-    str.append(_tr("Amount transferred") + ": ");
+    str.append(_tr("Amount transferred") + ": \n");
     QStringList tmpKeys = tmp.keys();
     foreach(key, tmpKeys) {
-        str.append(key + ": " + textformating::toValue(tmp[key]) + "\n\r");
+        str.append(key + ": " + textformating::toValue(tmp[key]) + "\n");
     }
     tmp = transaction[8];
     tmpKeys = tmp.keys();
-    str.append(_tr("Amount in this account") + ": ");
+    str.append("\n" + _tr("Amount in this account") + ": \n");
     foreach(key, tmpKeys) {
-        str.append(key + ": " + textformating::toValue(tmp[key]) + "\n\r");
+        str.append(key + ": " + textformating::toValue(tmp[key]) + "\n");
     }
     if(transaction.count() >= 10) {
         tmp = transaction[9];
-        str.append(_tr("Note") + ": " + tmp["note"] + "\n\r");
+        str.append("\n" + _tr("Note") + ": \n\n" + tmp["note"] + "\n\n");
     }
     detailTextEdit->setText(str);
     back = false;
@@ -139,6 +139,7 @@ void walletshowdetails::show(QString text) {
         qrcodegen_Ecc_HIGH, qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
     if (ok) {
         scene->clear();
+        scene->setBackgroundBrush(QBrush(QColor(255, 255, 255, 255)));
         int border = 4;
         thisMdiArea->setGeometry(0, 0, parent->width(), parent->height());
         thisWindow->setGeometry(0, 0, thisMdiArea->width(), thisMdiArea->height());

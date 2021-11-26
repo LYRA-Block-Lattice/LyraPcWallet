@@ -525,7 +525,7 @@ bool createprofitaccount::eventFilter(QObject *obj, QEvent *event) {
                     if (resBtn != QMessageBox::Yes) {
                         return true;
                     }
-                    walletErr_e response = profiting::createDividents(this->accCnt, profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4))->text());
+                    walletErr_e response = profiting::createDividents(cnt, profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 4))->text());
                     if(response != walletErr_e::WALLET_ERR_OK) {
                         QMessageBox::critical( this, this->windowTitle(),
                                 _tr("ERROR: Creating dividends."),

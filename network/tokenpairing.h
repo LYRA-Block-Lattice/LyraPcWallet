@@ -23,11 +23,13 @@ private:
     QNetworkReply *reply;
     QString read;
     bool busy = true;
+    bool error = false;
 signals:
 private slots:
     void replyFinished(QNetworkReply *resp);
     void httpReadyRead();
     void httpDownloadFinished();
+    void slotError(QNetworkReply::NetworkError);
 };
 
 #endif // TOKENPAIRING_H

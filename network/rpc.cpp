@@ -59,7 +59,7 @@ void rpc::on_connect() {
                 timerRetryConnect.start();
                 return;
             }
-            while(1) {
+            while(!events::getAppClosing()) {
                 if(events::getCustomIp().length())
                     break;
                 quint32 value = QRandomGenerator::global()->generate() % (rpcNodeList.count());
@@ -73,8 +73,6 @@ void rpc::on_connect() {
                     connectionState = rpcConnectionState_e::RPC_CONNECTION_STATE_CONNECTING;
                     break;
                 }
-                if(events::getAppClosing())
-                    return;
             }
             events::setRpcNetwork(events::getNetwork());
         } else {
@@ -156,7 +154,7 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
         timerRetryConnect.start();
-        while(!sendMsgTimedOut) {
+        while(!sendMsgTimedOut && !events::getAppClosing()) {
             if(!timerRetryConnect.isActive())
                 timerRetryConnect.start();
             QApplication::processEvents();
@@ -172,10 +170,6 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
                     sslWebSocket->setTextMessage(response);
                 }
             }
-            if(sendMsgTimedOut)
-                break;
-            if(events::getAppClosing())
-                break;
         }
     }
     qDebug() << "RPC 11: Response fail" << Qt::endl;
@@ -188,17 +182,13 @@ QString rpc::sendSimpleMessage(QString message) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
         timerRetryConnect.start();
-        while(1) {
+        while(!sendMsgTimedOut && !events::getAppClosing()) {
             QApplication::processEvents();
             QString response = getResponse();
             if(response.length()) {
                 qDebug() << "RPC 13: " + response << Qt::endl;
                 return response;
             }
-            if(sendMsgTimedOut)
-                break;
-            if(events::getAppClosing())
-                break;
         }
     }
     qDebug() << "RPC 14: Response fail" << Qt::endl;

@@ -493,8 +493,8 @@ void walletreceive::refreshSize() {
     lastReceivedDateLabel->setGeometry(s(877), s(88), s(370), s(25));
     lastReceivedValueLabel->setGeometry(s(877), s(119), s(370), s(20));
 
-    walletAddressLabel->setGeometry(s(0), s(165), s(200), s(30));
-    walletAddressIdLabel->setGeometry(s(220), s(164), s(870), s(30));
+    walletAddressLabel->setGeometry(s(0), s(168), s(200), s(30));
+    walletAddressIdLabel->setGeometry(s(205), s(168), s(870), s(30));
 
     requestToWalletIdLabel->setGeometry(s(0), s(235), s(200), s(33));
     requestToWalletIdLineEdit->setGeometry(s(215), s(232), s(850), s(39));
@@ -550,7 +550,7 @@ void walletreceive::refreshSize() {
 }
 
 void walletreceive::refreshLanguage() {
-    myWalletLabel->setText(_tr("My Wallet") +" - "+ _tr("Receive Funds"));
+    myWalletLabel->setText(_tr("My Account") +" - "+ _tr("Receive Funds"));
 
     walletBalanceLabel->setText(_tr("ACCOUNT BALANCE"));
 
@@ -562,7 +562,7 @@ void walletreceive::refreshLanguage() {
 
     lastReceivedLabel->setText(_tr("LAST RECEIVED TRANSACTION"));
 
-    walletAddressLabel->setText(_tr("Your wallet's address ID") + ":");
+    walletAddressLabel->setText(_tr("Your account address ID") + ":");
 
     requestToWalletIdLabel->setText(_tr("Request to wallet ID") + ":");
 

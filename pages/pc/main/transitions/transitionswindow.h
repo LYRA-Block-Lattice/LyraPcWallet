@@ -73,6 +73,7 @@ private:
     int assetsListModifyedCnt = -1;
     bool updateHistory = false;
     bool supressTableUpdate = false;
+    int recentTransactionsCnt = -1;
     rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;

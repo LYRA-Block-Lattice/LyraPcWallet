@@ -71,7 +71,6 @@
    "December" :                             "December",
    "NUMBER OF TRANSACTIONS" :               "NUMBER OF TRANSACTIONS",
    "in last week" :                         "in last week",
-   "Your wallet's address ID" :             "Your wallet's address ID",
    "My Account Balance" :                   "My Account Balance",
    "My Account Value" :                     "My Account Value",
    "Receive Funds" :                        "Receive Funds",
@@ -86,7 +85,6 @@
    "Send Funds" :                           "Send Funds",
    "TOTAL LYRA SENT" :                      "TOTAL LYRA SENT",
    "LAST SEND TRANSACTION" :                "LAST SEND TRANSACTION",
-   "Destination to wallet ID" :             "Destination to wallet ID",
    "Password Confirmation" :                "Password Confirmation",
    "Note" :                                 "Note",
    "SENT" :                                 "SENT",
@@ -224,6 +222,10 @@
    "ERROR: Unstaking tokens." :            "ERROR: Unstaking tokens.",
    "Staking successfull." :                "Staking successfull.",
    "Are you sure you want to create this staking account?" : "Are you sure you want to create this staking account?",
-   "Do you want to stake" :               "Do you want to stake",
-   "LYR to this account ID:" :            "LYR to this account ID:"
+   "Do you want to stake" :                "Do you want to stake",
+   "LYR to this account ID:" :             "LYR to this account ID:",
+   "My Account" :                          "My Account",
+   "Destination to account ID" :           "Destination to account ID",
+   "Your account address ID" :             "Your account address ID",
+   "ACCOUNT" :                             "ACCOUNT"
 }

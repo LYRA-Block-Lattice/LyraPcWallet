@@ -393,6 +393,7 @@ void settingswindow::updateWalletSettingsTable() {
         it->setEnabled(false);
         it->setText(pair.second);
         item.append(it);
+
         it = new QStandardItem();
         it->setForeground(QBrush(0x909090));
         it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);

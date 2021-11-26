@@ -70,7 +70,6 @@
    "December" :                             "Decembrie",
    "NUMBER OF TRANSACTIONS" :               "NUMARUL DE TRANZACȚII",
    "in last week" :                         "în ultima săptamană",
-   "Your wallet's address ID" :             "ID-ul portofelului tau",
    "My Account Balance" :                   "Balanta contului meu",
    "My Account Value" :                     "Valoarea contului meu",
    "Receive Funds" :                        "Fonduri primite",
@@ -85,7 +84,6 @@
    "Send Funds" :                           "Trimite fonduri",
    "TOTAL LYRA SENT" :                      "TOTAL LYRA TRIMIȘI",
    "LAST SEND TRANSACTION" :                "ULTIMA TRANZACȚIE TRIMISĂ",
-   "Destination to wallet ID" :             "ID-ul portofelului destinatar",
    "Password Confirmation" :                "Confirmă parola",
    "Note" :                                 "Notă",
    "SENT" :                                 "TRIMIS",
@@ -224,5 +222,9 @@
    "Staking successfull." :                "Staking successfull.",
    "Are you sure you want to create this staking account?" : "Are you sure you want to create this staking account?",
    "Do you want to stake" :               "Vrei sa faci stake",
-   "LYR to this account ID:" :            "LYR pe ID-ul:"
+   "LYR to this account ID:" :            "LYR pe ID-ul:",
+   "My Account" :                         "Portofelul Meu",
+   "Destination to account ID" :            "ID-ul contului destinatar",
+   "Your account address ID" :            "ID-ul contului tau",
+   "ACCOUNT" :                             "CONT"
 }

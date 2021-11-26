@@ -71,7 +71,6 @@
    "December" :                             "Dicembre",
    "NUMBER OF TRANSACTIONS" :               "NUMERO DI TRANSAZIONI",
    "in last week" :                         "nell'ultima settimana",
-   "Your wallet's address ID" :             "L'ID del tuo wallet",
    "My Account Balance" :                   "Il bilancio del mio account",
    "My Account Value" :                     "Il valore del mio account",
    "Receive Funds" :                        "Ricevi fondi",
@@ -86,7 +85,6 @@
    "Send Funds" :                           "Invia Fondi",
    "TOTAL LYRA SENT" :                      "TOTALE LYRA INVIATE",
    "LAST SEND TRANSACTION" :                "ULTIMA TRANSAZIONE INVIATA",
-   "Destination to wallet ID" :             "Wallet ID di destinazione",
    "Password Confirmation" :                "Password di conferma",
    "Note" :                                 "Nota",
    "SENT" :                                 "INVIA",
@@ -225,5 +223,9 @@
    "Staking successfull." :                "Staking successfull.",
    "Are you sure you want to create this staking account?" : "Are you sure you want to create this staking account?",
    "Do you want to stake" :               "Do you want to stake",
-   "LYR to this account ID:" :            "LYR to this account ID:"
+   "LYR to this account ID:" :            "LYR to this account ID:",
+   "My Account" :                         "My Account",
+   "Destination to account ID" :          "Account ID di destinazione",
+   "Your account address ID" :            "Your account address ID",
+   "ACCOUNT" :                             "ACCOUNT"
 }

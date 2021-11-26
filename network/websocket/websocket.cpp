@@ -15,8 +15,7 @@ websocket::~websocket() {
 //! [onConnected]
 void websocket::onConnected()
 {
-    if (m_debug)
-        qDebug() << "WEBSOCKET 1: WebSocket connected";
+    qDebug() << "WEBSOCKET 1: WebSocket connected";
     connect(&m_webSocket, &QWebSocket::textMessageReceived,
             this, &websocket::onTextMessageReceived);
     m_webSocket.sendTextMessage(QStringLiteral("Hello, world!"));
@@ -26,8 +25,7 @@ void websocket::onConnected()
 //! [onTextMessageReceived]
 void websocket::onTextMessageReceived(QString message)
 {
-    if (m_debug)
-        qDebug() << "WEBSOCKET 2: Message received:" << message;
+    qDebug() << "WEBSOCKET 2: Message received:" << message;
     m_webSocket.close();
 }
 //! [onTextMessageReceived]

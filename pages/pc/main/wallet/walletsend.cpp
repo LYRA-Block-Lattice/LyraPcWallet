@@ -519,8 +519,8 @@ void walletsend::refreshSize() {
     lastSendDateLabel->setGeometry(s(877), s(88), s(370), s(25));
     lastSendValueLabel->setGeometry(s(877), s(119), s(370), s(20));
 
-    walletAddressLabel->setGeometry(s(0), s(165), s(200), s(30));
-    walletAddressIdLabel->setGeometry(s(220), s(164), s(870), s(30));
+    walletAddressLabel->setGeometry(s(0), s(168), s(200), s(30));
+    walletAddressIdLabel->setGeometry(s(205), s(168), s(870), s(30));
 
     destinationWalletIdLabel->setGeometry(s(0), s(235), s(200), s(33));
     destinationWalletIdLineEdit->setGeometry(s(215), s(232), s(850), s(39));
@@ -576,7 +576,7 @@ void walletsend::refreshSize() {
     refreshFonts();
 }
 void walletsend::refreshLanguage() {
-    myWalletLabel->setText(_tr("My Wallet") +" - "+ _tr("Send Funds"));
+    myWalletLabel->setText(_tr("My Account") +" - "+ _tr("Send Funds"));
 
     walletBalanceLabel->setText(_tr("ACCOUNT BALANCE"));
 
@@ -595,11 +595,11 @@ void walletsend::refreshLanguage() {
     walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
     totalLyrSendedLastWeekLabel->setText( textformating::toPercentage(totalLyraPercentageSendedLastWeek) + " " + _tr("of Total Wallet"));
 
-    walletAddressLabel->setText(_tr("Your wallet's address ID") + ":");
+    walletAddressLabel->setText(_tr("Your account address ID") + ":");
 
     btcUsdLabel->setText("BTC            USD");
 
-    destinationWalletIdLabel->setText(_tr("Destination to wallet ID") + ":");
+    destinationWalletIdLabel->setText(_tr("Destination to account ID") + ":");
 
     //passwordConfirmationLabel->setText(_tr("Password Confirmation") + ":");
 

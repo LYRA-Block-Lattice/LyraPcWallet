@@ -551,7 +551,7 @@ void mainboard::updateMenuButtonsSize() {
 
 void mainboard::updateMenuButtonsLanguage() {
     dashboardTextLabel->setText(_tr("Dashboard"));
-    myWalletTextLabel->setText(_tr("My Wallet"));
+    myWalletTextLabel->setText(_tr("My Account"));
     myWalletReceiveTextLabel->setText(_tr("Receive"));
     myWalletSendTextLabel->setText(_tr("Send"));
     lyraTokensTextLabel->setText(_tr("Lyra Tokens"));

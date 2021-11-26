@@ -71,7 +71,6 @@
    "December" :                             "十二月",
    "NUMBER OF TRANSACTIONS" :               "交易数量",
    "in last week" :                         "在上周",
-   "Your wallet's address ID" :             "你的钱包地址",
    "My Account Balance" :                   "我的账户余额",
    "My Account Value" :                     "我的账户价值",
    "Receive Funds" :                        "接收",
@@ -86,7 +85,6 @@
    "Send Funds" :                           "发送",
    "TOTAL LYRA SENT" :                      "所有发送的LYRA",
    "LAST SEND TRANSACTION" :                "上次发送交易",
-   "Destination to wallet ID" :             "目标钱包地址",
    "Password Confirmation" :                "密码确认",
    "Note" :                                 "标注",
    "SENT" :                                 "发送",
@@ -225,5 +223,10 @@
    "Staking successfull." :                "质押成功。",
    "Are you sure you want to create this staking account?" : "确认创建质押账号吗？",
    "Do you want to stake" :               "Do you want to stake",
-   "LYR to this account ID:" :            "LYR to this account ID:"
+   "LYR to this account ID:" :            "LYR to this account ID:",
+   "My Account" :                         "My Account",
+   "Destination to account ID" :          "Destination to account ID",
+   "Your account address ID" :            "Your account address ID",
+   "ACCOUNT" :                             "ACCOUNT"
+
 }

@@ -2,6 +2,7 @@
 
 #include <QVariant>
 #include <QApplication>
+#include <QTimer>
 
 #include "wallet/events.h"
 
@@ -29,6 +30,7 @@ QString tokenpairing::getStatic(QString url) {
 }
 
 QString tokenpairing::get(QString url) {
+    QTimer timer;
     manager.setParent(this);
     connect(&manager, SIGNAL(finished(QNetworkReply*)),
         this, SLOT(replyFinished(QNetworkReply*)));
@@ -37,15 +39,16 @@ QString tokenpairing::get(QString url) {
         this, SLOT(httpReadyRead()));
     connect(reply, SIGNAL(finished()),
         this, SLOT(httpDownloadFinished()));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),
+           this, SLOT(slotError(QNetworkReply::NetworkError)));
     read.clear();
     status.clear();
     busy = true;
+    error = false;
     while(1) {
-        if(!busy)
+        if(!busy || error || events::getAppClosing())
             return read;
         QApplication::processEvents();
-        if(events::getAppClosing())
-            return read;
     }
 }
 
@@ -65,4 +68,10 @@ void tokenpairing::httpReadyRead() {
 void tokenpairing::httpDownloadFinished() {
     //qDebug() << read;
     busy = false;
+}
+
+void tokenpairing::slotError(QNetworkReply::NetworkError err) {
+    error = true;
+    qDebug() << "TOKENPAIRING 1: ";
+    qDebug() << "TOKENPAIRING 2: " << err;
 }

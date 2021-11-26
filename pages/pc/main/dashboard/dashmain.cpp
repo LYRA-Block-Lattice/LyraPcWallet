@@ -444,9 +444,9 @@ void dashmain::refreshSize() {
     viewAllAssetsButton->setGeometry(s(943), s(610), s(128), s(37));
 
     recentTransactionsTableView->setGeometry(s(57), s(660), s(645), s(175));
-    recentTransactionsTableView->setColumnWidth(0, s(140));
-    recentTransactionsTableView->setColumnWidth(1, s(90));
-    recentTransactionsTableView->setColumnWidth(2, s(125));
+    recentTransactionsTableView->setColumnWidth(0, s(125));
+    recentTransactionsTableView->setColumnWidth(1, s(140));
+    recentTransactionsTableView->setColumnWidth(2, s(90));
     recentTransactionsTableView->setColumnWidth(3, s(145));
     recentTransactionsTableView->setColumnWidth(4, s(145));
     recentTransactionsTableView->setRowHeight(0, s(31));
@@ -468,9 +468,9 @@ void dashmain::refreshSize() {
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
      */
     recentTransactionsTableView->setGeometry(s(57), s(660), s(645), s(175));
-    recentTransactionsTableView->setColumnWidth(0, s(140));
-    recentTransactionsTableView->setColumnWidth(1, s(90));
-    recentTransactionsTableView->setColumnWidth(2, s(125));
+    recentTransactionsTableView->setColumnWidth(0, s(125));
+    recentTransactionsTableView->setColumnWidth(1, s(140));
+    recentTransactionsTableView->setColumnWidth(2, s(90));
     recentTransactionsTableView->setColumnWidth(3, s(145));
     recentTransactionsTableView->setColumnWidth(4, s(145));
     recentTransactionsTableView->setRowHeight(0, s(31));
@@ -525,11 +525,11 @@ void dashmain::updateLastTransactionsTables() {
     recentTransactionsItemModel->setRowCount(4);
 
     refreshSize();
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("DATE TRANSACTION"));
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("ACCOUNT"));
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("TYPE"));
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("DATE TRANSACTION"));
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("TOKEN"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("TYPE"));
     recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("QUANTITY"));
     recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
@@ -736,7 +736,7 @@ void dashmain::run() {
             tmp->setText("");
             tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
             tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
+            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
             tmp->setText("");
         }
         if(list.count() != 0) {
@@ -747,9 +747,9 @@ void dashmain::run() {
                 tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
                 tmp->setText(list[cnt][0]);
                 tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-                tmp->setText(_tr(list[cnt][1]));
+                tmp->setText(list[cnt][1]);
                 tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-                tmp->setText(list[cnt][2]);
+                tmp->setText(_tr(list[cnt][2]));
                 tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
                 tmp->setText(list[cnt][3]);
                 tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));

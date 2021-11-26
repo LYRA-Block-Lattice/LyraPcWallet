@@ -417,8 +417,8 @@ void walletmain::refreshSize() {
     numberOfTransactionsCountLabel->setGeometry(s(877), s(88), s(370), s(25));
     numberOfTransactionsCountWeekLabel->setGeometry(s(877), s(119), s(370), s(20));
 
-    walletAddressLabel->setGeometry(s(0), s(195), s(200), s(30));
-    walletAddressIdLabel->setGeometry(s(205), s(195), s(870), s(30));
+    walletAddressLabel->setGeometry(s(0), s(192), s(200), s(30));
+    walletAddressIdLabel->setGeometry(s(205), s(192), s(870), s(30));
 
     voteUnvoteButton->setGeometry(s(1030), s(195), s(48), s(27));
 
@@ -443,7 +443,7 @@ void walletmain::refreshLanguage() {
     walletBalanceValueTotalLabel->setText(textformating::toPercentage(percentageOfTotalSupply) + " " + _tr("of Total Supply"));
     numberOfTransactionsCountWeekLabel->setText(QString::number(nrOfTransactionsLastWeek) + " " + _tr("in last week"));
 
-    myWalletLabel->setText(_tr("My Wallet"));
+    myWalletLabel->setText(_tr("My Account"));
 
     walletBalanceLabel->setText(_tr("ACCOUNT BALANCE"));
 
@@ -455,7 +455,7 @@ void walletmain::refreshLanguage() {
 
     numberOfTransactionsLabel->setText(_tr("NUMBER OF TRANSACTIONS"));
 
-    walletAddressLabel->setText(_tr("Your wallet's address ID") + ":");
+    walletAddressLabel->setText(_tr("Your account address ID") + ":");
 
     voteUnvoteButton->setText(_tr("STAKE"));
 
