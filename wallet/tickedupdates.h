@@ -11,6 +11,7 @@ class tickedupdates : public QWidget
 {
     Q_OBJECT
 public:
+
     tickedupdates();
     ~tickedupdates();
     void init(QWidget *parent = nullptr, tickedupdates *instance = nullptr);

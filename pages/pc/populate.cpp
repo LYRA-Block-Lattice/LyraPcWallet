@@ -17,6 +17,17 @@ struct QPairFirstComparer {
     }
 };
 
+struct QPairFirstComparer1 {
+    template<typename T1>
+    /*bool operator()(const QPair<T1,T2> & a, const QPair<T1,T2> & b) const {
+        return a.first < b.first;
+    }*/
+    bool operator()(const QList<T1> &v1, const QList<T1> &v2)
+    {
+        return v1.value(1) < v2.value(1);
+    }
+};
+
 bool populate::refreshAll() {
     QList<QStringList> recentTransactionsList;
     int index = events::getSelectedNameKeyIndex();
@@ -67,8 +78,10 @@ bool populate::refreshAll() {
             QString value;
             QString tokenValue;
             foreach(QString tmp, key)  {
-                value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
-                tokenValue += "\n" + textformating::toValue(value) + " " + tmp;
+                if(transaction[7][tmp].toDouble() != 0.0) {
+                    value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
+                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp;
+                }
             }
             if(tokenValue.length())
                 tokenValue.remove(0, 1);
@@ -76,8 +89,10 @@ bool populate::refreshAll() {
             key = transaction[8].keys();
             tokenValue = "";
             foreach(QString tmp, key)  {
-                value = QString::number(transaction[8][tmp].toDouble());
-                tokenValue += "\n" + textformating::toValue(value) + " " + tmp;
+                if(transaction[8][tmp].toDouble() > 0.0) {
+                    value = QString::number(transaction[8][tmp].toDouble());
+                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp;
+                }
             }
             if(tokenValue.length())
                 tokenValue.remove(0, 1);
@@ -86,7 +101,7 @@ bool populate::refreshAll() {
 
         }
     }
-    std::sort(recentTransactionsList.begin(), recentTransactionsList.end());
+    std::sort(recentTransactionsList.begin(), recentTransactionsList.end(), QPairFirstComparer1());
     std::reverse(recentTransactionsList.begin(), recentTransactionsList.end());
     std::sort(allList.begin(), allList.end(), QPairFirstComparer());
     double value = 0.0;
@@ -114,16 +129,15 @@ bool populate::refreshAll() {
             }
         }
     }
-    QPair<QString, double> ass;
+    QPair<QString, double> asset;
     int lyr = -1;
-    foreach(ass, tokenAllValue) {
+    foreach(asset, tokenAllValue) {
         QList<QString> assetsValue;
-        //asset = transaction[8][assName];
-        assetsValue.append(ass.first);
+        assetsValue.append(asset.first);
         assetsValue.append("0.00");
-        assetsValue.append(textformating::toValue(ass.second));
+        assetsValue.append(textformating::toValue(asset.second));
         assets.append(assetsValue);
-        if(!ass.first.compare("LYR")) {
+        if(!asset.first.compare("LYR")) {
             lyr = assets.count() - 1;
         }
     }
@@ -204,7 +218,7 @@ bool populate::refreshAll() {
             QString tokenValue;
             foreach(QString tmp, key)  {
                 value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
-                tokenValue += textformating::toValue(value) + " " + tmp + "\n";
+                tokenValue += textformating::toValue(value, 2) + " " + tmp + "\n";
             }
 
             recentTransactions.append(tokenValue);

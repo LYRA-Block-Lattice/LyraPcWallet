@@ -73,6 +73,8 @@ int screenNumber = 0;
 QString customIp[3];
 int customIpChanged = 0;
 bool walletUnlocked = true;
+QList<QPair<QString, int>>ringEventList;
+bool triggerNodeFetch = false;
 
 bool events::getAppClosing() {
     return appClosing;
@@ -722,5 +724,54 @@ bool events::getWalletUnlocked() {
     return walletUnlocked;
 }
 
+void events::addRingEvent(QString eventName, ringEvent_e eventType) {
+    QPair<QString, int> event;
+    foreach(event, ringEventList) {
+        if(!event.first.compare(eventName) && event.second == eventType)
+            return;
+    }
+    ringEventList.append(QPair<QString, int>(eventName, eventType));
+}
+
+QPair<QString, int> events::getRingEvent() {
+    if(ringEventList.isEmpty())
+        return QPair<QString, int>();
+    else {
+        return ringEventList.takeFirst();
+    }
+}
+
+QPair<QString, int> events::getRingEvent(QString eventName) {
+    if(ringEventList.isEmpty())
+        return QPair<QString, int>();
+    else {
+        QPair<QString, int> event;
+        foreach(event, ringEventList) {
+            if(!event.first.split(":")[1].compare(eventName) || !event.first.split(":")[2].compare(eventName)) {
+                //ringEventList.removeAll(event);
+                return event;
+            }
+        }
+        return QPair<QString, int>();
+    }
+}
+
+int events::getRingEventCount() {
+    return ringEventList.count();
+}
+
+void events::clearRingEvents() {
+    ringEventList.clear();
+}
+
+void events::setTriggerNodeFetch() {
+    triggerNodeFetch = true;
+}
+
+bool events::getTriggerNodeFetch() {
+    bool tmp = triggerNodeFetch;
+    triggerNodeFetch = false;
+    return tmp;
+}
 
 

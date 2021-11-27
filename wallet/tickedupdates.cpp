@@ -50,7 +50,10 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
 }
 
 void tickedupdates::run() {
-    if(selectedNameKeyIndex != events::getSelectedNameKeyIndex() || walletNameKeyListChanged != events::getAccountNameKeyListChanged() || network != events::getNetwork()) {
+    if(selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
+            walletNameKeyListChanged != events::getAccountNameKeyListChanged() ||
+            network != events::getNetwork() ||
+            events::getTriggerNodeFetch()) {
         network = events::getNetwork();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
         walletNameKeyListChanged = events::getAccountNameKeyListChanged();
@@ -163,10 +166,23 @@ void tickedupdates::on_FetchNode() {
         }
     }
 
+    QList<QPair<QString, QString>> nameAccIdList = events::getAccountNameIdList();
+    QPair<QString, QString>nameAccId;
+    events::clearRingEvents();
+    foreach(nameAccId, nameAccIdList) {
+        bool unreceived = false;
+        int height = 0;
+        walletbalance::balance(nameAccId.second, &height, &unreceived);
+        if(unreceived) {
+            events::addRingEvent(nameAccId.first + ":" + nameAccId.second, events::ringEvent_e::RING_EVENT_UNRECEIVED_BALANCE);
+        }
+    }
+    events::setBells(events::getRingEventCount());
+
     populate::refreshAll();
 }
 
-void tickedupdates::on_SaveWallet() {
+void tickedupdates::on_SaveWallet()  {
     walletfile::save(events::getWalletUserPassword().first, events::getWalletUserPassword().second);
 }
 

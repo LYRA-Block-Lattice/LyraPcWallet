@@ -1,7 +1,6 @@
 QT       += core gui network charts websockets
 TARGET = ../../LyraWallet/LyraWallet-MacOsX/lyra-pc-wallet
 
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11

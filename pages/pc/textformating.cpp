@@ -49,8 +49,8 @@ QString textformating::toValue(double sum, int precision) {
     return tmp;
 }
 
-QString textformating::toValue(QString value) {
-    return textformating::toValue(value.toDouble(), 8);
+QString textformating::toValue(QString value, int precision) {
+    return textformating::toValue(value.toDouble(), precision);
 }
 
 QString textformating::toPercentage(double sum) {

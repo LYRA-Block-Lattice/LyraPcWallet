@@ -55,7 +55,7 @@ void mainboard::setVars(QMdiArea *mdiArea, QWidget *parent) {
     updateWallet();
     updateNetwork();
 
-    bellImageLabel = new QLabel(windowMain);
+    bellImageLabel = new QPushButton(windowMain);
     bellNrLabel = new QLabel(windowMain);
     messageImageLabel = new QLabel(windowMain);
     messageNrLabel = new QLabel(windowMain);
@@ -70,6 +70,8 @@ void mainboard::setVars(QMdiArea *mdiArea, QWidget *parent) {
     logOutButton = new QPushButton(windowMain);
     connect(logOutButton, SIGNAL(clicked()),this, SLOT(on_logOut_ButtonPressed()));
     updateLogOut();
+
+    connect(bellImageLabel, SIGNAL(clicked()),this, SLOT(on_ring_pushed()));
 
     userNameLabel->setStyleSheet("color: #eee;");
     userNameLabel->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -630,16 +632,24 @@ void mainboard::updateNetwork() {
 
 void mainboard::updateBell() {
     if(events::getBells() == 0) {
-        QPixmap image(":/resource/ico/" + events::getStyle() + "/mainDashBoard/bell.png");
-        bellImageLabel->setPixmap(image);
+        //QPixmap image(":/resource/ico/" + events::getStyle() + "/mainDashBoard/bell.png");
+        //bellImageLabel->setPixmap(image);
+        bellImageLabel->setFlat(true);
+        bellImageLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/bell.png); border-radius: 0px");
+        bellImageLabel->setCursor(Qt::PointingHandCursor);
+        //bellImageLabel->setVisible(true);
         bellNrLabel->setVisible(false);
     } else {
-        QPixmap image(":/resource/ico/" + events::getStyle() + "/mainDashBoard/bellNotify.png");
-        bellImageLabel->setPixmap(image);
+        //QPixmap image(":/resource/ico/" + events::getStyle() + "/mainDashBoard/bellNotify.png");
+        //bellImageLabel->setPixmap(image);
+        bellImageLabel->setFlat(true);
+        bellImageLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/bellNotify.png); border-radius: 0px");
+        bellImageLabel->setCursor(Qt::PointingHandCursor);
+        //bellImageLabel->setVisible(true);
         bellNrLabel->setVisible(true);
     }
-    bellImageLabel->setAlignment(Qt::AlignCenter);
-    bellImageLabel->setScaledContents(true);
+    //bellImageLabel->setAlignment(Qt::AlignCenter);
+    //bellImageLabel->setScaledContents(true);
     bellImageLabel->setGeometry(s(1141), s(48), s(45), s(42));
 
     bellNrLabel->setStyleSheet("color: white;");
@@ -648,6 +658,7 @@ void mainboard::updateBell() {
     bellNrLabel->setAlignment(Qt::AlignCenter);
     bellNrLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     bellNrLabel->setGeometry(s(1141), s(48), s(45), s(42));
+    bellNrLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 }
 
 void mainboard::updateMessages() {
@@ -1017,4 +1028,17 @@ bool mainboard::eventFilter(QObject *obj, QEvent *event) {
 void mainboard::on_Account_Changed(const QString &) {
     events::setSelectedNameKeyIndex(walletSelectorComboBox->currentIndex());
     populate::refreshAll();
+}
+
+void mainboard::on_ring_pushed() {
+    QPair<QString, int> event = events::getRingEvent();
+    if(event.second == events::ringEvent_e::RING_EVENT_UNRECEIVED_BALANCE) {
+        QStringList accNameList = events::getAccountNameList();
+        QStringList split = event.first.split(":");
+        int nr = accNameList.indexOf(split[0]);
+        if(nr < 0)
+            return;
+        events::setSelectedNameKeyIndex(nr);
+        currentState = STATE_MY_WALLET;
+    }
 }

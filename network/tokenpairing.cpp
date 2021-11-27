@@ -45,9 +45,13 @@ QString tokenpairing::get(QString url) {
     status.clear();
     busy = true;
     error = false;
+    timedOut = false;
+    QTimer::singleShot(WEB_MESSAGE_RESPONSE_TIMEOUT, this, &tokenpairing::timedOutFunc);
     while(1) {
-        if(!busy || error || events::getAppClosing())
+        if(!busy || error || events::getAppClosing() || timedOut) {
+            timedOut = true;
             return read;
+        }
         QApplication::processEvents();
     }
 }
@@ -74,4 +78,11 @@ void tokenpairing::slotError(QNetworkReply::NetworkError err) {
     error = true;
     qDebug() << "TOKENPAIRING 1: ";
     qDebug() << "TOKENPAIRING 2: " << err;
+}
+
+void tokenpairing::timedOutFunc() {
+    if(!timedOut) {
+        timedOut = true;
+        qDebug() << "TOKENPAIRING 3: TimedOut";
+    }
 }

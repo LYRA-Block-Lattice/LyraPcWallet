@@ -24,12 +24,14 @@ private:
     QString read;
     bool busy = true;
     bool error = false;
+    bool timedOut = false;
 signals:
 private slots:
     void replyFinished(QNetworkReply *resp);
     void httpReadyRead();
     void httpDownloadFinished();
     void slotError(QNetworkReply::NetworkError);
+    void timedOutFunc();
 };
 
 #endif // TOKENPAIRING_H

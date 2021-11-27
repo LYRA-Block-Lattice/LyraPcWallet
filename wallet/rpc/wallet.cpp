@@ -7,6 +7,7 @@
 #include "wallet/rpc/wallethistory.h"
 #include "pages/pc/populate.h"
 #include "language/translate.h"
+#include "wallet/tickedupdates.h"
 
 void wallet::sync() {
     int index = events::getSelectedNameKeyIndex();
@@ -29,6 +30,7 @@ void wallet::sync() {
             populate::refreshAll();
             events::setWalletHistoryChanged();
             events::setUpdateHistory();
+            events::setTriggerNodeFetch();
         }
     }
 }

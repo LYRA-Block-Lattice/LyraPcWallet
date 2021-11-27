@@ -3,7 +3,7 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.10"
+#define APP_VERSION                                 "0.2.11"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -77,6 +77,7 @@
 
 #define RPC_CONNECT_TIMEOUT                         1000 // mS
 #define RPC_MESSAGE_RESPONSE_TIMEOUT                10000 // mS
+#define WEB_MESSAGE_RESPONSE_TIMEOUT                5000 // mS
 
 #define EXCHANGES_PRICE_BTC_PAIR_LIST               {{"finexbox", "https://xapi.finexbox.com/v1/ticker?market=lyr_btc"}}
 #define EXCHANGES_PRICE_USD_PAIR_LIST               {{"latoken", "https://api.latoken.com/v2/ticker"}}

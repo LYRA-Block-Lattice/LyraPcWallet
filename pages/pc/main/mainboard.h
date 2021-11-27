@@ -91,7 +91,7 @@ private:
     QComboBox *walletSelectorComboBox = nullptr;
     QLabel *networkLabelImage = nullptr;
     QLabel *networkLabel = nullptr;
-    QLabel *bellImageLabel = nullptr;
+    QPushButton *bellImageLabel = nullptr;
     QLabel *bellNrLabel = nullptr;
     QLabel *messageImageLabel = nullptr;
     QLabel *messageNrLabel = nullptr;
@@ -167,6 +167,7 @@ private slots:
     void on_logOut_ButtonPressed();
     void on_info_ButtonPressed();
     void on_Account_Changed(const QString &);
+    void on_ring_pushed();
 };
 
 #endif // MAIN_H

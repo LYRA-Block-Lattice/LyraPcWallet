@@ -64,8 +64,10 @@ walletErr_e walletbalance::receive(int accNr, bool *newTransactions) {
         QJsonObject jsonObjectErr = jsonObject["error"].toObject();
         if(jsonObjectErr.count() > 0)
             return WALLET_ERR_SIGNATURE;
-        if(jsonObject.contains("result") && id == jsonObject["id"].toInt())
+        if(jsonObject.contains("result") && id == jsonObject["id"].toInt()) {
+            events::setTriggerNodeFetch();
             return walletErr_e::WALLET_ERR_OK;
+        }
         idRec = jsonObject["id"].toInt();
         QString signRec = jsonObject["method"].toString();
         qDebug() << "WALLETBALANCE 2: " << signRec;
@@ -139,6 +141,7 @@ walletErr_e walletbalance::send(int accNr, QString destAccId, QString token, dou
             QJsonObject jsonObject = jsonResponse.object();
             //QJsonObject result = jsonObject["result"].toObject();
             if(jsonObject.contains("result") && id == jsonObject["id"].toInt()) {
+                events::setTriggerNodeFetch();
                 return walletErr_e::WALLET_ERR_OK;
             }
         }

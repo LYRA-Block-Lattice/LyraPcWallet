@@ -10,6 +10,11 @@
 
 class events {
 public:
+    typedef enum {
+        RING_EVENT_NONE,
+        RING_EVENT_UNRECEIVED_BALANCE
+    }ringEvent_e;
+
     typedef rpc::network_e network_e;
     static bool getAppClosing();
     static bool getNetworkConnected();
@@ -90,6 +95,10 @@ public:
     static QString getCustomIp(events::network_e net = events::network_e::NETWORK_NONE);
     static int getCustomIpChanged();
     static bool getWalletUnlocked();
+    static QPair<QString, int> getRingEvent();
+    static QPair<QString, int> getRingEvent(QString eventName);
+    static int getRingEventCount();
+    static bool getTriggerNodeFetch();
 
 
     static void setAppClosing(bool closing);
@@ -144,6 +153,9 @@ public:
     static void setScreenNumber(int screen);
     static void setCustomIp(QString ip, events::network_e net = events::network_e::NETWORK_NONE);
     static void setWalletUnlocked(bool unlocked);
+    static void addRingEvent(QString eventName, ringEvent_e eventType);
+    static void clearRingEvents();
+    static void setTriggerNodeFetch();
 };
 
 #endif // EVENTS_H
