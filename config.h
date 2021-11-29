@@ -3,7 +3,9 @@
 
 #include "qglobal.h"
 
-#define APP_VERSION                                 "0.2.11"
+#define VORBOSE_LEVEL                               2
+
+#define APP_VERSION                                 "0.2.12"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 

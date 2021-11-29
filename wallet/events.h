@@ -97,6 +97,7 @@ public:
     static bool getWalletUnlocked();
     static QPair<QString, int> getRingEvent();
     static QPair<QString, int> getRingEvent(QString eventName);
+    static QList<QPair<QString, int>> getRingEventList();
     static int getRingEventCount();
     static bool getTriggerNodeFetch();
 
@@ -154,6 +155,7 @@ public:
     static void setCustomIp(QString ip, events::network_e net = events::network_e::NETWORK_NONE);
     static void setWalletUnlocked(bool unlocked);
     static void addRingEvent(QString eventName, ringEvent_e eventType);
+    static void addRingEvents(QList<QPair<QString, int>> eventsList);
     static void clearRingEvents();
     static void setTriggerNodeFetch();
 };

@@ -322,6 +322,7 @@ void MainWindow::appMain() {
         if(loginCommand == login::CMD_LOGIN_WALLET) {
             mainboardWindow.run();
             mainboardWindow.setState(mainboard::STATE_DASHBOARD);
+            events::setTriggerNodeFetch();
         }
     }
     if(loginCommand == login::CMD_LOGIN_WALLET) {

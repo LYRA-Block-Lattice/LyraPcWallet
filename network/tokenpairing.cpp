@@ -48,6 +48,9 @@ QString tokenpairing::get(QString url) {
     timedOut = false;
     QTimer::singleShot(WEB_MESSAGE_RESPONSE_TIMEOUT, this, &tokenpairing::timedOutFunc);
     while(1) {
+#if VORBOSE_LEVEL >= 5
+        qDebug() << "TOKENPAIRING 4 :Loop ";
+#endif
         if(!busy || error || events::getAppClosing() || timedOut) {
             timedOut = true;
             return read;

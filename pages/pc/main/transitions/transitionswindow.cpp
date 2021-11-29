@@ -149,7 +149,9 @@ void transitionswindow::refreshTable() {
         return;
     refreshTableSemaphore = true;*/
     supressTableUpdate = true;
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 1: Start refresh table.";
+#endif
 
     QScrollBar *scroll = historyTableView->verticalScrollBar();
     int vScrolPos = scroll->value();
@@ -215,7 +217,9 @@ void transitionswindow::refreshTable() {
     }
     int index = events::getSelectedNameKeyIndex();
     QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(accountsList[index]);
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 2: Start refresh table.";
+#endif
     for (int cnt = 0; cnt < wallet.count(); cnt++) {
         QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
         QMap<QString, QString> tmp;
@@ -344,7 +348,9 @@ void transitionswindow::refreshTable() {
     }
     QLabel *dir;
     QPushButton *detailsButton;
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 3: Middle refresh table: " << historyTableView->verticalHeader()->count();
+#endif
     for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         dir = new QLabel();
         QString txt = dirs[cnt];
@@ -367,17 +373,23 @@ void transitionswindow::refreshTable() {
     if(vScrolPos <= scroll->maximum()) {
         scroll->setValue(vScrolPos);
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 4: End refresh table.";
+#endif
     refreshSize();
     refreshFonts();
     historyTableView->setVisible(true);
     //refreshTableSemaphore = false;
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 5: End refresh table.";
+#endif
     supressTableUpdate = false;
 }
 
 void transitionswindow::refreshFonts() {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 6: Start refresh fonts.";
+#endif
     txDirectionLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     txDirectionComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
 
@@ -409,11 +421,15 @@ void transitionswindow::refreshFonts() {
             detailsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
         }
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 7: End refresh fonts.";
+#endif
 }
 
 void transitionswindow::refreshSize() {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 8: Start refresh size.";
+#endif
     txDirectionLabel->setGeometry(s(50), s(30), s(130), s(39));
     txDirectionComboBox->setGeometry(s(50), s(80), s(200), s(39));
 
@@ -465,11 +481,15 @@ void transitionswindow::refreshSize() {
 
     refreshFonts();
     historyTableView->repaint();
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 9: End refresh size.";
+#endif
 }
 
 void transitionswindow::refreshLanguage() {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 10: Start refresh language.";
+#endif
     disconnect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
     disconnect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
     txDirectionLabel->setText(_tr("DIRECTION") + ":");
@@ -502,7 +522,9 @@ void transitionswindow::refreshLanguage() {
     refreshFonts();
     connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
+#if VORBOSE_LEVEL >= 3
     qDebug() << "TRANSACTIONSWINDOW 11: End refresh language.";
+#endif
 }
 
 void transitionswindow::setState(state_e state) {

@@ -8,7 +8,9 @@
 QMap<QString, QList<QList<QMap<QString, QString>>>> walletHistory[2];
 
 QList<QList<QMap<QString, QString>>> wallethistory::parseData(QString data) {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 1 Start parse data";
+#endif
     QList<QList<QMap<QString, QString>>> list;
     QJsonDocument jsonResponse = QJsonDocument::fromJson(data.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
@@ -63,12 +65,16 @@ QList<QList<QMap<QString, QString>>> wallethistory::parseData(QString data) {
         list[list.count() - 1].append(balances);
         list[list.count() - 1].append(note);
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 2: End parse data";
+#endif
     return list;
 }
 
 QList<QList<QMap<QString, QString>>> wallethistory::parseData(QJsonArray jsonArray) {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 3: Start parse data";
+#endif
     QList<QList<QMap<QString, QString>>> list;
     foreach (const QJsonValue & value, jsonArray) {
         list.append(QList<QMap<QString, QString>>());
@@ -118,12 +124,16 @@ QList<QList<QMap<QString, QString>>> wallethistory::parseData(QJsonArray jsonArr
         list[list.count() - 1].append(balances);
         list[list.count() - 1].append(note);
     }
+#if VORBOSE_LEVEL >= 3
     qDebug() << "WALLETHISTORY 4: End parse data";
+#endif
     return list;
 }
 
 QJsonArray wallethistory::getAccountHistoryJson(QString name, int network) {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 5: Start get wallet history";
+#endif
     QList<QList<QMap<QString, QString>>> wallet = walletHistory[network == -1 ? events::getNetwork() : network].find(name).value();//getWallet(name);
     QList<QMap<QString, QString>> transactionList;
     QJsonArray transactionsObject;
@@ -153,7 +163,9 @@ QJsonArray wallethistory::getAccountHistoryJson(QString name, int network) {
         }
         transactionsObject.append(transactionObject);
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 6: End get wallet history";
+#endif
     return transactionsObject;
 }
 
@@ -223,10 +235,14 @@ bool wallethistory::setNote(QString accountName, int transaction, QString note) 
 }
 
 bool wallethistory::updateAccount(QString name, QString accountId) {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 7: Start update wallet history";
+#endif
     int network = events::getNetwork();
     if(!walletHistory[network].contains(name)) {
+#if VORBOSE_LEVEL >= 4
         qDebug() << "WALLETHISTORY 8: Update wallet history";
+#endif
         return false;
     }
     QDateTime lm = QDateTime::currentDateTimeUtc();
@@ -239,7 +255,9 @@ bool wallethistory::updateAccount(QString name, QString accountId) {
                                                   QString::number(lm.toMSecsSinceEpoch()),
                                                   QString::number(0)}));
     if(response.length() == 0) {
+#if VORBOSE_LEVEL >= 4
         qDebug() << "WALLETHISTORY 9: Update wallet history";
+#endif
         return false;
     }
     QList<QList<QMap<QString, QString>>> srcAcc = getAccount(name);
@@ -257,7 +275,9 @@ bool wallethistory::updateAccount(QString name, QString accountId) {
     if(srcAcc.count() != destAcc.count()) {
         events::setWalletHistoryChanged();
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 10: End update wallet history";
+#endif
     return true;
 }
 
@@ -277,13 +297,17 @@ bool wallethistory::updateAccountName(QString oldName, QString newName) {
 }
 
 bool wallethistory::updateAccounts() {
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 11: Start update wallets";
+#endif
     QPair<QString, QString> pair;
     QList<QPair<QString, QString>> list = events::getAccountNameIdList();
     foreach(pair, list) {
         wallethistory::updateAccount(pair.first, pair.second);
     }
+#if VORBOSE_LEVEL >= 4
     qDebug() << "WALLETHISTORY 12: End update wallets";
+#endif
     return true;
 }
 

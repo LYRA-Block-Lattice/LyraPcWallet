@@ -733,11 +733,17 @@ void events::addRingEvent(QString eventName, ringEvent_e eventType) {
     ringEventList.append(QPair<QString, int>(eventName, eventType));
 }
 
+void events::addRingEvents(QList<QPair<QString, int>> eventsList) {
+    ringEventList.append(eventsList);
+}
+
 QPair<QString, int> events::getRingEvent() {
     if(ringEventList.isEmpty())
         return QPair<QString, int>();
     else {
-        return ringEventList.takeFirst();
+        QPair<QString, int> tmp(ringEventList.takeFirst());
+        ringEventList.append(tmp);
+        return tmp;
     }
 }
 
@@ -754,6 +760,10 @@ QPair<QString, int> events::getRingEvent(QString eventName) {
         }
         return QPair<QString, int>();
     }
+}
+
+QList<QPair<QString, int>> events::getRingEventList() {
+    return ringEventList;
 }
 
 int events::getRingEventCount() {

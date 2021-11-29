@@ -51,6 +51,9 @@ walletErr_e walletbalance::receive(int accNr, bool *newTransactions) {
     *newTransactions = false;
     int idRec = 1;
     while(1) {
+#if VORBOSE_LEVEL >= 5
+        qDebug() << "WALLETBALANCE 5 :Loop ";
+#endif
         if(events::getAppClosing())
             break;
         QApplication::processEvents();

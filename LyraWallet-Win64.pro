@@ -58,17 +58,19 @@ SOURCES += \
     storage/walletfile.cpp \
     wallet/check.cpp \
     wallet/events.cpp \
+    wallet/rpc/pool.cpp \
     wallet/rpc/profiting.cpp \
     wallet/rpc/sign.cpp \
+    wallet/rpc/swap.cpp \
     wallet/rpc/wallet.cpp \
     wallet/rpc/walletbalance.cpp \
     wallet/rpc/wallethistory.cpp \
     wallet/tickedupdates.cpp
 
 HEADERS += \
+    api/nebula.h \
     config.h \
     configlyra.h \
-    api/nebula.h \
     crypto/aes.h \
     crypto/base58Encoding.h \
     crypto/ecc.h \
@@ -108,8 +110,10 @@ HEADERS += \
     storage/walletfile.h \
     wallet/check.h \
     wallet/events.h \
+    wallet/rpc/pool.h \
     wallet/rpc/profiting.h \
     wallet/rpc/sign.h \
+    wallet/rpc/swap.h \
     wallet/rpc/wallet.h \
     wallet/rpc/walletbalance.h \
     wallet/rpc/wallethistory.h \

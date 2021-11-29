@@ -60,6 +60,9 @@ void rpc::on_connect() {
                 return;
             }
             while(!events::getAppClosing()) {
+#if VORBOSE_LEVEL >= 5
+                qDebug() << "RPC 15 :Loop ";
+#endif
                 if(events::getCustomIp().length())
                     break;
                 quint32 value = QRandomGenerator::global()->generate() % (rpcNodeList.count());
@@ -154,7 +157,10 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
         timerRetryConnect.start();
-        while(!sendMsgTimedOut && !events::getAppClosing()) {
+        while(!sendMsgTimedOut && !events::getAppClosing() && rpc::getConnected()) {
+#if VORBOSE_LEVEL >= 5
+            qDebug() << "RPC 16 :Loop ";
+#endif
             if(!timerRetryConnect.isActive())
                 timerRetryConnect.start();
             QApplication::processEvents();
@@ -182,7 +188,10 @@ QString rpc::sendSimpleMessage(QString message) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
         timerRetryConnect.start();
-        while(!sendMsgTimedOut && !events::getAppClosing()) {
+        while(!sendMsgTimedOut && !events::getAppClosing() && rpc::getConnected()) {
+#if VORBOSE_LEVEL >= 5
+            qDebug() << "RPC 17 :Loop ";
+#endif
             QApplication::processEvents();
             QString response = getResponse();
             if(response.length()) {

@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QApplication>
 
 #include "tickedupdates.h"
 #include "network/tokenpairing.h"
@@ -39,26 +40,32 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
     fetchNode.setParent(this);
     fetchNode.setInterval(5000);
     fetchNode.start();
+    fetchNodeUnreceived.setParent(this);
+    fetchNodeUnreceived.setInterval(5000);
+    fetchNodeUnreceived.start();
     saveWallet.setParent(this);
     saveWallet.setInterval(300000);
     saveWallet.start();
 
     connect(&fetchPairPrice, SIGNAL(timeout()), this, SLOT(on_FetchPairPrice()));
     connect(&fetchNode, SIGNAL(timeout()), this, SLOT(on_FetchNode()));
+    connect(&fetchNodeUnreceived, SIGNAL(timeout()), this, SLOT(on_FetchNodeUnreceived()));
     connect(&saveWallet, SIGNAL(timeout()), this, SLOT(on_SaveWallet()));
-
 }
 
 void tickedupdates::run() {
     if(selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
             walletNameKeyListChanged != events::getAccountNameKeyListChanged() ||
-            network != events::getNetwork() ||
-            events::getTriggerNodeFetch()) {
+            network != events::getNetwork()) {
         network = events::getNetwork();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
         walletNameKeyListChanged = events::getAccountNameKeyListChanged();
         fetchNode.setInterval(2000);
         fetchNode.start();
+    }
+    if(events::getTriggerNodeFetch()) {
+        fetchNodeUnreceived.setInterval(2000);
+        fetchNodeUnreceived.start();
     }
 }
 
@@ -115,7 +122,9 @@ void tickedupdates::on_FetchPairPrice() {
 void tickedupdates::on_FetchNode() {
     fetchNode.setInterval(60000);
 
+#if VORBOSE_LEVEL >= 3
     qDebug() << "TICKEDUPDATES 1: Start fetch nebula for network data.";
+#endif
     /* Fetch data from nebula */
     double teamTotal = 0.0;
     double circulate = 0.0;
@@ -125,22 +134,31 @@ void tickedupdates::on_FetchNode() {
         events::setBurnedSupply(burned);
         events::setTeamLockedReserved(teamTotal);
         events::setCirculatingSupply(circulate);
+#if VORBOSE_LEVEL >= 3
         qDebug() << "TICKEDUPDATES 2: Fetch";
+#endif
     } else {
+#if VORBOSE_LEVEL >= 3
         qDebug() << "TICKEDUPDATES 3: Failed";
+#endif
     }
+#if VORBOSE_LEVEL >= 3
     qDebug() << "TICKEDUPDATES 4: End fetch nebula for network data.";
     qDebug() << "TICKEDUPDATES 5: Start fetch node for data.";
+#endif
     if(nebula::getBlockHeight(&height)) {
         events::setTotalBlockCount(height);
+#if VORBOSE_LEVEL >= 3
         qDebug() << "TICKEDUPDATES 6: Fetch";
+#endif
     } else {
         events::setTotalBlockCount(0);
+#if VORBOSE_LEVEL >= 3
         qDebug() << "TICKEDUPDATES 7: Failed";
+#endif
     }
 
-    qDebug() << "TICKEDUPDATES 8: End fetch node for data.";
-
+    // Check if current account have unreceived balance.
     int index = events::getSelectedNameKeyIndex();
     QString accId = events::getAccountId(index);
     /*if(!accId.length())
@@ -166,20 +184,51 @@ void tickedupdates::on_FetchNode() {
         }
     }
 
+    populate::refreshAll();
+#if VORBOSE_LEVEL >= 3
+    qDebug() << "TICKEDUPDATES 8: End fetch node for data.";
+#endif
+}
+
+void tickedupdates::on_FetchNodeUnreceived() {
+    fetchNodeUnreceived.setInterval(60000);
+#if VORBOSE_LEVEL >= 3
+    qDebug() << "TICKEDUPDATES 9: Start fetch node for unreceived balance.";
+#endif
+    // Check if there is unreceived balance in each account.
     QList<QPair<QString, QString>> nameAccIdList = events::getAccountNameIdList();
     QPair<QString, QString>nameAccId;
-    events::clearRingEvents();
+    QList<QPair<QString, int>> tmpListNewRegistered;
     foreach(nameAccId, nameAccIdList) {
+        QApplication::processEvents();
         bool unreceived = false;
         int height = 0;
         walletbalance::balance(nameAccId.second, &height, &unreceived);
         if(unreceived) {
-            events::addRingEvent(nameAccId.first + ":" + nameAccId.second, events::ringEvent_e::RING_EVENT_UNRECEIVED_BALANCE);
+            tmpListNewRegistered.append(QPair<QString, int>(nameAccId.first + ":" + nameAccId.second, events::ringEvent_e::RING_EVENT_UNRECEIVED_BALANCE));
+            //events::addRingEvent(nameAccId.first + ":" + nameAccId.second, events::ringEvent_e::RING_EVENT_UNRECEIVED_BALANCE);
         }
     }
+    QList<QPair<QString, int>> tmpListAlreadyRegistered(events::getRingEventList());
+    QPair<QString, int>tmpItem;
+    // Remove the events that no longer active.
+    foreach(tmpItem, events::getRingEventList()) {
+        if(!tmpListNewRegistered.contains(tmpItem)) {
+            tmpListAlreadyRegistered.removeAll(tmpItem);
+        }
+    }
+    // Insert the new events into position 0, most recent first.
+    foreach(tmpItem, tmpListNewRegistered) {
+        if(!tmpListAlreadyRegistered.contains(tmpItem)) {
+            tmpListAlreadyRegistered.insert(0, tmpItem);
+        }
+    }
+    events::clearRingEvents();
+    events::addRingEvents(tmpListAlreadyRegistered);
     events::setBells(events::getRingEventCount());
-
-    populate::refreshAll();
+#if VORBOSE_LEVEL >= 3
+    qDebug() << "TICKEDUPDATES 10: End fetch node for unreceived balance.";
+#endif
 }
 
 void tickedupdates::on_SaveWallet()  {

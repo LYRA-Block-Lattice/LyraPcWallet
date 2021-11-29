@@ -19,6 +19,7 @@ public:
 private:
     QTimer fetchPairPrice;
     QTimer fetchNode;
+    QTimer fetchNodeUnreceived;
     QTimer saveWallet;
 
     int selectedNameKeyIndex = -1;
@@ -28,6 +29,7 @@ private:
 private slots:
     void on_FetchPairPrice();
     void on_FetchNode();
+    void on_FetchNodeUnreceived();
     void on_SaveWallet();
 };
 
