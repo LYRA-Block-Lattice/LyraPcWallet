@@ -227,5 +227,17 @@
    "My Account" :                         "My Account",
    "Destination to account ID" :            "Destination to account ID",
    "Your account address ID" :            "Your account address ID",
-   "ACCOUNT" :                             "ACCOUNT"
+   "ACCOUNT" :                             "ACCOUNT",
+   "Balance" :                             "Balance",
+   "Total Liquidate" :                     "Total Liquidate",
+   "Estimated price" :                     "Estimated price",
+   "You will sell" :                       "You will sell",
+   "You will get" :                        "You will get",
+   "Price impact" :                        "Price impact",
+   "Pool fee" :                            "Pool fee",
+   "Liquidate fee" :                       "Liquidate fee",
+   "SWAP successfully completed." :        "SWAP successfully completed.",
+   "Now we need to create receive block." :"Now we need to create receive block.",
+   "ERROR: Unknown" :                      "ERROR: Unknown",
+   "No lyquidate found for this pair." :   "No lyquidate found for this pair."
 }

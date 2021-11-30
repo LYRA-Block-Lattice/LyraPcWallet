@@ -281,20 +281,20 @@ dashmain::~dashmain() {
 void dashmain::refreshFonts() {
     titleLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
 
-    totalSupplyLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalSupplyLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     totalSupplyValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
 
-    teamLockedResetvedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    teamLockedResetvedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     teamLockedResetvedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    teamLockedResetvedValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    teamLockedResetvedValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    circulatingSupplyLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    circulatingSupplyLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     circulatingSupplyValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    circulatingSupplyValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    circulatingSupplyValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    totalBlockLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalBlockLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     totalBlockCountLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    //totalBlockPercentageLabel.setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    //totalBlockPercentageLabel.setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
     myWalletValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     btcUsdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
@@ -320,89 +320,27 @@ void dashmain::refreshFonts() {
     recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     QStandardItem *tmp;
-    if(recentTransactionsItemModel->rowCount() != 0) {
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 0));
+    for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
+        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 1));
+        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(0, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(1, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(1, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(1, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(1, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(1, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(2, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(2, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(2, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(2, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(2, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(3, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(3, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(3, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(3, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(3, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
     }
 
-    if(assetsItemModel->rowCount() != 0) {
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(0, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(0, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(0, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(1, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(1, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(1, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(2, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(2, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(2, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(3, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(3, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(3, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(4, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(4, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(4, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
     }
-
 }
 
 void dashmain::refreshSize() {
@@ -449,20 +387,17 @@ void dashmain::refreshSize() {
     recentTransactionsTableView->setColumnWidth(2, s(90));
     recentTransactionsTableView->setColumnWidth(3, s(145));
     recentTransactionsTableView->setColumnWidth(4, s(145));
-    recentTransactionsTableView->setRowHeight(0, s(31));
-    recentTransactionsTableView->setRowHeight(1, s(31));
-    recentTransactionsTableView->setRowHeight(2, s(31));
-    recentTransactionsTableView->setRowHeight(3, s(31));
+    for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
+        recentTransactionsTableView->setRowHeight(cnt, s(31));
+    }
 
     assetsTableView->setGeometry(s(783), s(655), s(305), s(175));
     assetsTableView->setColumnWidth(0, s(95));
     assetsTableView->setColumnWidth(1, s(65));
     assetsTableView->setColumnWidth(2, s(125));
-    assetsTableView->setRowHeight(0, s(31));
-    assetsTableView->setRowHeight(1, s(31));
-    assetsTableView->setRowHeight(2, s(31));
-    assetsTableView->setRowHeight(3, s(31));
-    assetsTableView->setRowHeight(4, s(31));
+    for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
+        assetsTableView->setRowHeight(cnt, s(31));
+    }
     assetsTableView->repaint();
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
@@ -473,20 +408,17 @@ void dashmain::refreshSize() {
     recentTransactionsTableView->setColumnWidth(2, s(90));
     recentTransactionsTableView->setColumnWidth(3, s(145));
     recentTransactionsTableView->setColumnWidth(4, s(145));
-    recentTransactionsTableView->setRowHeight(0, s(31));
-    recentTransactionsTableView->setRowHeight(1, s(31));
-    recentTransactionsTableView->setRowHeight(2, s(31));
-    recentTransactionsTableView->setRowHeight(3, s(31));
+    for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
+        recentTransactionsTableView->setRowHeight(cnt, s(31));
+    }
 
     assetsTableView->setGeometry(s(783), s(655), s(305), s(175));
     assetsTableView->setColumnWidth(0, s(95));
     assetsTableView->setColumnWidth(1, s(65));
     assetsTableView->setColumnWidth(2, s(125));
-    assetsTableView->setRowHeight(0, s(31));
-    assetsTableView->setRowHeight(1, s(31));
-    assetsTableView->setRowHeight(2, s(31));
-    assetsTableView->setRowHeight(3, s(31));
-    assetsTableView->setRowHeight(4, s(31));
+    for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
+        assetsTableView->setRowHeight(cnt, s(31));
+    }
     assetsTableView->repaint();
 
     refreshFonts();
@@ -522,9 +454,8 @@ void dashmain::refreshLanguage() {
 void dashmain::updateLastTransactionsTables() {
     recentTransactionsItemModel->clear();
     recentTransactionsItemModel->setColumnCount(5);
-    recentTransactionsItemModel->setRowCount(4);
+    recentTransactionsItemModel->setRowCount(0);
 
-    refreshSize();
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("ACCOUNT"));
     recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("DATE TRANSACTION"));
@@ -552,39 +483,54 @@ void dashmain::updateLastTransactionsTables() {
 
 
     QStandardItem *tmp;
-    for(int cnt = 0;  cnt < 4; cnt++) {
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
+    QList<QStringList> list = events::getRecentTransactions();
+    for(int cnt = 0; cnt < list.count(); cnt++) {
+        QList<QStandardItem *> item = QList<QStandardItem *>();
+        recentTransactionsTableView->setRowHidden(cnt, false);
+        tmp = new QStandardItem();
         tmp->setTextAlignment(Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEditable(false);
         tmp->setSelectable(false);
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
+        tmp->setText(list[cnt][0]);
+        item.append(tmp);
+        tmp = new QStandardItem();
         tmp->setTextAlignment(Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEditable(false);
         tmp->setSelectable(false);
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
+        tmp->setText(list[cnt][1]);
+        item.append(tmp);
+        tmp = new QStandardItem();
         tmp->setTextAlignment(Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEditable(false);
         tmp->setSelectable(false);
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
+        tmp->setText(_tr(list[cnt][2]));
+        item.append(tmp);
+        tmp = new QStandardItem();
         tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEditable(false);
         tmp->setSelectable(false);
-        tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
+        tmp->setText(list[cnt][3]);
+        item.append(tmp);
+        tmp = new QStandardItem();
         tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEditable(false);
         tmp->setSelectable(false);
+        tmp->setText(list[cnt][4]);
+        item.append(tmp);
+        recentTransactionsItemModel->appendRow(item);
     }
+    refreshSize();
 }
 
 void dashmain::updateAssetsTables() {
     assetsItemModel->clear();
     assetsItemModel->setColumnCount(3);
-    assetsItemModel->setRowCount(5);
+    assetsItemModel->setRowCount(0);
     refreshSize();
 
     assetsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
@@ -603,8 +549,45 @@ void dashmain::updateAssetsTables() {
     assetsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     assetsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 
+    QList<QStringList> list = events::getAssets();
     QStandardItem *tmp;
-    for(int cnt = 0;  cnt < 5; cnt++) {
+
+    QIcon arrowUp(":/resource/ico/" + events::getStyle() + "/mainDashBoard/dashboard/main/arrowUp.png");
+    QIcon arrowDown(":/resource/ico/" + events::getStyle() + "/mainDashBoard/dashboard/main/arrowDown.png");
+    QIcon arrowNone("");
+    /*for(int cnt = 0; cnt < list.count(); cnt++) {
+        assetsTableView->setRowHidden(cnt, true);
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
+        tmp->setText("");
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
+        tmp->setIcon(arrowNone);
+        tmp->setText("");
+        tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
+        tmp->setText("");
+    }*/
+    for(int cnt = 0; cnt < list.count(); cnt++) {
+        QList<QStandardItem *> item = QList<QStandardItem *>();
+        if(cnt >= list.count())
+            break;
+        assetsTableView->setRowHidden(cnt, false);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][0]);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        if(list[cnt][1].toDouble() == 0.0)
+            tmp->setIcon(arrowNone);
+        else if(list[cnt][1].toDouble() > 0.0)
+            tmp->setIcon(arrowUp);
+        else
+            tmp->setIcon(arrowDown);
+        tmp->setText(list[cnt][1] + " %");
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][2]);
+        item.append(tmp);
+        assetsItemModel->appendRow(item);
+    }
+    for(int cnt = 0;  cnt < list.count(); cnt++) {
         tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
         tmp->setTextAlignment(Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
@@ -724,76 +707,11 @@ void dashmain::run() {
     }
     if(recentTransactionsListModifyedCnt != events::getRecentTransactionsModifyedCnt()) {
         recentTransactionsListModifyedCnt = events::getRecentTransactionsModifyedCnt();
-        QList<QStringList> list = events::getRecentTransactions();
-        QStandardItem *tmp;
-        for(int cnt = 0; cnt < 4; cnt++) {
-            recentTransactionsTableView->setRowHidden(cnt, true);
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-            tmp->setText("");
-        }
-        if(list.count() != 0) {
-            for(int cnt = 0; cnt < 4; cnt++) {
-                if(cnt >= list.count())
-                    break;
-                recentTransactionsTableView->setRowHidden(cnt, false);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-                tmp->setText(list[cnt][0]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-                tmp->setText(list[cnt][1]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-                tmp->setText(_tr(list[cnt][2]));
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-                tmp->setText(list[cnt][3]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-                tmp->setText(list[cnt][4]);
-            }
-        }
+        updateLastTransactionsTables();
     }
     if(assetsListModifyedCnt != events::getAssetsModifyedCnt()) {
         assetsListModifyedCnt = events::getAssetsModifyedCnt();
-        QList<QStringList> list = events::getAssets();
-        QStandardItem *tmp;
-
-        QIcon arrowUp(":/resource/ico/" + events::getStyle() + "/mainDashBoard/dashboard/main/arrowUp.png");
-        QIcon arrowDown(":/resource/ico/" + events::getStyle() + "/mainDashBoard/dashboard/main/arrowDown.png");
-        QIcon arrowNone("");
-        for(int cnt = 0; cnt < 5; cnt++) {
-            assetsTableView->setRowHidden(cnt, true);
-            tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
-            tmp->setText("");
-            tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
-            tmp->setIcon(arrowNone);
-            tmp->setText("");
-            tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
-            tmp->setText("");
-        }
-        if(list.count() != 0) {
-            for(int cnt = 0; cnt < 5; cnt++) {
-                if(cnt >= list.count())
-                    break;
-                assetsTableView->setRowHidden(cnt, false);
-                tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
-                tmp->setText(list[cnt][0]);
-                tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
-                if(list[cnt][1].toDouble() == 0.0)
-                    tmp->setIcon(arrowNone);
-                else if(list[cnt][1].toDouble() > 0.0)
-                    tmp->setIcon(arrowUp);
-                else
-                    tmp->setIcon(arrowDown);
-                tmp->setText(list[cnt][1] + " %");
-                tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
-                tmp->setText(list[cnt][2]);
-            }
-        }
+        updateAssetsTables();
     }
     if(usdSelected != events::getBtcUsdSelect()) {
         usdSelected = events::getBtcUsdSelect();

@@ -159,13 +159,6 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 
     requestToWalletIdLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
     connect(requestToWalletIdLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_requestToWalletIdStatusLabel_Changed(const QString &)));
-    requestToWalletIdLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
-                                                    ";}");
 
     requestToWalletIdStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
     requestToWalletIdStatusLabel->setScaledContents(true);
@@ -176,25 +169,6 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     ammountLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
     tokenComboBox->setAutoFillBackground(false);
-    tokenComboBox->setStyleSheet(""
-        "QComboBox {   "
-               "color: #777;"
-               "border-color: white;"
-               "background-color: white;"
-               "border: 1px solid #eee;"
-               "border-radius: 3px;"
-               "padding: 1px 18px 1px 3px;"
-               "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
-        "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
-               "color: #aaa;"
-               "padding: 1px 1px 1px 1px;"
-               "selection-background-color: darkgray;"
-               "}"
-    );
     tokenComboBox->setCursor(Qt::PointingHandCursor);
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_destinationWalletIdLineEdit_Changed(const QString &)));
 
@@ -208,13 +182,6 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 
     ammountLineEdit->setPlaceholderText("0.00000000");
     ammountLineEdit->setAlignment(Qt::AlignRight);
-    ammountLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
-                                                    ";}");
     connect(ammountLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_ammountLineEdit_Changed(const QString &)));
 
     btcUsdTextLabel->setStyleSheet("color: #333;");
@@ -229,13 +196,6 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     btcUsdLineEdit->setPlaceholderText("0.00000000");
     btcUsdLineEdit->setAlignment(Qt::AlignRight);
     btcUsdLineEdit->setEnabled(false);
-    btcUsdLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
-                                                    ";}");
     connect(btcUsdLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_ammountUsdBtcLineEdit_Changed(const QString &)));
 
     btcUsdStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
@@ -274,120 +234,7 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastReceivedTransitionsLabel->setAlignment(Qt::AlignLeft);
     lastReceivedTransitionsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    recentTransactionsItemModel->setColumnCount(6);
-    recentTransactionsItemModel->setRowCount(0);
-
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Date / Hours"));
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Source"));
-    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
-    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
-    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, _tr("Note"));
-    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-
-    recentTransactionsTableView->setStyleSheet(
-                                   "QTableView { border: none;"
-                                   "background-color: transparent;"
-                                   "selection-background-color: transparent}");
-    recentTransactionsTableView->setShowGrid(false);
-    recentTransactionsTableView->verticalHeader()->setVisible(false);
-    recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
-    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
-    recentTransactionsTableView->horizontalHeader()->setEnabled(false);
-    recentTransactionsTableView->setAlternatingRowColors(true);
-    recentTransactionsTableView->setModel(recentTransactionsItemModel);
-    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
-    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
-
-    QStandardItem *tmp;
-    for(int cnt = 0;  cnt < 6; cnt++) {
-        QList<QStandardItem *> item = QList<QStandardItem *>();
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp= new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0xFFFFFF));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0xF0F0F0));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        recentTransactionsItemModel->appendRow(item);
-    }
-    QPushButton *viewDetails;
-    QLabel *statusDetails;
-    for(int cnt = 0;  cnt < 6; cnt++) {
-        viewDetails = new QPushButton();
-        viewDetails->setText(_tr("View details"));
-        viewDetails->setCursor(Qt::PointingHandCursor);
-        viewDetails->setStyleSheet(
-                    "background-color: transparent;"
-                    "color: #0093EE"
-                    );
-        viewDetails->setFlat(true);
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        statusDetails = new QLabel();
-        switch(cnt) {
-        case 0:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails0_PushButton()));
-            break;
-        case 1:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails1_PushButton()));
-            break;
-        case 2:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails2_PushButton()));
-            break;
-        case 3:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails3_PushButton()));
-            break;
-        case 4:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails4_PushButton()));
-            break;
-        case 5:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails5_PushButton()));
-            break;
-        }
-        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 3), viewDetails);
-        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 4), statusDetails);
-    }
+    updateReceived();
     refreshSize();
     refreshLanguage();
 
@@ -402,23 +249,23 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 void walletreceive::refreshFonts() {
     myWalletLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
 
-    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     walletBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     unreceivedBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
-    totalLyrReceivedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalLyrReceivedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     totalLyrReceivedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    totalLyrReceivedLastWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalLyrReceivedLastWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    lastReceivedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    lastReceivedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     lastReceivedDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    lastReceivedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    lastReceivedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
     walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
@@ -450,19 +297,19 @@ void walletreceive::refreshFonts() {
     QPushButton *viewDetails;
     QLabel *statusDetails;
     QStandardItem *tmp;
-    for(int cnt = 0;  cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+    for(int cnt = 0;  cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         viewDetails = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
         statusDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         statusDetails->setAlignment(Qt::AlignCenter);
 
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
@@ -483,7 +330,7 @@ void walletreceive::refreshSize() {
     unreceivedBalanceValueLabel->setGeometry(s(330), s(88), s(370), s(25));
     unreceivedBalanceValueTotalLabel->setGeometry(s(330), s(119), s(370), s(20));
 
-    syncButton->setGeometry(s(500), s(88), s(48), s(27));
+    syncButton->setGeometry(s(490), s(88), s(58), s(27));
 
     totalLyrReceivedLabel->setGeometry(s(604), s(69), s(370), s(20));
     totalLyrReceivedValueLabel->setGeometry(s(604), s(88), s(370), s(25));
@@ -509,7 +356,7 @@ void walletreceive::refreshSize() {
     btcUsdLineEdit->setGeometry(s(735), s(280), s(200), s(39));
     btcUsdStatusLabel->setGeometry(s(940), s(290), s(20), s(20));
 
-    btcUsdLabel->setGeometry(s(953), s(288), s(160), s(20));
+    btcUsdLabel->setGeometry(s(953), s(289), s(160), s(20));
     btcUsdSwitchLabel->setGeometry(s(1020), s(295), s(24), s(12));
 
     qrCodeLabel->setGeometry(s(480), s(330), s(200), s(39));
@@ -520,7 +367,7 @@ void walletreceive::refreshSize() {
     lastReceivedTransitionsArrowLabel->setGeometry(s(55), s(470), s(15), s(15));
     lastReceivedTransitionsLabel->setGeometry(s(80), s(470), s(250), s(30));
 
-    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(325));
+    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(295));
     recentTransactionsTableView->setColumnWidth(0, s(175));
     recentTransactionsTableView->setColumnWidth(1, s(240));
     recentTransactionsTableView->setColumnWidth(2, s(190));
@@ -534,17 +381,57 @@ void walletreceive::refreshSize() {
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
      */
-    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(325));
+    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(295));
     recentTransactionsTableView->setColumnWidth(0, s(175));
     recentTransactionsTableView->setColumnWidth(1, s(240));
     recentTransactionsTableView->setColumnWidth(2, s(190));
     recentTransactionsTableView->setColumnWidth(3, s(125));
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
-    for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+    for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         recentTransactionsTableView->setRowHeight(cnt, s(44));
     }
 
+    requestToWalletIdLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
+    tokenComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "color: #777;"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(3)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: " + QString::number((int)s(2)) + "px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    ammountLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
+    btcUsdLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
     refreshFonts();
     recentTransactionsTableView->repaint();
 }
@@ -599,11 +486,116 @@ void walletreceive::refreshLanguage() {
     recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
 
     QPushButton *viewDetails;
-    for(int cnt = 0;  cnt < 6; cnt++) {
+    for(int cnt = 0;  cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         viewDetails = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
         viewDetails->setText(_tr("View details"));
     }
     refreshFonts();
+}
+
+void walletreceive::updateReceived() {
+    recentTransactionsItemModel->clear();
+    recentTransactionsItemModel->setColumnCount(6);
+    recentTransactionsItemModel->setRowCount(0);
+
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Date / Hours"));
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Source"));
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, _tr("Note"));
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+
+    recentTransactionsTableView->setStyleSheet(
+                                   "QTableView { border: none;"
+                                   "background-color: transparent;"
+                                   "selection-background-color: transparent}");
+    recentTransactionsTableView->setShowGrid(false);
+    recentTransactionsTableView->verticalHeader()->setVisible(false);
+    recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
+    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
+    recentTransactionsTableView->horizontalHeader()->setEnabled(false);
+    recentTransactionsTableView->setAlternatingRowColors(true);
+    recentTransactionsTableView->setModel(recentTransactionsItemModel);
+    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+
+    QList<QStringList> list = events::getRecentRxTransactions();
+    QStandardItem *tmp;
+    QLabel *statusDetails;
+    QPushButton *viewDetails;
+    for(int cnt = 0; cnt < list.count(); cnt++) {
+        QList<QStandardItem *> item = QList<QStandardItem *>();
+        recentTransactionsTableView->setRowHidden(cnt, false);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][0]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][1]);
+        tmp->setTextAlignment(Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][2]);
+        tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][3]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0xFFFFFF));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][4]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0xF0F0F0));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][5]);
+        tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        recentTransactionsItemModel->appendRow(item);
+
+        viewDetails = new QPushButton();
+        viewDetails->setText(_tr("View details"));
+        viewDetails->setCursor(Qt::PointingHandCursor);
+        viewDetails->setStyleSheet(
+                    "background-color: transparent;"
+                    "color: #0093EE"
+                    );
+        viewDetails->setFlat(true);
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        statusDetails = new QLabel();
+        viewDetails->installEventFilter(this);
+        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 3), viewDetails);
+        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 4), statusDetails);
+        statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
+        statusDetails->setText(list[cnt][4]);
+        if(!list[cnt][4].compare(_tr("Completed"))) {
+            statusDetails->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/blue.png); border: 0px solid #eee; color: #fff; ");
+        }
+    }
+    refreshSize();
 }
 
 void walletreceive::run() {
@@ -657,49 +649,7 @@ void walletreceive::run() {
     }
     if(recentRxTransactionsModifyedCnt != events::getRecentRxTransactionsModifyedCnt()) {
         recentRxTransactionsModifyedCnt = events::getRecentRxTransactionsModifyedCnt();
-        QList<QStringList> list = events::getRecentRxTransactions();
-        QStandardItem *tmp;
-        QLabel *statusDetails;
-        for(int cnt = 0; cnt < 6; cnt++) {
-            recentTransactionsTableView->setRowHidden(cnt, true);
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 5));
-            tmp->setText("");
-        }
-        if(list.count() != 0) {
-            for(int cnt = 0; cnt < 6; cnt++) {
-                if(cnt >= list.count())
-                    break;
-                statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
-                statusDetails->setText(list[cnt][4]);
-                if(!list[cnt][4].compare(_tr("Completed"))) {
-                    statusDetails->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/blue.png); border: 0px solid #eee; color: #fff; ");
-                }
-                recentTransactionsTableView->setRowHidden(cnt, false);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-                tmp->setText(list[cnt][0]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-                tmp->setText(list[cnt][1]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-                tmp->setText(list[cnt][2]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-                tmp->setText(list[cnt][3]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-                tmp->setText(list[cnt][4]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 5));
-                tmp->setText(list[cnt][5]);
-            }
-            refreshFonts();
-        }
+        updateReceived();
     }
     if(idModifyedCnt != events::getIdModifyedCnt()) {
         idModifyedCnt = events::getIdModifyedCnt();
@@ -756,6 +706,15 @@ bool walletreceive::eventFilter(QObject *obj, QEvent *event) {
                         QMessageBox::Ok);
             } else if(obj == qrCodeImageLabel) {
                 showDetailsWindow->show(walletAddressIdLabel->text());
+            } else {
+                for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+                    QPushButton *details = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
+                    if (obj == details) {
+                        showDetails(cnt);
+                        return true;
+                    }
+                }
+
             }
         }
     }
@@ -820,30 +779,6 @@ void walletreceive::showDetails(int order) {
     QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(names[index]);
     QList<QMap<QString, QString>> transaction = wallet[transactionNr];
     showDetailsWindow->show(transaction);
-}
-
-void walletreceive::on_viewDetails0_PushButton() {
-    showDetails(0);
-}
-
-void walletreceive::on_viewDetails1_PushButton() {
-    showDetails(1);
-}
-
-void walletreceive::on_viewDetails2_PushButton() {
-    showDetails(2);
-}
-
-void walletreceive::on_viewDetails3_PushButton() {
-    showDetails(3);
-}
-
-void walletreceive::on_viewDetails4_PushButton() {
-    showDetails(4);
-}
-
-void walletreceive::on_viewDetails5_PushButton() {
-    showDetails(5);
 }
 
 void walletreceive::on_RefreshTotalReceivedLastWeekTimer() {

@@ -403,6 +403,8 @@ int events::getRecentTransactionsModifyedCnt() {
 }
 
 void events::setRecentTransactions(QList<QStringList> list) {
+    if(recentTransactionsList.count() == list.count())
+        return;
     recentTransactionsList = list;
     recentTransactionsListModifyedCnt++;
 }

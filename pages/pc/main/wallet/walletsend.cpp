@@ -298,120 +298,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastSendedTransitionsLabel->setAlignment(Qt::AlignLeft);
     lastSendedTransitionsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    recentTransactionsItemModel->setColumnCount(6);
-    recentTransactionsItemModel->setRowCount(0);
-
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Date / Hours"));
-    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Destination"));
-    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
-    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
-    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
-    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, _tr("Note"));
-    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-
-    recentTransactionsTableView->setStyleSheet(
-                                   "QTableView { border: none;"
-                                   "background-color: transparent;"
-                                   "selection-background-color: transparent}");
-    recentTransactionsTableView->setShowGrid(false);
-    recentTransactionsTableView->verticalHeader()->setVisible(false);
-    recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
-    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
-    recentTransactionsTableView->horizontalHeader()->setEnabled(false);
-    recentTransactionsTableView->setAlternatingRowColors(true);
-    recentTransactionsTableView->setModel(recentTransactionsItemModel);
-    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
-    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
-
-    QStandardItem *tmp;
-    for(int cnt = 0;  cnt < 6; cnt++) {
-        QList<QStandardItem *> item = QList<QStandardItem *>();
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp= new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0xFFFFFF));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignCenter);
-        tmp->setForeground(QBrush(0xF0F0F0));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        tmp = new QStandardItem();
-        tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        tmp->setForeground(QBrush(0x909090));
-        tmp->setEnabled(false);
-        tmp->setSelectable(false);
-        item.append(tmp);
-
-        recentTransactionsItemModel->appendRow(item);
-    }
-    QPushButton *viewDetails;
-    QLabel *statusDetails;
-    for(int cnt = 0;  cnt < 6; cnt++) {
-        viewDetails = new QPushButton();
-        viewDetails->setText(_tr("View details"));
-        viewDetails->setCursor(Qt::PointingHandCursor);
-        viewDetails->setStyleSheet(
-                    "background-color: transparent;"
-                    "color: #0093EE"
-                    );
-        viewDetails->setFlat(true);
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
-        statusDetails = new QLabel();
-        switch(cnt) {
-        case 0:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails0_PushButton()));
-            break;
-        case 1:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails1_PushButton()));
-            break;
-        case 2:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails2_PushButton()));
-            break;
-        case 3:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails3_PushButton()));
-            break;
-        case 4:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails4_PushButton()));
-            break;
-        case 5:
-            connect(viewDetails , SIGNAL(clicked()) , this , SLOT(on_viewDetails5_PushButton()));
-            break;
-        }
-        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 3), viewDetails);
-        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 4), statusDetails);
-    }
+    updateSend();
     refreshSize();
     refreshLanguage();
 
@@ -426,23 +313,23 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 void walletsend::refreshFonts() {
     myWalletLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
 
-    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     walletBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     unreceivedBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
-    totalLyrSendedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalLyrSendedLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     totalLyrSendedValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    totalLyrSendedLastWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    totalLyrSendedLastWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    lastSendLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    lastSendLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     lastSendDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    lastSendValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    lastSendValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
     walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
@@ -476,19 +363,19 @@ void walletsend::refreshFonts() {
     QPushButton *viewDetails;
     QLabel *statusDetails;
     QStandardItem *tmp;
-    for(int cnt = 0;  cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+    for(int cnt = 0;  cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         viewDetails = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
         statusDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         statusDetails->setAlignment(Qt::AlignCenter);
 
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
@@ -509,7 +396,7 @@ void walletsend::refreshSize() {
     unreceivedBalanceValueLabel->setGeometry(s(330), s(88), s(170), s(25));
     unreceivedBalanceValueTotalLabel->setGeometry(s(330), s(119), s(370), s(20));
 
-    syncButton->setGeometry(s(500), s(88), s(48), s(27));
+    syncButton->setGeometry(s(490), s(88), s(58), s(27));
 
     totalLyrSendedLabel->setGeometry(s(604), s(69), s(370), s(20));
     totalLyrSendedValueLabel->setGeometry(s(604), s(88), s(370), s(25));
@@ -535,7 +422,7 @@ void walletsend::refreshSize() {
     btcUsdLineEdit->setGeometry(s(735), s(280), s(200), s(39));
     btcUsdStatusLabel->setGeometry(s(940), s(290), s(20), s(20));
 
-    btcUsdLabel->setGeometry(s(953), s(288), s(160), s(20));
+    btcUsdLabel->setGeometry(s(953), s(289), s(160), s(20));
     btcUsdSwitchLabel->setGeometry(s(1020), s(295), s(24), s(12));
 
     //passwordConfirmationLabel->setGeometry(s(0), s(328), s(200), s(39));
@@ -549,27 +436,27 @@ void walletsend::refreshSize() {
     lastSendedTransitionsArrowLabel->setGeometry(s(55), s(470), s(15), s(15));
     lastSendedTransitionsLabel->setGeometry(s(80), s(470), s(250), s(30));
 
-    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(325));
+    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(295));
     recentTransactionsTableView->setColumnWidth(0, s(175));
     recentTransactionsTableView->setColumnWidth(1, s(240));
     recentTransactionsTableView->setColumnWidth(2, s(190));
     recentTransactionsTableView->setColumnWidth(3, s(125));
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
-    for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+    for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         recentTransactionsTableView->setRowHeight(cnt, s(44));
     }
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
      */
-    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(325));
+    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(295));
     recentTransactionsTableView->setColumnWidth(0, s(175));
     recentTransactionsTableView->setColumnWidth(1, s(240));
     recentTransactionsTableView->setColumnWidth(2, s(190));
     recentTransactionsTableView->setColumnWidth(3, s(125));
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
-    for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+    for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         recentTransactionsTableView->setRowHeight(cnt, s(44));
     }
 
@@ -637,11 +524,116 @@ void walletsend::refreshLanguage() {
     recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
 
     QPushButton *viewDetails;
-    for(int cnt = 0;  cnt < 6; cnt++) {
+    for(int cnt = 0;  cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         viewDetails = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
         viewDetails->setText(_tr("View details"));
     }
     refreshFonts();
+}
+
+void walletsend::updateSend() {
+    recentTransactionsItemModel->clear();
+    recentTransactionsItemModel->setColumnCount(6);
+    recentTransactionsItemModel->setRowCount(0);
+
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, _tr("Date / Hours"));
+    recentTransactionsItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, _tr("Source"));
+    recentTransactionsItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, _tr("Amount"));
+    recentTransactionsItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, _tr("Transaction"));
+    recentTransactionsItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, _tr("Status"));
+    recentTransactionsItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, _tr("Note"));
+    recentTransactionsItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+
+    recentTransactionsTableView->setStyleSheet(
+                                   "QTableView { border: none;"
+                                   "background-color: transparent;"
+                                   "selection-background-color: transparent}");
+    recentTransactionsTableView->setShowGrid(false);
+    recentTransactionsTableView->verticalHeader()->setVisible(false);
+    recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
+    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
+    recentTransactionsTableView->horizontalHeader()->setEnabled(false);
+    recentTransactionsTableView->setAlternatingRowColors(true);
+    recentTransactionsTableView->setModel(recentTransactionsItemModel);
+    recentTransactionsTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    recentTransactionsTableView->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+
+    QList<QStringList> list = events::getRecentTxTransactions();
+    QStandardItem *tmp;
+    QLabel *statusDetails;
+    QPushButton *viewDetails;
+    for(int cnt = 0; cnt < list.count(); cnt++) {
+        QList<QStandardItem *> item = QList<QStandardItem *>();
+        recentTransactionsTableView->setRowHidden(cnt, false);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][0]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][1]);
+        tmp->setTextAlignment(Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][2]);
+        tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][3]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0xFFFFFF));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][4]);
+        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setForeground(QBrush(0xF0F0F0));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        tmp = new QStandardItem();
+        tmp->setText(list[cnt][5]);
+        tmp->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        tmp->setForeground(QBrush(0x909090));
+        tmp->setEnabled(false);
+        tmp->setSelectable(false);
+        item.append(tmp);
+        recentTransactionsItemModel->appendRow(item);
+
+        viewDetails = new QPushButton();
+        viewDetails->setText(_tr("View details"));
+        viewDetails->setCursor(Qt::PointingHandCursor);
+        viewDetails->setStyleSheet(
+                    "background-color: transparent;"
+                    "color: #0093EE"
+                    );
+        viewDetails->setFlat(true);
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        statusDetails = new QLabel();
+        viewDetails->installEventFilter(this);
+        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 3), viewDetails);
+        recentTransactionsTableView->setIndexWidget(recentTransactionsItemModel->index(cnt, 4), statusDetails);
+        statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
+        statusDetails->setText(list[cnt][4]);
+        if(!list[cnt][4].compare(_tr("Completed"))) {
+            statusDetails->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/blue.png); border: 0px solid #eee; color: #fff; ");
+        }
+    }
+    refreshSize();
 }
 
 void walletsend::run() {
@@ -693,48 +685,7 @@ void walletsend::run() {
     }
     if(recentTxTransactionsModifyedCnt != events::getRecentTxTransactionsModifyedCnt()) {
         recentTxTransactionsModifyedCnt = events::getRecentTxTransactionsModifyedCnt();
-        QList<QStringList> list = events::getRecentTxTransactions();
-        QStandardItem *tmp;
-        QLabel *statusDetails;
-        for(int cnt = 0; cnt < 6; cnt++) {
-            recentTransactionsTableView->setRowHidden(cnt, true);
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-            tmp->setText("");
-            tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 5));
-            tmp->setText("");
-        }
-        if(list.count() != 0) {
-            for(int cnt = 0; cnt < 6; cnt++) {
-                if(cnt >= list.count())
-                    break;
-                recentTransactionsTableView->setRowHidden(cnt, false);
-                statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
-                statusDetails->setText(list[cnt][4]);
-                if(!list[cnt][4].compare(_tr("Completed"))) {
-                    statusDetails->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/blue.png); border: 0px solid #eee; color: #fff; ");
-                }
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-                tmp->setText(list[cnt][0]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-                tmp->setText(list[cnt][1]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-                tmp->setText(list[cnt][2]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-                tmp->setText(list[cnt][3]);
-                //tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-                //tmp->setText(list[cnt][4]);
-                tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 5));
-                tmp->setText(list[cnt][5]);
-            }
-        }
+        updateSend();
     }
     if(idModifyedCnt != events::getIdModifyedCnt()) {
         idModifyedCnt = events::getIdModifyedCnt();
@@ -799,6 +750,15 @@ bool walletsend::eventFilter(QObject *obj, QEvent *event) {
                         _tr("Account ID copied to clipboard."),
                         QMessageBox::Ok,
                         QMessageBox::Ok);
+            } else {
+                for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
+                    QPushButton *details = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
+                    if (obj == details) {
+                        showDetails(cnt);
+                        return true;
+                    }
+                }
+
             }
         }
     }
@@ -817,7 +777,7 @@ void walletsend::on_tokenComboBox_TextChanget(const QString &) {
     if(tokenComboBox->count() != 0) {
         QList<QPair<QString, double>> list = events::getTokenList();
         double value = (events::getBtcUsdSelect() ? events::getTokenPricePair("LYR_USD") : events::getTokenPricePair("LYR_BTC")) * list[tokenComboBox->currentIndex()].second;
-        ammountLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(list[tokenComboBox->currentIndex()].second ? (list[tokenComboBox->currentIndex()].second - LYRA_TX_FEE) : 0.0));
+        ammountLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(list[tokenComboBox->currentIndex()].second ? (list[tokenComboBox->currentIndex()].second - (list[tokenComboBox->currentIndex()].first.compare("LYR") ? 0.00 : LYRA_TX_FEE)) : 0.0));
         btcUsdLineEdit->setPlaceholderText(_tr("Max") + ": " + textformating::toValue(value, events::getBtcUsdSelect() ? 2 : 8));
         on_ammountLineEdit_Changed(ammountLineEdit->text());
         on_ammountUsdBtcLineEdit_Changed(ammountLineEdit->text());

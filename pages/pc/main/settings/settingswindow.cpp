@@ -228,7 +228,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border: 1px solid #eee;"
                "border-radius: 3px;"
                "padding: 1px 18px 1px 3px;"
-               "text-align: center;"
+               "text-align: right;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
@@ -502,8 +502,8 @@ void settingswindow::refreshFonts() {
     windowScaleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
 
     customNodeIpLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    customNodeIpLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    customNodeIpButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    customNodeIpLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    customNodeIpButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
     userManagerSettingsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
     usernameLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
@@ -511,28 +511,28 @@ void settingswindow::refreshFonts() {
     walletSettingsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
     userPasswordLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     userPasswordPassLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
-    backupButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
-    editButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    backupButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
+    editButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
 
     accountsTableView->horizontalHeader()->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
         QStandardItem *tmp = accountsItemModel->itemFromIndex(accountsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = accountsItemModel->itemFromIndex(accountsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         QPushButton *voteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 2));
         if(voteButton != 0)
-            voteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            voteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         QPushButton *editButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 3));
         if(editButton != 0)
-            editButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            editButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         QPushButton *deleteButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 4));
         if(deleteButton != 0)
-            deleteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            deleteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         QPushButton *showPrivKeyButton = (QPushButton *)accountsTableView->indexWidget(accountsItemModel->index(cnt, 5));
         if(showPrivKeyButton != 0)
-            showPrivKeyButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            showPrivKeyButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
     }
 }
 

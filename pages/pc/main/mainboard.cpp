@@ -459,19 +459,19 @@ void mainboard::updateMenuButtonsSize() {
     dashboardIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
     dashboardTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
     if(currentState == state_e::STATE_DASHBOARD)
-        dashboardArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        dashboardArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        dashboardArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        dashboardArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     dashboardButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 
     yCount += 73;
 
     myWalletIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
-    myWalletTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
+    myWalletTextLabel->setGeometry(s(72), s(yCount + 30), s(150), s(30));
     if(currentState == state_e::STATE_MY_WALLET || currentState == state_e::STATE_MY_WALLET_RECEIVE || currentState == state_e::STATE_MY_WALLET_SEND)
-        myWalletArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        myWalletArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        myWalletArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        myWalletArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     if(currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)
         myWalletButton->setGeometry(s(0), s(yCount + 20), s(210), s(35));
     else
@@ -499,9 +499,9 @@ void mainboard::updateMenuButtonsSize() {
     lyraTokensIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
     lyraTokensTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
     if(currentState == state_e::STATE_LYRA_TOKENS)
-        lyraTokensArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        lyraTokensArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        lyraTokensArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        lyraTokensArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     lyraTokenButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 
     yCount += 73;
@@ -510,9 +510,9 @@ void mainboard::updateMenuButtonsSize() {
     swapIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
     swapTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
     if(currentState == state_e::STATE_SWAP)
-        swapArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        swapArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        swapArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        swapArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     swapButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 
     yCount += 73;
@@ -521,9 +521,9 @@ void mainboard::updateMenuButtonsSize() {
     transactionsIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
     transactionsTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
     if(currentState == state_e::STATE_TRANSITION)
-        transactionsArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        transactionsArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        transactionsArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        transactionsArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     transactionsButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 
     yCount += 73;
@@ -532,17 +532,17 @@ void mainboard::updateMenuButtonsSize() {
     searchIcoLabel->setGeometry(s(28), s(yCount + 30), s(30), s(30));
     searchTextLabel->setGeometry(s(72), s(yCount + 28), s(150), s(30));
     if(currentState == state_e::STATE_SEARCH)
-        searchArowLabel->setGeometry(s(195), s(yCount + 39), s(10), s(6));
+        searchArowLabel->setGeometry(s(205), s(yCount + 39), s(10), s(6));
     else
-        searchArowLabel->setGeometry(s(195), s(yCount + 41), s(6), s(10));
+        searchArowLabel->setGeometry(s(205), s(yCount + 41), s(6), s(10));
     searchButton->setGeometry(s(0), s(yCount + 20), s(210), s(53));
 #endif
     settingsIcoLabel->setGeometry(s(28), s(690 + 30), s(30), s(30));
     settingsTextLabel->setGeometry(s(72), s(690 + 28), s(150), s(30));
     if(currentState == state_e::STATE_SETTINGS)
-        settingsArowLabel->setGeometry(s(195), s(690 + 39), s(10), s(6));
+        settingsArowLabel->setGeometry(s(205), s(690 + 39), s(10), s(6));
     else
-        settingsArowLabel->setGeometry(s(195), s(690 + 41), s(6), s(10));
+        settingsArowLabel->setGeometry(s(205), s(690 + 41), s(6), s(10));
     settingsButton->setGeometry(s(0), s(690 + 20), s(210), s(53));
 
     infoButton->setGeometry(s(68), s(800), s(74), s(40));
@@ -583,14 +583,14 @@ void mainboard::updateWallet() {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
-               "padding: 1px 18px 1px 3px;"
+               "border-radius: " + QString::number((int)s(3)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px 3px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: " + QString::number((int)s(2)) + "px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
@@ -693,7 +693,7 @@ void mainboard::updateUser() {
 
 void mainboard::updateLogOut() {
     logOutButton->setGeometry(s(1250), s(60), s(75), s(30));
-    logOutButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/logOut.png); border-radius: 4px; color: #eee; ");
+    logOutButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/logOut.png); border-radius: " + QString::number((int)s(4)) + "px; color: #eee; ");
     logOutButton->setText(_tr("LOGOUT"));
     logOutButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     logOutButton->setFlat(true);
@@ -764,10 +764,22 @@ void mainboard::run() {
             dashboardWindow->setVars(windowMain, parent);
         }
     }
+    if((currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)) {
+        if(!walletWindow) {
+            walletWindow = new walletpage();
+            walletWindow->setVars(windowMain, parent);
+        }
+    }
     if(currentState == STATE_TRANSITION) {
         if(!transitionsWindow) {
             transitionsWindow = new transitionswindow();
             transitionsWindow->setVars(windowMain, parent);
+        }
+    }
+    if(currentState == STATE_SWAP) {
+        if(!swapWindow) {
+            swapWindow = new swapwindow();
+            swapWindow->setVars(windowMain, parent);
         }
     }
     if(currentState == STATE_SEARCH) {
@@ -780,12 +792,6 @@ void mainboard::run() {
         if(!settingsWindow) {
             settingsWindow = new settingswindow();
             settingsWindow->setVars(windowMain, parent);
-        }
-    }
-    if((currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)) {
-        if(!walletWindow) {
-            walletWindow = new walletpage();
-            walletWindow->setVars(windowMain, parent);
         }
     }
     if(pastState != currentState || pastScale != events::getScale()  || pastLanguage.compare(translate::getCurrentLang())) {
@@ -801,6 +807,9 @@ void mainboard::run() {
         }
         if(dashboardWindow) {
             dashboardWindow->setState(dashboardpage::STATE_NONE);
+        }
+        if(swapWindow) {
+            swapWindow->setState(swapwindow::STATE_NONE);
         }
         if(transitionsWindow) {
             transitionsWindow->setState(transitionswindow::STATE_NONE);
@@ -833,6 +842,13 @@ void mainboard::run() {
             myWalletSendIcoLabel->setVisible(true);
             myWalletSendTextLabel->setVisible(true);
             myWalletSendButton->setVisible(true);
+        } else if(currentState == STATE_SWAP) {
+            walletSelectorLabel->setVisible(true);
+            walletSelectorComboBox->setVisible(true);
+            if(swapWindow) {
+                swapWindow->setState(swapwindow::STATE_SWAP);
+            }
+            parent->repaint();
         } else if(currentState == STATE_LYRA_TOKENS) {
 
         } else if(currentState == STATE_TRANSITION) {
@@ -848,8 +864,6 @@ void mainboard::run() {
             if(searchWindow) {
                 searchWindow->setState(searchwindow::STATE_SEARCH);
             }
-        } else if(currentState == STATE_SWAP) {
-
         } else if(currentState == STATE_SETTINGS) {
             walletSelectorLabel->setVisible(false);
             walletSelectorComboBox->setVisible(false);
@@ -907,14 +921,17 @@ void mainboard::run() {
     if(walletWindow) {
         walletWindow->run();
     }
-    if(settingsWindow) {
-        settingsWindow->run();
+    if(swapWindow) {
+        swapWindow->run();
     }
     if(transitionsWindow) {
         transitionsWindow->run();
     }
     if(searchWindow) {
         searchWindow->run();
+    }
+    if(settingsWindow) {
+        settingsWindow->run();
     }
 }
 

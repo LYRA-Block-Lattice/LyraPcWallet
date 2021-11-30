@@ -5,6 +5,7 @@
 #include "wallet/rpc/wallethistory.h"
 #include "pages/pc/textformating.h"
 #include "wallet/events.h"
+#include "configlyra.h"
 
 bool variantLessThan(const QList<QStringList> &v1, const QList<QStringList> &v2)
 {
@@ -80,22 +81,26 @@ bool populate::refreshAll() {
             foreach(QString tmp, key)  {
                 if(transaction[7][tmp].toDouble() != 0.0) {
                     value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
-                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp;
+                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
                 }
             }
             if(tokenValue.length())
                 tokenValue.remove(0, 1);
+            else
+                tokenValue = textformating::toValue(0, 2) + "LYR";
             recentTransactions.append(tokenValue);
             key = transaction[8].keys();
             tokenValue = "";
             foreach(QString tmp, key)  {
                 if(transaction[8][tmp].toDouble() > 0.0) {
                     value = QString::number(transaction[8][tmp].toDouble());
-                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp;
+                    tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
                 }
             }
             if(tokenValue.length())
                 tokenValue.remove(0, 1);
+            else
+                tokenValue = textformating::toValue(0, 2) + "LYR";
             recentTransactions.append(tokenValue);
             recentTransactionsList.append(recentTransactions);
 
@@ -133,7 +138,7 @@ bool populate::refreshAll() {
     int lyr = -1;
     foreach(asset, tokenAllValue) {
         QList<QString> assetsValue;
-        assetsValue.append(asset.first);
+        assetsValue.append(asset.first.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
         assetsValue.append("0.00");
         assetsValue.append(textformating::toValue(asset.second));
         assets.append(assetsValue);
@@ -218,7 +223,7 @@ bool populate::refreshAll() {
             QString tokenValue;
             foreach(QString tmp, key)  {
                 value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
-                tokenValue += textformating::toValue(value, 2) + " " + tmp + "\n";
+                tokenValue += textformating::toValue(value, 2) + " " + tmp.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN) + "\n";
             }
 
             recentTransactions.append(tokenValue);

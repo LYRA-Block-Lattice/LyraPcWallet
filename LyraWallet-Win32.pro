@@ -45,6 +45,7 @@ SOURCES += \
     pages/pc/main/settings/settingsedituser.cpp \
     pages/pc/main/settings/settingsshowprivkey.cpp \
     pages/pc/main/settings/settingswindow.cpp \
+    pages/pc/main/swap/swapwindow.cpp \
     pages/pc/main/transitions/transitionswindow.cpp \
     pages/pc/main/wallet/stake.cpp \
     pages/pc/main/wallet/walletmain.cpp \
@@ -97,6 +98,7 @@ HEADERS += \
     pages/pc/main/settings/settingsedituser.h \
     pages/pc/main/settings/settingsshowprivkey.h \
     pages/pc/main/settings/settingswindow.h \
+    pages/pc/main/swap/swapwindow.h \
     pages/pc/main/transitions/transitionswindow.h \
     pages/pc/main/wallet/stake.h \
     pages/pc/main/wallet/walletmain.h \

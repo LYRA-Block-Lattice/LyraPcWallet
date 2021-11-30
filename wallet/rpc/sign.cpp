@@ -40,7 +40,7 @@ QJsonObject sign::signMessage(QString ownerPKey, QString response, int id) {
             }
             QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
             QJsonObject jsonObject = jsonResponse.object();
-            if(!jsonObject["result"].isNull() && id == jsonObject["id"].toInt()) {
+            if(jsonObject.contains("result") && id == jsonObject["id"].toInt()) {
                 return jsonResponse.object();
             } else {
                 return jsonObject;

@@ -157,108 +157,24 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     QPixmap image2(":/resource/ico/" + events::getStyle() + "/mainDashBoard/common/switchRight.png");
     btcUsdSwitchLabel->setPixmap(image2);
 /********************************************************/
-    startBalanceDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     startBalanceDateEdit->setCursor(Qt::PointingHandCursor);
     startBalanceDateEdit->setCalendarPopup(true);
     startBalanceDateEdit->setDisplayFormat("dd/MM/yyyy");
     startBalanceDateEdit->setDate(QDate::currentDate());
     connect(startBalanceDateEdit, &QDateEdit::editingFinished,this, &walletmain::on_StartDateBalance_EditFinished);
 /*------------------------------------------------------*/
-    endBalanceDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     endBalanceDateEdit->setCursor(Qt::PointingHandCursor);
     endBalanceDateEdit->setCalendarPopup(true);
     endBalanceDateEdit->setDisplayFormat("dd/MM/yyyy");
     endBalanceDateEdit->setDate(QDate::currentDate());
     connect(endBalanceDateEdit, &QDateEdit::editingFinished,this, &walletmain::on_EndDateBalance_EditFinished);
 /*------------------------------------------------------*/
-    startValueDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     startValueDateEdit->setCursor(Qt::PointingHandCursor);
     startValueDateEdit->setCalendarPopup(true);
     startValueDateEdit->setDisplayFormat("dd/MM/yyyy");
     startValueDateEdit->setDate(QDate::currentDate());
     connect(startValueDateEdit, &QDateEdit::editingFinished,this, &walletmain::on_StartDateValue_EditFinished);
 /*------------------------------------------------------*/
-    endValueDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     endValueDateEdit->setCursor(Qt::PointingHandCursor);
     endValueDateEdit->setCalendarPopup(true);
     endValueDateEdit->setDisplayFormat("dd/MM/yyyy");
@@ -351,28 +267,28 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 void walletmain::refreshFonts() {
     myWalletLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
 
-    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     walletBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    walletBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     unreceivedBalanceValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    unreceivedBalanceValueTotalLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    syncButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
-    creationDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    creationDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     creationDateDateLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    creationDateHourLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    creationDateHourLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
-    numberOfTransactionsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    numberOfTransactionsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     numberOfTransactionsCountLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.1)));
-    numberOfTransactionsCountWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    numberOfTransactionsCountWeekLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
 
     walletAddressLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     walletAddressIdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
 
-    voteUnvoteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+    voteUnvoteButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
 
     btcUsdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
 
@@ -407,7 +323,7 @@ void walletmain::refreshSize() {
     unreceivedBalanceValueLabel->setGeometry(s(330), s(88), s(370), s(25));
     unreceivedBalanceValueTotalLabel->setGeometry(s(330), s(119), s(370), s(20));
 
-    syncButton->setGeometry(s(500), s(88), s(48), s(27));
+    syncButton->setGeometry(s(490), s(88), s(58), s(27));
 
     creationDateLabel->setGeometry(s(604), s(69), s(370), s(20));
     creationDateDateLabel->setGeometry(s(604), s(88), s(370), s(25));
@@ -420,7 +336,7 @@ void walletmain::refreshSize() {
     walletAddressLabel->setGeometry(s(0), s(192), s(200), s(30));
     walletAddressIdLabel->setGeometry(s(205), s(192), s(870), s(30));
 
-    voteUnvoteButton->setGeometry(s(1030), s(195), s(48), s(27));
+    voteUnvoteButton->setGeometry(s(1020), s(195), s(58), s(27));
 
     startBalanceDateEdit->setGeometry(s(262), s(355), s(127), s(30));
     endBalanceDateEdit->setGeometry(s(407), s(355), s(127), s(30));
@@ -428,7 +344,7 @@ void walletmain::refreshSize() {
     startValueDateEdit->setGeometry(s(805), s(355), s(127), s(30));
     endValueDateEdit->setGeometry(s(950), s(355), s(127), s(30));
 
-    btcUsdLabel->setGeometry(s(880), s(410), s(160), s(20));
+    btcUsdLabel->setGeometry(s(881), s(411), s(160), s(20));
     btcUsdSwitchLabel->setGeometry(s(950), s(415), s(24), s(12));
 
     walletBalanceChartLabel->setGeometry(s(60), s(410), s(220), s(20));
@@ -436,6 +352,91 @@ void walletmain::refreshSize() {
 
     myWalletBalanceChartView->setGeometry(s(40) - 35, s(450) - 35, s(520) + 65, s(360) + 65);
     myWalletValueChartView->setGeometry(s(585) - 35, s(450) - 35, s(520) + 65, s(360) + 65);
+
+    startValueDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    startBalanceDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    endBalanceDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    endValueDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
     refreshFonts();
 }
 

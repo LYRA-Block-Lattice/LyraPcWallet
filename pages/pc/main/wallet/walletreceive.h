@@ -119,12 +119,6 @@ private slots:
     void on_ammountLineEdit_Changed(const QString &);
     void on_ammountUsdBtcLineEdit_Changed(const QString &);
     void on_Sync_ButtonPressed();
-    void on_viewDetails0_PushButton();
-    void on_viewDetails1_PushButton();
-    void on_viewDetails2_PushButton();
-    void on_viewDetails3_PushButton();
-    void on_viewDetails4_PushButton();
-    void on_viewDetails5_PushButton();
     void on_RefreshTotalReceivedLastWeekTimer();
 };
 

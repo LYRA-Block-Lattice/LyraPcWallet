@@ -13,14 +13,20 @@
 #include "wallet/events.h"
 
 QJsonObject languagemap;
-QString language = "en";
+QString language = "ENG";
 
 bool translate::loadLanguage(QString lan) {
     QStringList trList;
     //Q_INIT_RESOURCE(Resources);
     QFile trFile(":/resource/lang/" + lan + ".txt");
-    if (!trFile.open(QIODevice::ReadOnly))
-        return false;
+    if (!trFile.open(QIODevice::ReadOnly)) {
+        trFile.setFileName(":/resource/lang/" DEFAULT_LANGUAGE ".txt");
+        if (!trFile.open(QIODevice::ReadOnly)) {
+            return false;
+        } else {
+            lan = DEFAULT_LANGUAGE;
+        }
+    }
     QString tmpTrFile = trFile.readAll();
     /*trList = tmpTrFile.remove('{').remove('}').remove(',').remove('\"').split("\r\n");
     trList.removeAll("");
@@ -50,7 +56,7 @@ QString translate::getCurrentLang() {
 }
 
 QString translate::getCurrentFontLight() {
-    if(language == "cn") {
+    if(language == "CHN") {
         return ":/resource/font/SimplifiedChinese/SourceHanSerifSC-Light.otf";
     } else {
         return ":/resource/font/roboto/Roboto-Light.ttf";
@@ -69,13 +75,13 @@ int translate::getNumberFontSize(double scale) {
 int translate::getCurrentFontSizeLight(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
 #if USE_WINDOWS_SCALING
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 #else
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale);
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale);
@@ -84,7 +90,7 @@ int translate::getCurrentFontSizeLight(double scale) {
 }
 
 QString translate::getCurrentFontMedium() {
-    if(language == "cn") {
+    if(language == "CHN") {
         return ":/resource/font/SimplifiedChinese/SourceHanSerifSC-Light.otf";
     } else {
         return ":/resource/font/roboto/Roboto-Medium.ttf";
@@ -94,13 +100,13 @@ QString translate::getCurrentFontMedium() {
 int translate::getCurrentFontSizeMedium(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
 #if USE_WINDOWS_SCALING
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 #else
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale);
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale);
@@ -109,7 +115,7 @@ int translate::getCurrentFontSizeMedium(double scale) {
 }
 
 QString translate::getCurrentFontRegular() {
-    if(language == "cn") {
+    if(language == "CHN") {
         return ":/resource/font/SimplifiedChinese/SourceHanSerifSC-Light.otf";
     } else {
         return ":/resource/font/roboto/Roboto-Regular.ttf";
@@ -119,13 +125,13 @@ QString translate::getCurrentFontRegular() {
 int translate::getCurrentFontSizeRegular(double scale) {
     QList<QScreen *> primaryScreen = QGuiApplication::screens();
 #if USE_WINDOWS_SCALING
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale / events::getOsWindowScale() / FONT_REDUCTION * ((double)primaryScreen[events::getScreenNumber()]->geometry().height() / (double)WINDOW_HEIGHT / 2));
     }
 #else
-    if(language == "cn") {
+    if(language == "CHN") {
         return _scale(DEFAULT_FONT_SIZE + 4, scale);
     } else {
         return _scale(DEFAULT_FONT_SIZE, scale);

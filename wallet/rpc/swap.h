@@ -5,7 +5,7 @@
 
 class swap {
 public:
-    static walletErr_e swapTokens(int accNr, QString from, double qty, QString to, double minimumReceived);
+    static walletErr_e swapTokens(int accNr, QString token0, QString token1, QString tokenToSwap, double amount, double amountToGet);
 };
 
 #endif // SWAP_H

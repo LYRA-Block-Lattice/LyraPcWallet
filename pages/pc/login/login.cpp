@@ -17,12 +17,12 @@
 #include "wallet/rpc/wallethistory.h"
 #include "crypto/signatures.h"
 
-#define COMMON_STYLE                                "background-repeat: no-repeat; background-position: right; border: 1px solid #eee; border-radius: 5px; "
+#define COMMON_STYLE                                "background-repeat: no-repeat; background-position: right; border: 1px solid #eee; border-radius: " + QString::number((int)s(5)) + "px; "
 #define COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE        "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PrivateKeyLineEdit_Light.png); "
 #define COMMON_USER_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_NameLineEdit_Light.png); "
 #define COMMON_PASS_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PasswordLineEdit_Light.png); "
-#define COMMON_GREEN_BUTTON                         "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonGreen_Light.png); border-radius: 5px; color: white; "
-#define COMMON_RED_BUTTON                           "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonRed_Light.png); border-radius: 5px; color: white; "
+#define COMMON_GREEN_BUTTON                         "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonGreen_Light.png); border-radius: " + QString::number((int)s(5)) + "px; color: white; "
+#define COMMON_RED_BUTTON                           "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonRed_Light.png); border-radius: " + QString::number((int)s(5)) + "px; color: white; "
 #define COMMON_DEFAULT_COLOR                        " color: #777; "
 #define COMMON_ERROR_COLOR                          " color: red; "
 
@@ -308,7 +308,7 @@ void login::run() {
 
             info->setGeometry(s(578), s(906), s(28), s(28));
             info->setFlat(true);
-            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: 7px");
+            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: " + QString::number((int)s(7)) + "px");
             info->setCursor(Qt::PointingHandCursor);
             info->setVisible(true);
 
@@ -369,7 +369,7 @@ void login::run() {
 
             info->setGeometry(s(289), s(453), s(14), s(14));
             info->setFlat(true);
-            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: 7px");
+            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: " + QString::number((int)s(7)) + "px");
             info->setCursor(Qt::PointingHandCursor);
             info->setVisible(true);
 
@@ -422,7 +422,7 @@ void login::run() {
 
             info->setGeometry(s(289), s(453), s(14), s(14));
             info->setFlat(true);
-            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: 7px");
+            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: " + QString::number((int)s(7)) + "px");
             info->setCursor(Qt::PointingHandCursor);
             info->setVisible(true);
 
@@ -490,7 +490,7 @@ void login::run() {
 
             info->setGeometry(s(289), s(453), s(14), s(14));
             info->setFlat(true);
-            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: 7px");
+            info->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonExclamation_Light.png); border-radius: " + QString::number((int)s(7)) + "px");
             info->setCursor(Qt::PointingHandCursor);
             info->setVisible(true);
 

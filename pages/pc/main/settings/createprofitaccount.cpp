@@ -96,6 +96,12 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
     for (int i = 0 ; i < accType->count() ; ++i) {
         accType->setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
     }
+    QStandardItemModel *model = qobject_cast<QStandardItemModel *>(accType->model());
+    QStandardItem *item;
+    item = model->item(1);
+    item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+    item = model->item(2);
+    item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
     accType->setCursor(Qt::PointingHandCursor);
 
     shareRatio->setAttribute(Qt::WA_TranslucentBackground, true);

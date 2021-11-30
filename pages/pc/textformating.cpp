@@ -5,46 +5,48 @@
 
 #include "language/translate.h"
 
-QString textformating::toValue(double sum, int precision) {
+QString textformating::toValue(double sum, int precision, bool noComma) {
     QString tmp = QString::number(sum,'f', precision).remove('-');//QVariant{sum}.toString();
-    int loc = tmp.indexOf('.');
-    if(loc != -1) {
-        /*if(tmp.length() - loc > 10)
-            tmp.insert(loc + 10, ',');
-        if(tmp.length() - loc > 7)
-            tmp.insert(loc + 7, ',');
-        if(tmp.length() - loc > 4)
-            tmp.insert(loc + 4, ',');*/
-        if(loc > 12) {
-            tmp.insert(loc - 3, ',');
-            tmp.insert(loc - 6, ',');
-            tmp.insert(loc - 9, ',');
-            tmp.insert(loc - 12, ',');
-        } else if(loc > 9) {
-            tmp.insert(loc - 3, ',');
-            tmp.insert(loc - 6, ',');
-            tmp.insert(loc - 9, ',');
-        } else if(loc > 6) {
-            tmp.insert(loc - 3, ',');
-            tmp.insert(loc - 6, ',');
-        } else if(loc > 3)
-            tmp.insert(loc - 3, ',');
-    } else {
-        int len = tmp.length();
-        if(len > 12) {
-            tmp.insert(len - 3, ',');
-            tmp.insert(len - 6, ',');
-            tmp.insert(len - 9, ',');
-            tmp.insert(len - 12, ',');
-        } else if(len > 9) {
-            tmp.insert(len - 3, ',');
-            tmp.insert(len - 6, ',');
-            tmp.insert(len - 9, ',');
-        } else if(len > 6) {
-            tmp.insert(len - 3, ',');
-            tmp.insert(len - 6, ',');
-        } else if(len > 3)
-            tmp.insert(len - 3, ',');
+    if(!noComma) {
+        int loc = tmp.indexOf('.');
+        if(loc != -1) {
+            /*if(tmp.length() - loc > 10)
+                tmp.insert(loc + 10, ',');
+            if(tmp.length() - loc > 7)
+                tmp.insert(loc + 7, ',');
+            if(tmp.length() - loc > 4)
+                tmp.insert(loc + 4, ',');*/
+            if(loc > 12) {
+                tmp.insert(loc - 3, ',');
+                tmp.insert(loc - 6, ',');
+                tmp.insert(loc - 9, ',');
+                tmp.insert(loc - 12, ',');
+            } else if(loc > 9) {
+                tmp.insert(loc - 3, ',');
+                tmp.insert(loc - 6, ',');
+                tmp.insert(loc - 9, ',');
+            } else if(loc > 6) {
+                tmp.insert(loc - 3, ',');
+                tmp.insert(loc - 6, ',');
+            } else if(loc > 3)
+                tmp.insert(loc - 3, ',');
+        } else {
+            int len = tmp.length();
+            if(len > 12) {
+                tmp.insert(len - 3, ',');
+                tmp.insert(len - 6, ',');
+                tmp.insert(len - 9, ',');
+                tmp.insert(len - 12, ',');
+            } else if(len > 9) {
+                tmp.insert(len - 3, ',');
+                tmp.insert(len - 6, ',');
+                tmp.insert(len - 9, ',');
+            } else if(len > 6) {
+                tmp.insert(len - 3, ',');
+                tmp.insert(len - 6, ',');
+            } else if(len > 3)
+                tmp.insert(len - 3, ',');
+        }
     }
     return tmp;
 }

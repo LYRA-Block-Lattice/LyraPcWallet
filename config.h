@@ -3,9 +3,9 @@
 
 #include "qglobal.h"
 
-#define VORBOSE_LEVEL                               2
+#define VORBOSE_LEVEL                               0
 
-#define APP_VERSION                                 "0.2.12"
+#define APP_VERSION                                 "0.3.0"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -36,13 +36,13 @@
 #else
 #define DEFAULT_FONT_SIZE                           13
 #endif
-#define DEFAULT_LANGUAGE                            "en"
+#define DEFAULT_LANGUAGE                            "ENG"
 #define DEFAULT_WALLET_EXTENSION                    "lyr"
 
 #define DEFAULT_NETWORK                             NETWORK_TESTNET
 
 #define LYRA_TOKEN_PAGE_IMPLEMENTED                 0
-#define SWAP_PAGE_IMPLEMENTED                       0
+#define SWAP_PAGE_IMPLEMENTED                       1
 #define TRANSITIONS_PAGE_IMPLEMENTED                1
 #define SEARCH_PAGE_IMPLEMENTED                     1
 

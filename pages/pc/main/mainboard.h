@@ -18,6 +18,7 @@
 #include "settings/settingswindow.h"
 #include "transitions/transitionswindow.h"
 #include "search/searchwindow.h"
+#include "swap/swapwindow.h"
 
 #include "info.h"
 
@@ -79,6 +80,7 @@ private:
 
     dashboardpage *dashboardWindow = nullptr;
     walletpage *walletWindow = nullptr;
+    swapwindow *swapWindow = nullptr;
     transitionswindow *transitionsWindow = nullptr;
     searchwindow *searchWindow = nullptr;
     settingswindow *settingsWindow = nullptr;

@@ -15,6 +15,8 @@
 #include "wallet/rpc/wallethistory.h"
 #include "pages/pc/textformating.h"
 
+#include "configlyra.h"
+
 #define s(s) _scale(s)
 
 transitionswindow::transitionswindow() {
@@ -159,7 +161,7 @@ void transitionswindow::refreshTable() {
 
     historyItemModel->clear();
 
-    historyItemModel->setColumnCount(10);
+    historyItemModel->setColumnCount(9);
     historyItemModel->setRowCount(0);
     refreshSize();
 
@@ -245,11 +247,11 @@ void transitionswindow::refreshTable() {
         //if(tmpKeys.count() > 1 || !tmpKeys.contains("LYR")) {
             //tmpKeys.removeAll("LYR");
         foreach(QString key, tmpKeys) {
-            amount += "\n" + textformating::toValue(tmp[key]) + " " + key;
+            amount += "\n" + textformating::toValue(tmp[key]) + " " + key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
         }
-        tmpKeys.removeAll("LYR");
+        //tmpKeys.removeAll("LYR");
         foreach(QString key, tmpKeys) {
-            token = key;
+            token = key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
         }
         //} else {
             //amount = textformating::toValue(tmp["LYR"]);
@@ -403,22 +405,22 @@ void transitionswindow::refreshFonts() {
     QStandardItem *tmp;
     for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 1));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 5));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 6));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 7));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         QPushButton *detailsButton = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 8));
         if(detailsButton != 0) {
-            detailsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            detailsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         }
     }
 #if VORBOSE_LEVEL >= 4
@@ -553,7 +555,10 @@ void transitionswindow::run() {
         pastLanguage = translate::getCurrentLang();
         refreshLanguage();
     }
-    if(network != events::getRpcNetwork() || selectedNameKeyIndex != events::getSelectedNameKeyIndex() || events::getUpdateHistory() || recentTransactionsCnt != events::getRecentTransactionsModifyedCnt()) {
+    if(network != events::getRpcNetwork() ||
+            selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
+            events::getUpdateHistory() ||
+            recentTransactionsCnt != events::getRecentTransactionsModifyedCnt()) {
         network = events::getRpcNetwork();
         recentTransactionsCnt = events::getRecentTransactionsModifyedCnt();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();

@@ -2,6 +2,7 @@
 #define SEARCHWINDOW_H
 
 #include <QMainWindow>
+#include <QObject>
 #include <QWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
