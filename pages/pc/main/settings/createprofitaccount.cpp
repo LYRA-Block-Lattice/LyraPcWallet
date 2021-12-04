@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QListView>
 
 #include "createprofitaccount.h"
 
@@ -74,18 +75,19 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
     //accType->setAlignment(Qt::AlignCenter);
     accType->setStyleSheet(""
         "QComboBox {   "
+               "combobox-popup: 1;"
                "color: #777;"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
@@ -162,7 +164,7 @@ void createprofitaccount::refreshFonts() {
     titleName->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.0)));
 
     accName->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    accType->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
+    accType->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     shareRatio->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     seats->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
 
@@ -197,8 +199,8 @@ void createprofitaccount::refreshFonts() {
 void createprofitaccount::refreshSize() {
     titleName->setGeometry(s(328), s(10), s(470), s(40));
 
-    accName->setGeometry(s(328), s(65), s(360), s(40));
-    accType->setGeometry(s(698), s(65), s(100), s(40));
+    accName->setGeometry(s(328), s(65), s(330), s(40));
+    accType->setGeometry(s(668), s(65), s(130), s(40));
     shareRatio->setGeometry(s(328), s(115), s(470), s(40));
     seats->setGeometry(s(328), s(165), s(470), s(40));
 

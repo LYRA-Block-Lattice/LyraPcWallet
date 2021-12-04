@@ -5,7 +5,7 @@
 
 #define VORBOSE_LEVEL                               0
 
-#define APP_VERSION                                 "0.3.1"
+#define APP_VERSION                                 "0.3.2"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -59,23 +59,31 @@
 #endif
 /* RPC nodes DNS/IP */
 /* Those nodes are selected randomly thru elimination from the full list, if all nodes are tried the list is refreshed and the cicle continue */
-#define RPC_TESTNET_IP_LIST                         {{"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
+#define RPC_TESTNET_IP_LIST                         { \
+                                                    {"wss://161.97.166.188:4504/api/v1/socket", true}, /*Iulian Gheorghiu node*/ \
+                                                    {"wss://173.212.228.110:4504/api/v1/socket", true}, /*Iulian Gheorghiu node*/ \
+                                                    {"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed2.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}, \
-                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}}
+                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true} \
+                                                    }
 
-#define RPC_MAINNET_IP_LIST                         {{"wss://161.97.166.188:5504/api/v1/socket", true}, /*Iulian Gheorghiu node*/ \
+#define RPC_MAINNET_IP_LIST                         { \
+                                                    {"wss://161.97.166.188:5504/api/v1/socket", true}, /*Iulian Gheorghiu node*/ \
                                                     {"wss://173.212.228.110:5504/api/v1/socket", true}, /*Iulian Gheorghiu node*/ \
                                                     {"wss://seed1.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed2.mainnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}, \
-                                                    {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true}}
+                                                    {"wss://seed3.mainnet.lyra.live:443/api/v1/socket", true} \
+                                                    }
 
-#define RPC_DEV_IP_LIST                             {{"wss://81.196.64.78:4504/api/v1/socket", true},  /*Iulian Gheorghiu node*/\
+#define RPC_DEV_IP_LIST                             { \
+                                                    {"wss://81.196.64.78:4504/api/v1/socket", true},  /*Iulian Gheorghiu node*/\
                                                     {"wss://seed.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed2.testnet.lyra.live:443/api/v1/socket", true}, \
                                                     {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}, \
-                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true}}
+                                                    {"wss://seed3.testnet.lyra.live:443/api/v1/socket", true} \
+                                                    }
 
 #define RPC_CONNECT_TIMEOUT                         1000 // mS
 #define RPC_MESSAGE_RESPONSE_TIMEOUT                10000 // mS

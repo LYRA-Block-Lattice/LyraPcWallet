@@ -32,6 +32,7 @@ private:
     void refreshFonts();
     void refreshSize();
     void refreshLanguage();
+    void refreshStyle();
     void updateLastTransactionsTables();
     void updateAssetsTables();
 

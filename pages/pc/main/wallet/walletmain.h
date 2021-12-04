@@ -44,6 +44,7 @@ private:
     void refreshFonts();
     void refreshSize();
     void refreshLanguage();
+    void refreshStyle();
 
     QMdiSubWindow *parent = nullptr;
     QMdiArea *mdiArea = nullptr;

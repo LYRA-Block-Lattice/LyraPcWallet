@@ -14,10 +14,10 @@ void wallet::sync() {
     QString accId = events::getAccountId(index);
     QStringList nameList = events::getAccountNameList();
     if(accId.length()) {
-        events::setUnreceivedBallance(_tr("Please wait"));
+        events::setUnreceivedBallance("Please wait");
         bool newTransaction = false;
         if(walletErr_e::WALLET_ERR_OK != walletbalance::receive(index, &newTransaction)) {
-            events::setUnreceivedBallance(_tr("ERROR"));
+            events::setUnreceivedBallance("ERROR!");
             return;
         }
         events::setUnreceivedBallance(newTransaction ? "Yes" : "No");
@@ -36,7 +36,7 @@ void wallet::sync() {
 }
 
 void wallet::checkNewTransactions() {
-    events::setUnreceivedBallance(_tr("Please wait"));
+    events::setUnreceivedBallance("Please wait");
     int index = events::getSelectedNameKeyIndex();
     bool newTransaction = false;
     int height = 0;

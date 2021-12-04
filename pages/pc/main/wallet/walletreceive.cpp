@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QThread>
 #include <QMessageBox>
+#include <QListView>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -111,7 +112,6 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceValueTotalLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     syncButton->setFlat(true);
     syncButton->setCursor(Qt::PointingHandCursor);
     connect(syncButton, SIGNAL(clicked()),this, SLOT(on_Sync_ButtonPressed()));
@@ -218,11 +218,10 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     qrCodeLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
     qrCodeImageLabel->setCursor(Qt::PointingHandCursor);
-    qrCodeImageLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/qr.png); border-radius: 3px;");
     qrCodeImageLabel->setScaledContents(true);
+    qrCodeImageLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/qr.png); border-radius: 3px;");
     qrCodeImageLabel->installEventFilter(this);
 
-    requestButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/request.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
     requestButton->setFlat(true);
     requestButton->setCursor(Qt::PointingHandCursor);
     requestButton->setVisible(false);
@@ -234,6 +233,7 @@ void walletreceive::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastReceivedTransitionsLabel->setAlignment(Qt::AlignLeft);
     lastReceivedTransitionsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
+    refreshStyle();
     updateReceived();
     refreshSize();
     refreshLanguage();
@@ -275,7 +275,7 @@ void walletreceive::refreshFonts() {
     requestToWalletIdStatusLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     ammountLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
-    tokenComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(1.0)));
+    tokenComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
     //lyrTextLabel.setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     ammountLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
     ammountValueStatusLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
@@ -374,65 +374,12 @@ void walletreceive::refreshSize() {
     recentTransactionsTableView->setColumnWidth(3, s(125));
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
-    for( int cnt = 0; cnt < recentTransactionsTableView->verticalHeader()->count(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(30));
-    }
-    refreshFonts();
-    /*
-     * Due to an issue with the table in QT we nee to repeat the dimension setup.
-     */
-    recentTransactionsTableView->setGeometry(s(35), s(510), s(1048), s(295));
-    recentTransactionsTableView->setColumnWidth(0, s(175));
-    recentTransactionsTableView->setColumnWidth(1, s(240));
-    recentTransactionsTableView->setColumnWidth(2, s(190));
-    recentTransactionsTableView->setColumnWidth(3, s(125));
-    recentTransactionsTableView->setColumnWidth(4, s(90));
-    recentTransactionsTableView->setColumnWidth(5, s(228));
-    for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(30));
-    }
+    QHeaderView* header = recentTransactionsTableView->verticalHeader();
+    header->setDefaultSectionSize(s(30));
 
-    requestToWalletIdLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
-                                                    ";}");
-    tokenComboBox->setStyleSheet(""
-        "QComboBox {   "
-               "color: #777;"
-               "border-color: white;"
-               "background-color: white;"
-               "border: 1px solid #eee;"
-               "border-radius: " + QString::number((int)s(3)) + "px;"
-               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
-               "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
-        "QComboBox QAbstractItemView {"
-               "border: " + QString::number((int)s(2)) + "px solid darkgray;"
-               "color: #aaa;"
-               "padding: 1px 1px 1px 1px;"
-               "selection-background-color: darkgray;"
-               "}"
-    );
-    ammountLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
-                                                    ";}");
-    btcUsdLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #A0B9CE;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
-                                                    ";}");
+
     refreshFonts();
+    refreshStyle();
     recentTransactionsTableView->repaint();
 }
 
@@ -493,6 +440,52 @@ void walletreceive::refreshLanguage() {
     refreshFonts();
 }
 
+void walletreceive::refreshStyle() {
+    requestToWalletIdLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
+    tokenComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(3)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: " + QString::number((int)s(2)) + "px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    ammountLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
+    btcUsdLineEdit->setStyleSheet("QLineEdit {   "
+                                                    "color: #A0B9CE;"
+                                                    "border-color: white;"
+                                                    "background-color: white;"
+                                                    "border: 1px solid #eee;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
+                                                    ";}");
+    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
+    requestButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/request.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+}
+
 void walletreceive::updateReceived() {
     recentTransactionsItemModel->clear();
     recentTransactionsItemModel->setColumnCount(6);
@@ -518,7 +511,7 @@ void walletreceive::updateReceived() {
     recentTransactionsTableView->setShowGrid(false);
     recentTransactionsTableView->verticalHeader()->setVisible(false);
     recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
-    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
+    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: " COLOR_GREY_MID "; ");
     recentTransactionsTableView->horizontalHeader()->setEnabled(false);
     recentTransactionsTableView->setAlternatingRowColors(true);
     recentTransactionsTableView->setModel(recentTransactionsItemModel);
@@ -602,8 +595,8 @@ void walletreceive::run() {
     /*if(!mdiArea->isVisible())
         showDetailsWindow.setVisible(false);*/
     if(pastScale != events::getScale()) {
-        refreshSize();
         pastScale = events::getScale();
+        updateReceived();
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         refreshLanguage();
@@ -666,7 +659,7 @@ void walletreceive::run() {
         tokenComboBox->clear();
         QPair<QString, double> pair;
         foreach(pair, list) {
-            tokenComboBox->addItem(pair.first);
+            tokenComboBox->addItem(pair.first.replace("tether/", "$"));
         }
         tokenComboBox->setCurrentText(tmp);
     }

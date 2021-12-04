@@ -18,9 +18,9 @@
 #include "crypto/signatures.h"
 
 #define COMMON_STYLE                                "background-repeat: no-repeat; background-position: right; border: 1px solid " COLOR_GREY_BRIGHT "; border-radius: " + QString::number((int)s(12)) + "px; "
-#define COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE        "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PrivateKeyLineEdit_Light.png); "
-#define COMMON_USER_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_NameLineEdit_Light.png); "
-#define COMMON_PASS_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PasswordLineEdit_Light.png); "
+#define COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE        "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PrivateKeyLineEdit_Light.png); background-color: " COLOR_WHITE ";"
+#define COMMON_USER_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_NameLineEdit_Light.png); background-color: " COLOR_WHITE ";"
+#define COMMON_PASS_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PasswordLineEdit_Light.png); background-color: " COLOR_WHITE ";"
 #define COMMON_GREEN_BUTTON                         QString("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: " COLOR_WHITE "; ")
 #define COMMON_RED_BUTTON                           QString("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(12)) + "px; color: " COLOR_WHITE "; ")
 #define COMMON_DEFAULT_COLOR                        QString(" color: " COLOR_GREY_MID "; ")
@@ -67,12 +67,14 @@ login::login(QMdiArea *mdiArea, QWidget *parent) {
     connect(privKeyLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_privateKeyLineEdit_textChanged(const QString &)));
 
     nameLineEdit = new QLineEdit(mdiArea);
-    nameLineEdit->setAlignment(Qt::AlignCenter);
+    //nameLineEdit->setAlignment(Qt::AlignCenter);
     nameLineEdit->setVisible(false);
+    nameLineEdit->setFocusPolicy(Qt::StrongFocus);
+    nameLineEdit->setFocus();
     connect(nameLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_nameNameLineEdit_textChanged(const QString &)));
 
     pass1LineEdit = new QLineEdit(mdiArea);
-    pass1LineEdit->setAlignment(Qt::AlignCenter);
+    //pass1LineEdit->setAlignment(Qt::AlignCenter);
     pass1LineEdit->setVisible(false);
     connect(pass1LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_pass1LineEdit_textChanged(const QString &)));
     connect(pass1LineEdit, &QLineEdit::returnPressed, this, &login::on_pass1EnterPushed);
@@ -108,6 +110,7 @@ login::login(QMdiArea *mdiArea, QWidget *parent) {
     //loginManagerUser->setVisible(false);
     lyraInc = new QLabel(mdiArea);
     lyraInc->setVisible(false);
+
 }
 
 login::~login() {
@@ -169,8 +172,13 @@ void login::run() {
         }
         if(currentState == STATE_NONE)
             window->setVisible(false);
-        else
+        else {
             window->setVisible(true);
+            QTimer::singleShot(0, this, [this]
+            {
+                nameLineEdit->setFocus();
+            });
+        }
 
         pastLanguage = translate::getCurrentLang();
 

@@ -10,16 +10,17 @@
 keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::keyrevealer) {
-    if(parent) {
-        QRect hostRect = MainWindow::getParent()->geometry();
-        this->move(hostRect.center() - this->rect().center());
-    }
     ui->setupUi(this);
-    QPushButton *cancelButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel);
-    cancelButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_DARK ", stop: 1 #ccc); border-radius: 5px; color: #eee; min-width: 70px; min-height: 25px;");
-    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok);
-    okButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_DARK ", stop: 1 #ccc); border-radius: 5px; color: #eee; min-width: 70px; min-height: 25px;");
 
+    QRect hostRect = MainWindow::getParent()->geometry();
+    this->move(hostRect.center() - this->rect().center());
+    QPushButton *cancelButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel);
+    cancelButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_BRIGHT ", stop: 1 " COLOR_GREY_DARK "); border-radius: 10px; color: #eee; min-width: 70px; min-height: 25px;");
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok);
+    okButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_BRIGHT ", stop: 1 " COLOR_GREY_DARK "); border-radius: 10px; color: #eee; min-width: 70px; min-height: 25px;");
+    QTimer::singleShot(0, this, [this] {
+        ui->lineEdit->setFocus();
+    });
     this->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
     this->nr = nr;
     this->immediate = immediate;
@@ -34,10 +35,21 @@ keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *paren
             qDebug() << "KEYREVEALER 2: " << "Nonimediate unmatched";
             pKey = "";
         }
+    } else {
+        if(!blurEffectCentralWidget) {
+            blurEffectCentralWidget = new QGraphicsBlurEffect();
+        }
+        blurEffectCentralWidget->setBlurRadius(5.0);
+        MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
     }
 }
 
 keyrevealer::~keyrevealer() {
+    if(!blurEffectCentralWidget) {
+        blurEffectCentralWidget = new QGraphicsBlurEffect();
+    }
+    blurEffectCentralWidget->setBlurRadius(0.0);
+    MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
     delete ui;
 }
 
@@ -63,9 +75,19 @@ void keyrevealer::on_buttonBox_accepted(){
         return;
     }
     qDebug() << "KEYREVEALER 7: " << "Not meet";
+    if(!blurEffectCentralWidget) {
+        blurEffectCentralWidget = new QGraphicsBlurEffect();
+    }
+    blurEffectCentralWidget->setBlurRadius(0.0);
+    MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
 }
 
 void keyrevealer::on_buttonBox_rejected(){
+    if(!blurEffectCentralWidget) {
+        blurEffectCentralWidget = new QGraphicsBlurEffect();
+    }
+    blurEffectCentralWidget->setBlurRadius(0.0);
+    MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
     result = keyrevealer::RESULT_REJECTED;
 }
 

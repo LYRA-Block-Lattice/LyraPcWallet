@@ -97,7 +97,6 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceValueTotalLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     syncButton->setFlat(true);
     syncButton->setCursor(Qt::PointingHandCursor);
     connect(syncButton, SIGNAL(clicked()),this, SLOT(on_Sync_ButtonPressed()));
@@ -140,7 +139,6 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletAddressIdLabel->installEventFilter(this);
 
 
-    voteUnvoteButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     voteUnvoteButton->setFlat(true);
     voteUnvoteButton->setCursor(Qt::PointingHandCursor);
     connect(voteUnvoteButton, SIGNAL(clicked()),this, SLOT(on_VoteUnvote_ButtonPressed()));
@@ -262,6 +260,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 
     refreshSize();
     refreshLanguage();
+    refreshStyle();
 }
 
 void walletmain::refreshFonts() {
@@ -353,91 +352,8 @@ void walletmain::refreshSize() {
     myWalletBalanceChartView->setGeometry(s(40) - 35, s(450) - 35, s(520) + 65, s(360) + 65);
     myWalletValueChartView->setGeometry(s(585) - 35, s(450) - 35, s(520) + 65, s(360) + 65);
 
-    startValueDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : " + QString::number((int)s(5)) + "px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
-    startBalanceDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : " + QString::number((int)s(5)) + "px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
-    endBalanceDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : " + QString::number((int)s(5)) + "px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
-    endValueDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : " + QString::number((int)s(5)) + "px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     refreshFonts();
+    refreshStyle();
 }
 
 void walletmain::refreshLanguage() {
@@ -469,6 +385,95 @@ void walletmain::refreshLanguage() {
 
 
     refreshFonts();
+}
+
+void walletmain::refreshStyle() {
+    startValueDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: " COLOR_GREY_MID ";"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    startBalanceDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: " COLOR_GREY_MID ";"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    endBalanceDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: " COLOR_GREY_MID ";"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    endValueDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: " COLOR_GREY_MID ";"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
+    voteUnvoteButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
 }
 
 void walletmain::run() {

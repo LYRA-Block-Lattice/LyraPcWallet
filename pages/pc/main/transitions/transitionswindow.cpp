@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QClipboard>
+#include <QListView>
 
 #include "QGraphicsBlurEffect"
 
@@ -70,25 +71,6 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 
     txDirectionComboBox->setCurrentIndex(0);
     txDirectionComboBox->setAutoFillBackground(false);
-    txDirectionComboBox->setStyleSheet(""
-        "QComboBox {   "
-               "color: #777;"
-               "border-color: white;"
-               "background-color: white;"
-               "border: 1px solid #eee;"
-               "border-radius: 3px;"
-               "padding: 1px 18px 1px 3px;"
-               "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
-        "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
-               "color: #aaa;"
-               "padding: 1px 1px 1px 1px;"
-               "selection-background-color: darkgray;"
-               "}"
-    );
     txDirectionComboBox->setCursor(Qt::PointingHandCursor);
     txDirectionComboBox->setVisible(true);
     connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
@@ -100,25 +82,6 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 
     tokenComboBox->setCurrentIndex(0);
     tokenComboBox->setAutoFillBackground(false);
-    tokenComboBox->setStyleSheet(""
-        "QComboBox {   "
-               "color: #777;"
-               "border-color: white;"
-               "background-color: white;"
-               "border: 1px solid #eee;"
-               "border-radius: 3px;"
-               "padding: 1px 18px 1px 3px;"
-               "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
-        "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
-               "color: #aaa;"
-               "padding: 1px 1px 1px 1px;"
-               "selection-background-color: darkgray;"
-               "}"
-    );
     tokenComboBox->setCursor(Qt::PointingHandCursor);
     tokenComboBox->setVisible(true);
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
@@ -131,17 +94,11 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     filterLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
     filterLineEdit->setVisible(true);
     connect(filterLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_Filter_Changed(const QString &)));
-    filterLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #777;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
-                                                    ";}");
 
     showDetailsWindow = new walletshowdetails();
     showDetailsWindow->init(mdiAreaTransitions);
 
+    refreshStyle();
     refreshLanguage();
     windowTransitions->repaint();
 }
@@ -197,7 +154,7 @@ void transitionswindow::refreshTable() {
 #endif
     historyTableView->verticalHeader()->setVisible(false);
     historyTableView->horizontalHeader()->setSectionsClickable(false);
-    historyTableView->horizontalHeader()->setStyleSheet("color: #777");
+    historyTableView->horizontalHeader()->setStyleSheet("color: " COLOR_GREY_MID "; ");
     historyTableView->horizontalHeader()->setEnabled(false);
     historyTableView->setAlternatingRowColors(true);
     //historyTableView.setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -235,7 +192,11 @@ void transitionswindow::refreshTable() {
         QString recvAcc = tmp["RecvAccountId"];
         tmp = transaction[6];
         QString recvHash = tmp["RecvHash"];
-        if(filterLineEdit->text().length() != 0 && !sendAcc.contains(filterLineEdit->text()) && !sendHash.contains(filterLineEdit->text()) && !recvAcc.contains(filterLineEdit->text()) && !recvHash.contains(filterLineEdit->text())) {
+        if(filterLineEdit->text().length() != 0 &&
+                !sendAcc.contains(filterLineEdit->text()) &&
+                    !sendHash.contains(filterLineEdit->text()) &&
+                        !recvAcc.contains(filterLineEdit->text()) &&
+                            !recvHash.contains(filterLineEdit->text())) {
             continue;
         }
         tmp = transaction[0];
@@ -261,13 +222,16 @@ void transitionswindow::refreshTable() {
         //}
         if(amount.length())
             amount.remove(0, 1);
-        if(tokenComboBox->currentText().compare(_tr("ALL")) && tokenComboBox->currentText().compare(token)) {
+        if(tokenComboBox->currentText().compare(_tr("ALL")) &&
+                tokenComboBox->currentText().compare(token)) {
             continue;
         }
         tmp = transaction[1];
-        if(txDirectionComboBox->currentIndex() == 1 && tmp["IsReceive"].toInt() == 1) {
+        if(txDirectionComboBox->currentIndex() == 1 &&
+                tmp["IsReceive"].toInt() == 1) {
             continue;
-        } else if(txDirectionComboBox->currentIndex() == 2 && tmp["IsReceive"].toInt() == 0) {
+        } else if(txDirectionComboBox->currentIndex() == 2 &&
+                  tmp["IsReceive"].toInt() == 0) {
             continue;
         }
         cumulatedWallet.append(transaction);
@@ -475,10 +439,61 @@ void transitionswindow::refreshSize() {
     }
 
     refreshFonts();
+    refreshStyle();
     historyTableView->repaint();
 #if VORBOSE_LEVEL >= 4
     qDebug() << "TRANSACTIONSWINDOW 9: End refresh size.";
 #endif
+}
+
+void transitionswindow::refreshStyle() {
+    txDirectionComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(14)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    tokenComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(14)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    filterLineEdit->setStyleSheet("QLineEdit {   "
+        "color: " COLOR_GREY_MID ";"
+        "border-color: white;"
+        "background-color: white;"
+        "border: 1px solid #eee;"
+        "border-radius: " + QString::number((int)s(14)) + "px;"
+        ";}");
 }
 
 void transitionswindow::refreshLanguage() {
@@ -528,7 +543,7 @@ void transitionswindow::refreshLanguage() {
     historyItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     historyItemModel->setHeaderData(6, Qt::Horizontal, _tr("To"));
     historyItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(7, Qt::Horizontal, _tr("Details"));
+    historyItemModel->setHeaderData(7, Qt::Horizontal, "");
     historyItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
 
     for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
@@ -563,7 +578,7 @@ void transitionswindow::run() {
         pastScale = events::getScale();
         mdiAreaTransitions->setGeometry(s(LEFT_MENU_WIDTH), s(HEADER_HEIGHT), s(WINDOW_WIDTH) - s(LEFT_MENU_WIDTH), s(WINDOW_HEIGHT) - s(HEADER_HEIGHT));
         windowTransitions->setGeometry(0, 0, mdiAreaTransitions->width(), mdiAreaTransitions->height());
-        refreshSize();
+        refreshTable();
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         pastLanguage = translate::getCurrentLang();
@@ -631,7 +646,7 @@ void transitionswindow::historyAccItemClicked(QModelIndex idx) {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(tmp->text().split("\n")[0]);
             QMessageBox::information( this, this->windowTitle(),
-                    _tr("Receive hash copied to clipboard.") + "\n" +
+                    _tr("Send hash copied to clipboard.") + "\n" +
                                       tmp->text().split("\n")[0],
                     QMessageBox::Ok,
                     QMessageBox::Ok);
@@ -641,7 +656,7 @@ void transitionswindow::historyAccItemClicked(QModelIndex idx) {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(tmp->text().split("\n")[1]);
             QMessageBox::information( this, this->windowTitle(),
-                    _tr("Send hash copied to clipboard.") + "\n" +
+                    _tr("Receive hash copied to clipboard.") + "\n" +
                                       tmp->text().split("\n")[1],
                     QMessageBox::Ok,
                     QMessageBox::Ok);

@@ -482,14 +482,14 @@ void mainboard::updateMenuButtonsSize() {
 
     myWalletSendIcoLabel->setGeometry(s(77), s(yCount + 15), s(15), s(15));
     myWalletSendTextLabel->setGeometry(s(100), s(yCount + 8), s(150), s(30));
-    myWalletSendButton->setGeometry(s(0), s(yCount + 15), s(210), s(15));
+    myWalletSendButton->setGeometry(s(0), s(yCount + 14), s(210), s(21));
 
     if(currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)
         yCount += 33;
 
     myWalletReceiveIcoLabel->setGeometry(s(77), s(yCount + 15), s(15), s(15));
     myWalletReceiveTextLabel->setGeometry(s(100), s(yCount + 8), s(150), s(30));
-    myWalletReceiveButton->setGeometry(s(0), s(yCount + 15), s(210), s(15));
+    myWalletReceiveButton->setGeometry(s(0), s(yCount + 14), s(210), s(21));
 
     if(currentState == STATE_MY_WALLET || currentState == STATE_MY_WALLET_SEND || currentState == STATE_MY_WALLET_RECEIVE)
         yCount += 53;
@@ -579,12 +579,13 @@ void mainboard::updateWallet() {
     //
     walletSelectorComboBox->setStyleSheet(""
         "QComboBox {   "
+               "combobox-popup: 1;"
                "color: #777;"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(3)) + "px;"
-               "padding: 1px " + QString::number((int)s(18)) + "px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
@@ -596,7 +597,7 @@ void mainboard::updateWallet() {
                "selection-background-color: darkgray;"
                "}"
     );
-    walletSelectorComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.0)));
+    walletSelectorComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     /*for (int i = 0 ; i < walletSelectorComboBox.count() ; ++i) {
         walletSelectorComboBox.setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
     }*/

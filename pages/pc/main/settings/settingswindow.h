@@ -42,6 +42,7 @@ private:
     void refreshFonts();
     void refreshSize();
     void refreshLanguage();
+    void refreshStyle();
     void updateWalletSettingsTable();
     /* Window */
     QWidget *parent = nullptr;

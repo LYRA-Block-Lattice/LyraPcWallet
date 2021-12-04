@@ -38,6 +38,7 @@ private:
     void refreshTable();
     void refreshFonts();
     void refreshSize();
+    void refreshStyle();
     void refreshLanguage();
     /* Window */
     QWidget *parent = nullptr;

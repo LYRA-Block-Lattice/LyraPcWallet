@@ -120,25 +120,6 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
 
     chooseRangeComboBox->setCurrentIndex(0);
     chooseRangeComboBox->setAutoFillBackground(false);
-    chooseRangeComboBox->setStyleSheet(""
-        "QComboBox {   "
-               "color: #777;"
-               "border-color: white;"
-               "background-color: white;"
-               "border: 1px solid #eee;"
-               "border-radius: 3px;"
-               "padding: 1px 18px 1px 3px;"
-               "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
-        "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
-               "color: #aaa;"
-               "padding: 1px 1px 1px 1px;"
-               "selection-background-color: darkgray;"
-               "}"
-    );
     chooseRangeComboBox->setCursor(Qt::PointingHandCursor);
     chooseRangeComboBox->setVisible(false);
 
@@ -154,27 +135,6 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     startDateEdit->setAttribute(Qt::WA_NoSystemBackground);
     startDateEdit->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    startDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     startDateEdit->setCursor(Qt::PointingHandCursor);
     startDateEdit->setCalendarPopup(true);
     startDateEdit->setDisplayFormat("dd/MM/yyyy");
@@ -185,27 +145,6 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     endLabel->setAlignment(Qt::AlignVCenter);
     endLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    endDateEdit->setStyleSheet(""
-                           "QDateEdit"
-                           "{"
-                           "color: #777;"
-                           "border : 0px solid white;"
-                           "background : transparent;"
-                           "padding : 5px;"
-                           "}"
-                           "QDateEdit::drop-down {"
-                           "border-style: solid;"
-                           "}"
-                           "QDateEdit QAbstractItemView:enabled {"
-                           "color: #999; "
-                           "background-color: white; "
-                           "selection-background-color: #999; "
-                           "selection-color: white; "
-                           "}"
-                           "QDateEdit QWidget#qt_calendar_navigationbar {"
-                           "background-color: grey"
-                           "}"
-                           );
     endDateEdit->setCursor(Qt::PointingHandCursor);
     endDateEdit->setCalendarPopup(true);
     endDateEdit->setDisplayFormat("dd/MM/yyyy");
@@ -270,6 +209,7 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
 
     updateLastTransactionsTables();
     updateAssetsTables();
+    refreshStyle();
     refreshSize();
     refreshLanguage();
 }
@@ -298,7 +238,7 @@ void dashmain::refreshFonts() {
 
     myWalletValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     btcUsdLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
-    chooseRangeComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+    chooseRangeComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.9)));
     orLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
     startLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
     startDateEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
@@ -387,41 +327,84 @@ void dashmain::refreshSize() {
     recentTransactionsTableView->setColumnWidth(2, s(90));
     recentTransactionsTableView->setColumnWidth(3, s(145));
     recentTransactionsTableView->setColumnWidth(4, s(145));
-    for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(31));
-    }
+    QHeaderView* header = recentTransactionsTableView->verticalHeader();
+    header->setDefaultSectionSize(s(31));
 
     assetsTableView->setGeometry(s(783), s(655), s(305), s(175));
     assetsTableView->setColumnWidth(0, s(95));
     assetsTableView->setColumnWidth(1, s(65));
     assetsTableView->setColumnWidth(2, s(125));
-    for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
-        assetsTableView->setRowHeight(cnt, s(31));
-    }
-    assetsTableView->repaint();
-    /*
-     * Due to an issue with the table in QT we nee to repeat the dimension setup.
-     */
-    recentTransactionsTableView->setGeometry(s(57), s(660), s(645), s(175));
-    recentTransactionsTableView->setColumnWidth(0, s(125));
-    recentTransactionsTableView->setColumnWidth(1, s(140));
-    recentTransactionsTableView->setColumnWidth(2, s(90));
-    recentTransactionsTableView->setColumnWidth(3, s(145));
-    recentTransactionsTableView->setColumnWidth(4, s(145));
-    for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(31));
-    }
-
-    assetsTableView->setGeometry(s(783), s(655), s(305), s(175));
-    assetsTableView->setColumnWidth(0, s(95));
-    assetsTableView->setColumnWidth(1, s(65));
-    assetsTableView->setColumnWidth(2, s(125));
-    for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
-        assetsTableView->setRowHeight(cnt, s(31));
-    }
+    header = assetsTableView->verticalHeader();
+    header->setDefaultSectionSize(s(31));
     assetsTableView->repaint();
 
+    refreshStyle();
     refreshFonts();
+}
+
+void dashmain::refreshStyle() {
+    chooseRangeComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: #777;"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(3)) + "px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 2px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    startDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
+    endDateEdit->setStyleSheet(""
+                           "QDateEdit"
+                           "{"
+                           "color: #777;"
+                           "border : 0px solid white;"
+                           "background : transparent;"
+                           "padding : " + QString::number((int)s(5)) + "px;"
+                           "}"
+                           "QDateEdit::drop-down {"
+                           "border-style: solid;"
+                           "}"
+                           "QDateEdit QAbstractItemView:enabled {"
+                           "color: #999; "
+                           "background-color: white; "
+                           "selection-background-color: #999; "
+                           "selection-color: white; "
+                           "}"
+                           "QDateEdit QWidget#qt_calendar_navigationbar {"
+                           "background-color: grey"
+                           "}"
+                           );
 }
 
 void dashmain::refreshLanguage() {
@@ -474,7 +457,7 @@ void dashmain::updateLastTransactionsTables() {
     recentTransactionsTableView->setShowGrid(false);
     recentTransactionsTableView->verticalHeader()->setVisible(false);
     recentTransactionsTableView->horizontalHeader()->setSectionsClickable(false);
-    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: #777");
+    recentTransactionsTableView->horizontalHeader()->setStyleSheet("color: " COLOR_GREY_MID "; ");
     recentTransactionsTableView->horizontalHeader()->setEnabled(false);
     recentTransactionsTableView->setAlternatingRowColors(true);
     recentTransactionsTableView->setModel(recentTransactionsItemModel);
@@ -609,8 +592,9 @@ void dashmain::updateAssetsTables() {
 
 void dashmain::run() {
     if(pastScale != events::getScale()) {
-        refreshSize();
         pastScale = events::getScale();
+        updateAssetsTables();
+        updateLastTransactionsTables();
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         refreshLanguage();

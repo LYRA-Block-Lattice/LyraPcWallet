@@ -36,6 +36,7 @@ private:
     void refreshFonts();
     void refreshSize();
     void refreshLanguage();
+    void refreshStyle();
     void updateSend();
     void showDetails(int order);
 

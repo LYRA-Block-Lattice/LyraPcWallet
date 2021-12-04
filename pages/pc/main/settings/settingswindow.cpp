@@ -7,6 +7,9 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QListView>
+#include <QStyleFactory>
+#include <QStyledItemDelegate>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -93,27 +96,32 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     languageLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     languageLabel->setVisible(true);
 
-    languageComboBox->setCurrentIndex(0);
-    languageComboBox->setAutoFillBackground(false);
     languageComboBox->setStyleSheet(""
         "QComboBox {   "
-               "color: #777;"
+               "combobox-popup: 0;"
+               "color: " COLOR_GREY_MID ";"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: center;"
-               ";}"
-        "QComboBox::drop-down {border-width: 1px;} "
-        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+               "}"
+        "QComboBox::drop-down {"
+               "border-width: 1px;"
+               "}"
+        "QComboBox::down-arrow {"
+                "image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);"
+               "}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
                "}"
     );
+    languageComboBox->setCurrentIndex(0);
+    languageComboBox->setAutoFillBackground(false);
     languageComboBox->setCursor(Qt::PointingHandCursor);
     languageComboBox->setVisible(true);
     connect(languageComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Language_Changed(const QString &)));
@@ -124,27 +132,28 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     appStyleLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     appStyleLabel->setVisible(true);
 
-    appStyleComboBox->setCurrentIndex(0);
-    appStyleComboBox->setAutoFillBackground(false);
     appStyleComboBox->setStyleSheet(""
         "QComboBox {   "
-               "color: #777;"
+               "combobox-popup: 0;"
+               "color: " COLOR_GREY_MID ";"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
                "}"
     );
+    appStyleComboBox->setCurrentIndex(0);
+    appStyleComboBox->setAutoFillBackground(false);
     appStyleComboBox->addItems({"light"});
     appStyleComboBox->setCursor(Qt::PointingHandCursor);
     appStyleComboBox->setVisible(true);
@@ -156,27 +165,28 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     networkLabel->setVisible(true);
     networkLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    networkComboBox->setCurrentIndex(0);
-    networkComboBox->setAutoFillBackground(false);
     networkComboBox->setStyleSheet(""
         "QComboBox {   "
-               "color: #777;"
+               "combobox-popup: 0;"
+               "color: " COLOR_GREY_MID ";"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
                "}"
     );
+    networkComboBox->setCurrentIndex(0);
+    networkComboBox->setAutoFillBackground(false);
     networkComboBox->addItems(NETWORKS);
     networkComboBox->setCursor(Qt::PointingHandCursor);
     networkComboBox->setVisible(true);
@@ -187,27 +197,28 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     alternativeValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     alternativeValueLabel->setVisible(true);
 
-    alternativeValueComboBox->setCurrentIndex(0);
-    alternativeValueComboBox->setAutoFillBackground(false);
     alternativeValueComboBox->setStyleSheet(""
         "QComboBox {   "
-               "color: #777;"
+               "combobox-popup: 0;"
+               "color: " COLOR_GREY_MID ";"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px 3px;"
                "text-align: center;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
                "}"
     );
+    alternativeValueComboBox->setCurrentIndex(0);
+    alternativeValueComboBox->setAutoFillBackground(false);
     alternativeValueComboBox->addItems({"BTC", "USD"});
     alternativeValueComboBox->setCursor(Qt::PointingHandCursor);
     alternativeValueComboBox->setVisible(true);
@@ -218,27 +229,28 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowScaleLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     windowScaleLabel->setVisible(true);
 
-    windowScaleComboBox->setCurrentIndex(0);
-    windowScaleComboBox->setAutoFillBackground(false);
     windowScaleComboBox->setStyleSheet(""
         "QComboBox {   "
-               "color: #777;"
+               "combobox-popup: 0;"
+               "color: " COLOR_GREY_MID ";"
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
-               "padding: 1px 18px 1px 3px;"
+               "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
                "text-align: right;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
         "QComboBox QAbstractItemView {"
-               "border: 2px solid darkgray;"
+               "border: 1px solid darkgray;"
                "color: #aaa;"
                "padding: 1px 1px 1px 1px;"
                "selection-background-color: darkgray;"
                "}"
     );
+    windowScaleComboBox->setCurrentIndex(0);
+    windowScaleComboBox->setAutoFillBackground(false);
     windowScaleComboBox->addItems(SCALE_LIST);
     windowScaleComboBox->setCursor(Qt::PointingHandCursor);
     windowScaleComboBox->setVisible(true);
@@ -251,16 +263,8 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
 
     customNodeIpLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
     customNodeIpLineEdit->setAlignment(Qt::AlignCenter);
-    customNodeIpLineEdit->setStyleSheet("QLineEdit {   "
-                                                    "color: #555;"
-                                                    "border-color: white;"
-                                                    "background-color: white;"
-                                                    "border: 1px solid #eee;"
-                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
-                                                    ";}");
     customNodeIpLineEdit->setVisible(true);
 
-    customNodeIpButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     customNodeIpButton->setFlat(true);
     customNodeIpButton->setCursor(Qt::PointingHandCursor);
     customNodeIpButton->setVisible(true);
@@ -303,13 +307,11 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     userPasswordPassLabel->setVisible(true);
 
 
-    backupButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     backupButton->setFlat(true);
     backupButton->setCursor(Qt::PointingHandCursor);
     backupButton->setVisible(true);
     connect(backupButton, SIGNAL(clicked()),this, SLOT(on_Backup_ButtonPressed()));
 
-    editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     editButton->setFlat(true);
     editButton->setCursor(Qt::PointingHandCursor);
     editButton->setVisible(true);
@@ -323,7 +325,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     accountsTableView->setShowGrid(false);
     accountsTableView->verticalHeader()->setVisible(false);
     accountsTableView->horizontalHeader()->setSectionsClickable(false);
-    accountsTableView->horizontalHeader()->setStyleSheet("color: #777; "
+    accountsTableView->horizontalHeader()->setStyleSheet("color: " COLOR_GREY_MID "; "
                         "QHeaderView::section {"
                         "border: 0px solid black;"
                         "border-bottom: 0px;  "
@@ -356,6 +358,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     //translate::loadLanguage("en");
 
     updateWalletSettingsTable();
+    refreshStyle();
     refreshSize();
     refreshLanguage();
 
@@ -487,19 +490,19 @@ void settingswindow::refreshFonts() {
     generalSettingsLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1.2)));
 
     languageLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    languageComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    languageComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     appStyleLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    appStyleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    appStyleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     networkLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    networkComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    networkComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     alternativeValueLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    alternativeValueComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    alternativeValueComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     windowScaleLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
-    windowScaleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
+    windowScaleComboBox->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.9)));
 
     customNodeIpLabel->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
     customNodeIpLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.8)));
@@ -552,7 +555,7 @@ void settingswindow::refreshSize() {
     alternativeValueComboBox->setGeometry(s(490), s(100), s(120), s(39));
 
     windowScaleLabel->setGeometry(s(610), s(52), s(160), s(39));
-    windowScaleComboBox->setGeometry(s(770), s(52), s(100), s(39));
+    windowScaleComboBox->setGeometry(s(770), s(52), s(130), s(39));
 
     customNodeIpLabel->setGeometry(s(610), s(100), s(160), s(39));
     customNodeIpLineEdit->setGeometry(s(770), s(100), s(130), s(39));
@@ -580,23 +583,10 @@ void settingswindow::refreshSize() {
     accountsTableView->setColumnWidth(3, s(90));
     accountsTableView->setColumnWidth(4, s(90));
     accountsTableView->setColumnWidth(5, s(90));
-    for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
-        accountsTableView->setRowHeight(cnt, s(39));
-    }
-    refreshFonts();
-    /*
-     * Due to an issue with the table in QT we nee to repeat the dimension setup.
-     */
-    accountsTableView->setGeometry(s(50), s(401), s(1010), s(423));
-    accountsTableView->setColumnWidth(0, s(500));
-    accountsTableView->setColumnWidth(1, s(150));
-    accountsTableView->setColumnWidth(2, s(90));
-    accountsTableView->setColumnWidth(3, s(90));
-    accountsTableView->setColumnWidth(4, s(90));
-    accountsTableView->setColumnWidth(5, s(90));
-    for( int cnt = 0; cnt < accountsTableView->verticalHeader()->count(); cnt++) {
-        accountsTableView->setRowHeight(cnt, s(39));
-    }
+    QHeaderView* header = accountsTableView->verticalHeader();
+    header->setDefaultSectionSize(s(39));
+
+    refreshStyle();
     refreshFonts();
 }
 
@@ -629,6 +619,123 @@ void settingswindow::refreshLanguage() {
     walletSettingsLabel->setText(_tr("Wallet settings"));
 
     refreshFonts();
+}
+
+void settingswindow::refreshStyle() {
+    languageComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
+               "padding: 1px " + QString::number((int)s(13)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               "}"
+        "QComboBox::drop-down {"
+               "border-width: 1px;"
+               "}"
+        "QComboBox::down-arrow {"
+                "image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);"
+               "}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    appStyleComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
+               "padding: 1px " + QString::number((int)s(13)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    networkComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
+               "padding: 1px " + QString::number((int)s(13)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    alternativeValueComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
+               "padding: 1px " + QString::number((int)s(13)) + "px 1px 3px;"
+               "text-align: center;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    windowScaleComboBox->setStyleSheet(""
+        "QComboBox {   "
+               "combobox-popup: 1;"
+               "color: " COLOR_GREY_MID ";"
+               "border-color: white;"
+               "background-color: white;"
+               "border: 1px solid #eee;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
+               "padding: 1px " + QString::number((int)s(13)) + "px 1px " + QString::number((int)s(3)) + "px;"
+               "text-align: right;"
+               ";}"
+        "QComboBox::drop-down {border-width: 1px;} "
+        "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/rangeComboBox.png);}"
+        "QComboBox QAbstractItemView {"
+               "border: 1px solid darkgray;"
+               "color: #aaa;"
+               "padding: 1px 1px 1px 1px;"
+               "selection-background-color: darkgray;"
+               "}"
+    );
+    customNodeIpLineEdit->setStyleSheet("QLineEdit {   "
+        "color: " COLOR_GREY_MID ";"
+        "border-color: white;"
+        "background-color: white;"
+        "border: 1px solid #eee;"
+        "border-radius: " + QString::number((int)s(19)) + "px;"
+        ";}");
+    customNodeIpButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
+    backupButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
+    editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
 }
 
 void settingswindow::setState(state_e state) {
@@ -670,13 +777,13 @@ void settingswindow::run() {
         mdiAreaSettings->setGeometry(s(LEFT_MENU_WIDTH), s(HEADER_HEIGHT), s(WINDOW_WIDTH) - s(LEFT_MENU_WIDTH), s(WINDOW_HEIGHT) - s(HEADER_HEIGHT));
         windowSettings->setGeometry(0, 0, mdiAreaSettings->width(), mdiAreaSettings->height());
         windowScaleComboBox->setCurrentText(QString::asprintf("%1.1f", events::getScaleStore()) + "x");
-        refreshSize();
+        updateWalletSettingsTable();
     }
     if(pastLanguage.compare(translate::getCurrentLang())) {
         pastLanguage = translate::getCurrentLang();
         languageComboBox->setCurrentText(translate::getCurrentLang());
-        refreshLanguage();
         updateWalletSettingsTable();
+        refreshLanguage();
     }
     if(getWalletUserPasswordChanged != events::getWalletUserPasswordChangedCnt()) {
         getWalletUserPasswordChanged = events::getWalletUserPasswordChangedCnt();
