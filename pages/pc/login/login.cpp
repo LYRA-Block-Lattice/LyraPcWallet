@@ -17,14 +17,14 @@
 #include "wallet/rpc/wallethistory.h"
 #include "crypto/signatures.h"
 
-#define COMMON_STYLE                                "background-repeat: no-repeat; background-position: right; border: 1px solid #eee; border-radius: " + QString::number((int)s(5)) + "px; "
+#define COMMON_STYLE                                "background-repeat: no-repeat; background-position: right; border: 1px solid " COLOR_GREY_BRIGHT "; border-radius: " + QString::number((int)s(12)) + "px; "
 #define COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE        "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PrivateKeyLineEdit_Light.png); "
 #define COMMON_USER_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_NameLineEdit_Light.png); "
 #define COMMON_PASS_LINE_EDIT_PICTURE               "background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_PasswordLineEdit_Light.png); "
-#define COMMON_GREEN_BUTTON                         "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonGreen_Light.png); border-radius: " + QString::number((int)s(5)) + "px; color: white; "
-#define COMMON_RED_BUTTON                           "border-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonRed_Light.png); border-radius: " + QString::number((int)s(5)) + "px; color: white; "
-#define COMMON_DEFAULT_COLOR                        " color: #777; "
-#define COMMON_ERROR_COLOR                          " color: red; "
+#define COMMON_GREEN_BUTTON                         QString("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: " COLOR_WHITE "; ")
+#define COMMON_RED_BUTTON                           QString("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(12)) + "px; color: " COLOR_WHITE "; ")
+#define COMMON_DEFAULT_COLOR                        QString(" color: " COLOR_GREY_MID "; ")
+#define COMMON_ERROR_COLOR                          QString(" color: " BUTON_COLOR_RED "; ")
 
 #define s(s) _scale(s)
 
@@ -62,19 +62,23 @@ login::login(QMdiArea *mdiArea, QWidget *parent) {
     connect(restoreWallet, SIGNAL(clicked()),this, SLOT(on_restoreWallet_pushed()));*/
 
     privKeyLineEdit = new QLineEdit(mdiArea);
+    privKeyLineEdit->setAlignment(Qt::AlignCenter);
     privKeyLineEdit->setVisible(false);
     connect(privKeyLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_privateKeyLineEdit_textChanged(const QString &)));
 
     nameLineEdit = new QLineEdit(mdiArea);
+    nameLineEdit->setAlignment(Qt::AlignCenter);
     nameLineEdit->setVisible(false);
     connect(nameLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_nameNameLineEdit_textChanged(const QString &)));
 
     pass1LineEdit = new QLineEdit(mdiArea);
+    pass1LineEdit->setAlignment(Qt::AlignCenter);
     pass1LineEdit->setVisible(false);
     connect(pass1LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_pass1LineEdit_textChanged(const QString &)));
     connect(pass1LineEdit, &QLineEdit::returnPressed, this, &login::on_pass1EnterPushed);
 
     pass2LineEdit = new QLineEdit(mdiArea);
+    pass2LineEdit->setAlignment(Qt::AlignCenter);
     pass2LineEdit->setVisible(false);
     connect(pass2LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_pass2LineEdit_textChanged(const QString &)));
 
@@ -212,14 +216,14 @@ void login::run() {
 
             nameLineEdit->setGeometry(s(790), s(300), s(430), s(62));
             nameLineEdit->setPlaceholderText(_tr("Username"));
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             nameLineEdit->setTextMargins(s(5), 0, s(24), 0);
             nameLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
             nameLineEdit->setVisible(true);
 
             pass1LineEdit->setGeometry(s(790), s(390), s(430), s(62));
             pass1LineEdit->setPlaceholderText(_tr("Password"));
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass1LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass1LineEdit->setEchoMode(QLineEdit::Password);
             pass1LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
@@ -237,10 +241,9 @@ void login::run() {
             getStarted->setGeometry(s(720), s(570), s(570), s(28));
             getStarted->setText(_tr("Don't Have an WALLET manager USER?") + " " + _tr("Get started!"));
             //restoreWallet.setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight()));
-            getStarted->setStyleSheet("border-radius: 2px; " COMMON_DEFAULT_COLOR);
+            getStarted->setStyleSheet("border-radius: 2px; " + COMMON_DEFAULT_COLOR);
             getStarted->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
             getStarted->setFlat(true);
-            //getStarted.setStyleSheet("background-image:url(:/resource/ico/" + events::getStyle() + "/loginCommon/main_ButtonGetStarted_Light.png); border-radius: 2px; ");
             getStarted->setCursor(Qt::PointingHandCursor);
             getStarted->setVisible(true);
 
@@ -269,14 +272,14 @@ void login::run() {
 
             nameLineEdit->setGeometry(s(790), s(390), s(430), s(62));
             nameLineEdit->setPlaceholderText(_tr("Username"));
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             nameLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
             nameLineEdit->setTextMargins(s(5), 0, s(24), 0);
             nameLineEdit->setVisible(true);
 
             pass1LineEdit->setGeometry(s(790), s(480), s(430), s(62));
             pass1LineEdit->setPlaceholderText(_tr("Password"));
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass1LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
             pass1LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass1LineEdit->setEchoMode(QLineEdit::Password);
@@ -284,7 +287,7 @@ void login::run() {
 
             pass2LineEdit->setGeometry(s(790), s(570), s(430), s(62));
             pass2LineEdit->setPlaceholderText(_tr("Re-type password"));
-            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass2LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
             pass2LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass2LineEdit->setEchoMode(QLineEdit::Password);
@@ -330,14 +333,14 @@ void login::run() {
 
             nameLineEdit->setGeometry(s(391), s(181), s(214), s(31));
             nameLineEdit->setPlaceholderText(_tr("Wallet name"));
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             nameLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             nameLineEdit->setTextMargins(s(5), 0, s(24), 0);
             nameLineEdit->setVisible(true);
 
             pass1LineEdit->setGeometry(s(391), s(221), s(214), s(31));
             pass1LineEdit->setPlaceholderText(_tr("Password"));
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass1LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             pass1LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass1LineEdit->setEchoMode(QLineEdit::Password);
@@ -345,7 +348,7 @@ void login::run() {
 
             pass2LineEdit->setGeometry(s(391), s(259), s(214), s(31));
             pass2LineEdit->setPlaceholderText(_tr("Re-type password"));
-            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass2LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             pass2LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass2LineEdit->setEchoMode(QLineEdit::Password);
@@ -390,14 +393,14 @@ void login::run() {
 
             nameLineEdit->setGeometry(s(391), s(178), s(214), s(31));
             nameLineEdit->setPlaceholderText(_tr("Wallet name"));
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             nameLineEdit->setTextMargins(s(5), 0, s(24), 0);
             nameLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             nameLineEdit->setVisible(true);
 
             pass1LineEdit->setGeometry(s(391), s(219), s(214), s(31));
             pass1LineEdit->setPlaceholderText(_tr("Password"));
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass1LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass1LineEdit->setEchoMode(QLineEdit::Password);
             pass1LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
@@ -444,21 +447,21 @@ void login::run() {
 
             privKeyLineEdit->setGeometry(s(391), s(181), s(214), s(31));
             privKeyLineEdit->setPlaceholderText(_tr("Private KEY"));
-            privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             privKeyLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             privKeyLineEdit->setTextMargins(s(5), 0, s(24), 0);
             privKeyLineEdit->setVisible(true);
 
             nameLineEdit->setGeometry(s(391), s(221), s(214), s(31));
             nameLineEdit->setPlaceholderText(_tr("Wallet name"));
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             nameLineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             nameLineEdit->setTextMargins(s(5), 0, s(24), 0);
             nameLineEdit->setVisible(true);
 
             pass1LineEdit->setGeometry(s(391), s(261), s(214), s(31));
             pass1LineEdit->setPlaceholderText(_tr("Password"));
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass1LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             pass1LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass1LineEdit->setEchoMode(QLineEdit::Password);
@@ -466,7 +469,7 @@ void login::run() {
 
             pass2LineEdit->setGeometry(s(391), s(301), s(214), s(31));
             pass2LineEdit->setPlaceholderText(_tr("Re-type password"));
-            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
             pass2LineEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
             pass2LineEdit->setTextMargins(s(5), 0, s(24), 0);
             pass2LineEdit->setEchoMode(QLineEdit::Password);
@@ -513,42 +516,42 @@ void login::run() {
 void login::on_privateKeyLineEdit_textChanged(const QString &arg1) {
     privKey = arg1;
     if (!check::privateKey(arg1)) {
-        privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+        privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
     } else {
-        privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+        privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     }
 }
 
 void login::on_nameNameLineEdit_textChanged(const QString &arg1) {
     name = arg1;
     if (!check::name(arg1)) {
-        nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+        nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
     } else {
-        nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+        nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     }
 }
 
 void login::on_pass1LineEdit_textChanged(const QString &arg1) {
     pass1 = arg1;
     if(!check::password(arg1)) {
-        pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+        pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
     } else {
-        pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+        pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     }
-    pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+    pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     if(!check::password(pass1, pass2)) {
-        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
     } else {
-        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     }
 }
 
 void login::on_pass2LineEdit_textChanged(const QString &arg1) {
     pass2 = arg1;
     if(!check::password(pass1, pass2)) {
-        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
     } else {
-        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_DEFAULT_COLOR);
+        pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_DEFAULT_COLOR);
     }
 }
 
@@ -557,10 +560,10 @@ void login::on_createNewWallet_pushed() {
         currentState = STATE_CREATE_WALLET;
     else {
         if (!check::name(name)) {
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else if(!check::password(pass1, pass2)) {
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
-            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
+            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else {
             events::setWalletUserPassword(QPair<QString, QString>({name, pass1}));
             if(!walletfile::exists(events::getWalletUserPassword().first)) {
@@ -579,7 +582,7 @@ void login::on_openWallet_pushed() {
         currentState = STATE_OPEN_WALLET;
     else {
         if (!check::name(name)) {
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else {
             currentState = STATE_NONE;
             command = command_e::CMD_OPEN_WALLET;
@@ -592,13 +595,13 @@ void login::on_restoreWallet_pushed() {
         currentState = STATE_RESTORE_WALLET;
     else {
         if (!check::name(name)) {
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else if(!check::password(pass1, pass2)) {
-            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
-            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
+            pass2LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else {
             if (!check::privateKey(privKey)) {
-                privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+                privKeyLineEdit->setStyleSheet(COMMON_PRIVATE_KEY_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
             } else {
                 currentState = STATE_NONE;
                 command = command_e::CMD_RESTORE_WALLET;
@@ -614,10 +617,10 @@ void login::on_login_pushed() {
     actionSemaphore = true;
     if(currentState == STATE_LOGIN_PAGE) {
         if (!check::name(name)) {
-            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+            nameLineEdit->setStyleSheet(COMMON_USER_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
         } else {
             if(!check::password(pass1)) {
-                pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE COMMON_ERROR_COLOR);
+                pass1LineEdit->setStyleSheet(COMMON_PASS_LINE_EDIT_PICTURE COMMON_STYLE + COMMON_ERROR_COLOR);
             } else {
                 events::setWalletUserPassword(QPair<QString, QString>({name, pass1}));
                 loginManager->setText(_tr("WAIT"));
@@ -635,6 +638,7 @@ void login::on_login_pushed() {
                     loginManager->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));
                     loginManager->setText(_tr("ERROR!"));
                     loginManager->repaint();
+                    QApplication::processEvents();
                     QThread::sleep(2);
                     loginManager->setStyleSheet(COMMON_GREEN_BUTTON);
                     loginManager->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(1)));

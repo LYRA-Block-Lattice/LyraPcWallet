@@ -65,7 +65,7 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
 
     refreshButton->setCursor(Qt::PointingHandCursor);
     refreshButton->setFlat(true);
-    refreshButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    refreshButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(refreshButton, SIGNAL(clicked()),this, SLOT(on_Refresh_ButtonPressed()));
 
 
@@ -76,7 +76,7 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     daysToStake->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -86,7 +86,7 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     voteId->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -96,10 +96,10 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
-    availableTokens->setStyleSheet("color: #333;");
+    availableTokens->setStyleSheet("color: " COLOR_GREY_DARK ";");
     availableTokens->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     availableTokens->setAttribute(Qt::WA_TranslucentBackground, true);
     availableTokens->setVisible(true);
@@ -111,12 +111,12 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     stakeOkButton->setCursor(Qt::PointingHandCursor);
     stakeOkButton->setFlat(true);
-    stakeOkButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    stakeOkButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(stakeOkButton, SIGNAL(clicked()),this, SLOT(on_StakeOk_ButtonPressed()));
 
 
@@ -139,12 +139,12 @@ void stake::init(QMdiArea *mdiArea, int accCnt) {
 
     closeButton->setCursor(Qt::PointingHandCursor);
     closeButton->setFlat(true);
-    closeButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    closeButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(closeButton, SIGNAL(clicked()),this, SLOT(on_Close_ButtonPressed()));
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
     refreshSize();
@@ -352,7 +352,7 @@ void stake::refreshStakingTable() {
             stakeButton = new QPushButton();
             stakeButton->setText(_tr("ADD STAKING"));
             stakeButton->setCursor(Qt::PointingHandCursor);
-            stakeButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+            stakeButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(16)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
             stakeButton->installEventFilter(this);
             stakingAccTableView->setIndexWidget(stakingAccItemModel->index(cnt, 5), stakeButton);
         }
@@ -361,7 +361,7 @@ void stake::refreshStakingTable() {
             unstakeButton = new QPushButton();
             unstakeButton->setText(_tr("UNSTAKE"));
             unstakeButton->setCursor(Qt::PointingHandCursor);
-            unstakeButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/red1.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+            unstakeButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(16)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
             unstakeButton->installEventFilter(this);
             stakingAccTableView->setIndexWidget(stakingAccItemModel->index(cnt, 6), unstakeButton);
         }
@@ -396,7 +396,7 @@ void stake::refreshStakingTable() {
     addButton = new QPushButton();
     addButton->setText(_tr("NEW STAKE ACC"));
     addButton->setCursor(Qt::PointingHandCursor);
-    addButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/green1.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+    addButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(16)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
     connect(addButton, SIGNAL(clicked()),this, SLOT(createStakingAccount()));
     stakingAccTableView->setIndexWidget(stakingAccItemModel->index(stakingAccTableView->verticalHeader()->count() - 1, 5), addButton);
 

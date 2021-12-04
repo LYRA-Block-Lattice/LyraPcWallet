@@ -101,7 +101,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: center;"
                ";}"
@@ -132,7 +132,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: center;"
                ";}"
@@ -164,7 +164,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: center;"
                ";}"
@@ -195,7 +195,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: center;"
                ";}"
@@ -226,7 +226,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: right;"
                ";}"
@@ -256,11 +256,11 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     customNodeIpLineEdit->setVisible(true);
 
-    customNodeIpButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    customNodeIpButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     customNodeIpButton->setFlat(true);
     customNodeIpButton->setCursor(Qt::PointingHandCursor);
     customNodeIpButton->setVisible(true);
@@ -303,13 +303,13 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     userPasswordPassLabel->setVisible(true);
 
 
-    backupButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    backupButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     backupButton->setFlat(true);
     backupButton->setCursor(Qt::PointingHandCursor);
     backupButton->setVisible(true);
     connect(backupButton, SIGNAL(clicked()),this, SLOT(on_Backup_ButtonPressed()));
 
-    editButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/cyan_b.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(12)) + "px; border: 1px solid #eee; color: #fff; ");
     editButton->setFlat(true);
     editButton->setCursor(Qt::PointingHandCursor);
     editButton->setVisible(true);
@@ -323,7 +323,7 @@ void settingswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     accountsTableView->setShowGrid(false);
     accountsTableView->verticalHeader()->setVisible(false);
     accountsTableView->horizontalHeader()->setSectionsClickable(false);
-    accountsTableView->horizontalHeader()->setStyleSheet("color: #555; "
+    accountsTableView->horizontalHeader()->setStyleSheet("color: #777; "
                         "QHeaderView::section {"
                         "border: 0px solid black;"
                         "border-bottom: 0px;  "
@@ -420,28 +420,28 @@ void settingswindow::updateWalletSettingsTable() {
         voteForButton = new QPushButton();
         voteForButton->setText(_tr("PROFITING"));
         voteForButton->setCursor(Qt::PointingHandCursor);
-        voteForButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        voteForButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         voteForButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 2), voteForButton);
 
         editButton = new QPushButton();
         editButton->setText(_tr("EDIT"));
         editButton->setCursor(Qt::PointingHandCursor);
-        editButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         editButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 3), editButton);
 
         deleteButton = new QPushButton();
         deleteButton->setText(_tr("DELETE"));
         deleteButton->setCursor(Qt::PointingHandCursor);
-        deleteButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/red.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        deleteButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         deleteButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 4), deleteButton);
 
         showPrivateKeyButton = new QPushButton();
         showPrivateKeyButton->setText(_tr("SHOW KEY"));
         showPrivateKeyButton->setCursor(Qt::PointingHandCursor);
-        showPrivateKeyButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/blue.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        showPrivateKeyButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         showPrivateKeyButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 5), showPrivateKeyButton);
 
@@ -472,7 +472,7 @@ void settingswindow::updateWalletSettingsTable() {
         addButton = new QPushButton();
         addButton->setText(_tr("ADD"));
         addButton->setCursor(Qt::PointingHandCursor);
-        addButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/settings/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        addButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         connect(addButton, SIGNAL(clicked()),this, SLOT(on_Add_ButtonPressed()));
         accountsTableView->setIndexWidget(accountsItemModel->index(accountsTableView->verticalHeader()->count() - 1, 5), addButton);
     }
@@ -569,8 +569,8 @@ void settingswindow::refreshSize() {
     userPasswordLabel->setGeometry(s(450), s(215), s(370), s(39));
     userPasswordPassLabel->setGeometry(s(450), s(270), s(370), s(39));
 
-    backupButton->setGeometry(s(910), s(264), s(58), s(27));
-    editButton->setGeometry(s(1000), s(264), s(58), s(27));
+    backupButton->setGeometry(s(887), s(264), s(78), s(27));
+    editButton->setGeometry(s(980), s(264), s(78), s(27));
 
 
     accountsTableView->setGeometry(s(50), s(401), s(1010), s(423));

@@ -96,7 +96,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletBalanceLabel->setAlignment(Qt::AlignLeft);
     walletBalanceLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    walletBalanceValueLabel->setStyleSheet("color: #333;");
+    walletBalanceValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletBalanceValueLabel->setAlignment(Qt::AlignLeft);
     walletBalanceValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -109,7 +109,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceLabel->setAlignment(Qt::AlignLeft);
     unreceivedBalanceLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    unreceivedBalanceValueLabel->setStyleSheet("color: #333;");
+    unreceivedBalanceValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     unreceivedBalanceValueLabel->setAlignment(Qt::AlignLeft);
     unreceivedBalanceValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -118,7 +118,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceValueTotalLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    syncButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/sync.png); border-radius: 1px; color: #eee; ");
+    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     syncButton->setFlat(true);
     syncButton->setCursor(Qt::PointingHandCursor);
     connect(syncButton, SIGNAL(clicked()),this, SLOT(on_Sync_ButtonPressed()));
@@ -127,7 +127,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     totalLyrSendedLabel->setAlignment(Qt::AlignLeft);
     totalLyrSendedLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    totalLyrSendedValueLabel->setStyleSheet("color: #333;");
+    totalLyrSendedValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     totalLyrSendedValueLabel->setAlignment(Qt::AlignLeft);
     totalLyrSendedValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -140,7 +140,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastSendLabel->setAlignment(Qt::AlignLeft);
     lastSendLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    lastSendDateLabel->setStyleSheet("color: #333;");
+    lastSendDateLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     lastSendDateLabel->setAlignment(Qt::AlignLeft);
     lastSendDateLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -149,7 +149,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastSendValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    walletAddressLabel->setStyleSheet("color: #333;");
+    walletAddressLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletAddressLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     walletAddressLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -159,7 +159,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletAddressIdLabel->setCursor(Qt::PointingHandCursor);
     walletAddressIdLabel->installEventFilter(this);
 
-    destinationWalletIdLabel->setStyleSheet("color: #333;");
+    destinationWalletIdLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     destinationWalletIdLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     destinationWalletIdLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -170,14 +170,14 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(3)) + "px;"
                                                     ";}");
 
 
     destinationWalletIdStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
     destinationWalletIdStatusLabel->setScaledContents(true);
 
-    ammountLabel->setStyleSheet("color: #333;");
+    ammountLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     ammountLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     ammountLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -219,11 +219,11 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     ammountValueStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
     ammountValueStatusLabel->setScaledContents(true);
 
-    ammountApproximateLabel->setStyleSheet("color: #333;");
+    ammountApproximateLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     ammountApproximateLabel->setAlignment(Qt::AlignCenter);
     ammountApproximateLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    btcUsdTextLabel->setStyleSheet("color: #333;");
+    btcUsdTextLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     btcUsdTextLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     btcUsdTextLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -243,7 +243,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     btcUsdStatusLabel->setScaledContents(true);
 
 
-    btcUsdLabel->setStyleSheet("color: #333;");
+    btcUsdLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     btcUsdLabel->setAlignment(Qt::AlignCenter);
     btcUsdLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -255,7 +255,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     btcUsdSwitchLabel->setPixmap(image2);
 
 
-    /*passwordConfirmationLabel->setStyleSheet("color: #333;");
+    /*passwordConfirmationLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     passwordConfirmationLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     passwordConfirmationLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -273,7 +273,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     passwordConfirmationStatusLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
     passwordConfirmationStatusLabel->setScaledContents(true);*/
 
-    noteLabel->setStyleSheet("color: #333;");
+    noteLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     noteLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     noteLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -286,7 +286,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
                                                     "border-radius: 3px;"
                                                     ";}");
 
-    sendButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/send/sendButton.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    sendButton->setStyleSheet("background-color: " BUTON_COLOR_ORANGE "; border-radius: " + QString::number((int)s(18)) + "px; border: 1px solid #eee; color: #fff; ");
     sendButton->setFlat(true);
     sendButton->setCursor(Qt::PointingHandCursor);
     connect(sendButton, SIGNAL(clicked()),this, SLOT(on_Send_ButtonPressed()));
@@ -294,7 +294,7 @@ void walletsend::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     lastSendedTransitionsArrowLabel->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/send/arrow.png); border: 0px solid #eee; color: #fff; ");
     lastSendedTransitionsArrowLabel->setScaledContents(true);
 
-    lastSendedTransitionsLabel->setStyleSheet("color: #333;");
+    lastSendedTransitionsLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     lastSendedTransitionsLabel->setAlignment(Qt::AlignLeft);
     lastSendedTransitionsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -367,21 +367,21 @@ void walletsend::refreshFonts() {
         viewDetails = (QPushButton *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 3));
         viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
-        statusDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        statusDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         statusDetails->setAlignment(Qt::AlignCenter);
 
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 5));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     }
 }
 
@@ -444,7 +444,7 @@ void walletsend::refreshSize() {
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
     for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(44));
+        recentTransactionsTableView->setRowHeight(cnt, s(30));
     }
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
@@ -457,7 +457,7 @@ void walletsend::refreshSize() {
     recentTransactionsTableView->setColumnWidth(4, s(90));
     recentTransactionsTableView->setColumnWidth(5, s(228));
     for( int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
-        recentTransactionsTableView->setRowHeight(cnt, s(44));
+        recentTransactionsTableView->setRowHeight(cnt, s(30));
     }
 
     refreshFonts();
@@ -572,14 +572,14 @@ void walletsend::updateSend() {
         recentTransactionsTableView->setRowHidden(cnt, false);
         tmp = new QStandardItem();
         tmp->setText(list[cnt][0]);
-        tmp->setTextAlignment(Qt::AlignCenter);
+        tmp->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEnabled(false);
         tmp->setSelectable(false);
         item.append(tmp);
         tmp = new QStandardItem();
         tmp->setText(list[cnt][1]);
-        tmp->setTextAlignment(Qt::AlignVCenter);
+        tmp->setTextAlignment(Qt::AlignCenter);
         tmp->setForeground(QBrush(0x909090));
         tmp->setEnabled(false);
         tmp->setSelectable(false);
@@ -630,7 +630,7 @@ void walletsend::updateSend() {
         statusDetails = (QLabel *)recentTransactionsTableView->indexWidget(recentTransactionsItemModel->index(cnt, 4));
         statusDetails->setText(list[cnt][4]);
         if(!list[cnt][4].compare(_tr("Completed"))) {
-            statusDetails->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/blue.png); border: 0px solid #eee; color: #fff; ");
+            statusDetails->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         }
     }
     refreshSize();
@@ -866,14 +866,14 @@ void walletsend::on_Send_ButtonPressed() {
             events::setWalletHistoryChanged();
             events::setUpdateHistory();
         } else {
-            sendButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/red.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+            sendButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(6)) + "px; border: 1px solid #eee; color: #fff; ");
             sendButton->setText(_tr("ERROR!"));
             sendButton->repaint();
             QThread::sleep(1);
         }
     }
     sendButton->setText(_tr("SEND"));
-    sendButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/send/sendButton.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    sendButton->setStyleSheet("background-color: " BUTON_COLOR_ORANGE "; border-radius: " + QString::number((int)s(6)) + "px; border: 1px solid #eee; color: #fff; ");
     userInputSemaphore = false;
 }
 

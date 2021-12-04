@@ -40,24 +40,25 @@ void settingsshowprivkey::init(QMdiArea *mdiArea) {
 
     okButton = new QPushButton(thisMdiArea);
 
-    titleName->setStyleSheet("color: #333;");
+    titleName->setStyleSheet("color: " COLOR_GREY_DARK ";");
     titleName->setAlignment(Qt::AlignCenter);
     titleName->setAttribute(Qt::WA_TranslucentBackground, true);
 
     privateKey->setAttribute(Qt::WA_TranslucentBackground, true);
+    privateKey->setAlignment(Qt::AlignCenter);
     privateKey->setAlignment(Qt::AlignCenter);
     privateKey->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     privateKey->setReadOnly(true);
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
     refreshSize();

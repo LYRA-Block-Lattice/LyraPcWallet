@@ -229,7 +229,7 @@
    "Your account address ID" :             "Mã địa chỉ của tài khoản của bạn",
    "ACCOUNT" :                             "TÀI KHOẢN",
    "Balance" :                             "Số dư",
-   "Total Liquidate" :                     "Tổng thanh lý",
+   "Total Liquidity" :                     "Tổng thanh lý",
    "Estimated price" :                     "Giá ước lượng",
    "You will sell" :                       "Bạn sẽ bán",
    "You will get" :                        "Bạn sẽ nhận",
@@ -239,5 +239,8 @@
    "SWAP successfully completed." :        "HOÁN ĐỔI thành công.",
    "Now we need to create receive block." :"Bây giờ chúng ta cần tạo block nhận.",
    "ERROR: Unknown" :                      "LỖI: Không rõ",
-   "No lyquidate found for this pair." :   "Không tìm thấy thanh lý nào cho cặp này."
+   "No liquidity found for this pair." :   "Không tìm thấy thanh lý nào cho cặp này.",
+   "Count" :                               "Thứ tự",
+   "Receive hash copied to clipboard." :   "Hash nhận về đã được chép vào bộ nhớ đệm.",
+   "Send hash copied to clipboard." :      "Hash gửi đi đã được chép vào bộ nhớp đệm"
 }

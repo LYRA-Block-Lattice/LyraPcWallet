@@ -36,7 +36,7 @@ void searchwindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     windowSearch->setVisible(true);
 
     searchPushButton = new QPushButton(mdiAreaSearch);
-    searchPushButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/receive/request.png); border-radius: 2px; border: 1px solid #eee; color: #fff; ");
+    searchPushButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     searchPushButton->setFlat(true);
     searchPushButton->setCursor(Qt::PointingHandCursor);
     searchPushButton->setVisible(true);

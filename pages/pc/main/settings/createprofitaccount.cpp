@@ -56,7 +56,7 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
     okButton = new QPushButton(thisMdiArea);
     cancelButton = new QPushButton(thisMdiArea);
 
-    titleName->setStyleSheet("color: #333;");
+    titleName->setStyleSheet("color: " COLOR_GREY_DARK ";");
     titleName->setAlignment(Qt::AlignCenter);
     titleName->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -67,7 +67,7 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     accType->setAutoFillBackground(false);
@@ -78,7 +78,7 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
                "border-color: white;"
                "background-color: white;"
                "border: 1px solid #eee;"
-               "border-radius: 3px;"
+               "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px 18px 1px 3px;"
                "text-align: center;"
                ";}"
@@ -111,7 +111,7 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     seats->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -121,17 +121,17 @@ void createprofitaccount::init(QMdiArea *mdiArea, int accCnt) {
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->setFlat(true);
-    cancelButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    cancelButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(cancelButton, SIGNAL(clicked()),this, SLOT(on_Cancel_ButtonPressed()));
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/orange.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_ORANGE "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
     profitingAccTableView = new QTableView(thisMdiArea);
@@ -173,7 +173,7 @@ void createprofitaccount::refreshFonts() {
     QStandardItem *tmp;
     for(int cnt = 0;  cnt < profitingAccTableView->verticalHeader()->count(); cnt++) {
         QPushButton *viewDetails = (QPushButton *)profitingAccTableView->indexWidget(profitingAccItemModel->index(cnt, 7));
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 0));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         tmp = profitingAccItemModel->itemFromIndex(profitingAccItemModel->index(cnt, 1));
@@ -361,7 +361,7 @@ void createprofitaccount::refreshProfitingTable() {
             stakeButton = new QPushButton();
             stakeButton->setText(_tr("CREATE DIVIDENDS"));
             stakeButton->setCursor(Qt::PointingHandCursor);
-            stakeButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+            stakeButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(16)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
             stakeButton->installEventFilter(this);
             profitingAccTableView->setIndexWidget(profitingAccItemModel->index(cnt, 7), stakeButton);
         }

@@ -43,59 +43,63 @@ void settingsedituser::init(QMdiArea *mdiArea) {
     okButton = new QPushButton(thisMdiArea);
 
     userLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    userLineEdit->setAlignment(Qt::AlignCenter);
     userLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(userLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_UserNameLineEdit_Changed(const QString &)));
 
     accountNameCheck->setScaledContents(true);
-    accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+    accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
 
     oldPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+    oldPasswordLineEdit->setAlignment(Qt::AlignCenter);
     oldPasswordLineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
     oldPasswordLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(oldPasswordLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_oldPasswordLineEdit_textChanged(const QString &)));
 
     newPassword1LineEdit->setEchoMode(QLineEdit::EchoMode::Password);
     newPassword1LineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    newPassword1LineEdit->setAlignment(Qt::AlignCenter);
     newPassword1LineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(newPassword1LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_newPassword1LineEdit_textChanged(const QString &)));
 
     newPassword2LineEdit->setEchoMode(QLineEdit::EchoMode::Password);
     newPassword2LineEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    newPassword2LineEdit->setAlignment(Qt::AlignCenter);
     newPassword2LineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(newPassword2LineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_newPassword2LineEdit_textChanged(const QString &)));
 
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->setFlat(true);
-    cancelButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    cancelButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(cancelButton, SIGNAL(clicked()),this, SLOT(on_Cancel_ButtonPressed()));
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/orange.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_ORANGE "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
     refreshSize();
@@ -187,9 +191,9 @@ settingsedituser::return_e settingsedituser::run() {
 
 void settingsedituser::on_UserNameLineEdit_Changed(const QString &text) {
     if(check::name(text)) {
-        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
+        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     } else {
-        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     }
 }
 
@@ -231,7 +235,7 @@ void settingsedituser::on_oldPasswordLineEdit_textChanged(const QString &) {
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     } else {
         oldPasswordLineEdit->setStyleSheet("QLineEdit {   "
@@ -239,7 +243,7 @@ void settingsedituser::on_oldPasswordLineEdit_textChanged(const QString &) {
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     }
 }
@@ -251,7 +255,7 @@ void settingsedituser::on_newPassword1LineEdit_textChanged(const QString &arg1) 
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     } else {
         newPassword1LineEdit->setStyleSheet("QLineEdit {   "
@@ -259,7 +263,7 @@ void settingsedituser::on_newPassword1LineEdit_textChanged(const QString &arg1) 
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     }
 }
@@ -271,7 +275,7 @@ void settingsedituser::on_newPassword2LineEdit_textChanged(const QString &arg1) 
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     } else {
         newPassword2LineEdit->setStyleSheet("QLineEdit {   "
@@ -279,7 +283,7 @@ void settingsedituser::on_newPassword2LineEdit_textChanged(const QString &arg1) 
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     }
 }

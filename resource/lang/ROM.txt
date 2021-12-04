@@ -223,12 +223,12 @@
    "Are you sure you want to create this staking account?" : "Are you sure you want to create this staking account?",
    "Do you want to stake" :                "Vrei sa faci stake",
    "LYR to this account ID:" :             "LYR pe ID-ul:",
-   "My Account" :                          "Portofelul Meu",
-   "Destination to account ID" :            "ID-ul contului destinatar",
+   "My Account" :                          "Contul Meu",
+   "Destination to account ID" :           "ID-ul contului destinatar",
    "Your account address ID" :             "ID-ul contului tau",
    "ACCOUNT" :                             "CONT",
    "Balance" :                             "Balanţa",
-   "Total Liquidate" :                     "Lichiditate totala",
+   "Total Liquidity" :                     "Lichiditate totala",
    "Estimated price" :                     "Preţul estimat",
    "You will sell" :                       "Vei vinde",
    "You will get" :                        "Vei primi",
@@ -238,5 +238,8 @@
    "SWAP successfully completed." :        "SWAP finalizat cu succes.",
    "Now we need to create receive block." :"Acum trebuie sa creem un bloc te primire.",
    "ERROR: Unknown" :                      "ERROR: Necunoscut",
-   "No lyquidate found for this pair." :   "Nu am gasit lichiditate pentru\naceasta combinatie."
+   "No liquidity found for this pair." :   "Nu am gasit lichiditate pentru\naceasta combinatie.",
+   "Count" :                               "Count",
+   "Receive hash copied to clipboard." :   "Hashul de primire a fost copiat pe clipboard.",
+   "Send hash copied to clipboard." :      "Hashul de trimitere a fost copiat pe clipboard."
 }

@@ -52,62 +52,65 @@ void settingsaddaccount::init(QMdiArea *mdiArea) {
 
     newAccountButton->setCursor(Qt::PointingHandCursor);
     newAccountButton->setFlat(true);
-    newAccountButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    newAccountButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     newAccountButton->setVisible(false);
     connect(newAccountButton, SIGNAL(clicked()),this, SLOT(on_New_ButtonPressed()));
 
     recoverAccountButton->setCursor(Qt::PointingHandCursor);
     recoverAccountButton->setFlat(true);
-    recoverAccountButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    recoverAccountButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     recoverAccountButton->setVisible(false);
     connect(recoverAccountButton, SIGNAL(clicked()),this, SLOT(on_Recover_ButtonPressed()));
 
     accountNameLineEdit->setVisible(false);
+    accountNameLineEdit->setAlignment(Qt::AlignCenter);
     connect(accountNameLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_AccountNameLineEdit_Changed(const QString &)));
     accountNameLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     privateKeyLineEdit->setVisible(false);
+    privateKeyLineEdit->setAlignment(Qt::AlignCenter);
     connect(privateKeyLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_PrivateKeyLineEdit_Changed(const QString &)));
     privateKeyLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
 
     accountNameCheck->setScaledContents(true);
-    accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+    accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     accountNameCheck->setVisible(false);
 
     privateKeyCheck->setScaledContents(true);
-    privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+    privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     privateKeyCheck->setVisible(false);
 
     passwordConfirmationLineEdit->setVisible(false);
+    passwordConfirmationLineEdit->setAlignment(Qt::AlignCenter);
     passwordConfirmationLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
     passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(passwordConfirmationLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_passwordConfirmationLineEdit_textChanged(const QString &)));
 
     cancelButton->setCursor(Qt::PointingHandCursor);
-    cancelButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+    cancelButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     cancelButton->setVisible(false);
     connect(cancelButton, SIGNAL(clicked()),this, SLOT(on_Cancel_ButtonPressed()));
 
     okButton->setCursor(Qt::PointingHandCursor);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/orange.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     okButton->setVisible(false);
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
@@ -291,17 +294,17 @@ void settingsaddaccount::on_Ok_ButtonPressed() {
 
 void settingsaddaccount::on_AccountNameLineEdit_Changed(const QString &text) {
     if(check::name(text)) {
-        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
+        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     } else {
-        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+        accountNameCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     }
 }
 
 void settingsaddaccount::on_PrivateKeyLineEdit_Changed(const QString &text) {
     if(signatures::validatePrivateKey(text)) {
-        privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: 1px; color: #eee; ");
+        privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     } else {
-        privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: 1px; color: #eee; ");
+        privateKeyCheck->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border-radius: " + QString::number((int)s(19)) + "px; color: #eee; ");
     }
 }
 
@@ -312,7 +315,7 @@ void settingsaddaccount::on_passwordConfirmationLineEdit_textChanged(const QStri
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     } else {
         passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
@@ -320,7 +323,7 @@ void settingsaddaccount::on_passwordConfirmationLineEdit_textChanged(const QStri
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     }
 }

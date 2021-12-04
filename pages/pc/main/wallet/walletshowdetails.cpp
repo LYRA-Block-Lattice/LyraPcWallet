@@ -45,7 +45,7 @@ void walletshowdetails::init(QMdiArea *mdiArea) {
     backPushButton = new QPushButton(thisMdiArea);
     backPushButton->setCursor(Qt::PointingHandCursor);
     backPushButton->setFlat(true);
-    backPushButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    backPushButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     backPushButton->setText(_tr("OK"));
     connect(backPushButton, SIGNAL(clicked()),this, SLOT(on_Back_ButtonPressed()));
 }
@@ -58,7 +58,7 @@ void walletshowdetails::run() {
         detailTextEdit->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.8)));
 
         backPushButton->setGeometry((parent->width() / 2) - s(50), parent->height() - s(50), s(100), s(40));
-        backPushButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+        backPushButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
         backPushButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         pastScale = events::getScale();
         graphicsView->setGeometry((parent->width() / 2) - (size * 4) , (parent->height() / 2) - (size * 4), (size * 8), (size * 8));

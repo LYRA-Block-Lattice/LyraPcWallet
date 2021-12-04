@@ -4,6 +4,8 @@
 #include <QScrollBar>
 #include <QMouseEvent>
 #include <QApplication>
+#include <QMessageBox>
+#include <QClipboard>
 
 #include "QGraphicsBlurEffect"
 
@@ -57,9 +59,11 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     filterLineEdit = new QLineEdit(mdiAreaTransitions);
 
     historyTableView = new QTableView(mdiAreaTransitions);
+    connect(historyTableView, SIGNAL(clicked(QModelIndex) ),
+        this,SLOT(historyAccItemClicked(QModelIndex) ) );
     historyItemModel = new QStandardItemModel();
 
-    txDirectionLabel->setStyleSheet("color: #333;");
+    txDirectionLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     txDirectionLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     txDirectionLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     txDirectionLabel->setVisible(true);
@@ -89,7 +93,7 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     txDirectionComboBox->setVisible(true);
     connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
 
-    tokenLabel->setStyleSheet("color: #333;");
+    tokenLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     tokenLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     tokenLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     tokenLabel->setVisible(true);
@@ -119,7 +123,7 @@ void transitionswindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     tokenComboBox->setVisible(true);
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
 
-    filterLabel->setStyleSheet("color: #333;");
+    filterLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     filterLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     filterLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     filterLabel->setVisible(true);
@@ -165,24 +169,22 @@ void transitionswindow::refreshTable() {
     historyItemModel->setRowCount(0);
     refreshSize();
 
-    historyItemModel->setHeaderData(0, Qt::Horizontal, _tr("Nr"));
-    historyItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(1, Qt::Horizontal, _tr("Account"));
+    historyItemModel->setHeaderData(0, Qt::Horizontal, _tr("Count"));
+    historyItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(1, Qt::Horizontal, "");
     historyItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(2, Qt::Horizontal, "");
-    historyItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(3, Qt::Horizontal, _tr("Date"));
-    historyItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(4, Qt::Horizontal, _tr("Amount"));
-    historyItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(5, Qt::Horizontal, _tr("Hash"));
+    historyItemModel->setHeaderData(2, Qt::Horizontal, _tr("Date"));
+    historyItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(3, Qt::Horizontal, _tr("Amount"));
+    historyItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(4, Qt::Horizontal, _tr("Hash"));
+    historyItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(5, Qt::Horizontal, _tr("From"));
     historyItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(6, Qt::Horizontal, _tr("From"));
+    historyItemModel->setHeaderData(6, Qt::Horizontal, _tr("To"));
     historyItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(7, Qt::Horizontal, _tr("To"));
-    historyItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
-    historyItemModel->setHeaderData(8, Qt::Horizontal, _tr("Details"));
-    historyItemModel->setHeaderData(8, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(7, Qt::Horizontal, _tr("Details"));
+    historyItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
 
     historyTableView->setStyleSheet(
                                    "QTableView { border: none;"
@@ -195,7 +197,7 @@ void transitionswindow::refreshTable() {
 #endif
     historyTableView->verticalHeader()->setVisible(false);
     historyTableView->horizontalHeader()->setSectionsClickable(false);
-    historyTableView->horizontalHeader()->setStyleSheet("color: #444");
+    historyTableView->horizontalHeader()->setStyleSheet("color: #777");
     historyTableView->horizontalHeader()->setEnabled(false);
     historyTableView->setAlternatingRowColors(true);
     //historyTableView.setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -284,16 +286,9 @@ void transitionswindow::refreshTable() {
 
         it = new QStandardItem(); // Account
         it->setForeground(QBrush(0x909090));
-        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        it->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         it->setEnabled(false);
         it->setText(height);
-        item.append(it);
-
-        it = new QStandardItem(); // Account
-        it->setForeground(QBrush(0x909090));
-        it->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        it->setEnabled(false);
-        it->setText(accountsList[index]);
         item.append(it);
 
         it = new QStandardItem(); // Tx Type
@@ -363,14 +358,14 @@ void transitionswindow::refreshTable() {
         }
         dir->setScaledContents(true);
         dir->repaint();
-        historyTableView->setIndexWidget(historyItemModel->index(cnt, 2), dir);
+        historyTableView->setIndexWidget(historyItemModel->index(cnt, 1), dir);
 
         detailsButton = new QPushButton();
         detailsButton->setText(_tr("DETAILS"));
         detailsButton->setCursor(Qt::PointingHandCursor);
-        detailsButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/cyan.png); border-radius: 6px; border: 1px solid #eee; color: #fff; ");
+        detailsButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         detailsButton->installEventFilter(this);
-        historyTableView->setIndexWidget(historyItemModel->index(cnt, 8), detailsButton);
+        historyTableView->setIndexWidget(historyItemModel->index(cnt, 7), detailsButton);
     }
     if(vScrolPos <= scroll->maximum()) {
         scroll->setValue(vScrolPos);
@@ -408,6 +403,8 @@ void transitionswindow::refreshFonts() {
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 1));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 2));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 3));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 4));
@@ -416,9 +413,7 @@ void transitionswindow::refreshFonts() {
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
         tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 6));
         tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
-        tmp = historyItemModel->itemFromIndex(historyItemModel->index(cnt, 7));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
-        QPushButton *detailsButton = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 8));
+        QPushButton *detailsButton = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
         if(detailsButton != 0) {
             detailsButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
         }
@@ -442,18 +437,17 @@ void transitionswindow::refreshSize() {
     filterLineEdit->setGeometry(s(600), s(80), s(450), s(39));
 
     historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
-    historyTableView->setColumnWidth(0, s(35));
-    historyTableView->setColumnWidth(1, s(180));
-    historyTableView->setColumnWidth(2, s(30));
-    historyTableView->setColumnWidth(3, s(150));
-    historyTableView->setColumnWidth(4, s(240));
-    historyTableView->setColumnWidth(5, s(100));
-    historyTableView->setColumnWidth(6, s(100));
-    historyTableView->setColumnWidth(7, s(100));
-    historyTableView->setColumnWidth(8, s(80));
+    historyTableView->setColumnWidth(0, s(55));
+    historyTableView->setColumnWidth(1, s(30));
+    historyTableView->setColumnWidth(2, s(150));
+    historyTableView->setColumnWidth(3, s(250));
+    historyTableView->setColumnWidth(4, s(150));
+    historyTableView->setColumnWidth(5, s(150));
+    historyTableView->setColumnWidth(6, s(150));
+    historyTableView->setColumnWidth(7, s(80));
     for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         historyTableView->setRowHeight(cnt, s(30));
-        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 8));
+        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
         if(directionLabel != 0) {
             directionLabel->repaint();
         }
@@ -464,18 +458,17 @@ void transitionswindow::refreshSize() {
     refreshFonts();
     historyTableView->repaint();
     historyTableView->setGeometry(s(45), s(200), s(1015), s(620));
-    historyTableView->setColumnWidth(0, s(35));
-    historyTableView->setColumnWidth(1, s(180));
-    historyTableView->setColumnWidth(2, s(30));
-    historyTableView->setColumnWidth(3, s(150));
-    historyTableView->setColumnWidth(4, s(240));
-    historyTableView->setColumnWidth(5, s(100));
-    historyTableView->setColumnWidth(6, s(100));
-    historyTableView->setColumnWidth(7, s(100));
-    historyTableView->setColumnWidth(8, s(80));
+    historyTableView->setColumnWidth(0, s(55));
+    historyTableView->setColumnWidth(1, s(30));
+    historyTableView->setColumnWidth(2, s(150));
+    historyTableView->setColumnWidth(3, s(250));
+    historyTableView->setColumnWidth(4, s(150));
+    historyTableView->setColumnWidth(5, s(150));
+    historyTableView->setColumnWidth(6, s(150));
+    historyTableView->setColumnWidth(7, s(80));
     for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         historyTableView->setRowHeight(cnt, s(30));
-        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 8));
+        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
         if(directionLabel != 0) {
             directionLabel->repaint();
         }
@@ -521,6 +514,27 @@ void transitionswindow::refreshLanguage() {
     filterLabel->setText(_tr("FILTER") + ":");
     filterLineEdit->setPlaceholderText(_tr("ID, Hash"));
 
+    historyItemModel->setHeaderData(0, Qt::Horizontal, _tr("Count"));
+    historyItemModel->setHeaderData(0, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(1, Qt::Horizontal, "");
+    historyItemModel->setHeaderData(1, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(2, Qt::Horizontal, _tr("Date"));
+    historyItemModel->setHeaderData(2, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(3, Qt::Horizontal, _tr("Amount"));
+    historyItemModel->setHeaderData(3, Qt::Horizontal, Qt::AlignRight, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(4, Qt::Horizontal, _tr("Hash"));
+    historyItemModel->setHeaderData(4, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(5, Qt::Horizontal, _tr("From"));
+    historyItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(6, Qt::Horizontal, _tr("To"));
+    historyItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    historyItemModel->setHeaderData(7, Qt::Horizontal, _tr("Details"));
+    historyItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignCenter, Qt::TextAlignmentRole);
+
+    for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
+        QPushButton *detailsButton = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
+        detailsButton->setText(_tr("DETAILS"));
+    }
     refreshFonts();
     connect(txDirectionComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_TxDirection_Changed(const QString &)));
     connect(tokenComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Token_Changed(const QString &)));
@@ -557,12 +571,14 @@ void transitionswindow::run() {
     }
     if(network != events::getRpcNetwork() ||
             selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
-            events::getUpdateHistory() ||
             recentTransactionsCnt != events::getRecentTransactionsModifyedCnt()) {
         network = events::getRpcNetwork();
         recentTransactionsCnt = events::getRecentTransactionsModifyedCnt();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
-        refreshLanguage();
+        oldHistoryAccItemIdx = QModelIndex();
+        refreshTable();
+    }
+    if(events::getUpdateHistory()) {
         refreshTable();
     }
     if(assetsListModifyedCnt != events::getAssetsModifyedCnt()) {
@@ -577,7 +593,7 @@ bool transitionswindow::eventFilter(QObject *obj, QEvent *event) {
     if(event->type() == QEvent::MouseButtonRelease) {
         if(mouseEvent->button() == Qt::LeftButton) {
             for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
-                QPushButton *details = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 8));
+                QPushButton *details = (QPushButton *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
                 if (obj == details) {
                     QScrollBar *scroll = historyTableView->verticalScrollBar();
                     int vScrolPos = scroll->value();
@@ -606,4 +622,42 @@ void transitionswindow::on_Token_Changed(const QString &) {
 
 void transitionswindow::on_Filter_Changed(const QString &) {
     refreshTable();
+}
+
+void transitionswindow::historyAccItemClicked(QModelIndex idx) {
+    if(idx.column() == 4) {
+        if(oldHistoryAccItemIdx.column() != idx.column() || oldHistoryAccItemIdx.row() != idx.row()) {
+            QStandardItem *tmp = historyItemModel->itemFromIndex(historyItemModel->index(idx.row(), idx.column()));
+            QClipboard* clipboard = QApplication::clipboard();
+            clipboard->setText(tmp->text().split("\n")[0]);
+            QMessageBox::information( this, this->windowTitle(),
+                    _tr("Receive hash copied to clipboard.") + "\n" +
+                                      tmp->text().split("\n")[0],
+                    QMessageBox::Ok,
+                    QMessageBox::Ok);
+            oldHistoryAccItemIdx = idx;
+        } else {
+            QStandardItem *tmp = historyItemModel->itemFromIndex(historyItemModel->index(idx.row(), idx.column()));
+            QClipboard* clipboard = QApplication::clipboard();
+            clipboard->setText(tmp->text().split("\n")[1]);
+            QMessageBox::information( this, this->windowTitle(),
+                    _tr("Send hash copied to clipboard.") + "\n" +
+                                      tmp->text().split("\n")[1],
+                    QMessageBox::Ok,
+                    QMessageBox::Ok);
+            oldHistoryAccItemIdx = QModelIndex();
+        }
+    } else if(idx.column() == 5 || idx.column() == 6) {
+        QStandardItem *tmp = historyItemModel->itemFromIndex(historyItemModel->index(idx.row(), idx.column()));
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(tmp->text());
+        oldHistoryAccItemIdx = QModelIndex();
+        QMessageBox::information( this, this->windowTitle(),
+                _tr("Account ID copied to clipboard.") + "\n" +
+                                  tmp->text(),
+                QMessageBox::Ok,
+                QMessageBox::Ok);
+    } else
+        oldHistoryAccItemIdx = QModelIndex();
+
 }

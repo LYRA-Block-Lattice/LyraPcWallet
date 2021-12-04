@@ -75,7 +75,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletBalanceLabel->setAlignment(Qt::AlignLeft);
     walletBalanceLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    walletBalanceValueLabel->setStyleSheet("color: #333;");
+    walletBalanceValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletBalanceValueLabel->setAlignment(Qt::AlignLeft);
     walletBalanceValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -88,7 +88,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceLabel->setAlignment(Qt::AlignLeft);
     unreceivedBalanceLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    unreceivedBalanceValueLabel->setStyleSheet("color: #333;");
+    unreceivedBalanceValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     unreceivedBalanceValueLabel->setAlignment(Qt::AlignLeft);
     unreceivedBalanceValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -97,7 +97,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     unreceivedBalanceValueTotalLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    syncButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/sync.png); border-radius: 1px; color: #eee; ");
+    syncButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     syncButton->setFlat(true);
     syncButton->setCursor(Qt::PointingHandCursor);
     connect(syncButton, SIGNAL(clicked()),this, SLOT(on_Sync_ButtonPressed()));
@@ -106,7 +106,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     creationDateLabel->setAlignment(Qt::AlignLeft);
     creationDateLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    creationDateDateLabel->setStyleSheet("color: #333;");
+    creationDateDateLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     creationDateDateLabel->setAlignment(Qt::AlignLeft);
     creationDateDateLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -119,7 +119,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     numberOfTransactionsLabel->setAlignment(Qt::AlignLeft);
     numberOfTransactionsLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    numberOfTransactionsCountLabel->setStyleSheet("color: #333;");
+    numberOfTransactionsCountLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     numberOfTransactionsCountLabel->setAlignment(Qt::AlignLeft);
     numberOfTransactionsCountLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -128,7 +128,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     numberOfTransactionsCountWeekLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
 
-    walletAddressLabel->setStyleSheet("color: #333;");
+    walletAddressLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletAddressLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     walletAddressLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     walletAddressLabel->installEventFilter(this);
@@ -140,13 +140,13 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     walletAddressIdLabel->installEventFilter(this);
 
 
-    voteUnvoteButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/sync.png); border-radius: 1px; color: #eee; ");
+    voteUnvoteButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(12)) + "px; color: #eee; ");
     voteUnvoteButton->setFlat(true);
     voteUnvoteButton->setCursor(Qt::PointingHandCursor);
     connect(voteUnvoteButton, SIGNAL(clicked()),this, SLOT(on_VoteUnvote_ButtonPressed()));
 
 
-    btcUsdLabel->setStyleSheet("color: #333;");
+    btcUsdLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     btcUsdLabel->setAlignment(Qt::AlignCenter);
     btcUsdLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -183,11 +183,11 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
 /*------------------------------------------------------*/
 /********************************************************/
 
-    walletBalanceChartLabel->setStyleSheet("color: #333;");
+    walletBalanceChartLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletBalanceChartLabel->setAlignment(Qt::AlignLeft);
     walletBalanceChartLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    walletValueChartLabel->setStyleSheet("color: #333;");
+    walletValueChartLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     walletValueChartLabel->setAlignment(Qt::AlignLeft);
     walletValueChartLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 

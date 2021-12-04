@@ -229,7 +229,7 @@
    "Your account address ID" :             "你的帐号 ID",
    "ACCOUNT" :                             "账户",
    "Balance" :                             "余额",
-   "Total Liquidate" :                     "总流动性",
+   "Total Liquidity" :                     "总流动性",
    "Estimated price" :                     "估计价格",
    "You will sell" :                       "你将卖出",
    "You will get" :                        "你将得到",
@@ -239,5 +239,8 @@
    "SWAP successfully completed." :        "置换成功完成.",
    "Now we need to create receive block." :"现在你需要创建接收块",
    "ERROR: Unknown" :                      "未知错误",
-   "No lyquidate found for this pair." :   "没有关于这个配对的流动性"
+   "No liquidity found for this pair." :   "没有关于这个配对的流动性",
+   "Count" :                               "数量",
+   "Receive hash copied to clipboard." :   "接收哈希已复制到剪贴板.”",
+   "Send hash copied to clipboard." :      "发送哈希已复制到剪贴板."
 }

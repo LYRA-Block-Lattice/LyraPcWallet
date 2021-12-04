@@ -39,23 +39,24 @@ void settingsdeleteaccount::init(QMdiArea *mdiArea) {
     okButton = new QPushButton(thisMdiArea);
 
     passwordConfirmationLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+    passwordConfirmationLineEdit->setAlignment(Qt::AlignCenter);
     passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
                                                     "color: #555;"
                                                     "border-color: white;"
                                                     "background-color: white;"
                                                     "border: 1px solid #eee;"
-                                                    "border-radius: 3px;"
+                                                    "border-radius: " + QString::number((int)s(19)) + "px;"
                                                     ";}");
     connect(passwordConfirmationLineEdit, SIGNAL(textChanged(const QString &)),this, SLOT(on_passwordConfirmationLineEdit_textChanged(const QString &)));
 
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->setFlat(true);
-    cancelButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/green.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    cancelButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(cancelButton, SIGNAL(clicked()),this, SLOT(on_Cancel_ButtonPressed()));
 
     okButton->setCursor(Qt::PointingHandCursor);
     okButton->setFlat(true);
-    okButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/transitions/red.png); border-radius: 3px; border: 1px solid #eee; color: #fff; ");
+    okButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     connect(okButton, SIGNAL(clicked()),this, SLOT(on_Ok_ButtonPressed()));
 
     refreshSize();
@@ -165,7 +166,7 @@ void settingsdeleteaccount::on_passwordConfirmationLineEdit_textChanged(const QS
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     } else {
         passwordConfirmationLineEdit->setStyleSheet("QLineEdit {   "
@@ -173,7 +174,7 @@ void settingsdeleteaccount::on_passwordConfirmationLineEdit_textChanged(const QS
                                                         "border-color: white;"
                                                         "background-color: white;"
                                                         "border: 1px solid #eee;"
-                                                        "border-radius: 3px;"
+                                                        "border-radius: " + QString::number((int)s(19)) + "px;"
                                                         ";}");
     }
 }

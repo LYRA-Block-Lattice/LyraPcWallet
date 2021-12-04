@@ -7,6 +7,7 @@
 #include "wallet/rpc/swap.h"
 #include "pages/pc/textformating.h"
 #include "configlyra.h"
+#include "wallet/rpc/walletbalance.h"
 
 #define s(s) _scale(s)
 
@@ -317,7 +318,7 @@ void swapwindow::refreshSize() {
     liquidateFeeValueLabel->setGeometry(s(490), s(425), s(300), s(19));
 
     swapPushButton->setGeometry(s(370), s(460), s(370), s(39));
-    swapPushButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/swap/blue.png); border-radius: " + QString::number((int)s(6)) + "px; border: 1px solid #eee; color: #fff; ");
+    swapPushButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
     refreshFonts();
 }
 
@@ -330,7 +331,7 @@ void swapwindow::refreshLanguage() {
     //toValueLineEdit->setPlaceholderText(_tr("TO VALUE"));
 
 
-    totalLiquidateLabel->setText(_tr("Total Liquidate"));
+    totalLiquidateLabel->setText(_tr("Total Liquidity"));
     estimatedPriceLabel->setText(_tr("Estimated price"));
     youSellLabel->setText(_tr("You will sell"));
     youGetLabel->setText(_tr("You will get"));
@@ -508,12 +509,12 @@ void swapwindow::on_FetchPool() {
             qDebug() << poolCalculate.payToProvider << "PayToProvider";
             qDebug() << poolCalculate.payToAuthorizer << "PayToAuthorizer";
 #endif
-            estimatedPriceValueLabel->setText(textformating::toValue(poolCalculate.price, 8) + " " + poolCalculate.swapInToken);
-            youSellValueLabel->setText(textformating::toValue(poolCalculate.swapInAmount, 8) + " " + poolCalculate.swapInToken);
-            youGetValueLabel->setText(textformating::toValue(poolCalculate.swapOutAmount, 8) + " " + poolCalculate.swapOutToken);
+            estimatedPriceValueLabel->setText(textformating::toValue(poolCalculate.price, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+            youSellValueLabel->setText(textformating::toValue(poolCalculate.swapInAmount, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+            youGetValueLabel->setText(textformating::toValue(poolCalculate.swapOutAmount, 8) + " " + poolCalculate.swapOutToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
             priceimpactValueLabel->setText(textformating::toValue(poolCalculate.priceImpact * 100.0, 8) + " %");
             poolFeeValueLabel->setText(textformating::toValue(poolCalculate.payToProvider, 8) + " LYR");
-            liquidateFeeValueLabel->setText(textformating::toValue(poolCalculate.payToAuthorizer, 8) + " " + poolCalculate.swapInToken);
+            liquidateFeeValueLabel->setText(textformating::toValue(poolCalculate.payToAuthorizer, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
 
             if(lastEditedVal == LAST_EDITED_VAL_TOKEN0) {
                 if(fromValueLineEdit->text().length())
@@ -532,7 +533,7 @@ void swapwindow::on_FetchPool() {
         }
         valueSource = VALUE_SOURCE_SELF;
     } else {
-        totalLiquidateValueLabel->setText(_tr("No lyquidate found for this pair."));
+        totalLiquidateValueLabel->setText(_tr("No liquidity found for this pair"));
         estimatedPriceValueLabel->setText(fromValueComboBox->currentText());
         youSellValueLabel->setText(fromValueComboBox->currentText());
         youGetValueLabel->setText(toValueComboBox->currentText());
@@ -543,12 +544,15 @@ void swapwindow::on_FetchPool() {
 }
 
 void swapwindow::on_swap_ButtonPressed() {
+    bool unreceived = false;
+    int height = 0;
     walletErr_e response = swap::swapTokens(events::getSelectedNameKeyIndex(),
                      fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
                         toValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
                             fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
                                 fromValueLineEdit->text().remove(",").toDouble(),
                                     poolCalculate.minimumReceive);
+    QString accId = events::getAccountId(events::getSelectedNameKeyIndex());
     switch (response) {
     case walletErr_e::WALLET_ERR_OK:
         QMessageBox::information( this, this->windowTitle(),
@@ -556,7 +560,13 @@ void swapwindow::on_swap_ButtonPressed() {
                     _tr("Now we need to create receive block."),
                 QMessageBox::Ok,
                 QMessageBox::Ok);
-        wallet::sync();
+        if(!accId.length()) {
+            break;
+        }
+        walletbalance::balance(accId, &height, &unreceived);
+        if(unreceived) {
+            wallet::sync();
+        }
         break;
     default:
         QMessageBox::critical( this, this->windowTitle(),

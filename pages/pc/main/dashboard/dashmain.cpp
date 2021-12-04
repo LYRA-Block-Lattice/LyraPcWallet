@@ -62,7 +62,7 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     totalSupplyLabel->setAlignment(Qt::AlignLeft);
     totalSupplyLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    totalSupplyValueLabel->setStyleSheet("color: #333;");
+    totalSupplyValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     totalSupplyValueLabel->setAlignment(Qt::AlignLeft);
     totalSupplyValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -102,12 +102,12 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     totalBlockPercentageLabel->setAlignment(Qt::AlignLeft);
     totalBlockPercentageLabel->setAttribute(Qt::WA_TranslucentBackground, true);*/
 
-    myWalletValueLabel->setStyleSheet("color: #333;");
+    myWalletValueLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     myWalletValueLabel->setAlignment(Qt::AlignLeft);
     myWalletValueLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     myWalletValueLabel->installEventFilter(this);
 
-    btcUsdLabel->setStyleSheet("color: #333;");
+    btcUsdLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     btcUsdLabel->setAlignment(Qt::AlignCenter);
     btcUsdLabel->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -142,7 +142,7 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     chooseRangeComboBox->setCursor(Qt::PointingHandCursor);
     chooseRangeComboBox->setVisible(false);
 
-    orLabel->setStyleSheet("color: #333;");
+    orLabel->setStyleSheet("color: " COLOR_GREY_DARK ";");
     orLabel->setAlignment(Qt::AlignLeft);
     orLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     orLabel->setVisible(false);

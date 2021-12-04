@@ -183,7 +183,9 @@ QString rpc::sendMessage(int *id, QString api, QStringList args) {
 }
 
 QString rpc::sendSimpleMessage(QString message) {
+#if VORBOSE_LEVEL >= 1
     qDebug() << "RPC 12: " + message;
+#endif
     if(sendText(message)) {
         sendMsgTimedOut = false;
         timerRetryConnect.setInterval(RPC_MESSAGE_RESPONSE_TIMEOUT);
@@ -195,12 +197,16 @@ QString rpc::sendSimpleMessage(QString message) {
             QApplication::processEvents();
             QString response = getResponse();
             if(response.length()) {
+#if VORBOSE_LEVEL >= 1
                 qDebug() << "RPC 13: " + response << Qt::endl;
+#endif
                 return response;
             }
         }
     }
+#if VORBOSE_LEVEL >= 1
     qDebug() << "RPC 14: Response fail" << Qt::endl;
+#endif
     return QString("");
 }
 

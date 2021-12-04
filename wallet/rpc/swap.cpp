@@ -6,9 +6,8 @@
 #include "wallet/events.h"
 
 walletErr_e swap::swapTokens(int accNr, QString token0, QString token1, QString tokenToSwap, double amount, double amountToGet) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -18,7 +17,7 @@ walletErr_e swap::swapTokens(int accNr, QString token0, QString token1, QString 
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result.contains("result") && result["result"].toObject().contains("balance"))
         return walletErr_e::WALLET_ERR_OK;
     return walletErr_e::WALLET_ERR_UNKNOWN;

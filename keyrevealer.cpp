@@ -15,7 +15,12 @@ keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *paren
         this->move(hostRect.center() - this->rect().center());
     }
     ui->setupUi(this);
-    this->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint);
+    QPushButton *cancelButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel);
+    cancelButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_DARK ", stop: 1 #ccc); border-radius: 5px; color: #eee; min-width: 70px; min-height: 25px;");
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok);
+    okButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_DARK ", stop: 1 #ccc); border-radius: 5px; color: #eee; min-width: 70px; min-height: 25px;");
+
+    this->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
     this->nr = nr;
     this->immediate = immediate;
     this->persistent = persistent;

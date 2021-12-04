@@ -693,7 +693,7 @@ void mainboard::updateUser() {
 
 void mainboard::updateLogOut() {
     logOutButton->setGeometry(s(1250), s(60), s(75), s(30));
-    logOutButton->setStyleSheet("border-image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/logOut.png); border-radius: " + QString::number((int)s(4)) + "px; color: #eee; ");
+    logOutButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(4)) + "px; color: #eee; ");
     logOutButton->setText(_tr("LOGOUT"));
     logOutButton->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
     logOutButton->setFlat(true);

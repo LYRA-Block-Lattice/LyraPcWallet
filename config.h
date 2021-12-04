@@ -5,7 +5,7 @@
 
 #define VORBOSE_LEVEL                               0
 
-#define APP_VERSION                                 "0.3.0"
+#define APP_VERSION                                 "0.3.1"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 
@@ -92,6 +92,18 @@
 #else
 #define FONT_REDUCTION  1
 #endif
+
+#define BUTON_COLOR_GREEN                           "#40b630"
+#define BUTON_COLOR_RED                             "#ff151f"
+#define BUTON_COLOR_BLUE                            "#0093ee"
+#define BUTON_COLOR_CYAN                            "#26c1c9"
+#define BUTON_COLOR_ORANGE                          "#fd7b1f"
+#define BUTON_COLOR_YELOW                           "#faca00"
+#define COLOR_GREY_BRIGHT                           "#ccc"
+#define COLOR_GREY_MID                              "#888"
+#define COLOR_GREY_DARK                             "#444"
+#define COLOR_WHITE                                 "#FFF"
+#define COLOR_BLACK                                 "#000"
 
 
 

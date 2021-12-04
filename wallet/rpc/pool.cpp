@@ -27,9 +27,8 @@ pool::poolInfo_t pool::info(QString tiker0, QString toker1) {
 }
 
 walletErr_e pool::create(int accNr, QString toker0, QString toker1) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -39,16 +38,15 @@ walletErr_e pool::create(int accNr, QString toker0, QString toker1) {
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result.contains("balance"))
         return walletErr_e::WALLET_ERR_OK;
     return walletErr_e::WALLET_ERR_UNKNOWN;
 }
 
 walletErr_e pool::addLiquidity(int accNr, QString toker0, double toker0Amount, QString toker1, double toker1Amount) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -58,7 +56,7 @@ walletErr_e pool::addLiquidity(int accNr, QString toker0, double toker0Amount, Q
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result.contains("balance"))
         return walletErr_e::WALLET_ERR_OK;
     return walletErr_e::WALLET_ERR_UNKNOWN;
@@ -92,9 +90,8 @@ pool::poolCalculate pool::calculate(QString poolId, QString swapFrom, double amo
 }
 
 walletErr_e pool::removeLiquidity(int accNr, QString toker0, QString toker1) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -104,7 +101,7 @@ walletErr_e pool::removeLiquidity(int accNr, QString toker0, QString toker1) {
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result.contains("balance"))
         return walletErr_e::WALLET_ERR_OK;
     return walletErr_e::WALLET_ERR_UNKNOWN;

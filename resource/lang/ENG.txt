@@ -229,7 +229,7 @@
    "Your account address ID" :             "Your account address ID",
    "ACCOUNT" :                             "ACCOUNT",
    "Balance" :                             "Balance",
-   "Total Liquidate" :                     "Total Liquidate",
+   "Total Liquidity" :                     "Total Liquidity",
    "Estimated price" :                     "Estimated price",
    "You will sell" :                       "You will sell",
    "You will get" :                        "You will get",
@@ -239,5 +239,8 @@
    "SWAP successfully completed." :        "SWAP successfully completed.",
    "Now we need to create receive block." :"Now we need to create receive block.",
    "ERROR: Unknown" :                      "ERROR: Unknown",
-   "No lyquidate found for this pair." :   "No lyquidate found for this pair."
+   "No liquidity found for this pair." :   "No liquidity found for this pair",
+   "Count" :                               "Count",
+   "Receive hash copied to clipboard." :   "Receive hash copied to clipboard.",
+   "Send hash copied to clipboard." :      "Send hash copied to clipboard."
 }

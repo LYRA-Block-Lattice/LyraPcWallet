@@ -8,9 +8,8 @@
 #include "profiting.h"
 
 walletErr_e profiting::createProfitingAcc(int accNr, QString accName, QString accType, double shareRatio, int maxVoter) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -20,7 +19,7 @@ walletErr_e profiting::createProfitingAcc(int accNr, QString accName, QString ac
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result["result"].toObject().contains("pftid")) {
         return  walletErr_e::WALLET_ERR_OK;
     } else {
@@ -43,9 +42,8 @@ walletErr_e profiting::createProfitingAcc(int accNr, QString accName, QString ac
 }
 
 walletErr_e profiting::createStakingAcc(int accNr, QString accName, QString voteFor, int daysToStake, bool compoundMode) {
-    QString accPKey = events::getAccountKey(accNr);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     //QString accountId = signatures::getAccountIdFromPrivateKey(ownerPKey);
@@ -56,7 +54,7 @@ walletErr_e profiting::createStakingAcc(int accNr, QString accName, QString vote
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     if(result["result"].toObject().contains("stkid") && !voteFor.compare(result["result"].toObject()["voting"].toString())) {
         return  walletErr_e::WALLET_ERR_OK;
     } else {
@@ -79,9 +77,8 @@ walletErr_e profiting::createStakingAcc(int accNr, QString accName, QString vote
 }
 
 walletErr_e profiting::addStaking(int accNr, QString stakingId, double amount) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -91,7 +88,7 @@ walletErr_e profiting::addStaking(int accNr, QString stakingId, double amount) {
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;
@@ -100,9 +97,8 @@ walletErr_e profiting::addStaking(int accNr, QString stakingId, double amount) {
 }
 
 walletErr_e profiting::unStaking(int accNr, QString stakingId) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -112,7 +108,7 @@ walletErr_e profiting::unStaking(int accNr, QString stakingId) {
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;
@@ -121,9 +117,8 @@ walletErr_e profiting::unStaking(int accNr, QString stakingId) {
 }
 
 walletErr_e profiting::createDividents(int accNr, QString profitingId) {
-    QString accPKey = events::getAccountKey(accNr, true, false);
     QString accId = events::getAccountId(accNr);
-    if(!accPKey.length() || !accId.length())
+    if(!accId.length())
         return walletErr_e::WALLET_ERR_UNKNOWN;
     connection_t connection = rpcapi::getConnection();
     int id = 0;
@@ -133,7 +128,7 @@ walletErr_e profiting::createDividents(int accNr, QString profitingId) {
         return  walletErr_e::WALLET_ERR_TIMEOUT;
     }
 
-    QJsonObject result = sign::signMessage(accPKey, response, id);
+    QJsonObject result = sign::signMessage(accNr, response, id).result;
     result = result["result"].toObject();
     if(result["success"].toBool()) {
         return  walletErr_e::WALLET_ERR_OK;

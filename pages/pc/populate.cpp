@@ -223,7 +223,10 @@ bool populate::refreshAll() {
             QString tokenValue;
             foreach(QString tmp, key)  {
                 value = QString::number(isReceived ? transaction[7][tmp].toDouble() : 0.0 - transaction[7][tmp].toDouble());
-                tokenValue += textformating::toValue(value, 2) + " " + tmp.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN) + "\n";
+                tokenValue += "\n" + textformating::toValue(value, 2) + " " + tmp.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
+            }
+            if(tokenValue.length()) {
+                tokenValue.remove(0, 1);
             }
 
             recentTransactions.append(tokenValue);

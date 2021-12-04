@@ -75,11 +75,13 @@ private:
     bool supressTableUpdate = false;
     int recentTransactionsCnt = -1;
     rpc::network_e network = rpc::network_e::NETWORK_TESTNET;
+    QModelIndex oldHistoryAccItemIdx;
 private slots:
     bool eventFilter(QObject *obj, QEvent *ev) override;
     void on_TxDirection_Changed(const QString &);
     void on_Token_Changed(const QString &);
     void on_Filter_Changed(const QString &);
+    void historyAccItemClicked(QModelIndex);
 
 };
 
