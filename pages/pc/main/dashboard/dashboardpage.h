@@ -28,10 +28,10 @@ public:
     //~dashboard();
     void run();
     void setState(state_e state);
+    QMdiSubWindow *window = nullptr;
 private:
     /* Window */
     QWidget *parent = nullptr;
-    QMdiSubWindow *window = nullptr;
     QWidget *widget = nullptr;
     //QMdiArea *mdiArea;
     QMdiArea *mdiAreaDashboard = nullptr;

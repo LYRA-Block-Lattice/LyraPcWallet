@@ -238,7 +238,7 @@
    "SWAP successfully completed." :        "SWAP finalizat cu succes.",
    "Now we need to create receive block." :"Acum trebuie sa creem un bloc te primire.",
    "ERROR: Unknown" :                      "ERROR: Necunoscut",
-   "No liquidity found for this pair." :   "Nu am gasit lichiditate pentru\naceasta combinatie.",
+   "No liquidity found for this pair" :    "Nu am gasit lichiditate pentru\naceasta combinatie.",
    "Count" :                               "Count",
    "Receive hash copied to clipboard." :   "Hashul de primire a fost copiat pe clipboard.",
    "Send hash copied to clipboard." :      "Hashul de trimitere a fost copiat pe clipboard."

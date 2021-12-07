@@ -33,6 +33,8 @@ public:
     QString getPrivateKey();
     runMode_e getState();
     void setState(runMode_e state);
+
+    QMdiSubWindow *thisWindow = nullptr;
 private:
     void refreshFonts();
     void refreshSize();
@@ -41,7 +43,6 @@ private:
     QWidget *parent = nullptr;
     QMdiArea *thisMdiArea = nullptr;
     QWidget *thisWidget = nullptr;
-    QMdiSubWindow *thisWindow = nullptr;
 
     QLabel *titleName = nullptr;
 

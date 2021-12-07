@@ -36,6 +36,7 @@
 QString walletPassword;
 QTimer clearTimer;
 QWidget *par;
+mainboard *mainboardWindow;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -96,7 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&timerLoop, SIGNAL(timeout()), this, SLOT(appMain()));
 
     loginPage = new login(ui->mainMdiArea, ui->centralwidget);
-    mainboardWindow.setVars(ui->mainMdiArea, ui->centralwidget);
+    mainboardWindow = new mainboard();
+    mainboardWindow->setVars(ui->mainMdiArea, ui->centralwidget);
     //loginPage->setVars(ui->mainMdiArea, ui->centralwidget);
 
     rpcConnection = new rpc(this);
@@ -320,13 +322,13 @@ void MainWindow::appMain() {
         if(loginPage)
             loginCommand = loginPage->getCommand();
         if(loginCommand == login::CMD_LOGIN_WALLET) {
-            mainboardWindow.run();
-            mainboardWindow.setState(mainboard::STATE_DASHBOARD);
+            mainboardWindow->run();
+            mainboardWindow->setState(mainboard::STATE_DASHBOARD);
             events::setTriggerNodeFetch();
         }
     }
     if(loginCommand == login::CMD_LOGIN_WALLET) {
-        mainboardWindow.run();
+        mainboardWindow->run();
         tickedUpdates.run();
     }
 /*
@@ -423,5 +425,46 @@ void MainWindow::passClear() {
 
 QWidget *MainWindow::getParent() {
     return par;
+}
+
+void MainWindow::refreshParentWindow() {
+    if(mainboardWindow->windowHeader)
+        mainboardWindow->windowHeader->repaint();
+    if(mainboardWindow->windowLeftMenu)
+        mainboardWindow->windowLeftMenu->repaint();
+    if(mainboardWindow->dashboardWindow)
+        mainboardWindow->dashboardWindow->window->repaint();
+    if(mainboardWindow->walletWindow) {
+        if(mainboardWindow->walletWindow->windowWallet)
+            mainboardWindow->walletWindow->windowWallet->repaint();
+        if(mainboardWindow->walletWindow->windowSend)
+            mainboardWindow->walletWindow->windowSend->repaint();
+        if(mainboardWindow->walletWindow->windowReceive)
+            mainboardWindow->walletWindow->windowReceive->repaint();
+    }
+    if(mainboardWindow->swapWindow) {
+        mainboardWindow->swapWindow->repaint();
+        if(mainboardWindow->swapWindow->windowSwap)
+            mainboardWindow->swapWindow->windowSwap->repaint();
+    }
+    if(mainboardWindow->transitionsWindow)
+        mainboardWindow->transitionsWindow->window->repaint();
+    if(mainboardWindow->searchWindow)
+        mainboardWindow->searchWindow->window->repaint();
+    if(mainboardWindow->settingsWindow) {
+        mainboardWindow->settingsWindow->window->repaint();
+        if(mainboardWindow->settingsWindow->addAccountWindow)
+            mainboardWindow->settingsWindow->addAccountWindow->thisWindow->repaint();
+        if(mainboardWindow->settingsWindow->settingsDeleteAccount)
+            mainboardWindow->settingsWindow->settingsDeleteAccount->thisWindow->repaint();
+        if(mainboardWindow->settingsWindow->settingsEditAccount)
+            mainboardWindow->settingsWindow->settingsEditAccount->thisWindow->repaint();
+        if(mainboardWindow->settingsWindow->settingsEditUser)
+            mainboardWindow->settingsWindow->settingsEditUser->thisWindow->repaint();
+        if(mainboardWindow->settingsWindow->settingsShowPrivKey)
+            mainboardWindow->settingsWindow->settingsShowPrivKey->thisWindow->repaint();
+        if(mainboardWindow->settingsWindow->createProfitAccount)
+            mainboardWindow->settingsWindow->createProfitAccount->thisWindow->repaint();
+    }
 }
 

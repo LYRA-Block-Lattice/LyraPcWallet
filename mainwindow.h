@@ -45,6 +45,7 @@ public:
     static QString getPassword();
     static void setPassword(QString pass, bool persistent = false);
     static QWidget *getParent();
+    static void refreshParentWindow();
 private:
     void windowToMain();
     void windowToLogin();
@@ -71,7 +72,6 @@ private:
     login *loginPage;
 
     mainWindowState_e mainWindowState = mainWindowState_e::MAIN_WINDOW_STATE_DASHBOARD;
-    mainboard mainboardWindow;
 
     appState_e appState = APP_STATE_LOGIN;
 

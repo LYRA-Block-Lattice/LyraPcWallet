@@ -5,7 +5,7 @@
 
 #define VORBOSE_LEVEL                               0
 
-#define APP_VERSION                                 "0.3.2"
+#define APP_VERSION                                 "0.3.3"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
 

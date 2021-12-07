@@ -22,13 +22,13 @@ public:
     void setVars(QMdiSubWindow *window = nullptr, QWidget *parent = nullptr);
     void run();
     void setState(state_e state);
+    QMdiSubWindow *window = nullptr;
 private:
     void refreshFonts();
     void refreshSize();
     void refreshLanguage();
 
     QWidget *parent = nullptr;
-    QMdiSubWindow *window = nullptr;
 
     QMdiArea *mdiAreaSearch = nullptr;
     QWidget *widgetSearch = nullptr;

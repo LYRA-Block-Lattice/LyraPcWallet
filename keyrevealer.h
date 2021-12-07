@@ -22,7 +22,7 @@ private:
         RESULT_ACCEPTED
     }result = keyrevealer::RESULT_NONE;
 
-    QGraphicsBlurEffect *blurEffectCentralWidget = nullptr;
+   QGraphicsBlurEffect *blurEffectCentralWidget = nullptr;
     int nr;
     bool immediate = true;
     bool persistent = false;

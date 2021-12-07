@@ -1,11 +1,11 @@
 #include <QException>
 
 #include "mainwindow.h"
-
 #include "keyrevealer.h"
 #include "ui_keyrevealer.h"
 
 #include "wallet/events.h"
+#include "pages/pc/main/mainboard.h"
 
 keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *parent) :
     QDialog(parent),
@@ -41,6 +41,7 @@ keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *paren
         }
         blurEffectCentralWidget->setBlurRadius(5.0);
         MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
+        MainWindow::refreshParentWindow();
     }
 }
 
@@ -50,6 +51,7 @@ keyrevealer::~keyrevealer() {
     }
     blurEffectCentralWidget->setBlurRadius(0.0);
     MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
+    MainWindow::refreshParentWindow();
     delete ui;
 }
 
@@ -80,6 +82,7 @@ void keyrevealer::on_buttonBox_accepted(){
     }
     blurEffectCentralWidget->setBlurRadius(0.0);
     MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
+    MainWindow::refreshParentWindow();
 }
 
 void keyrevealer::on_buttonBox_rejected(){
@@ -88,6 +91,7 @@ void keyrevealer::on_buttonBox_rejected(){
     }
     blurEffectCentralWidget->setBlurRadius(0.0);
     MainWindow::getParent()->setGraphicsEffect(blurEffectCentralWidget);
+    MainWindow::refreshParentWindow();
     result = keyrevealer::RESULT_REJECTED;
 }
 
@@ -99,3 +103,4 @@ QString keyrevealer::getKey() {
     pKey = "";
     return tmp;
 }
+

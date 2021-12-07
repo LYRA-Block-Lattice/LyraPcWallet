@@ -54,6 +54,21 @@ public:
     QWidget *parent = nullptr;
     QMdiArea *mdiArea = nullptr;
     QMdiSubWindow *windowMain = nullptr;
+
+
+    QMdiArea *mdiAreaHeader = nullptr;
+    QWidget *widgetHeader = nullptr;
+    QMdiSubWindow *windowHeader = nullptr;
+    QMdiArea *mdiAreaLeftMenu = nullptr;
+    QWidget *widgetLeftMenu = nullptr;
+    QMdiSubWindow *windowLeftMenu = nullptr;
+
+    dashboardpage *dashboardWindow = nullptr;
+    walletpage *walletWindow = nullptr;
+    swapwindow *swapWindow = nullptr;
+    transitionswindow *transitionsWindow = nullptr;
+    searchwindow *searchWindow = nullptr;
+    settingswindow *settingsWindow = nullptr;
 private:
     void updateWallet();
     void updateNetwork();
@@ -71,19 +86,7 @@ private:
 
 
     //QMdiArea mdiAreaMain;
-    QMdiArea *mdiAreaHeader = nullptr;
-    QWidget *widgetHeader = nullptr;
-    QMdiSubWindow *windowHeader = nullptr;
-    QMdiArea *mdiAreaLeftMenu = nullptr;
-    QWidget *widgetLeftMenu = nullptr;
-    QMdiSubWindow *windowLeftMenu = nullptr;
 
-    dashboardpage *dashboardWindow = nullptr;
-    walletpage *walletWindow = nullptr;
-    swapwindow *swapWindow = nullptr;
-    transitionswindow *transitionsWindow = nullptr;
-    searchwindow *searchWindow = nullptr;
-    settingswindow *settingsWindow = nullptr;
 
     info *infoWindow = nullptr;
 

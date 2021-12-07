@@ -38,6 +38,14 @@ public:
     void setVars(QMdiSubWindow *window = nullptr, QWidget *parent = nullptr);
     void run();
     void setState(state_e state);
+    QMdiSubWindow *window = nullptr;
+
+    settingsaddaccount *addAccountWindow = nullptr;
+    settingsdeleteaccount *settingsDeleteAccount = nullptr;
+    settingseditaccount *settingsEditAccount = nullptr;
+    settingsedituser *settingsEditUser = nullptr;
+    settingsshowprivkey *settingsShowPrivKey = nullptr;
+    createprofitaccount *createProfitAccount = nullptr;
 private:
     void refreshFonts();
     void refreshSize();
@@ -46,7 +54,6 @@ private:
     void updateWalletSettingsTable();
     /* Window */
     QWidget *parent = nullptr;
-    QMdiSubWindow *window = nullptr;
     //QMdiArea *mdiArea;
     QMdiArea *mdiAreaSettings = nullptr;
     QWidget *widgetSettings = nullptr;
@@ -87,12 +94,6 @@ private:
     QStandardItemModel *accountsItemModel = nullptr;
 
 
-    settingsaddaccount *addAccountWindow = nullptr;
-    settingsdeleteaccount *settingsDeleteAccount = nullptr;
-    settingseditaccount *settingsEditAccount = nullptr;
-    settingsedituser *settingsEditUser = nullptr;
-    settingsshowprivkey *settingsShowPrivKey = nullptr;
-    createprofitaccount *createProfitAccount = nullptr;
 
 
     state_e currentState = STATE_NONE;

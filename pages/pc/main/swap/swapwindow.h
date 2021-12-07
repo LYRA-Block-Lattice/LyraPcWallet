@@ -31,6 +31,9 @@ public:
     void setVars(QMdiSubWindow *window = nullptr, QWidget *parent = nullptr);
     void run();
     void setState(state_e state);
+    QMdiSubWindow *window = nullptr;
+
+    QMdiSubWindow *windowSwap = nullptr;
 private:
     void refreshFonts();
     void refreshSize();
@@ -38,11 +41,9 @@ private:
     void refreshTokenAmount();
 
     QWidget *parent = nullptr;
-    QMdiSubWindow *window = nullptr;
 
     QMdiArea *mdiAreaSwap = nullptr;
     QWidget *widgetSwap = nullptr;
-    QMdiSubWindow *windowSwap = nullptr;
 
 
     QLabel *fromLabel = nullptr;

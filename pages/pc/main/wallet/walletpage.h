@@ -30,20 +30,20 @@ public:
     void setVars(QMdiSubWindow *window = nullptr, QWidget *parent = nullptr);
     void run();
     void setState(state_e state);
+    QMdiSubWindow *window;
+    QMdiSubWindow *windowWallet = nullptr;
+    QMdiSubWindow *windowSend = nullptr;
+    QMdiSubWindow *windowReceive = nullptr;
 private:
     /* Window */
     QWidget *parent;
-    QMdiSubWindow *window;
 
     QMdiArea *mdiAreaWallet = nullptr;
     QWidget *widgetWallet = nullptr;
-    QMdiSubWindow *windowWallet = nullptr;
     QMdiArea *mdiAreaSend = nullptr;
     QWidget *widgetSend = nullptr;
-    QMdiSubWindow *windowSend = nullptr;
     QMdiArea *mdiAreaReceive = nullptr;
     QWidget *widgetReceive = nullptr;
-    QMdiSubWindow *windowReceive = nullptr;
 
 
     walletmain *walletMain = nullptr;

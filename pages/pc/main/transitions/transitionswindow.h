@@ -34,6 +34,7 @@ public:
 
     walletshowdetails *showDetailsWindow = nullptr;
 
+    QMdiSubWindow *window = nullptr;
 private:
     void refreshTable();
     void refreshFonts();
@@ -42,7 +43,6 @@ private:
     void refreshLanguage();
     /* Window */
     QWidget *parent = nullptr;
-    QMdiSubWindow *window = nullptr;
 
     QMdiArea *mdiAreaTransitions = nullptr;
     QWidget *widgetTransitions = nullptr;

@@ -239,7 +239,7 @@
    "SWAP successfully completed." :        "HOÁN ĐỔI thành công.",
    "Now we need to create receive block." :"Bây giờ chúng ta cần tạo block nhận.",
    "ERROR: Unknown" :                      "LỖI: Không rõ",
-   "No liquidity found for this pair." :   "Không tìm thấy thanh lý nào cho cặp này.",
+   "No liquidity found for this pair" :    "Không tìm thấy thanh lý nào cho cặp này.",
    "Count" :                               "Thứ tự",
    "Receive hash copied to clipboard." :   "Hash nhận về đã được chép vào bộ nhớ đệm.",
    "Send hash copied to clipboard." :      "Hash gửi đi đã được chép vào bộ nhớp đệm"
