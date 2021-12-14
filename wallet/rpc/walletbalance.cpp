@@ -93,7 +93,9 @@ walletErr_e walletbalance::receive(int accNr, bool *newTransactions) {
                 object.insert("result", array);
                 QJsonDocument doc(object);
                 QString sendMsg = QString((doc.toJson(QJsonDocument::Compact)));
+                qDebug() << "WALLETBALANCE 4: " << accNr << sendMsg;
                 response = connection->sendSimpleMessage(sendMsg);
+                qDebug() << "WALLETBALANCE 5: " << accNr << response;
                 *newTransactions = true;
             }
         }

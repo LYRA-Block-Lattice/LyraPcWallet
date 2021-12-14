@@ -235,12 +235,13 @@
    "You will get" :                        "Bạn sẽ nhận",
    "Price impact" :                        "Tác động giá",
    "Pool fee" :                            "Phí của Pool",
-   "Liquidate fee" :                       "Phí thanh lý",
+   "Network fee" :                         "Phí thanh lý",
    "SWAP successfully completed." :        "HOÁN ĐỔI thành công.",
    "Now we need to create receive block." :"Bây giờ chúng ta cần tạo block nhận.",
    "ERROR: Unknown" :                      "LỖI: Không rõ",
    "No liquidity found for this pair" :    "Không tìm thấy thanh lý nào cho cặp này.",
    "Count" :                               "Thứ tự",
    "Receive hash copied to clipboard." :   "Hash nhận về đã được chép vào bộ nhớ đệm.",
-   "Send hash copied to clipboard." :      "Hash gửi đi đã được chép vào bộ nhớp đệm"
+   "Send hash copied to clipboard." :      "Hash gửi đi đã được chép vào bộ nhớp đệm",
+   "per" :                                 "per"
 }

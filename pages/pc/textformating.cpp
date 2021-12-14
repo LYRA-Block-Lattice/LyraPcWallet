@@ -2,11 +2,12 @@
 
 #include <QVariant>
 #include <QDate>
+#include <QDebug>
 
 #include "language/translate.h"
 
 QString textformating::toValue(double sum, int precision, bool noComma) {
-    QString tmp = QString::number(sum,'f', precision).remove('-');//QVariant{sum}.toString();
+    QString tmp = QString::number(sum, 'f', precision).remove('-');//QVariant{sum}.toString();
     if(!noComma) {
         int loc = tmp.indexOf('.');
         if(loc != -1) {
@@ -52,7 +53,7 @@ QString textformating::toValue(double sum, int precision, bool noComma) {
 }
 
 QString textformating::toValue(QString value, int precision) {
-    return textformating::toValue(value.toDouble(), precision);
+    return toValue(value.toDouble(), precision);
 }
 
 QString textformating::toPercentage(double sum) {

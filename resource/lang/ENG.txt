@@ -235,12 +235,13 @@
    "You will get" :                        "You will get",
    "Price impact" :                        "Price impact",
    "Pool fee" :                            "Pool fee",
-   "Liquidate fee" :                       "Liquidate fee",
+   "Network fee" :                         "Network fee",
    "SWAP successfully completed." :        "SWAP successfully completed.",
    "Now we need to create receive block." :"Now we need to create receive block.",
    "ERROR: Unknown" :                      "ERROR: Unknown",
    "No liquidity found for this pair" :    "No liquidity found for this pair",
    "Count" :                               "Count",
    "Receive hash copied to clipboard." :   "Receive hash copied to clipboard.",
-   "Send hash copied to clipboard." :      "Send hash copied to clipboard."
+   "Send hash copied to clipboard." :      "Send hash copied to clipboard.",
+   "per" :                                 "per"
 }

@@ -16,12 +16,15 @@ keyrevealer::keyrevealer(int nr, bool immediate, bool persistent, QWidget *paren
     this->move(hostRect.center() - this->rect().center());
     QPushButton *cancelButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel);
     cancelButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_BRIGHT ", stop: 1 " COLOR_GREY_DARK "); border-radius: 10px; color: #eee; min-width: 70px; min-height: 25px;");
+    cancelButton->setVisible(false);
     QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok);
     okButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 " COLOR_GREY_BRIGHT ", stop: 1 " COLOR_GREY_DARK "); border-radius: 10px; color: #eee; min-width: 70px; min-height: 25px;");
+    okButton->setVisible(false);
     QTimer::singleShot(0, this, [this] {
         ui->lineEdit->setFocus();
     });
     this->setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
     this->nr = nr;
     this->immediate = immediate;
     this->persistent = persistent;
@@ -102,5 +105,12 @@ QString keyrevealer::getKey() {
     QString tmp = pKey;
     pKey = "";
     return tmp;
+}
+
+
+void keyrevealer::on_lineEdit_returnPressed()
+{
+    on_buttonBox_accepted();
+    this->hide();
 }
 

@@ -1,5 +1,6 @@
 #include <string>
 #include <QList>
+#include <QStringRef>
 #include <QCryptographicHash>
 
 #include "configlyra.h"

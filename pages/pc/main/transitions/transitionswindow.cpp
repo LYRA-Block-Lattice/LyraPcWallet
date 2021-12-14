@@ -207,21 +207,15 @@ void transitionswindow::refreshTable() {
         QStringList tmpKeys = tmp.keys();
         QString amount;
         QString token;
-        //if(tmpKeys.count() > 1 || !tmpKeys.contains("LYR")) {
-            //tmpKeys.removeAll("LYR");
         foreach(QString key, tmpKeys) {
-            amount += "\n" + textformating::toValue(tmp[key]) + " " + key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
+            amount += "\n" + textformating::toValue(tmp[key]);
+            amount += " " + key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
         }
-        //tmpKeys.removeAll("LYR");
+        if(amount.length())
+            amount.remove(0, 1);
         foreach(QString key, tmpKeys) {
             token = key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN);
         }
-        //} else {
-            //amount = textformating::toValue(tmp["LYR"]);
-            //token = "LYR";
-        //}
-        if(amount.length())
-            amount.remove(0, 1);
         if(tokenComboBox->currentText().compare(_tr("ALL")) &&
                 tokenComboBox->currentText().compare(token)) {
             continue;
@@ -258,13 +252,6 @@ void transitionswindow::refreshTable() {
         it = new QStandardItem(); // Tx Type
         //it->setText("");
         item.append(it);
-
-        /*it = new QStandardItem(); // Token
-        it->setForeground(QBrush(0x909090));
-        it->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
-        it->setEnabled(false);
-        it->setText(token);
-        item.append(it);*/
 
         it = new QStandardItem(); // Date
         it->setForeground(QBrush(0x909090));
@@ -409,13 +396,13 @@ void transitionswindow::refreshSize() {
     historyTableView->setColumnWidth(5, s(150));
     historyTableView->setColumnWidth(6, s(150));
     historyTableView->setColumnWidth(7, s(80));
-    for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
+    /*for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         historyTableView->setRowHeight(cnt, s(30));
-        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
+        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 1));
         if(directionLabel != 0) {
             directionLabel->repaint();
         }
-    }
+    }*/
     /*
      * Due to an issue with the table in QT we nee to repeat the dimension setup.
      */
@@ -430,13 +417,13 @@ void transitionswindow::refreshSize() {
     historyTableView->setColumnWidth(5, s(150));
     historyTableView->setColumnWidth(6, s(150));
     historyTableView->setColumnWidth(7, s(80));
-    for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
+    /*for( int cnt = 0; cnt < historyTableView->verticalHeader()->count(); cnt++) {
         historyTableView->setRowHeight(cnt, s(30));
-        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 7));
+        QLabel *directionLabel = (QLabel *)historyTableView->indexWidget(historyItemModel->index(cnt, 1));
         if(directionLabel != 0) {
             directionLabel->repaint();
         }
-    }
+    }*/
 
     refreshFonts();
     refreshStyle();
@@ -514,10 +501,31 @@ void transitionswindow::refreshLanguage() {
     tokenLabel->setText(_tr("TOKEN") + ":");
     tmp = tokenComboBox->currentIndex();
     tokenComboBox->clear();
-    QList<QStringList> assetList = events::getAssets();
+    int index = events::getSelectedNameKeyIndex();
+    QStringList accountsList = events::getAccountNameList();
+    if(accountsList.count() == 0) {
+        return;
+    }
+    QList<QList<QMap<QString, QString>>> wallet = wallethistory::getAccount(accountsList[index]);
+    QList<QString> assetList;
+    for (int cnt = 0; cnt < wallet.count(); cnt++) {
+        QList<QMap<QString, QString>> transaction = wallet[wallet.count() - cnt - 1];
+        QMap<QString, QString> tmp = transaction[7];
+        QStringList tmpKeys = tmp.keys();
+        foreach(QString key, tmpKeys) {
+            if(!assetList.contains(key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN)))
+                assetList.append(key.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+        }
+    }
+    assetList.sort();
+    if(assetList.contains("LYR")) {
+        assetList.removeOne("LYR");
+        assetList.insert(0, "LYR");
+    }
+
     tokenComboBox->addItem(_tr("ALL"));
-    foreach(QStringList asset, assetList) {
-        tokenComboBox->addItem(asset[0]);
+    foreach(QString asset, assetList) {
+        tokenComboBox->addItem(asset);
     }
     if(tmp < tokenComboBox->count()) {
         if(tmp < 0) {

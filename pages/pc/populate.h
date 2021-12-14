@@ -6,7 +6,7 @@
 class populate
 {
 public:
-    static bool refreshAll();
+    static bool refreshAll(int accNr = -1);
 };
 
 #endif // POPULATE_H

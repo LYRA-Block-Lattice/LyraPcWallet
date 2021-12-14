@@ -235,12 +235,13 @@
    "You will get" :                        "你将得到",
    "Price impact" :                        "价格影响",
    "Pool fee" :                            "池费用",
-   "Liquidate fee" :                       "流动性费用",
+   "Network fee" :			   "网络费",
    "SWAP successfully completed." :        "置换成功完成.",
    "Now we need to create receive block." :"现在你需要创建接收块",
    "ERROR: Unknown" :                      "未知错误",
    "No liquidity found for this pair" :    "没有关于这个配对的流动性",
    "Count" :                               "数量",
    "Receive hash copied to clipboard." :   "接收哈希已复制到剪贴板.”",
-   "Send hash copied to clipboard." :      "发送哈希已复制到剪贴板."
+   "Send hash copied to clipboard." :      "发送哈希已复制到剪贴板.",
+   "per" :                                 "每"
 }

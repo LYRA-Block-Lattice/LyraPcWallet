@@ -1,6 +1,6 @@
 #include <QResizeEvent>
 #include <QScreen>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPainter>
 #include <QDir>
@@ -359,7 +359,7 @@ void MainWindow::appMain() {
         }
     }
 #if USE_WINDOWS_SCALING
-    int tmp = QApplication::desktop()->screenNumber(this);
+    int tmp = 0;//QApplication::desktop()->screenNumber(this);
     events::setScreenNumber(tmp);
     QList<QScreen *> screens = QGuiApplication::screens();
     double osWindowScale = 0;

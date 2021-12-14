@@ -176,22 +176,22 @@ void stake::refreshFonts() {
     QStandardItem *tmp;
     for(int cnt = 0;  cnt < stakingAccTableView->verticalHeader()->count(); cnt++) {
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = stakingAccItemModel->itemFromIndex(stakingAccItemModel->index(cnt, 5));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         QPushButton *viewDetails = (QPushButton *)stakingAccTableView->indexWidget(stakingAccItemModel->index(cnt, 5));
-        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+        viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         if(cnt < stakingAccTableView->verticalHeader()->count() - 1) {
             viewDetails = (QPushButton *)stakingAccTableView->indexWidget(stakingAccItemModel->index(cnt, 6));
-            viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.5)));
+            viewDetails->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         }
     }
 
@@ -213,12 +213,13 @@ void stake::refreshSize() {
 
     stakingAccTableView->setGeometry(s(25), s(65), s(1050), s(730));
     stakingAccTableView->setColumnWidth(0, s(150));
-    stakingAccTableView->setColumnWidth(1, s(225));
-    stakingAccTableView->setColumnWidth(2, s(225));
+    stakingAccTableView->setColumnWidth(1, s(205));
+    stakingAccTableView->setColumnWidth(2, s(205));
     stakingAccTableView->setColumnWidth(3, s(120));
     stakingAccTableView->setColumnWidth(4, s(110));
     stakingAccTableView->setColumnWidth(5, s(110));
     stakingAccTableView->setColumnWidth(6, s(110));
+    stakingAccTableView->setColumnWidth(7, s(34));
     for( int cnt = 0; cnt < stakingAccTableView->verticalHeader()->count(); cnt++) {
         stakingAccTableView->setRowHeight(cnt, s(34));
     }
@@ -228,14 +229,15 @@ void stake::refreshSize() {
      */
     stakingAccTableView->setGeometry(s(25), s(65), s(1050), s(730));
     stakingAccTableView->setColumnWidth(0, s(150));
-    stakingAccTableView->setColumnWidth(1, s(225));
-    stakingAccTableView->setColumnWidth(2, s(225));
+    stakingAccTableView->setColumnWidth(1, s(205));
+    stakingAccTableView->setColumnWidth(2, s(205));
     stakingAccTableView->setColumnWidth(3, s(120));
     stakingAccTableView->setColumnWidth(4, s(110));
     stakingAccTableView->setColumnWidth(5, s(110));
     stakingAccTableView->setColumnWidth(6, s(110));
+    stakingAccTableView->setColumnWidth(7, s(34));
     for( int cnt = 0; cnt < stakingAccTableView->verticalHeader()->count(); cnt++) {
-        stakingAccTableView->setRowHeight(cnt, s(34));
+        stakingAccTableView->setRowHeight(cnt, s(40));
     }
 
     refreshFonts();
@@ -271,6 +273,8 @@ void stake::refreshLanguage() {
     stakingAccItemModel->setHeaderData(5, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
     stakingAccItemModel->setHeaderData(6, Qt::Horizontal, "");
     stakingAccItemModel->setHeaderData(6, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
+    stakingAccItemModel->setHeaderData(7, Qt::Horizontal, "Active");
+    stakingAccItemModel->setHeaderData(7, Qt::Horizontal, Qt::AlignLeft, Qt::TextAlignmentRole);
 
     okButton->setText(_tr("CREATE STAKING ACCOUNT"));
     closeButton->setText(_tr("CLOSE"));
@@ -287,11 +291,15 @@ void stake::refreshStakingTable() {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QJsonObject result = jsonObject["result"].toObject();
+    QDateTime now = QDateTime::currentDateTime();
+    qDebug() << now.currentDateTimeUtc().toString();
+    int64_t timeNow = now.currentDateTimeUtc().toMSecsSinceEpoch();
     //QDateTime now = QDateTime::currentDateTime();
     if(!result["owner"].toString().compare(id)) {
         QJsonArray stakings = result["stakings"].toArray();
         QStandardItem *tmp;
         QJsonObject obj = QJsonValue(stakings[0]).toObject();
+        QLabel *status;
         foreach(const QJsonValue & value, stakings) {
             QJsonObject obj = value.toObject();
             QDateTime endDate = QDateTime::fromString(obj["start"].toString(), Qt::ISODateWithMs);
@@ -343,8 +351,21 @@ void stake::refreshStakingTable() {
             item.append(tmp);
             tmp = new QStandardItem();
             item.append(tmp);
+            tmp = new QStandardItem();
+            item.append(tmp);
 
             stakingAccItemModel->appendRow(item);
+
+            status = new QLabel();
+            if(date.toMSecsSinceEpoch() > timeNow)
+                status->setStyleSheet("image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/ok.png); border: 5px; ");
+            else
+                status->setStyleSheet("image:url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/wallet/warning.png); border: 5px; ");
+            status->setScaledContents(true);
+            status->repaint();
+            stakingAccTableView->setIndexWidget(stakingAccItemModel->index(stakingAccItemModel->rowCount() - 1, 7), status);
+        }
+        for( int cnt = 0; cnt < stakingAccTableView->verticalHeader()->count(); cnt++) {
         }
 
         QPushButton *stakeButton;

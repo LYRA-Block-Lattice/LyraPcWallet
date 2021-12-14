@@ -423,28 +423,28 @@ void settingswindow::updateWalletSettingsTable() {
         voteForButton = new QPushButton();
         voteForButton->setText(_tr("PROFITING"));
         voteForButton->setCursor(Qt::PointingHandCursor);
-        voteForButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
+        voteForButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         voteForButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 2), voteForButton);
 
         editButton = new QPushButton();
         editButton->setText(_tr("EDIT"));
         editButton->setCursor(Qt::PointingHandCursor);
-        editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
+        editButton->setStyleSheet("background-color: " BUTON_COLOR_CYAN "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         editButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 3), editButton);
 
         deleteButton = new QPushButton();
         deleteButton->setText(_tr("DELETE"));
         deleteButton->setCursor(Qt::PointingHandCursor);
-        deleteButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
+        deleteButton->setStyleSheet("background-color: " BUTON_COLOR_RED "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         deleteButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 4), deleteButton);
 
         showPrivateKeyButton = new QPushButton();
         showPrivateKeyButton->setText(_tr("SHOW KEY"));
         showPrivateKeyButton->setCursor(Qt::PointingHandCursor);
-        showPrivateKeyButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
+        showPrivateKeyButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         showPrivateKeyButton->installEventFilter(this);
         accountsTableView->setIndexWidget(accountsItemModel->index(cnt, 5), showPrivateKeyButton);
 
@@ -475,7 +475,7 @@ void settingswindow::updateWalletSettingsTable() {
         addButton = new QPushButton();
         addButton->setText(_tr("ADD"));
         addButton->setCursor(Qt::PointingHandCursor);
-        addButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(18)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
+        addButton->setStyleSheet("background-color: " BUTON_COLOR_GREEN "; border-radius: " + QString::number((int)s(14)) + "px; border: " + QString::number((int)s(6)) + "px solid #fff; color: #fff; ");
         connect(addButton, SIGNAL(clicked()),this, SLOT(on_Add_ButtonPressed()));
         accountsTableView->setIndexWidget(accountsItemModel->index(accountsTableView->verticalHeader()->count() - 1, 5), addButton);
     }
@@ -584,7 +584,7 @@ void settingswindow::refreshSize() {
     accountsTableView->setColumnWidth(4, s(90));
     accountsTableView->setColumnWidth(5, s(90));
     QHeaderView* header = accountsTableView->verticalHeader();
-    header->setDefaultSectionSize(s(39));
+    header->setDefaultSectionSize(s(30));
 
     refreshStyle();
     refreshFonts();
@@ -942,7 +942,7 @@ bool settingswindow::eventFilter(QObject *obj, QEvent *event) {
 
 void settingswindow::on_Backup_ButtonPressed() {
     QFileDialog fileDialog(mdiAreaSettings);
-    fileDialog.setReadOnly(true);
+    //fileDialog.setReadOnly(true);
     QString dir = fileDialog.getSaveFileName(this, "Save wallet", QString() ,QString("*." DEFAULT_WALLET_EXTENSION));
     if(dir.length() != 0) {
         events::setWalletHistoryChanged();

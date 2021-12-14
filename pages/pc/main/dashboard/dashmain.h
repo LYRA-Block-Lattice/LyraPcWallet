@@ -10,6 +10,7 @@
 #include <QDateEdit>
 #include <QTableView>
 #include <QStandardItemModel>
+#include <QtCharts>
 #include <QtCharts/QChartView>
 #include <QChart>
 #include <QSplineSeries>
@@ -19,8 +20,6 @@
 
 #include "config.h"
 #include "wallet/events.h"
-
-QT_CHARTS_USE_NAMESPACE
 
 class dashmain : public QMainWindow
 {

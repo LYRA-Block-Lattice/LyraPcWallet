@@ -1,14 +1,26 @@
-QT       += core gui network charts websockets
-TARGET = ../../LyraWallet/LyraWallet-MacOsX/lyra-pc-wallet
+#QT       += widgets core gui network charts websockets core5compat
+QT       += widgets core gui network charts websockets
+unix:!macx {
+
+}
+macx: {
+TARGET = ../LyraWallet-MacOsX/lyra-pc-wallet
+CONFIG += QMAKE_APPLE_DEVICE_ARCHS="x86_64 x86_64h arm64"
+CONFIG += app_bundle
+CONFIG += sdk_no_version_check
+}
+win32: {
+
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
-CONFIG += app_bundle
 
 DEFINES += MY_LIB_PATH=/
 
-#QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
+
+#QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/ ../Frameworks/@
 
 #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
 MACDEPLOY = `echo $$QMAKE_QMAKE | sed 's/qmake/macdeployqt/g'`

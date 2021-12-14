@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+QTimer *fetchNode;
 tickedupdates *tickedUpdatesl = nullptr;
 
 tickedupdates::tickedupdates() {
@@ -37,9 +38,9 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
     fetchPairPrice.setParent(this);
     fetchPairPrice.setInterval(2000);
     fetchPairPrice.start();
-    fetchNode.setParent(this);
-    fetchNode.setInterval(5000);
-    fetchNode.start();
+    fetchNode = new QTimer(this);
+    fetchNode->setInterval(5000);
+    fetchNode->start();
     fetchNodeUnreceived.setParent(this);
     fetchNodeUnreceived.setInterval(5000);
     fetchNodeUnreceived.start();
@@ -48,9 +49,14 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
     saveWallet.start();
 
     connect(&fetchPairPrice, SIGNAL(timeout()), this, SLOT(on_FetchPairPrice()));
-    connect(&fetchNode, SIGNAL(timeout()), this, SLOT(on_FetchNode()));
+    connect(fetchNode, SIGNAL(timeout()), this, SLOT(on_FetchNode()));
     connect(&fetchNodeUnreceived, SIGNAL(timeout()), this, SLOT(on_FetchNodeUnreceived()));
     connect(&saveWallet, SIGNAL(timeout()), this, SLOT(on_SaveWallet()));
+}
+
+void tickedupdates::triggerAccountRefresh() {
+    fetchNode->setInterval(1);
+    fetchNode->start();
 }
 
 void tickedupdates::run() {
@@ -60,8 +66,8 @@ void tickedupdates::run() {
         network = events::getNetwork();
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
         walletNameKeyListChanged = events::getAccountNameKeyListChanged();
-        fetchNode.setInterval(2000);
-        fetchNode.start();
+        fetchNode->setInterval(2000);
+        fetchNode->start();
     }
     if(events::getTriggerNodeFetch()) {
         fetchNodeUnreceived.setInterval(2000);
@@ -120,7 +126,7 @@ void tickedupdates::on_FetchPairPrice() {
 }
 
 void tickedupdates::on_FetchNode() {
-    fetchNode.setInterval(60000);
+    fetchNode->setInterval(60000);
 
 #if VORBOSE_LEVEL >= 3
     qDebug() << "TICKEDUPDATES 1: Start fetch nebula for network data.";
@@ -178,7 +184,7 @@ void tickedupdates::on_FetchNode() {
         events::setUnreceivedBallance(unreceived ? "Yes" : "No");
         if(height != wallethistory::getCount(names[index])) {
             wallethistory::updateAccount(names[index], accId);
-            populate::refreshAll();
+            //populate::refreshAll(index);
             events::setWalletHistoryChanged();
             events::setUpdateHistory();
         }

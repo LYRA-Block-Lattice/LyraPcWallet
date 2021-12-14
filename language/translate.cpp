@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <QScreen>
 #include <QApplication>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 
 #include "config.h"
 #include "wallet/events.h"

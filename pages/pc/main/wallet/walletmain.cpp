@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QThread>
 #include <QMessageBox>
+#include <QtCharts>
+#include <QtCharts/QAbstractAxis>
 
 #include "language/translate.h"
 #include "wallet/events.h"
@@ -16,6 +18,7 @@
 #include "storage/walletfile.h"
 
 #define s(s) _scale(s)
+
 
 walletmain::walletmain() {
 
@@ -208,7 +211,7 @@ void walletmain::setVars(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) {
     myWalletBalanceAxisY->setTickCount(11);
     //myWalletBalanceAxisY->setGridLineVisible(false);
     myWalletBalanceChart->addAxis(myWalletBalanceAxisY, Qt::AlignLeft);
-    QList<QtCharts::QAbstractAxis *> abstract = myWalletBalanceChart->axes(Qt::Vertical);
+    QList<QAbstractAxis *> abstract = myWalletBalanceChart->axes(Qt::Vertical);
     abstract.first()->setRange(0, 100);
     myWalletBalanceSeries->attachAxis(myWalletBalanceAxisY);
 
@@ -592,7 +595,7 @@ void walletmain::run() {
             QDate endDate = QDateTime::fromMSecsSinceEpoch(list[list.count() - 1].first).date();
             events::setDateRange(startDate, endDate);
         }
-        QList<QtCharts::QAbstractAxis *> abstract = myWalletBalanceChart->axes(Qt::Vertical);
+        QList<QAbstractAxis *> abstract = myWalletBalanceChart->axes(Qt::Vertical);
         if(list.count() != 0) {
             abstract.first()->setRange(minimum, maximum);
         } else {
@@ -620,7 +623,7 @@ void walletmain::run() {
             QDate endDate = QDateTime::fromMSecsSinceEpoch(list[list.count() - 1].first).date();
             events::setDateRange(startDate, endDate);
         }
-        QList<QtCharts::QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
+        QList<QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
         abstract.first()->setRange(minimum, maximum);
         if(list.count() != 0) {
             abstract.first()->setRange(minimum, maximum);

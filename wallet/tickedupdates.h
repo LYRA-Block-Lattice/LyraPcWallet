@@ -16,9 +16,9 @@ public:
     ~tickedupdates();
     void init(QWidget *parent = nullptr, tickedupdates *instance = nullptr);
     void run();
+    static void triggerAccountRefresh();
 private:
     QTimer fetchPairPrice;
-    QTimer fetchNode;
     QTimer fetchNodeUnreceived;
     QTimer saveWallet;
 

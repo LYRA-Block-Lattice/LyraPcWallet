@@ -17,13 +17,12 @@
 #include <QLineSeries>
 #include <QDateTimeAxis>
 #include <QCategoryAxis>
+#include <QtCharts>
 
 #include "stake.h"
 
 #include "config.h"
 #include "wallet/events.h"
-
-QT_CHARTS_USE_NAMESPACE
 
 class walletmain : public QMainWindow
 {

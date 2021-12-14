@@ -98,6 +98,8 @@ private:
 
     pool::poolInfo_t poolInfo;
     pool::poolCalculate poolCalculate;
+
+    bool triggerAccRefresh = false;
 private slots:
     void on_fromValueLineEdit_textChanged(const QString &);
     void on_toValueLineEdit_textChanged(const QString &);

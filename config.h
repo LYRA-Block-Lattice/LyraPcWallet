@@ -5,9 +5,11 @@
 
 #define VORBOSE_LEVEL                               0
 
-#define APP_VERSION                                 "0.3.3"
+#define APP_VERSION                                 "0.3.4"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
+#define SUPPORTED_COINS_MAINNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), ""}, {(SYMBOL_FOR_TETHERED_TOKEN  "USDT"), ""}}
+#define SUPPORTED_COINS_TESTNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), ""}, {(SYMBOL_FOR_TETHERED_TOKEN  "LTT"), ""}}
 
 #ifdef Q_OS_OSX
 #define USE_WINDOWS_SCALING                         true
@@ -96,7 +98,7 @@
 #define ICO_WINDOW_SMALL                            ":/resource/ico/256color.ico"
 
 #ifdef Q_OS_OSX
-#define FONT_REDUCTION  0.7
+#define FONT_REDUCTION  0.8
 #else
 #define FONT_REDUCTION  1
 #endif
@@ -112,8 +114,5 @@
 #define COLOR_GREY_DARK                             "#444"
 #define COLOR_WHITE                                 "#FFF"
 #define COLOR_BLACK                                 "#000"
-
-
-
 
 #endif // DEF_H

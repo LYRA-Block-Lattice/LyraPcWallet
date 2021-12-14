@@ -8,6 +8,8 @@
 #include "pages/pc/textformating.h"
 #include "configlyra.h"
 #include "wallet/rpc/walletbalance.h"
+#include "pages/pc/populate.h"
+#include "wallet/tickedupdates.h"
 
 #define s(s) _scale(s)
 
@@ -90,7 +92,15 @@ void swapwindow::setVars(QMdiSubWindow *window, QWidget *parent) {
     toValueComboBox->setAutoFillBackground(false);
     toValueComboBox->setVisible(true);
     toValueComboBox->setCursor(Qt::PointingHandCursor);
-    toValueComboBox->addItems({(SYMBOL_FOR_TETHERED_TOKEN "LTT"), (SYMBOL_FOR_TETHERED_TOKEN  "TRX")});
+    QList<QStringList> tokenList;
+    if(events::getRpcNetwork() == events::network_e::NETWORK_MAINNET)
+        tokenList = SUPPORTED_COINS_MAINNET;
+    else
+        tokenList = SUPPORTED_COINS_TESTNET;
+    foreach(QStringList token, tokenList) {
+        toValueComboBox->addItem(token[1] + (token[1].length() ? "/ " : "") + token[0]);
+    }
+
     connect(toValueComboBox, SIGNAL(currentTextChanged(const QString &)),this, SLOT(on_Ticker1_Changed(const QString &)));
 
 
@@ -261,7 +271,7 @@ void swapwindow::refreshSize() {
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
-               "text-align: center;"
+               "text-align: right;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
@@ -292,7 +302,7 @@ void swapwindow::refreshSize() {
                "border: 1px solid #eee;"
                "border-radius: " + QString::number((int)s(19)) + "px;"
                "padding: 1px " + QString::number((int)s(18)) + "px 1px " + QString::number((int)s(3)) + "px;"
-               "text-align: center;"
+               "text-align: right;"
                ";}"
         "QComboBox::drop-down {border-width: 1px;} "
         "QComboBox::down-arrow {image: url(:/resource/ico/" + events::getStyle() + "/mainDashBoard/walletComboBoxArrow.png);}"
@@ -304,23 +314,24 @@ void swapwindow::refreshSize() {
                "}"
     );
 
-    totalLiquidateLabel->setGeometry(s(320), s(250), s(300), s(38));
-    totalLiquidateValueLabel->setGeometry(s(490), s(250), s(300), s(38));
-    estimatedPriceLabel->setGeometry(s(320), s(300), s(300), s(19));
-    estimatedPriceValueLabel->setGeometry(s(490), s(300), s(300), s(19));
-    youSellLabel->setGeometry(s(320), s(325), s(300), s(19));
-    youSellValueLabel->setGeometry(s(490), s(325), s(300), s(19));
-    youGetLabel->setGeometry(s(320), s(350), s(300), s(19));
-    youGetValueLabel->setGeometry(s(490), s(350), s(300), s(19));
-    priceimpactLabel->setGeometry(s(320), s(375), s(300), s(19));
-    priceimpactValueLabel->setGeometry(s(490), s(375), s(300), s(19));
-    poolFeeLabel->setGeometry(s(320), s(400), s(300), s(19));
-    poolFeeValueLabel->setGeometry(s(490), s(400), s(300), s(19));
-    liquidateFeeLabel->setGeometry(s(320), s(425), s(300), s(19));
-    liquidateFeeValueLabel->setGeometry(s(490), s(425), s(300), s(19));
+    estimatedPriceLabel->setGeometry(s(320), s(250), s(300), s(19));
+    estimatedPriceValueLabel->setGeometry(s(490), s(250), s(300), s(19));
+    youSellLabel->setGeometry(s(320), s(275), s(300), s(19));
+    youSellValueLabel->setGeometry(s(490), s(275), s(300), s(19));
+    youGetLabel->setGeometry(s(320), s(300), s(300), s(19));
+    youGetValueLabel->setGeometry(s(490), s(300), s(300), s(19));
+    priceimpactLabel->setGeometry(s(320), s(325), s(300), s(19));
+    priceimpactValueLabel->setGeometry(s(490), s(325), s(300), s(19));
+    poolFeeLabel->setGeometry(s(320), s(350), s(300), s(19));
+    poolFeeValueLabel->setGeometry(s(490), s(350), s(300), s(19));
+    liquidateFeeLabel->setGeometry(s(320), s(375), s(300), s(19));
+    liquidateFeeValueLabel->setGeometry(s(490), s(375), s(300), s(19));
 
-    swapPushButton->setGeometry(s(370), s(460), s(370), s(39));
+    swapPushButton->setGeometry(s(370), s(410), s(370), s(39));
     swapPushButton->setStyleSheet("background-color: " BUTON_COLOR_BLUE "; border-radius: " + QString::number((int)s(19)) + "px; border: 1px solid #eee; color: #fff; ");
+
+    totalLiquidateLabel->setGeometry(s(320), s(460), s(300), s(38));
+    totalLiquidateValueLabel->setGeometry(s(490), s(460), s(300), s(38));
     refreshFonts();
 }
 
@@ -339,7 +350,7 @@ void swapwindow::refreshLanguage() {
     youGetLabel->setText(_tr("You will get"));
     priceimpactLabel->setText(_tr("Price impact"));
     poolFeeLabel->setText(_tr("Pool fee"));
-    liquidateFeeLabel->setText(_tr("Liquidate fee"));
+    liquidateFeeLabel->setText(_tr("Network fee"));
 
     swapPushButton->setText(_tr("Swap"));
 
@@ -374,6 +385,17 @@ void swapwindow::run() {
         pastLanguage = translate::getCurrentLang();
         refreshLanguage();
     }
+    if(network != events::getRpcNetwork()) {
+        QList<QStringList> tokenList;
+        toValueComboBox->clear();
+        if(events::getRpcNetwork() == events::network_e::NETWORK_MAINNET)
+            tokenList = SUPPORTED_COINS_MAINNET;
+        else
+            tokenList = SUPPORTED_COINS_TESTNET;
+        foreach(QStringList token, tokenList) {
+            toValueComboBox->addItem(token[1] + (token[1].length() ? "/ " : "") + token[0]);
+        }
+    }
     if(network != events::getRpcNetwork() ||
             selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
             recentTransactionsCnt != events::getRecentTransactionsModifyedCnt()) {
@@ -384,6 +406,10 @@ void swapwindow::run() {
         fetchPool.start();
         //refreshLanguage();
         //refreshTable();
+    }
+    if(triggerAccRefresh) {
+        triggerAccRefresh = false;
+        tickedupdates::triggerAccountRefresh();
     }
 }
 
@@ -461,9 +487,25 @@ void swapwindow::on_reverseTokens_ButtonPressed() {
 
 void swapwindow::on_FetchPool() {
     fetchPool.stop();
+    QList<QStringList> tList = SUPPORTED_COINS_MAINNET;
+    QString tokenFrom = fromValueComboBox->currentText();
+    foreach(QStringList token, tList) {
+        if(!tokenFrom.compare(token[1] + (token[1].length() ? "/ " : "") + token[0])) {
+            tokenFrom = token[0];
+            break;
+        }
+    }
+    QString tokenTo = toValueComboBox->currentText();
+    foreach(QStringList token, tList) {
+        if(!tokenTo.compare(token[1] + (token[1].length() ? "/ " : "") + token[0])) {
+            tokenTo = token[0];
+            break;
+        }
+    }
+
     QList<QPair<QString, double>> tokenList = events::getTokenList();
-    poolInfo = pool::info(fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
-                          toValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"));
+    poolInfo = pool::info(tokenFrom.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
+                          tokenTo.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"));
 #if VORBOSE_LEVEL >= 1
     qDebug() << poolInfo.height;
     qDebug() << poolInfo.poolId;
@@ -474,14 +516,14 @@ void swapwindow::on_FetchPool() {
     QPair<QString, double>tmpToken;
     amountToken0 = 0.0;
     foreach(tmpToken, tokenList) {
-        if(!tmpToken.first.compare(fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"))) {
+        if(!tmpToken.first.compare(tokenFrom.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"))) {
             amountToken0 = tmpToken.second;
             break;
         }
     }
     amountToken1 = 0.0;
     foreach(tmpToken, tokenList) {
-        if(!tmpToken.first.compare(toValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"))) {
+        if(!tmpToken.first.compare(tokenTo.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"))) {
             amountToken1 = tmpToken.second;
             break;
         }
@@ -489,12 +531,12 @@ void swapwindow::on_FetchPool() {
     refreshLanguage();
     if(poolInfo.valid) {
         totalLiquidateValueLabel->setText(textformating::toValue(poolInfo.amount0) + " " +
-                                          fromValueComboBox->currentText() + "\n" +
+                                          tokenFrom.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN) + "\n" +
                                             textformating::toValue(poolInfo.amount1) + " " +
-                                                toValueComboBox->currentText());
+                                                tokenTo.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
         if(lastEditedVal == LAST_EDITED_VAL_TOKEN0) {
             poolCalculate = pool::calculate(poolInfo.poolId,
-                                            fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
+                                            tokenFrom.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
                                                 fromValueLineEdit->text().remove(",").toDouble(), 0.01);
         }
         if(poolCalculate.valid) {
@@ -511,12 +553,12 @@ void swapwindow::on_FetchPool() {
             qDebug() << poolCalculate.payToProvider << "PayToProvider";
             qDebug() << poolCalculate.payToAuthorizer << "PayToAuthorizer";
 #endif
-            estimatedPriceValueLabel->setText(textformating::toValue(poolCalculate.price, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+            estimatedPriceValueLabel->setText(textformating::toValue(poolCalculate.price, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN) + " " + _tr("per") + " " + poolCalculate.swapOutToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
             youSellValueLabel->setText(textformating::toValue(poolCalculate.swapInAmount, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
             youGetValueLabel->setText(textformating::toValue(poolCalculate.swapOutAmount, 8) + " " + poolCalculate.swapOutToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
             priceimpactValueLabel->setText(textformating::toValue(poolCalculate.priceImpact * 100.0, 8) + " %");
-            poolFeeValueLabel->setText(textformating::toValue(poolCalculate.payToProvider, 8) + " LYR");
-            liquidateFeeValueLabel->setText(textformating::toValue(poolCalculate.payToAuthorizer, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+            poolFeeValueLabel->setText(textformating::toValue(poolCalculate.payToProvider, 8) + " " + poolCalculate.swapInToken.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+            liquidateFeeValueLabel->setText(textformating::toValue(poolCalculate.payToAuthorizer, 8) + " LYR");
 
             if(lastEditedVal == LAST_EDITED_VAL_TOKEN0) {
                 if(fromValueLineEdit->text().length())
@@ -536,22 +578,38 @@ void swapwindow::on_FetchPool() {
         valueSource = VALUE_SOURCE_SELF;
     } else {
         totalLiquidateValueLabel->setText(_tr("No liquidity found for this pair"));
-        estimatedPriceValueLabel->setText(fromValueComboBox->currentText());
-        youSellValueLabel->setText(fromValueComboBox->currentText());
-        youGetValueLabel->setText(toValueComboBox->currentText());
+        estimatedPriceValueLabel->setText(tokenFrom.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+        youSellValueLabel->setText(tokenFrom.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
+        youGetValueLabel->setText(tokenTo.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
         priceimpactValueLabel->setText(" %");
         poolFeeValueLabel->setText(" LYR");
-        liquidateFeeValueLabel->setText(fromValueComboBox->currentText());
+        liquidateFeeValueLabel->setText(tokenFrom.replace("tether/", SYMBOL_FOR_TETHERED_TOKEN));
     }
 }
 
 void swapwindow::on_swap_ButtonPressed() {
     bool unreceived = false;
     int height = 0;
+    QList<QStringList> tList = SUPPORTED_COINS_MAINNET;
+    QString tokenFrom = fromValueComboBox->currentText();
+    foreach(QStringList token, tList) {
+        if(!tokenFrom.compare(token[1] + (token[1].length() ? "/ " : "") + token[0])) {
+            tokenFrom = token[0];
+            break;
+        }
+    }
+    QString tokenTo = toValueComboBox->currentText();
+    foreach(QStringList token, tList) {
+        if(!tokenTo.compare(token[1] + (token[1].length() ? "/ " : "") + token[0])) {
+            tokenTo = token[0];
+            break;
+        }
+    }
+
     walletErr_e response = swap::swapTokens(events::getSelectedNameKeyIndex(),
-                     fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
-                        toValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
-                            fromValueComboBox->currentText().replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
+                     tokenFrom.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
+                        tokenTo.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
+                            tokenFrom.replace(SYMBOL_FOR_TETHERED_TOKEN, "tether/"),
                                 fromValueLineEdit->text().remove(",").toDouble(),
                                     poolCalculate.minimumReceive);
     QString accId = events::getAccountId(events::getSelectedNameKeyIndex());
@@ -569,6 +627,7 @@ void swapwindow::on_swap_ButtonPressed() {
         if(unreceived) {
             wallet::sync();
         }
+        triggerAccRefresh = true;
         break;
     default:
         QMessageBox::critical( this, this->windowTitle(),

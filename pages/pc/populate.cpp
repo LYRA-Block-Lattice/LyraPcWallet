@@ -1,3 +1,5 @@
+#include <QApplication>
+
 #include "populate.h"
 
 #include "language/translate.h"
@@ -29,7 +31,7 @@ struct QPairFirstComparer1 {
     }
 };
 
-bool populate::refreshAll() {
+bool populate::refreshAll(int accNr) {
     QList<QStringList> recentTransactionsList;
     int index = events::getSelectedNameKeyIndex();
     QStringList listId = events::getAccountNameList();
@@ -46,11 +48,15 @@ bool populate::refreshAll() {
     double balance = 0.0;
     QList<QPair<qint64, double>> allList;
     QList<QPair<QString, double>> tokList[listId.count()];
-    for(int ind = 0; ind < listId.count(); ind++) {
+    int ind = accNr;
+    if(accNr < 0)
+        ind = 0;
+    for(; ind < (accNr < 0 ? listId.count() : accNr + 1); ind++) {
         QString accountName = listId[ind];
         transactionCount = wallethistory::getCount(accountName);
 
         for(int cnt = 0; cnt < transactionCount; cnt++) {
+            QApplication::processEvents();
             transaction_t transaction = wallethistory::getTransaction(accountName, cnt);
             qint64 time = wallethistory::timestampToQint64(transaction[2]["TimeStamp"]);
             balance = transaction[8]["LYR"].toDouble();

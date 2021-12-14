@@ -170,7 +170,7 @@ dashmain::dashmain(QMdiArea *mdiArea, QMdiSubWindow *parentWindow) : QMainWindow
     myWalletValueAxisY->setLabelFormat("%f");
     myWalletValueAxisY->setTickCount(11);
     myWalletValueChart->addAxis(myWalletValueAxisY, Qt::AlignLeft);
-    QList<QtCharts::QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
+    QList<QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
     abstract.first()->setRange(0, 100);
     myWalletValueSeries->attachAxis(myWalletValueAxisY);
 
@@ -262,24 +262,24 @@ void dashmain::refreshFonts() {
     QStandardItem *tmp;
     for(int cnt = 0; cnt < recentTransactionsItemModel->rowCount(); cnt++) {
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getCurrentFontSizeLight(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 3));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = recentTransactionsItemModel->itemFromIndex(recentTransactionsItemModel->index(cnt, 4));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
     }
 
     for(int cnt = 0; cnt < assetsItemModel->rowCount(); cnt++) {
         tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 0));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 1));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
         tmp = assetsItemModel->itemFromIndex(assetsItemModel->index(cnt, 2));
-        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.6)));
+        tmp->setFont(QFont(translate::getCurrentFontLight(), translate::getNumberFontSize(0.7)));
     }
 }
 
@@ -678,7 +678,7 @@ void dashmain::run() {
             dateRangeModifyedCntN++;
             //events::setDateRange(startDate, endDate);
         }
-        QList<QtCharts::QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
+        QList<QAbstractAxis *> abstract = myWalletValueChart->axes(Qt::Vertical);
         if(list.count() != 0) {
             abstract.first()->setRange(minimum, maximum);
         } else {
