@@ -55,7 +55,7 @@ void tickedupdates::init(QWidget *parent, tickedupdates *instance) {
 }
 
 void tickedupdates::triggerAccountRefresh() {
-    fetchNode->setInterval(1);
+    fetchNode->setInterval(100);
     fetchNode->start();
 }
 
@@ -206,7 +206,6 @@ void tickedupdates::on_FetchNodeUnreceived() {
     QPair<QString, QString>nameAccId;
     QList<QPair<QString, int>> tmpListNewRegistered;
     foreach(nameAccId, nameAccIdList) {
-        QApplication::processEvents();
         bool unreceived = false;
         int height = 0;
         walletbalance::balance(nameAccId.second, &height, &unreceived);

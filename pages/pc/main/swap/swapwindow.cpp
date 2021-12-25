@@ -363,12 +363,29 @@ void swapwindow::refreshTokenAmount() {
 
 }
 
+void swapwindow::repopulatetokensComboBoxes() {
+    fromValueComboBox->clear();
+    fromValueComboBox->addItems({"LYR"});
+    toValueComboBox->clear();
+    QList<QStringList> tokenList;
+    if(events::getRpcNetwork() == events::network_e::NETWORK_MAINNET)
+        tokenList = SUPPORTED_COINS_MAINNET;
+    else
+        tokenList = SUPPORTED_COINS_TESTNET;
+    foreach(QStringList token, tokenList) {
+        toValueComboBox->addItem(token[1] + (token[1].length() ? "/ " : "") + token[0]);
+    }
+    fetchPool.setInterval(1000);
+    fetchPool.start();
+}
+
 void swapwindow::run() {
     if(pastState != currentState) {
         pastState = currentState;
         if(currentState == STATE_SWAP) {
             mdiAreaSwap->setVisible(true);
-            windowSwap->setVisible(true);
+            windowSwap->setVisible(true);toValueComboBox->clear();
+            repopulatetokensComboBoxes();
             refreshTokenAmount();
         } else {
             mdiAreaSwap->setVisible(false);
@@ -386,15 +403,7 @@ void swapwindow::run() {
         refreshLanguage();
     }
     if(network != events::getRpcNetwork()) {
-        QList<QStringList> tokenList;
-        toValueComboBox->clear();
-        if(events::getRpcNetwork() == events::network_e::NETWORK_MAINNET)
-            tokenList = SUPPORTED_COINS_MAINNET;
-        else
-            tokenList = SUPPORTED_COINS_TESTNET;
-        foreach(QStringList token, tokenList) {
-            toValueComboBox->addItem(token[1] + (token[1].length() ? "/ " : "") + token[0]);
-        }
+        repopulatetokensComboBoxes();
     }
     if(network != events::getRpcNetwork() ||
             selectedNameKeyIndex != events::getSelectedNameKeyIndex() ||
@@ -404,8 +413,6 @@ void swapwindow::run() {
         selectedNameKeyIndex = events::getSelectedNameKeyIndex();
         fetchPool.setInterval(100);
         fetchPool.start();
-        //refreshLanguage();
-        //refreshTable();
     }
     if(triggerAccRefresh) {
         triggerAccRefresh = false;

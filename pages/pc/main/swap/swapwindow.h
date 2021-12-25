@@ -39,6 +39,7 @@ private:
     void refreshSize();
     void refreshLanguage();
     void refreshTokenAmount();
+    void repopulatetokensComboBoxes();
 
     QWidget *parent = nullptr;
 

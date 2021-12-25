@@ -16,6 +16,7 @@
 #include "pages/pc/populate.h"
 #include "wallet/rpc/wallethistory.h"
 #include "storage/walletfile.h"
+#include "wallet/tickedupdates.h"
 
 #define s(s) _scale(s)
 
@@ -650,7 +651,8 @@ void walletreceive::run() {
         showDetailsWindow->setDetailsVisible(false);
         events::setUnreceivedBallance("Please wait");
         run();
-        wallet::checkNewTransactions();
+        //wallet::checkNewTransactions();
+        tickedupdates::triggerAccountRefresh();
     }
     if(tokenListModifyedCnt != events::getTokenListModifyedCnt()) {
         tokenListModifyedCnt = events::getTokenListModifyedCnt();

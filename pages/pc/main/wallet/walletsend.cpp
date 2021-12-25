@@ -17,6 +17,7 @@
 #include "pages/pc/populate.h"
 #include "wallet/rpc/wallethistory.h"
 #include "storage/walletfile.h"
+#include "wallet/tickedupdates.h"
 
 #include "configlyra.h"
 
@@ -685,7 +686,8 @@ void walletsend::run() {
         showDetailsWindow->setDetailsVisible(false);
         events::setUnreceivedBallance("Please wait");
         run();
-        wallet::checkNewTransactions();
+        //wallet::checkNewTransactions();
+        tickedupdates::triggerAccountRefresh();
     }
     if(tokenListModifyedCnt != events::getTokenListModifyedCnt()) {
         tokenListModifyedCnt = events::getTokenListModifyedCnt();

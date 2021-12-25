@@ -11,7 +11,8 @@ TARGET = ../../LyraWallet-Win32/lyra-pc-wallet
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
-
+#QMAKE_LFLAGS += -Wl,--large-address-aware
+#QMAKE_LFLAGS_WINDOWS += -Wl,--stack,32000000
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0

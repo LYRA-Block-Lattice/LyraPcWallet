@@ -27,8 +27,11 @@ bool walletfile::load(QString fileName, QString password) {
     QFile trFile(path);
     if (!trFile.open(QIODevice::ReadOnly))
         return false;
-    QByteArray walletFileEnc = trFile.readAll();
-    QByteArray dec = aes::aesDecrypt(walletFileEnc, password);
+    static QByteArray walletFileEnc = trFile.readAll();
+    if(!walletFileEnc.count()) {
+        qDebug() << "ERROR reading file";
+    }
+    static QByteArray dec = aes::aesDecrypt(walletFileEnc, password);
     /*QFile dumpFile(QString(USER_HOME) + "/" WALLET_PATH "/dump.txt");
     if (!dumpFile.open(QIODevice::WriteOnly))
         return false;
@@ -67,13 +70,18 @@ bool walletfile::load(QString fileName, QString password) {
     return true;
 }
 
+bool otherSaveInProgress = false;
+
 bool walletfile::save(QString fileName, QString password, QString directory) {
+    if(otherSaveInProgress)
+        return false;
     if(!events::getWalletHistoryChanged())
         return true;
     if(fileName.length() == 0)
         return false;
+    otherSaveInProgress = true;
     QJsonObject objectFile;
-    QJsonObject objectAccounts;
+    static QJsonObject objectAccounts;
     QJsonObject lastPairs;
     QString pairName;
     QMap<QString, double> pairList = events::getTokenPricePairs();
@@ -101,8 +109,8 @@ bool walletfile::save(QString fileName, QString password, QString directory) {
     objectFile.insert("lastPairs", lastPairs);
     objectFile.insert("version", 1);
     QJsonDocument doc(objectFile);
-    QString fileData = QString((doc.toJson(QJsonDocument::Indented)));
-    QByteArray enc = aes::aesEncrypt(fileData.toUtf8(), password);
+    static QString fileData = QString((doc.toJson(QJsonDocument::Indented)));
+    static QByteArray enc = aes::aesEncrypt(fileData.toUtf8(), password);
     QString path;
     if(directory.length() == 0) {
         QDir dir = QDir(QString(USER_HOME) + "/" WALLET_PATH "/");
@@ -123,6 +131,7 @@ bool walletfile::save(QString fileName, QString password, QString directory) {
         return false;
     trFile.write(enc);
     trFile.close();
+    otherSaveInProgress = false;
 
     return true;
 }

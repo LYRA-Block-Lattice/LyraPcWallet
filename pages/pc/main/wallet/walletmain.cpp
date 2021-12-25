@@ -16,6 +16,7 @@
 #include "pages/pc/populate.h"
 #include "wallet/rpc/wallethistory.h"
 #include "storage/walletfile.h"
+#include "wallet/tickedupdates.h"
 
 #define s(s) _scale(s)
 
@@ -654,7 +655,8 @@ void walletmain::run() {
             stakeWindow->setState(stake::runMode_e::NONE);
         }
         run();
-        wallet::checkNewTransactions();
+        //wallet::checkNewTransactions();
+        tickedupdates::triggerAccountRefresh();
     }
     if(stakeWindow) {
         stakeWindow->run();

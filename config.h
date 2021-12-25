@@ -3,13 +3,13 @@
 
 #include "qglobal.h"
 
-#define VORBOSE_LEVEL                               0
+#define VORBOSE_LEVEL                               1
 
-#define APP_VERSION                                 "0.3.4"
+#define APP_VERSION                                 "0.3.5"
 
 #define NETWORKS                                    {"testnet", "mainnet"/*, "dev"*/}
-#define SUPPORTED_COINS_MAINNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), ""}, {(SYMBOL_FOR_TETHERED_TOKEN  "USDT"), ""}}
-#define SUPPORTED_COINS_TESTNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), ""}, {(SYMBOL_FOR_TETHERED_TOKEN  "LTT"), ""}}
+#define SUPPORTED_COINS_MAINNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), "TRX"}, {(SYMBOL_FOR_TETHERED_TOKEN  "USDT"), "TRX"}}
+#define SUPPORTED_COINS_TESTNET                     {{(SYMBOL_FOR_TETHERED_TOKEN "TRX"), "TRX"}, {(SYMBOL_FOR_TETHERED_TOKEN  "LTT"), "TRX"}}
 
 #ifdef Q_OS_OSX
 #define USE_WINDOWS_SCALING                         true
